@@ -1,0 +1,50 @@
+{
+  "name": "mosaic-light-react",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@craco/craco": "^6.1.1",
+    "@tailwindcss/forms": "^0.2.1",
+    "@testing-library/jest-dom": "^5.11.10",
+    "@testing-library/react": "^11.2.6",
+    "@testing-library/user-event": "^12.8.3",
+    "autoprefixer": "^9.8.5",
+    "chart.js": "^3.0.2",
+    "chartjs-adapter-moment": "^1.0.0",
+    "cruip-js-toolkit": "^1.0.3",
+    "moment": "^2.29.1",
+    "node-sass": "^5.0.0",
+    "postcss": "^8.2.9",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-flatpickr": "^3.10.7",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.3",
+    "react-transition-group": "^4.4.1",
+    "tailwindcss": "^2.1.1",
+    "web-vitals": "^1.1.1"
+  },
+  "scripts": {
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "craco eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

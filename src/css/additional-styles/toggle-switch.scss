@@ -1,0 +1,33 @@
+// Switch element
+.form-switch {
+    @apply relative select-none;
+    width: 44px;
+
+    label {
+        @apply block overflow-hidden cursor-pointer h-6 rounded-full;
+
+        > span:first-child {
+            @apply absolute block rounded-full;
+            width: 20px;
+            height: 20px;
+            top: 2px;
+            left: 2px;
+            right: 50%;
+            transition: all .15s ease-out;
+        }
+    }
+
+    input[type="checkbox"] {
+    
+        &:checked {
+
+            + label {
+                @apply bg-indigo-500;
+
+                > span:first-child {
+                    left: 22px;
+                }
+            }
+        }
+    }
+}
