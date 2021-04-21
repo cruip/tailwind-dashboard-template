@@ -84,7 +84,6 @@ function BarChart03({
           // Reuse the built-in legendItems generator
           const items = c.options.plugins.legend.labels.generateLabels(c);
           items.forEach((item) => {
-            console.log(item);
             const li = document.createElement('li');
             li.style.display = 'flex';
             li.style.justifyContent = 'space-between';
