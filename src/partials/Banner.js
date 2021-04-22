@@ -9,7 +9,7 @@ function Banner() {
     { bannerOpen && (
       <div className="fixed bottom-0 right-0 w-full md:bottom-8 md:right-12 md:w-auto z-60">
         <div className="bg-gray-800 text-gray-50 text-sm p-3 md:rounded shadow-lg flex justify-between">
-          <div>👉️ Have a look at the full template on <a className="hover:underline" href="https://preview.cruip.com/mosaic/">Cruip.com</a>.</div>
+          <div>👉️  Looking for more? Have a look at the premium version on <a className="hover:underline" href="https://preview.cruip.com/mosaic/">Cruip.com</a>.</div>
           <button className="text-gray-500 hover:text-gray-400 ml-5" onClick={() => setBannerOpen(false) }>
             <span className="sr-only">Close</span>
             <svg className="w-4 h-4 flex-shrink-0 fill-current" viewBox="0 0 16 16">
