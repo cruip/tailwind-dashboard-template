@@ -127,7 +127,7 @@ function BarChart03({
       <div>
         <canvas ref={canvas} width={width} height={height}></canvas>
       </div>
-      <div className="px-5 pt-2 pb-6">
+      <div className="px-5 pt-2 pb-2">
         <ul ref={legend} className="text-sm divide-y divide-gray-100"></ul>
         <ul className="text-sm divide-y divide-gray-100"></ul>
       </div>
