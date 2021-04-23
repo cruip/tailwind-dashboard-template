@@ -7,7 +7,7 @@ Chart.register(Tooltip);
 
 // Define Chart.js default settings
 Chart.defaults.font.family = '"Inter", sans-serif';
-Chart.defaults.font.style = '500';
+Chart.defaults.font.weight = '500';
 Chart.defaults.color = tailwindConfig().theme.colors.gray[400];
 Chart.defaults.scale.grid.color = tailwindConfig().theme.colors.gray[100];
 Chart.defaults.plugins.tooltip.titleColor = tailwindConfig().theme.colors.gray[800];
