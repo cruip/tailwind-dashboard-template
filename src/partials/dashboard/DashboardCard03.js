@@ -64,7 +64,7 @@ function DashboardCard03() {
       <div className="px-5 pt-5">
         <header className="flex justify-between items-start mb-2">
           {/* Icon */}
-          <img src={Icon} width="32" height="32" alt="Icon 01" />
+          <img src={Icon} width="32" height="32" alt="Icon 03" />
           {/* Menu button */}
           <EditMenu className="relative inline-flex">
             <li>
