@@ -19,7 +19,6 @@ function Info({
     >
       <button
         className="block"
-        href="#0"
         aria-haspopup="true"
         aria-expanded={infoOpen}
         onClick={(e) => e.preventDefault()}
