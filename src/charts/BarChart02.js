@@ -56,7 +56,7 @@ function BarChart02({
               },
             },
             grid: {
-              display: false,
+              drawBorder: false,
             },
             ticks: {
               autoSkipPadding: 48,
