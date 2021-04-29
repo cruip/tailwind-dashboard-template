@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import { focusHandling } from 'cruip-js-toolkit';
 
 import {
   Chart, LineController, LineElement, Filler, PointElement, LinearScale, TimeScale, Tooltip,
@@ -98,6 +99,7 @@ function LineChart02({
             button.onclick = () => {
               c.setDatasetVisibility(item.datasetIndex, !c.isDatasetVisible(item.datasetIndex));
               c.update();
+              focusHandling('outline');
             };
             // Color box
             const box = document.createElement('span');
