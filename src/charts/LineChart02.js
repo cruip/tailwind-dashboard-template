@@ -145,7 +145,6 @@ function LineChart02({
       </div>
       {/* Chart built with Chart.js 3 */}
       <div className="flex-grow">
-        {/* Change the height attribute to adjust the chart height */}
         <canvas ref={canvas} width={width} height={height}></canvas>
       </div>
     </React.Fragment>

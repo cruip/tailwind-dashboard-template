@@ -110,7 +110,6 @@ function RealtimeChart({
         </div>
       </div>
       <div className="flex-grow">
-        {/* Change the height attribute to adjust the chart height */}
         <canvas ref={canvas} data={data} width={width} height={height}></canvas>
       </div>
     </React.Fragment>
