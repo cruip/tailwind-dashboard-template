@@ -81,10 +81,11 @@ function RealtimeChart({
         },
         animation: false,
         maintainAspectRatio: false,
+        resizeDelay: 200,
       },
     });
     return () => chart.destroy();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   // Update header values

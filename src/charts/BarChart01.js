@@ -79,6 +79,7 @@ function BarChart01({
           duration: 500,
         },
         maintainAspectRatio: false,
+        resizeDelay: 200,
       },
       plugins: [{
         id: 'htmlLegend',
@@ -145,7 +146,7 @@ function BarChart01({
       }],
     });
     return () => chart.destroy();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

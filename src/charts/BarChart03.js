@@ -71,6 +71,7 @@ function BarChart03({
           duration: 500,
         },
         maintainAspectRatio: false,
+        resizeDelay: 200,
       },
       plugins: [{
         id: 'htmlLegend',

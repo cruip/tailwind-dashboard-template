@@ -9,7 +9,7 @@ import 'chartjs-adapter-moment';
 // Import utilities
 import { tailwindConfig } from '../utils/Utils';
 
-Chart.register(DoughnutController, ArcElement, TimeScale, Tooltip,);
+Chart.register(DoughnutController, ArcElement, TimeScale, Tooltip);
 
 function DoughnutChart({
   data,
@@ -44,6 +44,7 @@ function DoughnutChart({
           duration: 500,
         },
         maintainAspectRatio: false,
+        resizeDelay: 200,
       },
       plugins: [{
         id: 'htmlLegend',

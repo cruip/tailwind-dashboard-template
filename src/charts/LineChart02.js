@@ -76,6 +76,7 @@ function LineChart02({
           mode: 'nearest',
         },
         maintainAspectRatio: false,
+        resizeDelay: 200,
       },
       plugins: [{
         id: 'htmlLegend',

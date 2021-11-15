@@ -1,6 +1,8 @@
 const colors = require('tailwindcss/colors');
+const plugin = require('tailwindcss/plugin');
 
 module.exports = {
+  mode: 'jit',
   purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
   theme: {
     extend: {
@@ -12,7 +14,7 @@ module.exports = {
       },
       colors: {
         gray: colors.blueGray,
-        'light-blue': colors.lightBlue,
+        'light-blue': colors.sky,
         red: colors.rose,
       },
       outline: {
@@ -44,6 +46,7 @@ module.exports = {
         44: '11rem',
         56: '14rem',
         60: '15rem',
+        72: '18rem',
         80: '20rem',
       },
       maxWidth: {
@@ -55,15 +58,14 @@ module.exports = {
       },
     },
   },
-  variants: {
-    extend: {
-      margin: ['first', 'last'],
-      borderWidth: ['first', 'last'],
-      padding: ['first', 'last'],
-    },
-  },
   plugins: [
     // eslint-disable-next-line global-require
     require('@tailwindcss/forms'),
+    // add custom variant for expanding sidebar
+    plugin(({ addVariant, e }) => {
+      addVariant('sidebar-expanded', ({ modifySelectors, separator }) => {
+        modifySelectors(({ className }) => `.sidebar-expanded .${e(`sidebar-expanded${separator}${className}`)}`);
+      });
+    }),
   ],
 };

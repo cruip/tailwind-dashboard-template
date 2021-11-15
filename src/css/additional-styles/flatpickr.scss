@@ -20,7 +20,7 @@ $daysWidth: $daySize*7;
 .flatpickr-calendar {
     border: inherit;
     @apply rounded shadow-lg border border-gray-200 left-1/2;
-    margin-left: - ($daysWidth + $calendarPadding*2)/2;
+    margin-left: - ($daysWidth + $calendarPadding*2)*0.5;
     padding: $calendarPadding;
     width: $daysWidth + $calendarPadding*2;
 }

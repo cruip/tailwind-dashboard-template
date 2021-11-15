@@ -84,6 +84,7 @@ function BarChart02({
           duration: 200,
         },
         maintainAspectRatio: false,
+        resizeDelay: 200,
       },
     });
     return () => chart.destroy();
