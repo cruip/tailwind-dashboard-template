@@ -4,7 +4,7 @@
 
 - Update dependencies
 - Enable Tailwind JIT
-- Add expandable 7 collapsible sidebar feature
+- Add expandable / collapsible sidebar feature
 
 ## [1.0.0] - 2021-04-20
 
