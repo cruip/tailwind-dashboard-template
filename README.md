@@ -110,6 +110,8 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
 
+[![Vue version of Mosaic](https://user-images.githubusercontent.com/2683512/142940194-6ef06dbc-6bc2-4129-a554-db77efbba8f2.png)](https://github.com/cruip/vuejs-admin-dashboard-template)
+
 ## Credits
 
 - [Nucleo](https://nucleoapp.com/)
