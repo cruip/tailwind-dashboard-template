@@ -74,7 +74,7 @@ function DashboardCard10() {
                   <div className="font-semibold text-left">Spent</div>
                 </th>
                 <th className="p-2 whitespace-nowrap">
-                  <div className="font-semibold text-left">Country</div>
+                  <div className="font-semibold text-center">Country</div>
                 </th>
               </tr>
             </thead>
