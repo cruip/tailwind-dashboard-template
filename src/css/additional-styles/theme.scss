@@ -1,16 +1,3 @@
-:focus,
-button:focus,
-.btn:focus,
-.btn-sm:focus,
-.form-input:focus,
-.form-textarea:focus,
-.form-multiselect:focus,
-.form-select:focus,
-.form-checkbox:focus,
-.form-radio:focus {
-    @apply outline-blue;
-}
-
 .form-input,
 .form-textarea,
 .form-multiselect,
@@ -19,6 +6,7 @@ button:focus,
 .form-radio {
 
     &:focus {
-        box-shadow: none !important;
+        @apply ring-0;
     }
 }
+

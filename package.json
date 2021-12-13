@@ -4,14 +4,13 @@
   "private": true,
   "dependencies": {
     "@craco/craco": "^6.4.0",
-    "@tailwindcss/forms": "^0.3.4",
+    "@tailwindcss/forms": "^0.4.0",
     "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "autoprefixer": "^9.8.8",
     "chart.js": "^3.6.0",
     "chartjs-adapter-moment": "^1.0.0",
-    "cruip-js-toolkit": "^1.1.3",
     "moment": "^2.29.1",
     "postcss": "^8.3.11",
     "react": "^17.0.2",
@@ -21,7 +20,6 @@
     "react-scripts": "4.0.3",
     "react-transition-group": "^4.4.2",
     "sass": "^1.43.4",
-    "tailwindcss": "^2.2.19",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
@@ -46,5 +44,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.0.2"
   }
 }

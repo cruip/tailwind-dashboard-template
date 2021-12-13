@@ -1,5 +1,4 @@
 import React, { useRef, useEffect } from 'react';
-import { focusHandling } from 'cruip-js-toolkit';
 
 import {
   Chart, BarController, BarElement, LinearScale, TimeScale, Tooltip, Legend,
@@ -103,7 +102,6 @@ function BarChart01({
             button.onclick = () => {
               c.setDatasetVisibility(item.datasetIndex, !c.isDatasetVisible(item.datasetIndex));
               c.update();
-              focusHandling('outline');
             };
             // Color box
             const box = document.createElement('span');
@@ -154,7 +152,7 @@ function BarChart01({
       <div className="px-5 py-3">
         <ul ref={legend} className="flex flex-wrap"></ul>
       </div>
-      <div className="flex-grow">
+      <div className="grow">
         <canvas ref={canvas} width={width} height={height}></canvas>
       </div>
     </React.Fragment>

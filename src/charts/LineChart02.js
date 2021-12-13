@@ -1,5 +1,4 @@
 import React, { useRef, useEffect } from 'react';
-import { focusHandling } from 'cruip-js-toolkit';
 
 import {
   Chart, LineController, LineElement, Filler, PointElement, LinearScale, TimeScale, Tooltip,
@@ -100,7 +99,6 @@ function LineChart02({
             button.onclick = () => {
               c.setDatasetVisibility(item.datasetIndex, !c.isDatasetVisible(item.datasetIndex));
               c.update();
-              focusHandling('outline');
             };
             // Color box
             const box = document.createElement('span');
@@ -139,13 +137,13 @@ function LineChart02({
             <div className="text-3xl font-bold text-gray-800 mr-2">$1,482</div>
             <div className="text-sm font-semibold text-white px-1.5 bg-yellow-500 rounded-full">-22%</div>
           </div>
-          <div className="flex-grow ml-2 mb-1">
+          <div className="grow ml-2 mb-1">
             <ul ref={legend} className="flex flex-wrap justify-end"></ul>
           </div>
         </div>
       </div>
       {/* Chart built with Chart.js 3 */}
-      <div className="flex-grow">
+      <div className="grow">
         <canvas ref={canvas} width={width} height={height}></canvas>
       </div>
     </React.Fragment>

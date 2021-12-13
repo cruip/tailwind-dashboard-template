@@ -124,7 +124,7 @@ function BarChart03({
   }, []);
 
   return (
-    <div className="flex-grow flex flex-col justify-center">
+    <div className="grow flex flex-col justify-center">
       <div>
         <canvas ref={canvas} width={width} height={height}></canvas>
       </div>

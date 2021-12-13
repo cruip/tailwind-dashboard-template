@@ -110,7 +110,7 @@ function RealtimeChart({
           <div ref={chartDeviation} className="text-sm font-semibold text-white px-1.5 rounded-full"></div>
         </div>
       </div>
-      <div className="flex-grow">
+      <div className="grow">
         <canvas ref={canvas} data={data} width={width} height={height}></canvas>
       </div>
     </React.Fragment>
