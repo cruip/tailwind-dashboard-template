@@ -1,5 +1,11 @@
 # CHANGELOG.md
 
+## [1.3.0] - 2022-01-25
+
+- Replace CRA (Create React App) with Vite
+- Remove Craco
+- Update dependencies
+
 ## [1.2.0] - 2021-12-13
 
 - Update Tailwind 3
