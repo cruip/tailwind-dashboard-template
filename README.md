@@ -12,6 +12,8 @@ Created and maintained with ❤️ by [Cruip.com](https://cruip.com/).
 
 Check the live demo here 👉️ [https://mosaic.cruip.com/](https://mosaic.cruip.com/)
 
+## Mosaic Pro
+
 [![Mosaic Pro](https://user-images.githubusercontent.com/2683512/151177026-3d063355-976d-4fdb-a5ed-9c1501c58af2.png)](https://cruip.com/mosaic/)
 
 ## Table of contents
