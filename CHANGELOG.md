@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## [1.3.1] - 2022-01-27
+
+- Fix tailwind.config.js file
+
 ## [1.3.0] - 2022-01-25
 
 - Replace CRA (Create React App) with Vite
