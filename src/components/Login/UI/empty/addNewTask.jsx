@@ -6,7 +6,7 @@ const AddNewSurvey = (props) => (
       <img src={addNewStaff} alt="hahah" />
     </div>
     <div className="text-center">
-      <button>Add New Survey</button>
+      <button onClick={props.openModal}>Add New Survey</button>
     </div>
   </div>
 );

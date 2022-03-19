@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@tailwindcss/forms": "^0.4.0",
+    "axios": "^0.26.1",
     "chart.js": "^3.5.0",
     "chartjs-adapter-moment": "^1.0.0",
     "firebase": "^8.6.7",

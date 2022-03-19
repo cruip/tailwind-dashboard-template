@@ -1,15 +1,17 @@
-.Login {
+.Survey {
+  margin: 0 auto;
+  padding-top: 2rem;
   width: 500px;
   box-sizing: border-box;
 }
 
-.LoginTitle {
+.SurveyTitle {
   font-size: 20px;
   padding-bottom: 1rem;
   font-weight: bold;
 }
 
-.Login input,
+.Survey input,
 button {
   padding: 14px;
   margin: 0.4rem 0;
@@ -17,18 +19,18 @@ button {
   border: 1px solid rgb(177, 177, 177);
 }
 
-.Login button {
+.Survey button {
   background-color: #689911;
   color: white;
   width: 100%;
 }
 
-.Login button:hover {
+.Survey button:hover {
   cursor: pointer;
   background-color: #57830c;
 }
 
-.Login .invalidForm {
+.Survey .invalidForm {
   color: #000;
   border: 1px solid red;
 }
@@ -44,7 +46,7 @@ label {
   font-size: 12px;
 }
 
-.externalLogin {
+.externalSurvey {
   display: flex;
   flex-flow: row;
   margin: 0 auto;
@@ -61,7 +63,7 @@ label {
 }
 
 .continueWith span {
-  color: #02ca13;
+  color: #0000ff;
   cursor: pointer;
 }
 
@@ -72,7 +74,7 @@ label {
 }
 
 @media only screen and (max-width: 700px) {
-  .Login {
+  .Survey {
     box-sizing: border-box;
     width: 100%;
     padding: 1rem;
