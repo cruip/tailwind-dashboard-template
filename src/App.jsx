@@ -7,6 +7,7 @@ import "./charts/ChartjsConfig";
 
 // Import pages
 import Dashboard from "./pages/Dashboard";
+import AddSurveyScreen from "./pages/AddSurvey";
 
 function App() {
   const location = useLocation();
@@ -20,6 +21,11 @@ function App() {
   return (
     <>
       <Routes>
+        <Route
+          exact
+          path="/dashboard/insert-new-survey"
+          element={<AddSurveyScreen />}
+        />
         <Route exact path="/" element={<Authentication />} />
         <Route exact path="/dashboard" element={<Dashboard />} />
       </Routes>
