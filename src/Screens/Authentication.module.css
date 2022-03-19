@@ -1,0 +1,21 @@
+.Authentication {
+  box-sizing: border-box;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: space-between;
+  flex-flow: row;
+}
+
+.image img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.login {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
