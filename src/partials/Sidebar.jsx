@@ -193,7 +193,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
               >
                 <NavLink
                   end
-                  to="/Surveys"
+                  to="/surveys"
                   className={`block text-slate-200 hover:text-white truncate transition duration-150 ${
                     pathname.includes("analytics") && "hover:text-slate-200"
                   }`}

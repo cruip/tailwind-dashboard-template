@@ -30,7 +30,7 @@ const AddingQuestions = (props) => {
           {
             surveyDescription: props.description,
             surveyTitle: props.name,
-            surveyQuestiond: questions,
+            surveyQuestions: questions,
           }
         );
         if (response.status == 200) {
