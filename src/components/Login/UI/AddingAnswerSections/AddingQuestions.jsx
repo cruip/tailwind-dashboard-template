@@ -20,7 +20,7 @@ const AddingQuestions = (props) => {
     updatedArray.push(...questions, question);
     setQuestion(updatedArray);
   }
-  console.log(questions);
+
   const sendToDatabaseHandler = async () => {
     try {
       setIsLoading(true);

@@ -1,0 +1,23 @@
+.detailsItem {
+  width: 100%;
+}
+.detailsItem {
+  border-bottom: 1px solid black;
+  padding: 0.4rem 0;
+}
+.image_container {
+  width: 100%;
+  height: 140px;
+}
+.image_container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.detailTitle {
+  font-weight: bold;
+  padding: 0.3rem 0;
+}
+.detailName {
+  padding: 0 1rem;
+}

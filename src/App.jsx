@@ -9,6 +9,7 @@ import "./charts/ChartjsConfig";
 import Dashboard from "./pages/Dashboard";
 import AddSurveyScreen from "./pages/AddSurvey";
 import SurveysScreen from "./pages/Surveys";
+import SurveyDetails from "./pages/SurveyDetailsPage";
 
 function App() {
   const location = useLocation();
@@ -30,6 +31,7 @@ function App() {
         <Route exact path="/" element={<Authentication />} />
         <Route exact path="/dashboard" element={<Dashboard />} />
         <Route path="/surveys" element={<SurveysScreen />} />
+        <Route path="/surveys/:id" element={<SurveyDetails />} />
       </Routes>
     </>
   );

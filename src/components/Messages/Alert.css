@@ -1,0 +1,25 @@
+.dialog-message {
+  width: 100%;
+}
+.Message-text {
+  text-align: center;
+  margin: 0 auto;
+}
+.button-container {
+  display: grid;
+  box-sizing: border-box;
+  padding-top: 1rem;
+  grid-template-columns: repeat(2, 50%);
+}
+.button {
+  padding: 0.4rem;
+  margin: 0.3rem;
+  color: white;
+  border: none;
+}
+.cancel {
+  background-color: rgb(194, 95, 14);
+}
+.confirm {
+  background-color: rgb(21, 148, 63);
+}
