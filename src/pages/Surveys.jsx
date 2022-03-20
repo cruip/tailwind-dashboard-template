@@ -76,7 +76,7 @@ const SurveysScreen = () => {
   }
 
   function gotoSurveyHandler(id) {
-    navigate(`/surveys/:${id}`);
+    navigate(`/surveys/${id}`);
   }
 
   return (
