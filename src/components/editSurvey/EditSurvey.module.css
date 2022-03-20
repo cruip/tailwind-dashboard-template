@@ -1,0 +1,82 @@
+.Survey {
+  margin: 0 auto;
+  padding-top: 2rem;
+  width: 500px;
+  box-sizing: border-box;
+}
+
+.SurveyTitle {
+  font-size: 20px;
+  padding-bottom: 1rem;
+  font-weight: bold;
+}
+
+.Survey input,
+button {
+  padding: 14px;
+  margin: 0.4rem 0;
+  outline: none;
+  border: 1px solid rgb(177, 177, 177);
+}
+
+.Survey button {
+  background-color: #689911;
+  color: white;
+  width: 100%;
+}
+
+.Survey button:hover {
+  cursor: pointer;
+  background-color: #57830c;
+}
+
+.Survey .invalidForm {
+  color: #000;
+  border: 1px solid red;
+}
+
+.InputControl {
+  padding-bottom: 1rem;
+  display: flex;
+  flex-flow: column;
+}
+
+label {
+  width: 100%;
+  font-size: 12px;
+}
+
+.externalSurvey {
+  display: flex;
+  flex-flow: row;
+  margin: 0 auto;
+}
+.socialMedia {
+  width: 30px;
+  height: 30px;
+  padding-right: 1rem;
+}
+.socialMedia img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.continueWith span {
+  color: #0000ff;
+  cursor: pointer;
+}
+
+.continueWith {
+  text-align: center;
+  font-size: 12px;
+  padding: 2rem 0;
+}
+
+@media only screen and (max-width: 700px) {
+  .Survey {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 1rem;
+  }
+}

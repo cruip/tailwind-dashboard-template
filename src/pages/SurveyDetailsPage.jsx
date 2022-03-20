@@ -58,7 +58,7 @@ const SurveyDetails = () => {
         )
         .then(() => {
           setQuestion((currentQuestions) =>
-            currentQuestions.filter((question) => question.id !== questionId)
+            currentQuestions.filter((question, index) => index !== questionId)
           );
           setDeleting(false);
         })

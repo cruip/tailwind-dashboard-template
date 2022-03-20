@@ -11,13 +11,19 @@ import Modal from "../components/Login/UI/modal/Modal";
 import Alert from "../components/confirmationModal/Confirmation";
 import AlertMessage from "../components/Messages/Alert";
 import { useNavigate } from "react-router-dom";
+import EditSurvey from "../components/editSurvey/EditSurvey";
 
 const SurveysScreen = () => {
   const [surveys, setSurveys] = useState([]);
   const [isLoading, setIsloading] = useState(false);
   const [isModalOpen, setModelOpen] = useState(false);
   const [surveyId, setSurveyId] = useState("");
+  const [isEditModalOpen, setEditModal] = useState(false);
   const [isDeleting, setDeleting] = useState(false);
+  const [selectedSurvey, setSelectedSurvey] = useState({});
+  const [editedSurveyData, setEditedSurvey] = useState({});
+  const [isEditing, setIsEditing] = useState(false);
+  const [value, setValue] = useState(1);
 
   const navigate = useNavigate();
 
@@ -45,13 +51,9 @@ const SurveysScreen = () => {
     surveysHandler();
   }, [surveysHandler]);
 
-  function openModalHandler(id) {
-    setModelOpen(true);
-    setSurveyId(id);
-  }
-
   function closeModal() {
-    setModelOpen(!isModalOpen);
+    setModelOpen(false);
+    setEditModal(false);
   }
 
   async function deleteSurveyHandler() {
@@ -79,9 +81,59 @@ const SurveysScreen = () => {
     navigate(`/surveys/${id}`);
   }
 
+  // modal for editStuff
+  function openEditableModalHandler(id) {
+    setEditModal(true);
+    setSurveyId(id);
+    console.log(id);
+    const selectedSurvey = surveys.filter((survey) => survey.id === id);
+    setSelectedSurvey(selectedSurvey);
+  }
+
+  async function editChangableHandler(dataInfo) {
+    try {
+      setIsEditing(true);
+      const response = await axios.patch(
+        `https://ritco-app-default-rtdb.firebaseio.com/surveys/${surveyId}.json`,
+        dataInfo
+      );
+      const data = response.data;
+      let dataArray = [];
+      console.log(data);
+      if (data) {
+        setIsEditing(false);
+        closeModal();
+        window.location.reload(true);
+        // setSurveys((currentSurveys) =>
+        //   currentSurveys.filter((survey) => {
+        //     dataArray.push(dataInfo, survey.id !== surveyId);
+        //     return dataArray;
+        //   })
+        // );
+      }
+    } catch (error) {
+      setIsEditing(false);
+      console.log(error);
+    }
+  }
+
+  function openModalHandler(id) {
+    setModelOpen(true);
+    setSurveyId(id);
+  }
+
   return (
     <>
-      {/* {isModalOpen && <Modal />} */}
+      {isEditModalOpen && (
+        <Modal onClose={closeModal}>
+          <EditSurvey
+            survey={selectedSurvey}
+            editedSurvey={setEditedSurvey}
+            editSurveyHandler={editChangableHandler}
+            name={isEditing ? "Updating..." : " Add survey"}
+          />
+        </Modal>
+      )}
       {isModalOpen && (
         <Alert onClose={closeModal}>
           <AlertMessage
@@ -113,30 +165,40 @@ const SurveysScreen = () => {
                   .map((survey) => {
                     return (
                       <div
-                        onClick={() => {
-                          gotoSurveyHandler(survey.id);
-                        }}
                         key={survey.id}
                         className="relative bg-gradient-to-t from-green-500 to-green-400  h-[300px] p-4 pt-8 text-white shadow-md shadow-blue-500/40 hover:shadow-indigo-500/40 cursor-pointer"
                       >
-                        <div className="h-[100px] ">
-                          <img
-                            className="object-contain h-[100%] w-[100%]"
-                            src={imageURL}
-                            alt={imageURL}
-                          />
+                        <div
+                          onClick={() => {
+                            gotoSurveyHandler(survey.id);
+                          }}
+                        >
+                          <div className="h-[100px] ">
+                            <img
+                              className="object-contain h-[100%] w-[100%]"
+                              src={imageURL}
+                              alt={imageURL}
+                            />
+                          </div>
+                          <div className="text-3xl font-bold text-center">
+                            {survey.surveyTitle}
+                          </div>
+                          <div className="text-center">
+                            {survey.surveyDescription}
+                          </div>
                         </div>
-                        <div className="text-3xl font-bold text-center">
-                          {survey.surveyTitle}
-                        </div>
-                        <div className="text-center">
-                          {survey.surveyDescription}
-                        </div>
-                        <div className="flex gap-4 flex-reverse pr-4 pb-2 align-bottom absolute bottom-0 right-0">
-                          <div className="pr-4">
+
+                        <div className="flex gap-4 flex-reverse pr-4 pb-2 align-bottom absolute bottom-0 right-0 z-10 ">
+                          <div
+                            className="p-1 "
+                            onClick={() => openEditableModalHandler(survey.id)}
+                          >
                             <FontAwesomeIcon icon={faEdit} />
                           </div>
-                          <div onClick={() => openModalHandler(survey.id)}>
+                          <div
+                            className=" py-1 px-2  text-center"
+                            onClick={() => openModalHandler(survey.id)}
+                          >
                             <FontAwesomeIcon icon={faRemove} />
                           </div>
                         </div>
