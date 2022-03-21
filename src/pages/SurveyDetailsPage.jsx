@@ -9,6 +9,8 @@ import { faEdit, faRemove, faAdd } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Alert from "../components/confirmationModal/Confirmation";
 import AlertMessage from "../components/Messages/Alert";
+import Modal from "../components/confirmationModal/Confirmation";
+import AddingQuestion from "../components/addingQuestion/AddingQuestion";
 
 const SurveyDetails = () => {
   const params = useParams();
@@ -18,6 +20,9 @@ const SurveyDetails = () => {
   const [isModalOpen, setModelOpen] = useState(false);
   const [questionId, setQuestionId] = useState("");
   const [isDeleting, setDeleting] = useState(false);
+  const [isAddingQuestionOpen, setAddingQuestion] = useState(false);
+  const [isCreatingNew, setCreatingNew] = useState(false);
+
   const surveysHandler = useCallback(async () => {
     try {
       setIsloading(true);
@@ -46,7 +51,8 @@ const SurveyDetails = () => {
   }
 
   function closeModal() {
-    setModelOpen(!isModalOpen);
+    setModelOpen(false);
+    setAddingQuestion(false);
   }
 
   async function deleteSurveyHandler() {
@@ -70,8 +76,41 @@ const SurveyDetails = () => {
     }
   }
 
+  function onOpenAddQuestionHandler() {
+    setAddingQuestion(true);
+  }
+
+  async function addQuestionHandler(question) {
+    try {
+      setCreatingNew(true);
+      const datas = questions.push(question);
+      setSurvey(datas);
+      if (question) {
+        const response = await axios.patch(
+          `https://ritco-app-default-rtdb.firebaseio.com/surveys/${params.id}/surveyQuestions.json`,
+          { ...questions }
+        );
+        const datasInfo = await response.data;
+        if (datasInfo) {
+          closeModal();
+          setCreatingNew(false);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <>
+      {isAddingQuestionOpen && (
+        <Modal onClose={closeModal}>
+          <AddingQuestion
+            questions={addQuestionHandler}
+            buttonStatus={isCreatingNew ? "Creating" : "Add Question"}
+          />
+        </Modal>
+      )}
       {isModalOpen && (
         <Alert onClose={closeModal}>
           <AlertMessage
@@ -103,7 +142,10 @@ const SurveyDetails = () => {
                   <div className="font-bold text-2xl">{survey.surveyTitle}</div>
                   <div>{survey.surveyDescription}</div>
                 </div>
-                <div className="absolute top-12 right-4 p-2 text-white w-[100px] cursor-pointer">
+                <div
+                  className="absolute top-12 right-4 p-2 text-white w-[100px] cursor-pointer"
+                  onClick={onOpenAddQuestionHandler}
+                >
                   <div className="font-bold">
                     <FontAwesomeIcon icon={faAdd} size="2x" />
                   </div>

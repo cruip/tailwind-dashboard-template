@@ -104,12 +104,6 @@ const SurveysScreen = () => {
         setIsEditing(false);
         closeModal();
         window.location.reload(true);
-        // setSurveys((currentSurveys) =>
-        //   currentSurveys.filter((survey) => {
-        //     dataArray.push(dataInfo, survey.id !== surveyId);
-        //     return dataArray;
-        //   })
-        // );
       }
     } catch (error) {
       setIsEditing(false);
