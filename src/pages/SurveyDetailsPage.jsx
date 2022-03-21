@@ -11,6 +11,7 @@ import Alert from "../components/confirmationModal/Confirmation";
 import AlertMessage from "../components/Messages/Alert";
 import Modal from "../components/confirmationModal/Confirmation";
 import AddingQuestion from "../components/addingQuestion/AddingQuestion";
+import EditQuestion from "../components/editingQuestion/EditQuestion";
 
 const SurveyDetails = () => {
   const params = useParams();
@@ -22,6 +23,9 @@ const SurveyDetails = () => {
   const [isDeleting, setDeleting] = useState(false);
   const [isAddingQuestionOpen, setAddingQuestion] = useState(false);
   const [isCreatingNew, setCreatingNew] = useState(false);
+  const [isEditable, setIsEditable] = useState(false);
+  const [selectedQuestion, setSelectedQuestion] = useState("");
+  const [isEditing, setEditing] = useState(false);
 
   const surveysHandler = useCallback(async () => {
     try {
@@ -53,6 +57,7 @@ const SurveyDetails = () => {
   function closeModal() {
     setModelOpen(false);
     setAddingQuestion(false);
+    setIsEditable(false);
   }
 
   async function deleteSurveyHandler() {
@@ -64,7 +69,7 @@ const SurveyDetails = () => {
         )
         .then(() => {
           setQuestion((currentQuestions) =>
-            currentQuestions.filter((question, index) => index !== questionId)
+            currentQuestions.filter((_, index) => index !== questionId)
           );
           setDeleting(false);
         })
@@ -79,6 +84,9 @@ const SurveyDetails = () => {
   function onOpenAddQuestionHandler() {
     setAddingQuestion(true);
   }
+
+  // const user = localStorage.getItem("username");
+  // console.log(user);
 
   async function addQuestionHandler(question) {
     try {
@@ -101,8 +109,43 @@ const SurveyDetails = () => {
     }
   }
 
+  function openEditableModal(id) {
+    setIsEditable(true);
+    const selectedQuest = questions.filter((element, index) => index === id);
+    setSelectedQuestion(selectedQuest);
+    setQuestionId(id);
+  }
+
+  async function getSelectedQuestion(question) {
+    console.log(question);
+    try {
+      setEditing(true);
+      const response = await axios.patch(
+        `https://ritco-app-default-rtdb.firebaseio.com/surveys/${params.id}/surveyQuestions/${questionId}.json`,
+        { ...question }
+      );
+      const data = await response.data;
+      if (data) {
+        setEditing(false);
+        closeModal();
+      }
+    } catch (error) {
+      setEditing(false);
+      console.log(error);
+    }
+  }
+
   return (
     <>
+      {isEditable && (
+        <Modal onClose={closeModal}>
+          <EditQuestion
+            name={isEditing ? "Editing..." : "Edit"}
+            questionSelected={selectedQuestion}
+            clicked={getSelectedQuestion}
+          />
+        </Modal>
+      )}
       {isAddingQuestionOpen && (
         <Modal onClose={closeModal}>
           <AddingQuestion
@@ -163,7 +206,10 @@ const SurveyDetails = () => {
                         className="px-8 py-2 mx-8 my-4 bg-[#CECECE] flex justify-between items-center "
                       >
                         <div className="text-left">{element}</div>
-                        <div className="flex flex-row ">
+                        <div
+                          className="flex flex-row "
+                          onClick={() => openEditableModal(index)}
+                        >
                           <div className="pr-2 mr-2 cursor-pointer">
                             <FontAwesomeIcon icon={faEdit} />
                           </div>

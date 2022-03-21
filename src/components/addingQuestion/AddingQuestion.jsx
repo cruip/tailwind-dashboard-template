@@ -51,7 +51,7 @@ const AddingQuestion = (props) => {
           type="submit"
           onClick={() => submitHandler}
         >
-          {props.buttonStatus}
+          {props.buttonStatus ? props.buttonStatus : "Add Question"}
         </button>
       </form>
     </Fragment>
