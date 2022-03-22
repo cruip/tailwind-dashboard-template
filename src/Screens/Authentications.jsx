@@ -3,7 +3,7 @@ import classes from "./Authentication.module.css";
 import SignUp from "../components/Login/SignUp";
 import { useState } from "react";
 const Authentication = () => {
-  const [switchAccount, setSwitchAccount] = useState(false);
+  const [switchAccount, setSwitchAccount] = useState(true);
 
   function setSwitchAccountHandler() {
     setSwitchAccount(!switchAccount);

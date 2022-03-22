@@ -11,10 +11,13 @@
 }
 
 .modal_confirm {
+  box-sizing: border-box;
   padding: 1rem;
   position: fixed;
   top: 20%;
-  left: 50%;
+  width: 600px;
+  right: 0;
+  left: 0;
 
   margin: 0 auto;
   background: rgb(255, 255, 255);
@@ -24,7 +27,8 @@
 
 @media (min-width: 768px) {
   .modal-confirm {
-    width: 40rem;
+    box-sizing: border-box;
+    width: 500px;
     left: calc(50% - 20rem);
   }
 }

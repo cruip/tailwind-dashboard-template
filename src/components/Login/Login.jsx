@@ -38,11 +38,7 @@ const Login = ({ signUpHandler }) => {
     if (!formIsValid) {
       return;
     }
-    const signInInformation = {
-      username: enteredEmailValue,
-      password: enteredPasswordValue,
-    };
-    // console.log(signInInformation);
+
     try {
       const response = await auth.signInWithEmailAndPassword(
         enteredEmailValue,

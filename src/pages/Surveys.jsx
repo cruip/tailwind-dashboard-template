@@ -144,10 +144,10 @@ const SurveysScreen = () => {
           <div>
             <div className="text-center font-bold pt-8 text-3xl">Surveys</div>
             <div className="text-center  p-8 text-lg w-[70%] mx-auto my-0">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi
-              iusto quaerat quas vitae odit ducimus doloribus repellendus
-              temporibus rem repudiandae. Non esse sit quos magnam quisquam ab
-              reprehenderit deserunt laboriosam?
+              Litco is the company that carries the passangers in side of our
+              country(Rwanda) have a wealth of experience making accident claims
+              on behalf of injured children and families who have lost their
+              children to these accidents.
             </div>
             {isLoading ? (
               <div className="text-center flex flex-col item-center justify-center h-[300px] mx-auto my-0 w-[10px]">
