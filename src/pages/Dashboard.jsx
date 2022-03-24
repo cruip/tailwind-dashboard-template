@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
 import WelcomeBanner from "../partials/dashboard/WelcomeBanner";
-import DashboardAvatars from "../partials/dashboard/DashboardAvatars";
+// import DashboardAvatars from "../partials/dashboard/DashboardAvatars";
 import FilterButton from "../partials/actions/FilterButton";
 import Datepicker from "../partials/actions/Datepicker";
 import DashboardCard01 from "../partials/dashboard/DashboardCard01";
@@ -43,16 +43,16 @@ function Dashboard() {
             {/* Dashboard actions */}
             <div className="sm:flex sm:justify-between sm:items-center mb-8">
               {/* Left: Avatars */}
-              <DashboardAvatars />
+              {/* <DashboardAvatars /> */}
 
               {/* Right: Actions */}
               <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
                 {/* Filter button */}
                 <FilterButton />
                 {/* Datepicker built with flatpickr */}
-                <Datepicker />
+                {/* <Datepicker /> */}
                 {/* Add view button */}
-                <button className="btn bg-indigo-500 hover:bg-indigo-600 text-white">
+                <button className="btn bg-green-500 hover:bg-green-600 text-white">
                   <svg
                     className="w-4 h-4 fill-current opacity-50 shrink-0"
                     viewBox="0 0 16 16"
@@ -80,25 +80,25 @@ function Dashboard() {
               {/* Line chart (Acme Professional) */}
               <DashboardCard03 />
               {/* Bar chart (Direct vs Indirect) */}
-              <DashboardCard04 />
+              {/* <DashboardCard04 /> */}
               {/* Line chart (Real Time Value) */}
-              <DashboardCard05 />
+              {/* <DashboardCard05 /> */}
               {/* Doughnut chart (Top Countries) */}
-              <DashboardCard06 />
+              {/* <DashboardCard06 /> */}
               {/* Table (Top Channels) */}
-              <DashboardCard07 />
+              {/* <DashboardCard07 /> */}
               {/* Line chart (Sales Over Time) */}
-              <DashboardCard08 />
+              {/* <DashboardCard08 /> */}
               {/* Stacked bar chart (Sales VS Refunds) */}
-              <DashboardCard09 />
+              {/* <DashboardCard09 /> */}
               {/* Card (Customers) */}
-              <DashboardCard10 />
+              {/* <DashboardCard10 /> */}
               {/* Card (Reasons for Refunds) */}
-              <DashboardCard11 />
+              {/* <DashboardCard11 /> */}
               {/* Card (Recent Activity) */}
-              <DashboardCard12 />
+              {/* <DashboardCard12 /> */}
               {/* Card (Income/Expenses) */}
-              <DashboardCard13 />
+              {/* <DashboardCard13 /> */}
             </div>
           </div>
         </main>
