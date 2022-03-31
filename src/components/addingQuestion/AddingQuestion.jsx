@@ -1,5 +1,5 @@
 import UserInput from "../Login/UI/userInput/user_input_validations";
-import classes from "../../components/Login/adding-survey/Adding_Survey_Form.module.css";
+import classes from "../../components/Login/adding-survey/Adding_survey_Form.module.css";
 import { Fragment } from "react/cjs/react.production.min";
 
 const isNotEmpty = (value) => value.trim() !== "" && value.length > 2;

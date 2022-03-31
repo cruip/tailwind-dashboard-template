@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Sidebar from "../partials/Sidebar";
@@ -21,10 +21,41 @@ import DashboardCard11 from "../partials/dashboard/DashboardCard11";
 import DashboardCard12 from "../partials/dashboard/DashboardCard12";
 import DashboardCard13 from "../partials/dashboard/DashboardCard13";
 import Banner from "../partials/Banner";
+import { useCallback } from "react";
+import axios from "axios";
 
 function Dashboard() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false); 
+  const [surveys,setSurveys] = useState([]) 
+  const [isLoading,setIsloading] = useState(false);
   const navigate = useNavigate();
+
+
+  const getSurveys = useCallback( async ()=>{
+    try {
+      setIsloading(true);
+      const response = await axios.get(
+        "https://ritco-app-default-rtdb.firebaseio.com/surveys.json"
+      );
+      const data = await response.data;
+      let arrayOfData = [];
+
+      for (let i in data) {
+        arrayOfData.push({ id: i, ...data[i] });
+      }
+      setSurveys(arrayOfData);
+      if (data) {
+        setIsloading(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+ 
+  useEffect(() => {
+    getSurveys();
+  }, [getSurveys]);
+
   return (
     <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}
@@ -74,7 +105,7 @@ function Dashboard() {
             {/* Cards */}
             <div className="grid grid-cols-12 gap-6">
               {/* Line chart (Acme Plus) */}
-              <DashboardCard01 />
+              <DashboardCard01 surveys = {surveys} />
               {/* Line chart (Acme Advanced) */}
               <DashboardCard02 />
               {/* Line chart (Acme Professional) */}
