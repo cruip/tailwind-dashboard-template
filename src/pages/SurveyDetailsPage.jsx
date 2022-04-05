@@ -85,7 +85,7 @@ const SurveyDetails = () => {
     setAddingQuestion(true);
   }
 
-  // const user = localStorage.getItem("username");
+  const user = localStorage.getItem("username");
   // console.log(user);
 
   async function addQuestionHandler(question) {
@@ -117,12 +117,12 @@ const SurveyDetails = () => {
   }
 
   async function getSelectedQuestion(question) {
-    console.log(question);
+  
     try {
       setEditing(true);
       const response = await axios.patch(
-        `https://ritco-app-default-rtdb.firebaseio.com/surveys/${params.id}/surveyQuestions/${questionId}.json`,
-        { ...question }
+        `https://ritco-app-default-rtdb.firebaseio.com/surveys/${params.id}/surveyQuestions.json`,
+        {[questionId]:question}
       );
       const data = await response.data;
       if (data) {
@@ -134,6 +134,10 @@ const SurveyDetails = () => {
       console.log(error);
     }
   }
+
+  const filteredQuestionsArray = questions.filter(data => data!= null);
+
+ 
 
   return (
     <>
@@ -199,7 +203,7 @@ const SurveyDetails = () => {
                     {` Survey Questions (${questions.length})`}
                   </div>
                   <div className="h[2px] bg[black]"></div>
-                  {questions.map((element, index) => {
+                  {filteredQuestionsArray.map((element, index) => {
                     return (
                       <div
                         key={index}

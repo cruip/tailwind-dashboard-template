@@ -28,6 +28,8 @@ function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false); 
   const [surveys,setSurveys] = useState([]) 
   const [isLoading,setIsloading] = useState(false);
+  const [likes,setLikes] = useState([]);
+  const [badClitics,setBadCritics] = useState([]);
   const navigate = useNavigate();
 
 
@@ -51,10 +53,55 @@ function Dashboard() {
       console.log(error);
     }
   }, []);
+
+
+  const getdislikedMessageHandler = useCallback( async ()=>{
+    try {
+      setIsloading(true);
+      const response = await axios.get(
+        "https://ritco-app-default-rtdb.firebaseio.com/dislikedComments.json"
+      );
+      const data = await response.data;
+      let arrayOfData = [];
+
+      for (let i in data) {
+        arrayOfData.push({ id: i, ...data[i] });
+      }
+      setBadCritics(arrayOfData);
+      if (data) {
+        setIsloading(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+
+  const getAllLikesHandler = useCallback( async()=>{
+    try{
+   const response =  await axios.get("https://ritco-app-default-rtdb.firebaseio.com/likedComments.json")
+   const data = await response.data;
+   let arrayOfData = [];
+
+   for (let i in data) {
+     arrayOfData.push({ id: i, ...data[i] });
+   }
+   setLikes(arrayOfData);
+   if (data) {
+     setIsloading(false);
+   }
+    }catch(error){
+
+    }
+  },[])
+
+
  
   useEffect(() => {
+    getAllLikesHandler();
     getSurveys();
-  }, [getSurveys]);
+    getdislikedMessageHandler();
+  }, [getSurveys,getAllLikesHandler, getdislikedMessageHandler]);
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -107,9 +154,9 @@ function Dashboard() {
               {/* Line chart (Acme Plus) */}
               <DashboardCard01 surveys = {surveys} />
               {/* Line chart (Acme Advanced) */}
-              <DashboardCard02 />
+              <DashboardCard02 likes = {likes} />
               {/* Line chart (Acme Professional) */}
-              <DashboardCard03 />
+              <DashboardCard03 dislikedComments ={badClitics} />
               {/* Bar chart (Direct vs Indirect) */}
               {/* <DashboardCard04 /> */}
               {/* Line chart (Real Time Value) */}

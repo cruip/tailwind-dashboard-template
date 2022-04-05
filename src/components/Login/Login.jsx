@@ -47,6 +47,8 @@ const Login = ({ signUpHandler }) => {
       const data = await response.user;
       if (data?.email) {
         navigate("/dashboard");
+        await localStorage.setItem("names",data?.displayName);
+        console.log(data?.displayName);
       }
     } catch (error) {
       setIsLoading(false);

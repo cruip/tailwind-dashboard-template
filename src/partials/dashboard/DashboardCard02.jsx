@@ -7,7 +7,7 @@ import EditMenu from "../EditMenu";
 // Import utilities
 import { tailwindConfig, hexToRGB } from "../../utils/Utils";
 
-function DashboardCard02() {
+function DashboardCard02({likes}) {
   const chartData = {
     labels: [
       "12-01-2020",
@@ -73,6 +73,13 @@ function DashboardCard02() {
     ],
   };
 
+  let message = '';
+  if(likes.length <= 1){
+    message = "like";
+  }else {
+    message = 'likes'
+  }
+
   return (
     <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white shadow-lg rounded-sm border border-slate-200">
       <div className="px-5 pt-5">
@@ -108,13 +115,13 @@ function DashboardCard02() {
           </EditMenu>
         </header>
         <h2 className="text-lg font-semibold text-slate-800 mb-2">
-          Survey Bad Critics
+         Overall Survey Likes
         </h2>
         <div className="text-xs font-semibold text-slate-400 uppercase mb-1">
           Survey
         </div>
-        <div className="flex items-start">
-          <div className="text-3xl font-bold text-slate-800 mr-2">1,489</div>
+        <div className="flex items-start pb-4 ">
+          <div className="text-3xl font-bold text-slate-800 mr-2">{likes.length} {message}</div>
           <div className="text-sm font-semibold text-white px-1.5 bg-yellow-500 rounded-full">
             -14%
           </div>
@@ -123,7 +130,7 @@ function DashboardCard02() {
       {/* Chart built with Chart.js 3 */}
       <div className="grow">
         {/* Change the height attribute to adjust the chart height */}
-        <LineChart data={chartData} width={389} height={128} />
+        {/* <LineChart data={chartData} width={389} height={128} /> */}
       </div>
     </div>
   );
