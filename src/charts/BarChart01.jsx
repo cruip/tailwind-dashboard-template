@@ -44,20 +44,20 @@ function BarChart01({
               callback: (value) => formatValue(value),
             },
           },
-          x: {
-            type: 'time',
-            time: {
-              parser: 'MM-DD-YYYY',
-              unit: 'month',
-              displayFormats: {
-                month: 'MMM YY',
-              },
-            },
-            grid: {
-              display: false,
-              drawBorder: false,
-            },
-          },
+          // x: {
+          //   type: 'time',
+          //   time: {
+          //     parser: 'MM-DD-YYYY',
+          //     unit: 'month',
+          //     displayFormats: {
+          //       month: 'MMM YY',
+          //     },
+          //   },
+          //   grid: {
+          //     display: false,
+          //     drawBorder: false,
+          //   },
+          // },
         },
         plugins: {
           legend: {

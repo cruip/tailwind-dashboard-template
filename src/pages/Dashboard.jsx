@@ -32,6 +32,8 @@ function Dashboard() {
   const [badClitics,setBadCritics] = useState([]);
   const navigate = useNavigate();
 
+  
+
 
   const getSurveys = useCallback( async ()=>{
     try {
@@ -86,6 +88,8 @@ function Dashboard() {
    for (let i in data) {
      arrayOfData.push({ id: i, ...data[i] });
    }
+
+
    setLikes(arrayOfData);
    if (data) {
      setIsloading(false);
@@ -102,6 +106,18 @@ function Dashboard() {
     getSurveys();
     getdislikedMessageHandler();
   }, [getSurveys,getAllLikesHandler, getdislikedMessageHandler]);
+
+  const dateArray = [];
+  for(let i in badClitics){
+    dateArray.push(badClitics[i].createdTime.substring(0,10))
+  }
+
+  for(let i in likes ){
+    dateArray.push(likes[i].createdTime.substring(0,10))
+  }
+  const unique = [...new Set(dateArray)]
+  console.log(unique);
+
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -147,7 +163,7 @@ function Dashboard() {
                   </span>
                 </button>
               </div>
-            </div>
+            </div> 
 
             {/* Cards */}
             <div className="grid grid-cols-12 gap-6">
@@ -158,7 +174,7 @@ function Dashboard() {
               {/* Line chart (Acme Professional) */}
               <DashboardCard03 dislikedComments ={badClitics} />
               {/* Bar chart (Direct vs Indirect) */}
-              {/* <DashboardCard04 /> */}
+              <DashboardCard04 labelDates={unique}/>
               {/* Line chart (Real Time Value) */}
               {/* <DashboardCard05 /> */}
               {/* Doughnut chart (Top Countries) */}
