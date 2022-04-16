@@ -66,7 +66,7 @@ function DashboardCard02() {
           {/* Icon */}
           <img src={Icon} width="32" height="32" alt="Icon 02" />
           {/* Menu button */}
-          <EditMenu className="relative inline-flex">
+          {/* <EditMenu className="relative inline-flex">
             <li>
               <Link className="font-medium text-sm text-slate-600 hover:text-slate-800 flex py-1 px-3" to="#0">Option 1</Link>
             </li>
@@ -76,7 +76,7 @@ function DashboardCard02() {
             <li>
               <Link className="font-medium text-sm text-rose-500 hover:text-rose-600 flex py-1 px-3" to="#0">Remove</Link>
             </li>
-          </EditMenu>
+          </EditMenu> */}
         </header>
         <h2 className="text-lg font-semibold text-slate-800 mb-2">Acme Advanced</h2>
         <div className="text-xs font-semibold text-slate-400 uppercase mb-1">Sales</div>

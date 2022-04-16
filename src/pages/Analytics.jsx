@@ -69,17 +69,17 @@ function Dashboard() {
             <div className="grid grid-cols-12 gap-6">
 
               {/* Line chart (Acme Plus) */}
-              <DashboardCard01 />
+              {/* <DashboardCard01 /> */}
               {/* Line chart (Acme Advanced) */}
-              <DashboardCard02 />
+              {/* <DashboardCard02 /> */}
               {/* Line chart (Acme Professional) */}
-              <DashboardCard03 />
+              {/* <DashboardCard03 /> */}
               {/* Bar chart (Direct vs Indirect) */}
-              <DashboardCard04 />
+              {/* <DashboardCard04 /> */}
               {/* Line chart (Real Time Value) */}
               {/* <DashboardCard05 /> */}
               {/* Doughnut chart (Top Countries) */}
-              <DashboardCard06 />
+              {/* <DashboardCard06 /> */}
               {/* Table (Top Channels) */}
               <DashboardCard07 />
               {/* Line chart (Sales Over Time) */}
