@@ -15,6 +15,7 @@ import Analytics from './pages/Analytics';
 import D_Cycle from './pages/Diagnosis_Cycle';
 import D_Season from './pages/Diagnosis_Seasonal';
 import D_Trend from './pages/Diagnosis_Trend';
+import Prescriptive from './pages/Diagnosis_Trend';
 
 function App() {
 
@@ -34,6 +35,7 @@ function App() {
         <Route exact path="/d-trend" element={<D_Trend />} />
         <Route exact path="/d-seasonal" element={<D_Season />} />
         <Route exact path="/d-cycle" element={<D_Cycle />} />
+        <Route exact path="/prescriptive" element={<Prescriptive />} />
       </Routes>
     </>
   );

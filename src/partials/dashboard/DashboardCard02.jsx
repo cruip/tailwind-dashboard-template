@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import LineChart from '../../charts/LineChart01';
-import Icon from '../../images/icon-02.svg';
-import EditMenu from '../EditMenu';
+// import Icon from '../../images/icon-02.svg';
+// import EditMenu from '../EditMenu';
 
 // Import utilities
 import { tailwindConfig, hexToRGB } from '../../utils/Utils';
@@ -64,7 +64,7 @@ function DashboardCard02() {
       <div className="px-5 pt-5">
         <header className="flex justify-between items-start mb-2">
           {/* Icon */}
-          <img src={Icon} width="32" height="32" alt="Icon 02" />
+          {/* <img src={Icon} width="32" height="32" alt="Icon 02" /> */}
           {/* Menu button */}
           {/* <EditMenu className="relative inline-flex">
             <li>
