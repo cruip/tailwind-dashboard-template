@@ -76,7 +76,7 @@ function Sidebar({
           </button>
           {/* Logo */}
           <NavLink end to="/" className="block">
-            <img src={Logo} width="full" height="32" viewBox="0 0 32 32"/>
+            <img src={Logo} width="full" height="52" viewBox="0 0 32 32"/>
           </NavLink>
         </div>
 

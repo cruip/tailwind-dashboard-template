@@ -1,5 +1,5 @@
 {
-  "name": "mosaic-light-react",
+  "name": "dashboard-rsui",
   "version": "0.1.0",
   "scripts": {
     "dev": "vite",
@@ -15,12 +15,15 @@
     "react-dom": "^17.0.2",
     "react-flatpickr": "^3.10.7",
     "react-router-dom": "^6.2.1",
-    "react-transition-group": "^4.4.1"
+    "react-timeprovider": "^2.0.1",
+    "react-transition-group": "^4.4.1",
+    "react-use-date": "^0.3.1"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^1.0.7",
     "autoprefixer": "^10.4.2",
     "postcss": "^8.4.5",
+    "react-use-current-time": "^1.0.1",
     "sass": "^1.49.0",
     "tailwindcss": "^3.0.15",
     "vite": "^2.7.2"

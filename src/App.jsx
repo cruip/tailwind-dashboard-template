@@ -10,6 +10,7 @@ import './css/style.scss';
 import './charts/ChartjsConfig';
 
 // Import pages
+import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Analytics from './pages/Analytics';
 import D_Cycle from './pages/Diagnosis_Cycle';
@@ -31,6 +32,7 @@ function App() {
     <>
       <Routes>
         <Route exact path="/" element={<Dashboard />} />
+        <Route exact path="/login" element={<Login />} />
         <Route exact path="/analytics" element={<Analytics />} />
         <Route exact path="/d-trend" element={<D_Trend />} />
         <Route exact path="/d-seasonal" element={<D_Season />} />
