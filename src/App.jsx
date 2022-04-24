@@ -12,11 +12,10 @@ import './charts/ChartjsConfig';
 // Import pages
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
-import Analytics from './pages/Analytics';
-import D_Cycle from './pages/Diagnosis_Cycle';
-import D_Season from './pages/Diagnosis_Seasonal';
-import D_Trend from './pages/Diagnosis_Trend';
-import Prescriptive from './pages/Diagnosis_Trend';
+import Diagnosis from './pages/Diagnosis';
+import Preskriptif from './pages/Preskriptif';
+import Deskriptif from './pages/Deskriptif';
+import Prediktif from './pages/Prediktif';
 
 function App() {
 
@@ -31,13 +30,12 @@ function App() {
   return (
     <>
       <Routes>
-        <Route exact path="/" element={<Dashboard />} />
         <Route exact path="/login" element={<Login />} />
-        <Route exact path="/analytics" element={<Analytics />} />
-        <Route exact path="/d-trend" element={<D_Trend />} />
-        <Route exact path="/d-seasonal" element={<D_Season />} />
-        <Route exact path="/d-cycle" element={<D_Cycle />} />
-        <Route exact path="/prescriptive" element={<Prescriptive />} />
+        <Route exact path="/" element={<Dashboard />} />
+        <Route exact path="/deskriptif" element={<Deskriptif />} />
+        <Route exact path="/prediktif" element={<Prediktif />} />
+        <Route exact path="/preskriptif" element={<Preskriptif />} />
+        <Route exact path="/diagnosis" element={<Diagnosis />} />
       </Routes>
     </>
   );
