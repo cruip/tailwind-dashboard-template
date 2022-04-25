@@ -1,8 +1,6 @@
 import * as React from "react";
-import SearchModal from './header/SearchModal';
 import Upload_csv from "./header/Upload_csv";
 import Time from "./header/Time";
-// import Help from './header/Help';
 
 import UserMenu from "./header/UserMenu";
 
@@ -36,7 +34,6 @@ function Header({ sidebarOpen, setSidebarOpen }) {
                 Selamat Datang <span className="hidden lg:block"> &nbsp;di Dashboard Revenue RSUI</span>
               </h1>
               <Time  />
-
             </div>
           </div>
 

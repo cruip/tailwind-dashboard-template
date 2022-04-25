@@ -51,7 +51,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
   }, [sidebarExpanded]);
 
   return (
-    <div className="font-gilroy">
+    <div className="font-gilroy font-semibold text-base text-neutral-300 ">
       {/* Sidebar backdrop (mobile only) */}
       <div
         className={`fixed inset-0 bg-slate-900 bg-opacity-30 z-40 lg:hidden lg:z-auto transition-opacity duration-200 ${
@@ -103,7 +103,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
         <div className="space-y-8">
           {/* Pages group */}
           <div>
-            <h3 className="text-xs uppercase text-slate-500 font-semibold pl-3">
+            <h3 className="text-xs uppercase text-slate-500  pl-3">
               <span
                 className="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6"
                 aria-hidden="true"
@@ -117,15 +117,15 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
             <ul className="mt-3">
               {/* Dashboard */}
               <li
-                className={`px-3 py-2 rounded-md mb-0.5 last:mb-0  ${
+                className={`px-3 py-2 rounded-md mb-0.5 last:mb-0   ${
                   pathname === "/" && "bg-slate-100"
                 }`}
               >
                 <NavLink
                   end
                   to="/"
-                  className={`block text-blue-800 hover:text-blue-700 truncate transition duration-150 ${
-                    pathname === "/" && "hover:text-slate-200"
+                  className={`block  hover:text-primary-500 truncate  transition duration-150 ${
+                    pathname === "/" && "hover:text-slate-200 text-primary-600"
                   }`}
                 >
                   <div className="flex items-center">
@@ -149,7 +149,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                         d="M12 15c-1.654 0-3-1.346-3-3 0-.462.113-.894.3-1.285L6 6l4.714 3.301A2.973 2.973 0 0112 9c1.654 0 3 1.346 3 3s-1.346 3-3 3z"
                       />
                     </svg>
-                    <span className="text-sm font-bold ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                    <span className="ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                       Dashboard
                     </span>
                   </div>
@@ -164,8 +164,8 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                 <NavLink
                   end
                   to="/deskriptif"
-                  className={`block text-slate-400 hover:text-blue-700 truncate transition duration-150 ${
-                    pathname.includes("deskriptif") && "hover:text-slate-200"
+                  className={`block  hover:text-primary-500 truncate transition duration-150 ${
+                    pathname.includes("deskriptif") && "hover:text-slate-200 text-primary-600"
                   }`}
                 >
                   <div className="flex items-center">
@@ -194,7 +194,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                         d="M14 3v5h5M16 13H8M16 17H8M10 9H8"
                       />
                     </svg>
-                    <span className="text-sm font-bold ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                    <span className="   ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                       Deskriptif
                     </span>
                   </div>
@@ -209,8 +209,8 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                 <NavLink
                   end
                   to="/prediktif"
-                  className={`block text-slate-400 hover:text-blue-700 truncate transition duration-150 ${
-                    pathname.includes("prediktif") && "hover:text-slate-200"
+                  className={`block  hover:text-primary-500 truncate transition duration-150 ${
+                    pathname.includes("prediktif") && "hover:text-slate-200 text-primary-600"
                   }`}
                 >
                   <div className="flex items-center">
@@ -228,7 +228,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                         d="M4 18h2a1 1 0 001-1V8a1 1 0 00-1-1H4a1 1 0 00-1 1v9a1 1 0 001 1zM11 18h2a1 1 0 001-1V3a1 1 0 00-1-1h-2a1 1 0 00-1 1v14a1 1 0 001 1zM17 12v5a1 1 0 001 1h2a1 1 0 001-1v-5a1 1 0 00-1-1h-2a1 1 0 00-1 1z"
                       />
                     </svg>
-                    <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                    <span className="   ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                       Prediktif
                     </span>
                   </div>
@@ -243,8 +243,8 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                 <NavLink
                   end
                   to="/preskriptif"
-                  className={`block text-slate-400 hover:text-blue-700 truncate transition duration-150 ${
-                    pathname.includes("preskriptif") && "hover:text-slate-200"
+                  className={`block  hover:text-primary-500 truncate transition duration-150 ${
+                    pathname.includes("preskriptif") && "hover:text-slate-200 text-primary-600"
                   }`}
                 >
                   <div className="flex items-center">
@@ -262,7 +262,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                         d="M4 18h2a1 1 0 001-1V8a1 1 0 00-1-1H4a1 1 0 00-1 1v9a1 1 0 001 1zM11 18h2a1 1 0 001-1V3a1 1 0 00-1-1h-2a1 1 0 00-1 1v14a1 1 0 001 1zM17 12v5a1 1 0 001 1h2a1 1 0 001-1v-5a1 1 0 00-1-1h-2a1 1 0 00-1 1z"
                       />
                     </svg>
-                    <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                    <span className="   ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                       Preskriptif
                     </span>
                   </div>
@@ -277,8 +277,8 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                 <NavLink
                   end
                   to="/diagnosis"
-                  className={`block text-slate-400 hover:text-blue-700 truncate transition duration-150 ${
-                    pathname.includes("diagnosis") && "hover:text-slate-200"
+                  className={`block hover:text-primary-500 truncate transition duration-150 ${
+                    pathname.includes("diagnosis") && "hover:text-slate-200 text-primary-600"
                   }`}
                 >
                   <div className="flex items-center">
@@ -296,7 +296,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                         d="M4 18h2a1 1 0 001-1V8a1 1 0 00-1-1H4a1 1 0 00-1 1v9a1 1 0 001 1zM11 18h2a1 1 0 001-1V3a1 1 0 00-1-1h-2a1 1 0 00-1 1v14a1 1 0 001 1zM17 12v5a1 1 0 001 1h2a1 1 0 001-1v-5a1 1 0 00-1-1h-2a1 1 0 00-1 1z"
                       />
                     </svg>
-                    <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                    <span className="   ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                       Diagnosis
                     </span>
                   </div>

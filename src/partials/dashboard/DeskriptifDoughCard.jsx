@@ -4,7 +4,7 @@ import DoughnutChart from '../../charts/DoughnutChart';
 // Import utilities
 import { tailwindConfig } from '../../utils/Utils';
 
-function DashboardCard06() {
+function DeskriptifDoughCard() {
 
   const chartData = {
     labels: ['Umum', 'Asuransi', 'Kemenkes', 'BPJS'],
@@ -32,9 +32,9 @@ function DashboardCard06() {
   };
 
   return (
-    <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white shadow-lg rounded-sm border border-slate-200">
+    <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white shadow-lg rounded-xl border border-slate-200">
       <header className="px-5 py-4 border-b border-slate-100">
-        <h2 className="font-semibold text-slate-800">Patient Type</h2>
+        <h2 className="font-bold text-xl text-primary-900">Patient Type</h2>
       </header>
       {/* Chart built with Chart.js 3 */}
       {/* Change the height attribute to adjust the chart height */}
@@ -43,4 +43,4 @@ function DashboardCard06() {
   );
 }
 
-export default DashboardCard06;
+export default DeskriptifDoughCard;

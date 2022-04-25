@@ -96,7 +96,7 @@ module.exports = {
           800: "#8F1321",
           900: "#770B1F",
         },
-        succes: {
+        success: {
           100: "#E0FAD3",
           200: "#BCF6A9",
           300: "#8AE679",
