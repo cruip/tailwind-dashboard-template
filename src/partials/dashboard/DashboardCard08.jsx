@@ -1,8 +1,8 @@
 import React from 'react';
-import LineChart from '../../charts/LineChart02';
+import LineChart from '../../components/charts/LineChart02';
 
 // Import utilities
-import { tailwindConfig } from '../../utils/Utils';
+import { tailwindConfig } from '../../components/utils/Utils';
 
 function DashboardCard08() {
 

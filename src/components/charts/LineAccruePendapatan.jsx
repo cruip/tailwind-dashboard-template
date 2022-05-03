@@ -10,7 +10,7 @@ import { tailwindConfig, formatValue } from '../utils/Utils';
 
 Chart.register(LineController, LineElement, Filler, PointElement, LinearScale, TimeScale, Tooltip);
 
-function LineChartDeskriptif({
+function LineChart01({
   data,
   width,
   height
@@ -37,23 +37,32 @@ function LineChartDeskriptif({
             beginAtZero: true,
           },
           x: {
+            grid: {
+              display:false
+            },
             type: 'time',
             time: {
-              parser: 'DD-MM-YYYY',
+              parser: 'MM-DD-YYYY',
               unit: 'month',
             },
-            display: true,
+
           },
         },
         plugins: {
           tooltip: {
-            
+            callbacks: {
+              title: () => false, // Disable tooltip title
+              label: (context) => formatValue(context.parsed.y),
+            },
           },
           legend: {
-            display: true,
+            display: false,
           },
         },
-        
+        interaction: {
+          intersect: false,
+          mode: 'nearest',
+        },
         maintainAspectRatio: false,
         resizeDelay: 200,
       },
@@ -67,4 +76,4 @@ function LineChartDeskriptif({
   );
 }
 
-export default LineChartDeskriptif;
+export default LineChart01;

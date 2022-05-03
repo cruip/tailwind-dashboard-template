@@ -10,7 +10,7 @@ import { formatValue } from '../utils/Utils';
 
 Chart.register(BarController, BarElement, LinearScale, TimeScale, Tooltip, Legend);
 
-function BarChart02({
+function BarKPI({
   data,
   width,
   height
@@ -96,4 +96,4 @@ function BarChart02({
   );
 }
 
-export default BarChart02;
+export default BarKPI;

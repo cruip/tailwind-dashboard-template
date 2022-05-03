@@ -7,7 +7,7 @@ import {
 
 import './css/style.scss';
 
-import './charts/ChartjsConfig';
+import './components/charts/ChartjsConfig';
 
 // Import pages
 import Login from './pages/Login';

@@ -1,13 +1,13 @@
 import React from 'react';
 // import { Link } from 'react-router-dom';
-import LineChart from '../../charts/LineChart01';
+import LineChart from '../../components/charts/LineAccruePendapatan';
 // import Icon from '../../images/icon-01.svg';
 // import EditMenu from '../EditMenu';
 
 // Import utilities
-import { tailwindConfig, hexToRGB } from '../../utils/Utils';
+import { tailwindConfig, hexToRGB } from '../../components/utils/Utils';
 
-function DashboardCard01() {
+function CardAccruePendapatan() {
 
   const chartData = {
     labels: [
@@ -32,35 +32,19 @@ function DashboardCard01() {
         ],
         fill: true,
         backgroundColor: `rgba(${hexToRGB(tailwindConfig().theme.colors.blue[500])}, 0.08)`,
-        borderColor: tailwindConfig().theme.colors.indigo[500],
+        borderColor: tailwindConfig().theme.colors.blue[500],
         borderWidth: 2,
         tension: 0,
         pointRadius: 0,
         pointHoverRadius: 3,
-        pointBackgroundColor: tailwindConfig().theme.colors.indigo[500],
-        clip: 20,
-      },
-      // Gray line
-      {
-        data: [
-          532, 532, 532, 404, 404, 314, 314,
-          314, 314, 314, 234, 314, 234, 234,
-          314, 314, 314, 388, 314, 202, 202,
-          202, 202, 314, 720, 642,
-        ],
-        borderColor: tailwindConfig().theme.colors.slate[300],
-        borderWidth: 2,
-        tension: 0,
-        pointRadius: 0,
-        pointHoverRadius: 3,
-        pointBackgroundColor: tailwindConfig().theme.colors.slate[300],
+        pointBackgroundColor: tailwindConfig().theme.colors.blue[500],
         clip: 20,
       },
     ],
   };
 
   return (
-    <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white shadow-lg rounded-sm border border-slate-200">
+    <div className="flex flex-col h-full col-span-full sm:col-span-6 xl:col-span-4 bg-white shadow-lg rounded-lg border border-slate-200">
       <div className="px-5 pt-5">
         <header className="flex justify-between items-start mb-2">
           {/* Icon */}
@@ -78,15 +62,15 @@ function DashboardCard01() {
             </li>
           </EditMenu> */}
         </header>
-        <h2 className="text-lg font-semibold text-slate-800 mb-2">Pendapatan</h2>
+        <h2 className="text-xl font-bold text-neutral-500 mb-2">Accrue Pendapatan</h2>
         <div className="text-xs font-semibold text-slate-400 mb-1">Estimasi</div>
         <div className="flex items-start">
-          <div className="text-3xl font-bold text-slate-800 mr-2">Rp123.12 JT</div>
-          <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">+49%</div>
+          <div className="text-3xl text-primary-700 font-bold mr-2">Rp12,149,705,440</div>
+          <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">+15.5%</div>
         </div>
       </div>
       {/* Chart built with Chart.js 3 */}
-      <div className="grow">
+      <div className="grow ">
         {/* Change the height attribute to adjust the chart height */}
         <LineChart data={chartData} width={389} height={128} />
       </div>
@@ -94,4 +78,4 @@ function DashboardCard01() {
   );
 }
 
-export default DashboardCard01;
+export default CardAccruePendapatan;

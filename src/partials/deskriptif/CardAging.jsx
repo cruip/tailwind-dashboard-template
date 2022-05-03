@@ -1,11 +1,10 @@
 import React from 'react';
-// import BarChart from '../../charts/BarChart01';
-import Barchart from '../../charts/BarChart04';
+import Barchart from '../../components/charts/BarAging';
 
 // Import utilities
-import { tailwindConfig } from '../../utils/Utils';
+import { tailwindConfig } from '../../components/utils/Utils';
 
-function DashboardCard04() {
+function CardAging() {
 
   const chartData = {
     labels: [
@@ -53,4 +52,4 @@ function DashboardCard04() {
   );
 }
 
-export default DashboardCard04;
+export default CardAging;

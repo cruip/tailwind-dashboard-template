@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
-
+import CardIn from "../partials/dashboard/PreskriptifInCard";
 
 function Preskriptif() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -43,7 +43,7 @@ function Preskriptif() {
 
             {/* Cards */}
             <div className="grid grid-cols-12 gap-6">
-
+              <CardIn/>
             </div>
           </div>
         </main>

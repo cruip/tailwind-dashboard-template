@@ -10,7 +10,7 @@ import { formatValue } from '../utils/Utils';
 
 Chart.register(BarController, BarElement, LinearScale, TimeScale, Tooltip, Legend);
 
-function BarChart04({
+function BarAging({
   data,
   width,
   height
@@ -60,10 +60,6 @@ function BarChart04({
               display: true,
               drawBorder: false,
             },
-            ticks: {
-              autoSkipPadding: 48,
-              maxRotation: 0,
-            },
           },
         },
         plugins: {
@@ -72,7 +68,7 @@ function BarChart04({
           },
           tooltip: {
             callbacks: {
-              title: () => false, // Disable tooltip title
+              title: () => false, 
             },
           },
         },
@@ -96,4 +92,4 @@ function BarChart04({
   );
 }
 
-export default BarChart04;
+export default BarAging;

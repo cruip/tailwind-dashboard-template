@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+
 import Sidebar from "../partials/Sidebar";
 import Header from "../partials/Header";
-import CardAging from "../partials/dashboard/DeskriptifBarCardAging";
-import CardPatient from "../partials/dashboard/DeskriptifDoughCard";
-import CardKPI from "../partials/dashboard/DeskriptifBarCardKPI";
-import CardRawatVS from "../partials/dashboard/DeskriptifLineCard";
+
+import Datepicker from "../partials/actions/Datepicker";
+
+import CardAging from "../partials/deskriptif/CardAging";
+import CardKPI from "../partials/deskriptif/CardKPI";
+import CardGuarantor from "../partials/deskriptif/CardGuarantor";
 
 function Deskriptif() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -21,9 +24,7 @@ function Deskriptif() {
 
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-            {/* Judul pagenya */}
-            <div className="relative overflow-hidden ">
-              {/* Content */}
+          <div className="sm:flex sm:justify-between sm:items-center mb-8">
               <div className="">
                 <h1 className="font-medium text-neutral-300 hidden md:block">
                   Dashboard Revenue
@@ -32,23 +33,24 @@ function Deskriptif() {
                   Deskriptif
                 </h1>
               </div>
-            </div>
-
-            {/* Dashboard actions */}
-            <div className="sm:flex sm:justify-between sm:items-center mb-8">
-              {/* Left: Avatars */}
-
-              {/* Right: Actions */}
+              {/* Kanan: Actions */}
               <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
+                <Datepicker />
               </div>
             </div>
 
             {/* Cards */}
-            <div className="grid grid-cols-12 gap-6">
-              <CardKPI />
-              <CardPatient/>
-              <CardAging />
-              <CardRawatVS />
+            <div className="grid grid-cols-12 sm:gap-6 gap-3">
+                <div className="col-span-8">
+                  <CardKPI />
+                </div>
+                <div className="row-span-2 col-span-4">
+                  <CardGuarantor />
+                </div>
+                <div className="col-span-8">
+                  <CardAging />
+                </div>
+                
             </div>
           </div>
         </main>

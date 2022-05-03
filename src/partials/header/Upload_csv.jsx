@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Transition from "../../utils/Transition";
+import Transition from "../../components/utils/Transition";
 
 function Upload_csv() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -34,7 +34,7 @@ function Upload_csv() {
   });
 
   return (
-    <div className="relative inline-flex ml-3">
+    <div className="relative inline-flex">
       <button
         ref={trigger}
         className={`px-3 w-full h-12 inline-flex items-center text-sm  font-medium justify-center bg-white hover:bg-slate-200 transition duration-150 rounded-2xl ${
@@ -44,23 +44,23 @@ function Upload_csv() {
         onClick={() => setDropdownOpen(!dropdownOpen)}
         aria-expanded={dropdownOpen}
       >
+      <div className="flex items-center">
         <svg
-          width="14"
+          width="17"
           height="17"
-          viewBox="0 0 14 17"
+          viewBox="0 0 17 17"
           fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="mr-2"
+          className="fill-current text-primary-700 lg:mx-2"
         >
           <path
             d="M5 13H9C9.55 13 10 12.55 10 12V7H11.59C12.48 7 12.93 5.92 12.3 5.29L7.71 0.700001C7.32 0.310001 6.69 0.310001 6.3 0.700001L1.71 5.29C1.08 5.92 1.52 7 2.41 7H4V12C4 12.55 4.45 13 5 13ZM1 15H13C13.55 15 14 15.45 14 16C14 16.55 13.55 17 13 17H1C0.45 17 0 16.55 0 16C0 15.45 0.45 15 1 15Z"
-            fill="#003B81"
           />
         </svg>
 
-        <p className="hidden text-base text-primary-500 font-semibold lg:block">
-          visualisasi revenue
+        <p className="hidden text-sm text-primary-500 font-semibold lg:block">
+          Upload CSV
         </p>
+        </div>
       </button>
 
       <Transition
@@ -80,7 +80,7 @@ function Upload_csv() {
           onFocus={() => setDropdownOpen(true)}
           onBlur={() => setDropdownOpen(false)}
         >
-          <div className="pl-4  font-gilroy">
+          <div className="">
             <button
               className="float-right text-2xl leading-none font-semibold outline-none focus:outline-none"
               onClick={() => setDropdownOpen(false)}

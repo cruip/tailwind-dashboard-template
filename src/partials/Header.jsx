@@ -29,16 +29,16 @@ function Header({ sidebarOpen, setSidebarOpen }) {
                 <rect x="4" y="17" width="16" height="2" />
               </svg>
             </button>
-            <div className="font-gilroy relative ml-4 text-white">
-              <h1 className="text-xl font-bold inline-flex">
-                Selamat Datang <span className="hidden lg:block"> &nbsp;di Dashboard Revenue RSUI</span>
+            <div className=" relative ml-4 text-white">
+              <h1 className="text-xl font-bold hidden md:block">
+                Selamat Datang di Dashboard Revenue RSUI
               </h1>
               <Time  />
             </div>
           </div>
 
           {/* Header: Right side */}
-          <div className="flex items-center">
+          <div className="flex gap-4">
             <Upload_csv />
             <UserMenu />
           </div>

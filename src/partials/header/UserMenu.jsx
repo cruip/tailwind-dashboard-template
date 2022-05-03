@@ -1,11 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import Transition from '../../utils/Transition';
-
-import UserAvatar from '../../images/user-36-04.jpg';
+import React, { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
+import Transition from "../../components/utils/Transition";
 
 function UserMenu() {
-
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const trigger = useRef(null);
@@ -14,11 +11,16 @@ function UserMenu() {
   // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }) => {
-      if (!dropdownOpen || dropdown.current.contains(target) || trigger.current.contains(target)) return;
+      if (
+        !dropdownOpen ||
+        dropdown.current.contains(target) ||
+        trigger.current.contains(target)
+      )
+        return;
       setDropdownOpen(false);
     };
-    document.addEventListener('click', clickHandler);
-    return () => document.removeEventListener('click', clickHandler);
+    document.addEventListener("click", clickHandler);
+    return () => document.removeEventListener("click", clickHandler);
   });
 
   // close if the esc key is pressed
@@ -27,27 +29,33 @@ function UserMenu() {
       if (!dropdownOpen || keyCode !== 27) return;
       setDropdownOpen(false);
     };
-    document.addEventListener('keydown', keyHandler);
-    return () => document.removeEventListener('keydown', keyHandler);
+    document.addEventListener("keydown", keyHandler);
+    return () => document.removeEventListener("keydown", keyHandler);
   });
 
   return (
     <div className="relative inline-flex">
       <button
         ref={trigger}
-        className="mx-4 inline-flex justify-center items-center group bg-white rounded-full p-2"
+        className="px-3 w-full h-12 inline-flex items-center text-sm justify-center bg-white hover:bg-slate-200 transition duration-150 rounded-2xl "
         aria-haspopup="true"
         onClick={() => setDropdownOpen(!dropdownOpen)}
         aria-expanded={dropdownOpen}
       >
-        {/* User Icon */}
-        <img className="w-8 h-8 rounded-full" src={UserAvatar} width="32" height="32" alt="User" /> 
         {/* ##User Icon */}
-        <div className="flex items-center truncate">
-          <span className="truncate ml-2 text-sm font-medium group-hover:text-slate-800 hidden lg:block">Budi Sudiyanto</span>
-          <svg className="w-3 h-3 shrink-0 ml-1 fill-current text-slate-400" viewBox="0 0 12 12">
-            <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
+        <div className="flex items-center ">
+          <svg 
+          width="17"
+          heigh="17"
+          viewBox="0 0 17 17"
+          className="fill-current text-primary-700">
+            <path d="M8 8C10.21 8 12 6.21 12 4C12 1.79 10.21 0 8 0C5.79 0 4 1.79 4 4C4 6.21 5.79 8 8 8ZM8 10C5.33 10 0 11.34 0 14V15C0 15.55 0.45 16 1 16H15C15.55 16 16 15.55 16 15V14C16 11.34 10.67 10 8 10Z" />
           </svg>
+          <div className="lg:mx-2">
+          <p className=" hidden text-sm text-primary-500 font-semibold lg:block">
+            Budi Sudiyanto
+          </p>
+          </div>
         </div>
       </button>
 
@@ -67,10 +75,11 @@ function UserMenu() {
           onBlur={() => setDropdownOpen(false)}
         >
           <div className="pt-0.5 pb-2 px-3 mb-1 border-b border-slate-200">
-            <div className="font-medium text-slate-800">Budi Sudiyanto</div>
+            <div className="font-medium text-primary-700">Budi Sudiyanto</div>
           </div>
           <ul>
             {/* <li>
+            ***** INI ADALAH BUAT LOGOUT NANTI ****
               <Link
                 className="font-medium text-sm text-indigo-500 hover:text-indigo-600 flex items-center py-1 px-3"
                 to="/"
@@ -92,7 +101,7 @@ function UserMenu() {
         </div>
       </Transition>
     </div>
-  )
+  );
 }
 
 export default UserMenu;

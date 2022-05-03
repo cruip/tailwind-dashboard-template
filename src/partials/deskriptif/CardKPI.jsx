@@ -1,11 +1,11 @@
 import React from 'react';
-import BarChart from '../../charts/BarChart02';
+import BarChart from '../../components/charts/BarKPI';
 
 // Import utilities
-import { tailwindConfig } from '../../utils/Utils';
+import { tailwindConfig } from '../../components/utils/Utils';
 
 
-function DashboardCard09() {
+function CardKPI() {
 
 
 
@@ -56,7 +56,7 @@ function DashboardCard09() {
   return (
     <div className="col-span-full  xl:col-span-8 bg-white shadow-lg rounded-xl border border-slate-200">
       <header className="px-5 py-4 border-b border-slate-100 flex items-center">
-        <h2 className="font-bold text-xl text-primary-600">Performance (KPI)</h2>
+        <h2 className="font-bold text-xl text-primary-900">Administration Performance</h2>
       </header>
       {/* Chart built with Chart.js 3 */}
       <div className="grow">
@@ -67,4 +67,4 @@ function DashboardCard09() {
   );
 }
 
-export default DashboardCard09;
+export default CardKPI;

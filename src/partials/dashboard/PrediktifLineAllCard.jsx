@@ -1,10 +1,10 @@
 import React from 'react';
-import LineChart from '../../charts/LineChartPrediktifAll';
+import LineChart from '../../components/charts/LineChartPrediktifAll';
 
 
 
 // Import utilities
-import { tailwindConfig, hexToRGB } from '../../utils/Utils';
+import { tailwindConfig, hexToRGB } from '../../components/utils/Utils';
 
 function PrediktifLineAllCard() {
 
