@@ -1,8 +1,8 @@
-import { Sequelize } from "sequelize/types";
+const Sequelize = require('sequelize');
 
 const db = new Sequelize('rsui', 'root', '',{
     host: "localhost",
     dialect: "mysql"
 });
 
-export default db;
+module.exports = db;

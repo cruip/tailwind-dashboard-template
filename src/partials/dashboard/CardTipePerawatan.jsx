@@ -1,19 +1,32 @@
-import React from 'react';
-import DoughnutChart from '../../components/charts/DoughnutTipePerawatan';
+import React, { useEffect } from "react";
+import axios from "axios";
+import DoughnutChart from "../../components/charts/DoughnutTipePerawatan";
 
 // Import utilities
-import { tailwindConfig } from '../../components/utils/Utils';
+import { tailwindConfig } from "../../components/utils/Utils";
 
 function CardTipePerawatan() {
+  const dataArray = [];
+
+  axios
+    .get("http://localhost:5000/tipeperawatan/1")
+    .then((res) => {
+      var valInpatient = res.data.inpatient;
+      var valOutpatient = res.data.outpatient;
+      var valEmergency = res.data.emergency;
+      dataArray.push(valInpatient, valOutpatient, valEmergency);
+      console.log(dataArray);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 
   const chartData = {
-    labels: ['Inpation', 'Outpation', 'Emergency'],
+    labels: ["Inpatient", "Outpatient", "Emergency"],
     datasets: [
       {
-        label: 'Tipe Perawatan',
-        data: [
-          30, 45, 25
-        ],
+        label: "Tipe Perawatan",
+        data: dataArray,
         backgroundColor: [
           tailwindConfig().theme.colors.blue[500],
           tailwindConfig().theme.colors.yellow[300],

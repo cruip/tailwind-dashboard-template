@@ -1,26 +1,25 @@
-import { Sequelize } from "sequelize";
-import db from "../config/database";
-
-const { DataTypes } = Sequelize;
+const Sequelize = require("sequelize");
+const db = require("../config/database.js");
 
 const TipePerawatan = db.define(
   "monthly_2021_tipe_perawatan",
   {
     month: {
-      type: DataTypes.DATE,
+      type: Sequelize.DATE,
     },
     emergency: {
-      type: DataTypes.INT,
+      type: Sequelize.INTEGER,
     },
     inpatient: {
-      type: DataTypes.INT,
+      type: Sequelize.INTEGER,
     },
     outpatient: {
-      type: DataTypes.INT,
+      type: Sequelize.INTEGER,
     },
   },
   {
     freezeTableName: true,
+    timestamps: false,
   }
 );
-export default TipePerawatan;
+module.exports = TipePerawatan;

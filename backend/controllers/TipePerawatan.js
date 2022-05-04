@@ -1,15 +1,15 @@
-import TipePerawatan from "../model/tipeperawatanModel";
+const TipePerawatan = require ("../model/tipeperawatanModel");
 
-export const getAllTipePerawatan = async (req, res) => {
+const getAllTipePerawatan = async (req, res) => {
     try {
         const tipeperawatan = await TipePerawatan.findAll();
         res.json(tipeperawatan);
     } catch (error) {
         res.json({ message: error.message });
-    }  
+    }
 }
- 
-export const getTipePerawatanById = async (req, res) => {
+
+const getTipePerawatanById = async (req, res) => {
     try {
         const tipeperawatan = await TipePerawatan.findAll({
             where: {
@@ -21,8 +21,10 @@ export const getTipePerawatanById = async (req, res) => {
         res.json({ message: error.message });
     }  
 }
- 
-export const createTipePerawatan = async (req, res) => {
+
+
+
+const createTipePerawatan = async (req, res) => {
     try {
         await TipePerawatan.create(req.body);
         res.json({
@@ -32,8 +34,8 @@ export const createTipePerawatan = async (req, res) => {
         res.json({ message: error.message });
     }  
 }
- 
-export const updateTipePerawatan = async (req, res) => {
+
+const updateTipePerawatan = async (req, res) => {
     try {
         await TipePerawatan.update(req.body, {
             where: {
@@ -47,8 +49,8 @@ export const updateTipePerawatan = async (req, res) => {
         res.json({ message: error.message });
     }  
 }
- 
-export const deleteTipePerawatan = async (req, res) => {
+
+const deleteTipePerawatan = async (req, res) => {
     try {
         await TipePerawatan.destroy({
             where: {
@@ -62,3 +64,8 @@ export const deleteTipePerawatan = async (req, res) => {
         res.json({ message: error.message });
     }  
 }
+exports.getAllTipePerawatan = getAllTipePerawatan;
+exports.getTipePerawatanById = getTipePerawatanById;
+exports.createTipePerawatan = createTipePerawatan;
+exports.updateTipePerawatan = updateTipePerawatan;
+exports.deleteTipePerawatan = deleteTipePerawatan;

@@ -1,19 +1,12 @@
-import express  from "express";
-
-import {
-    getAllTipePerawatan,
-    getTipePerawatanById,
-    createTipePerawatan,
-    updateTipePerawatan,
-    deleteTipePerawatan
-} from "../controllers/TipePerawatan.js";
+const express = require('express');
+const TipePerawatan = require('../controllers/TipePerawatan.js');
 
 const router = express.Router();
 
-router.get('/', getAllTipePerawatan);
-router.get('/:id', getTipePerawatanById);
-router.post('/', createTipePerawatan);
-router.patch('/:id', updateTipePerawatan);
-router.delete('/:id', deleteTipePerawatan);
+router.get('/', TipePerawatan.getAllTipePerawatan);
+router.get('/:id', TipePerawatan.getTipePerawatanById);
+router.post('/', TipePerawatan.createTipePerawatan);
+router.patch('/:id', TipePerawatan.updateTipePerawatan);
+router.delete('/:id', TipePerawatan.deleteTipePerawatan);
 
-export default router;
+module.exports = router;
