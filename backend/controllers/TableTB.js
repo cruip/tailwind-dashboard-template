@@ -1,22 +1,22 @@
-const TipePerawatan = require ("../model/modelTP");
+const TableTB = require ("../model/modelTB");
 
-const getAllTipePerawatan = async (req, res) => {
+const getAllTableTB = async (req, res) => {
     try {
-        const tipeperawatan = await TipePerawatan.findAll();
-        res.json(tipeperawatan);
+        const tabletb = await TableTB.findAll();
+        res.json(tabletb);
     } catch (error) {
         res.json({ message: error.message });
     }
 }
 
-const getTipePerawatanById = async (req, res) => {
+const getTableTBById = async (req, res) => {
     try {
-        const tipeperawatan = await TipePerawatan.findAll({
+        const tabletb = await TableTB.findAll({
             where: {
                 id: req.params.id
             }
         });
-        res.json(tipeperawatan[0]);
+        res.json(tabletb[0]);
     } catch (error) {
         res.json({ message: error.message });
     }  
@@ -24,9 +24,9 @@ const getTipePerawatanById = async (req, res) => {
 
 
 
-const createTipePerawatan = async (req, res) => {
+const createTableTB = async (req, res) => {
     try {
-        await TipePerawatan.create(req.body);
+        await TableTB.create(req.body);
         res.json({
             "message": "Data Created"
         });
@@ -35,9 +35,9 @@ const createTipePerawatan = async (req, res) => {
     }  
 }
 
-const updateTipePerawatan = async (req, res) => {
+const updateTableTB = async (req, res) => {
     try {
-        await TipePerawatan.update(req.body, {
+        await TableTB.update(req.body, {
             where: {
                 id: req.params.id
             }
@@ -50,9 +50,9 @@ const updateTipePerawatan = async (req, res) => {
     }  
 }
 
-const deleteTipePerawatan = async (req, res) => {
+const deleteTableTB = async (req, res) => {
     try {
-        await TipePerawatan.destroy({
+        await TableTB.destroy({
             where: {
                 id: req.params.id
             }
@@ -64,8 +64,9 @@ const deleteTipePerawatan = async (req, res) => {
         res.json({ message: error.message });
     }  
 }
-exports.getAllTipePerawatan = getAllTipePerawatan;
-exports.getTipePerawatanById = getTipePerawatanById;
-exports.createTipePerawatan = createTipePerawatan;
-exports.updateTipePerawatan = updateTipePerawatan;
-exports.deleteTipePerawatan = deleteTipePerawatan;
+
+exports.getAllTableTB = getAllTableTB;
+exports.getTableTBById = getTableTBById;
+exports.createTableTB = createTableTB;
+exports.updateTableTB = updateTableTB;
+exports.deleteTableTB = deleteTableTB;

@@ -22,4 +22,7 @@ const TipePerawatan = db.define(
     timestamps: false,
   }
 );
+
+
 module.exports = TipePerawatan;
+
