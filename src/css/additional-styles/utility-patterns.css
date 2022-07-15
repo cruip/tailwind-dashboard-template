@@ -1,4 +1,4 @@
-// Typography
+/* Typography */
 .h1 {
     @apply text-4xl font-extrabold tracking-tighter;
 }
@@ -25,15 +25,20 @@
     }
 }
 
-// Buttons
+/* Buttons */
 .btn,
+.btn-lg,
 .btn-sm,
 .btn-xs {
     @apply font-medium text-sm inline-flex items-center justify-center border border-transparent rounded leading-5 shadow-sm transition duration-150 ease-in-out;
 }
 
 .btn {
-    @apply px-2.5 py-2;
+    @apply px-3 py-2;
+}
+
+.btn-lg {
+    @apply px-4 py-3;
 }
 
 .btn-sm {
@@ -44,7 +49,7 @@
     @apply px-2 py-0.5;
 }
 
-// Forms
+/* Forms */
 input[type="search"]::-webkit-search-decoration,
 input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-results-button,

@@ -1,10 +1,11 @@
-// Import base styles
-@import '~flatpickr/dist/flatpickr.min.css';
+@import 'flatpickr/dist/flatpickr.min.css';
 
-// Customise flatpickr
-$calendarPadding: 24px;
-$daySize: 36px;
-$daysWidth: $daySize*7;
+/* Customise flatpickr */
+* {
+    --calendarPadding: 24px;
+    --daySize: 36px;
+    --daysWidth: calc(var(--daySize)*7);
+}
 
 @keyframes fpFadeInDown {
   from {
@@ -20,16 +21,21 @@ $daysWidth: $daySize*7;
 .flatpickr-calendar {
     border: inherit;
     @apply rounded shadow-lg border border-slate-200 left-1/2;
-    margin-left: - ($daysWidth + $calendarPadding*2)*0.5;
-    padding: $calendarPadding;
-    width: $daysWidth + $calendarPadding*2;
+    margin-left: calc(calc(var(--daysWidth) + calc(var(--calendarPadding)*2))*0.5*-1);
+    padding: var(--calendarPadding);
+    width: calc(var(--daysWidth) + calc(var(--calendarPadding)*2));
 }
 
 @screen lg {
     .flatpickr-calendar {
-        @apply left-auto right-0;
+        @apply left-0 right-auto;
         margin-left: 0;
     }
+}
+
+.flatpickr-right.flatpickr-calendar {
+    @apply right-0 left-auto;
+    margin-left: 0;
 }
 
 .flatpickr-calendar.animate.open {
@@ -46,20 +52,20 @@ $daysWidth: $daySize*7;
 }
 
 .flatpickr-days {
-    width: $daysWidth;
+    width: var(--daysWidth);
 }
 
 .dayContainer {
-    width: $daysWidth;
-    min-width: $daysWidth;
-    max-width: $daysWidth;
+    width: var(--daysWidth);
+    min-width: var(--daysWidth);
+    max-width: var(--daysWidth);
 }
 
 .flatpickr-day {
     @apply bg-slate-50 text-sm font-medium text-slate-600;
-    max-width: $daySize;
-    height: $daySize;
-    line-height: $daySize;
+    max-width: var(--daySize);
+    height: var(--daySize);
+    line-height: var(--daySize);
 }
 
 .flatpickr-day,
@@ -218,6 +224,8 @@ span.flatpickr-weekday {
 }
 
 .flatpickr-calendar.arrowTop::before,
-.flatpickr-calendar.arrowTop::after {
+.flatpickr-calendar.arrowTop::after,
+.flatpickr-calendar.arrowBottom::before,
+.flatpickr-calendar.arrowBottom::after {
     display: none;
 }
