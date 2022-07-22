@@ -7,9 +7,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@apollo/client": "^3.6.9",
     "@tailwindcss/forms": "^0.4.0",
     "chart.js": "^3.5.0",
     "chartjs-adapter-moment": "^1.0.0",
+    "graphql": "^16.5.0",
     "moment": "^2.29.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
