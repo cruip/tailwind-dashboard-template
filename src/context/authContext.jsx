@@ -39,7 +39,8 @@ const AuthProvider = (props) => {
 
     const login = (userdata) => {
         console.log(userdata, 'user data');
-        localStorage.setItem('token', userdata.authenticate.token.accessToken)
+        localStorage.setItem('token', userdata?.authenticate.token.accessToken)
+        localStorage.setItem('userData', JSON.stringify(userdata))
         dispatch({
             type: 'LOGIN',
             payload: userdata
@@ -48,6 +49,7 @@ const AuthProvider = (props) => {
 
     const logout = () => {
         localStorage.removeItem('token')
+        localStorage.removeItem('userData')
         dispatch({
             type: 'LOGOUT',
             

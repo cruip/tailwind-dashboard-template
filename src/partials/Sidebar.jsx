@@ -287,19 +287,6 @@ function Sidebar({
                   </div>
                 </NavLink>
               </li>
-              {/* log */}
-              <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname.includes('login') && 'bg-slate-900'}`}>
-                <NavLink end to="/login" className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes('tasks') && 'hover:text-slate-200'}`}>
-                  <div className="flex items-center">
-                    <svg className="w-6 h-6 shrink-0" viewBox="0 0 24 24">
-                      <path className={`fill-current text-slate-600 ${pathname.includes('tasks') && 'text-indigo-500'}`} d="M8 1v2H3v19h18V3h-5V1h7v23H1V1z" />
-                      <path className={`fill-current text-slate-600 ${pathname.includes('tasks') && 'text-indigo-500'}`} d="M1 1h22v23H1z" />
-                      <path className={`fill-current text-slate-400 ${pathname.includes('tasks') && 'text-indigo-300'}`} d="M15 10.586L16.414 12 11 17.414 7.586 14 9 12.586l2 2zM5 0h14v4H5z" />
-                    </svg>
-                    <span className="ml-3 text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">Login</span>
-                  </div>
-                </NavLink>
-              </li>
               {/* Inbox */}
               <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname.includes('inbox') && 'bg-slate-900'}`}>
                 <NavLink end to="/" className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes('inbox') && 'hover:text-slate-200'}`}>

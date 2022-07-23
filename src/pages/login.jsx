@@ -1,16 +1,18 @@
-import React, {  useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLazyQuery } from "@apollo/client";
 import { GET_LOGIN } from "../services/authService";
 import { AuthContext } from "../context/authContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Login = () => {
   const [values, setValues] = useState({
     email: "",
     password: "",
   });
-  const context = useContext(AuthContext)
-  let navigate = useNavigate()
+  const context = useContext(AuthContext);
+  let navigate = useNavigate();
+  const { state } = useLocation();
+  // console.log(state, 'state');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -20,23 +22,17 @@ const Login = () => {
     });
   };
 
-  const [login, { loading, data }]= useLazyQuery(GET_LOGIN);
-    // console.log(loading, error, data, 'auth');
-    const handleSubmit = () => {
-      
-      login({ variables: { ...values } })
-      if(data?.authenticate.token) {
-        console.log(data, 'data one');
-        context.login(data)
-        navigate('/')
-      }
+  const [login, { loading, error, data }] = useLazyQuery(GET_LOGIN);
+  // console.log(loading, error, data, 'auth');
+  const handleSubmit = () => {
+    login({ variables: { ...values } });
+    if (data?.authenticate.token) {
+      context.login(data);
+      setTimeout(() => {
+        navigate(state?.path || "/", { replace: true });
+      }, 500);
+    }
   };
-
-  // useEffect(() => {
-  //   // console.log(data, 'datata');
-  //   context.login(data)
-  //   navigate('/dashboard')
-  // }, [data])
 
   return (
     <main>
@@ -66,10 +62,9 @@ const Login = () => {
             />
           </div>
           <div className="flex items-center justify-center mb-4 text-center mt-7 form-group">
-            <button className="flex items-center justify-center w-48 py-3 font-medium text-white bg-indigo-700 rounded-lg shadow-md" 
-             onClick={
-              () => handleSubmit()
-            }
+            <button
+              className="flex items-center justify-center w-48 py-3 font-medium text-white bg-indigo-700 rounded-lg shadow-md"
+              onClick={() => handleSubmit()}
             >
               Log In
             </button>
