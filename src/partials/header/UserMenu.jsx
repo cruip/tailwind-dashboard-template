@@ -91,7 +91,7 @@ function UserMenu() {
             </li>
             <li>
               <span
-                className="flex items-center px-3 py-1 text-sm font-medium text-indigo-500 hover:text-indigo-600"
+                className="flex items-center px-3 py-1 text-sm font-medium text-indigo-500 cursor-pointer hover:text-indigo-600"
                 onClick={() => Logout()}
               >
                 Sign Out

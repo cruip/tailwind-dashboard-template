@@ -65,8 +65,8 @@ export const Table = ({
                 <thead>
                   <tr className="text-left bg-blue-100">
                     {headers?.length
-                      ? headers.map((h) => {
-                          return <th className="py-3">{h}</th>;
+                      ? headers.map((h, i) => {
+                          return <th className="py-3" key={i}>{h}</th>;
                         })
                       : null}
                   </tr>

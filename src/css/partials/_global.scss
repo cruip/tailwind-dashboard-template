@@ -15,3 +15,17 @@
   .pagination .disabled {
     opacity: 0.25;
   }
+
+  td:not(:first-child) {
+    padding-top:20px;
+    padding-bottom:20px;
+    padding-right:20px;       
+  }
+
+  td:first-child {
+    padding-left: 0.5rem;
+  }
+
+  th:first-child {
+    padding-left: 0.5rem;
+  }
