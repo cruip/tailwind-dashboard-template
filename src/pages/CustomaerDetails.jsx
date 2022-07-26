@@ -1,36 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card } from "../partials/card/Card";
 import { Tab, Tabs, TabPane } from "../partials/Tabs";
 import Page from "../partials/page";
 import { Link } from "react-router-dom";
 import Modal from "../partials/modal/Modal";
 
-const CustomerBookingDetail = () => {
-  const [cancelModal, setCancelModal] = React.useState(false);
-  const [confirmModal, setConfirmModal] = React.useState(false);
-  const [reschedulemModal, setRescheduleModal] = React.useState(false);
-  const [changeStatusModal, setChangeStatusModal] = React.useState(false);
-  const [invoiceModal, setInvoiceModal] = React.useState(false);
+const Customer = () => {
+    const [deactivateModal, setDeactivateModal] = useState(false);
+    const [activateModal, setActivateModal] = useState(false);
+    const [emailModal, setEmailModal] = useState(false);
+    const [passwordModal, setPasswordModal] = useState(false)
 
-  const toggleCancelModal = () => {
-    setCancelModal(!cancelModal);
-  };
+    const toggleDeactivateModal = () => {
+        setDeactivateModal(!deactivateModal);
+      };
+    
+      const toggleActivateModal = () => {
+        setActivateModal(!activateModal);
+      };
 
-  const toggleConfirmModal = () => {
-    setConfirmModal(!confirmModal);
-  };
+      const toggleEmailModal = () => {
+        setEmailModal(!emailModal)
+      }
 
-  const toggleInvoiceModal = () => {
-    setInvoiceModal(!invoiceModal);
-  };
-
-  const toggleRescheduleModal = () => {
-    setRescheduleModal(!reschedulemModal);
-  };
-
-  const toggleStatusModal = () => {
-    setChangeStatusModal(!changeStatusModal);
-  };
+      const togglePasswordModal = () => {
+        setPasswordModal(!passwordModal)
+      }
 
   return (
     <Page>
@@ -42,13 +37,13 @@ const CustomerBookingDetail = () => {
         </Link>
       </div>
       <h2 className="text-xl font-semibold text-sky-800">
-        Welcome to Victors Booking Page
+        Welcome to Victors Profile
       </h2>
       <div className="w-full mx-auto mt-8 xl:w-4/5">
         <Card width="w-full">
           <Tabs defaultTab={0}>
             <Tab label="Profile" tabIndex={0} />
-            <Tab label="Travel history" tabIndex={1} />
+            <Tab label="Booking Details" tabIndex={1} />
             <div className="mt-4 ">
               <TabPane tabIndex={0}>
                 <div className="mt-5 ">
@@ -68,34 +63,29 @@ const CustomerBookingDetail = () => {
                 <div className="flex flex-wrap items-center mt-6">
                   <button
                     className="py-3 mb-3 text-white bg-blue-500 rounded-lg shadow-md mr-7 w-52 focus:border-0 focus:outline-none hover:bg-blue-600"
-                    onClick={toggleInvoiceModal}
+                    onClick={toggleDeactivateModal}
                   >
-                    View Invoice
+                   Deactivate Account
                   </button>
                   <button
                     className="py-3 mb-3 text-white bg-blue-500 rounded-lg shadow-md mr-7 w-52 focus:border-0 focus:outline-none hover:bg-blue-600"
-                    onClick={() => toggleCancelModal()}
+                    onClick={() => toggleActivateModal()}
                   >
-                    Cancel Booking
+                   Re Activate Account
                   </button>
                   <button
                     className="py-3 mb-3 text-white bg-blue-500 rounded-lg shadow-md mr-7 w-52 focus:border-0 focus:outline-none hover:bg-blue-600"
-                    onClick={toggleRescheduleModal}
+                    onClick={() => toggleEmailModal()}
                   >
-                    Reschedule Booking
+                   Change Email
                   </button>
                   <button
                     className="py-3 mb-3 text-white bg-blue-500 rounded-lg shadow-md mr-7 w-52 focus:border-0 focus:outline-none hover:bg-blue-600"
-                    onClick={toggleConfirmModal}
+                    onClick={() => togglePasswordModal()}
                   >
-                    Confirm Booking
+                   Change Password
                   </button>
-                  <button
-                    className="py-3 mb-3 text-white bg-blue-500 rounded-lg shadow-md mr-7 w-52 focus:border-0 focus:outline-none hover:bg-blue-600"
-                    onClick={toggleStatusModal}
-                  >
-                    Change Pasenger's status
-                  </button>
+                  
                 </div>
               </TabPane>
               <TabPane tabIndex={1}>
@@ -111,72 +101,65 @@ const CustomerBookingDetail = () => {
       </div>
 
       {/* //modals */}
-
       <Modal
-        show={cancelModal}
+        show={deactivateModal}
         size="md"
-        onHide={toggleCancelModal}
-        buttonText="Cancel"
+        onHide={toggleDeactivateModal}
+        buttonText="De-Activate"
       >
-        <p>Do you want to cancel this booking? </p>
-      </Modal>
-
-      <Modal
-        show={invoiceModal}
-        size="md"
-        onHide={toggleInvoiceModal}
-        buttonText="download"
-      >
-        <p>download invoice as pdf</p>
+        <p>Do you want to Deactivate this account? </p>
       </Modal>
       <Modal
-        show={confirmModal}
+        show={activateModal}
         size="md"
-        onHide={toggleConfirmModal}
-        buttonText="confirm"
+        onHide={toggleActivateModal}
+        buttonText="Activate"
       >
-        <p>Confirm this bookig</p>
+        <p>Reactivate this Customer</p>
       </Modal>
       <Modal
-        show={reschedulemModal}
+        show={emailModal}
         size="md"
-        onHide={toggleRescheduleModal}
-        buttonText="reschedule"
+        onHide={toggleEmailModal}
       >
-        <p>Do you want to reschedule the trip?</p>
+        <p>Change customer email</p>
         <div className="px-8 pt-6 pb-8 mb-4 bg-white rounded shadow-md">
           <div className="mb-4">
             <label
               className="block mb-2 text-sm font-bold text-gray-700"
-              htmlFor="date"
+              htmlFor="email"
             >
-              select new travel date
+              Input New Email
             </label>
             <input
               className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-              id="date"
-              type="date"
-              placeholder="Username"
+              id="email"
+              type="email"
+              placeholder="dryvafrica@dryvafrica.com"
             />
           </div>
         </div>
       </Modal>
       <Modal
-        show={changeStatusModal}
+        show={passwordModal}
         size="md"
-        onHide={toggleStatusModal}
-        buttonText="chnage"
+        onHide={togglePasswordModal}
       >
-        <p>Do you want to change the status of this trip?</p>
+        <p>Change Customer Password</p>
         <div className="px-8 pt-6 pb-8 mb-4 bg-white rounded shadow-md">
-          <div className="relative inline-block w-full">
-            <select className="block w-full px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline">
-              <option>
-                cancelled
-              </option>
-              <option>Option 2</option>
-              <option>Option 3</option>
-            </select>
+          <div className="mb-4">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="password"
+            >
+              Input new password
+            </label>
+            <input
+              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              id="password"
+              type="password"
+              placeholder="password"
+            />
           </div>
         </div>
       </Modal>
@@ -184,4 +167,4 @@ const CustomerBookingDetail = () => {
   );
 };
 
-export default CustomerBookingDetail;
+export default Customer;

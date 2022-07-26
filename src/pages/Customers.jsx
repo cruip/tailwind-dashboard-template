@@ -10,41 +10,37 @@ const Datas = [
   {
     id: 1,
     customer_name: "Ballack",
-    company_name: "GUO",
-    amount: "100,000",
-    seat_no: "4A",
+    customer_phone: "07032880693",
+    customer_email: "me@gmail.com",
   },
   {
     id: 2,
     customer_name: "Ballack",
-    company_name: "GUO",
-    amount: "100,000",
-    seat_no: "4A",
+    customer_phone: "07032880693",
+    customer_email: "me@gmail.com",
   },
   {
     id: 3,
     customer_name: "Ballack",
-    company_name: "GUO",
-    amount: "100,000",
-    seat_no: "4A",
+    customer_phone: "07032880693",
+    customer_email: "me@gmail.com",
   },
   {
     id: 4,
     customer_name: "Ballack",
-    company_name: "GUO",
-    amount: "100,000",
-    seat_no: "4A",
+    customer_phone: "07032880693",
+    customer_email: "me@gmail.com",
   },
 ];
 
-const CustomerBooking = () => {
+const Customers = () => {
   const [limit, setLimit] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(3);
   const [tableLoad, setTableLoad] = useState(false);
   const [data, setData] = useState(Datas);
-  const [cancelModal, setCancelModal] = useState(false);
-  const [confirmModal, setConfirmModal] = useState(false);
+  const [deactivateModal, setDeactivateModal] = useState(false);
+  const [activateModal, setActivateModal] = useState(false);
 
   const onPrevPage = () => {
     setCurrentPage((prevState) => prevState - 1);
@@ -53,18 +49,18 @@ const CustomerBooking = () => {
   const onNextPage = () => {
     setCurrentPage((prevState) => prevState + 1);
   };
-  const toggleCancelModal = () => {
-    setCancelModal(!cancelModal);
+  const toggleDeactivateModal = () => {
+    setDeactivateModal(!deactivateModal);
   };
 
-  const toggleConfirmModal = () => {
-    setConfirmModal(!confirmModal);
+  const toggleActivateModal = () => {
+    setActivateModal(!activateModal);
   };
   const tableHeader = [
     "Customer Name",
-    "Company Name",
-    "Amount Paid",
-    "Seat No",
+    "Customer Id",
+    "customer phone",
+    "customer Email",
     "Action",
   ];
 
@@ -72,32 +68,32 @@ const CustomerBooking = () => {
     return (
       <tr key={data?.id} className="border-b-2 border-slate-200">
         <td>{data?.customer_name}</td>
-        <td>{data?.company_name}</td>
-        <td>{data?.amount}</td>
-        <td>{data?.seat_no}</td>
+        <td>{data?.id}</td>
+        <td>{data?.customer_phone}</td>
+        <td>{data?.customer_email}</td>
 
         <td>
           <DropDown
             links={[
               {
-                name: "View Booking",
+                name: "View Profile",
                 isLink: true,
                 onclick: () => {},
                 link: `${data.id}`,
               },
               {
-                name: "cancel Booking",
+                name: "De-Activate Customer",
                 isLink: false,
                 onclick: () => {
-                  toggleCancelModal();
+                  toggleDeactivateModal();
                 },
                 link: "",
               },
               {
-                name: "Confirm Booking",
+                name: "Re-Activate Customer",
                 isLink: false,
                 onclick: () => {
-                  toggleConfirmModal();
+                  toggleActivateModal();
                 },
                 link: "",
               },
@@ -111,29 +107,29 @@ const CustomerBooking = () => {
   return (
     <Page>
       <section>
-        <div className="flex items-center justify-between mb-6">
+        {/* <div className="flex items-center justify-between mb-6">
           <p>Book a seat</p>
           <button className="px-4 py-2 text-white rounded-md w-52 bg-sky-800">
             Book Seat
           </button>
-        </div>
+        </div> */}
         <div className="gap-8 columns-2">
           <Card
-            name={"Total Seat Booked"}
-            description="Total Number of booked seats"
+            name={"Active Customers"}
+            description="Total Number of Active Customers"
           >
             <h3 className="mt-5 text-right">
               <span className="text-xl font-semibold text-sky-800">1000</span>{" "}
-              Seats
+              Customers
             </h3>
           </Card>
           <Card
-            name={"Total Unbooked Seat"}
-            description="Total Number of Unbooked seats"
+            name={"Total Customers"}
+            description="Total Number of Customers"
           >
             <h3 className="mt-5 text-right ">
               <span className="text-xl font-semibold text-sky-800">4000</span>{" "}
-              Seats
+              Customers
             </h3>
           </Card>
         </div>
@@ -141,10 +137,10 @@ const CustomerBooking = () => {
 
       <section className="mt-10 ">
         <div className="col-12">
-          <Card description={"Manage Booking"} width="w-full">
+          <Card description={"Manage Customer"} width="w-full">
             <div className="flex items-center justify-between w-full ">
               <div className="flex items-center w-1/2">
-                <p className="mr-3 ">Filter By Bus Name:</p>
+                <p className="mr-3 ">Filter By customer Name:</p>
                 <select className="block w-1/2 px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline">
                   <option>All</option>
                   <option>Option 2</option>
@@ -191,23 +187,23 @@ const CustomerBooking = () => {
         </div>
       </section>
       <Modal
-        show={cancelModal}
+        show={deactivateModal}
         size="md"
-        onHide={toggleCancelModal}
-        buttonText="Cancel"
+        onHide={toggleDeactivateModal}
+        buttonText="De-Activate"
       >
-        <p>Do you want to cancel this booking? </p>
+        <p>Do you want to Deactivate this account? </p>
       </Modal>
       <Modal
-        show={confirmModal}
+        show={activateModal}
         size="md"
-        onHide={toggleConfirmModal}
-        buttonText="confirm"
+        onHide={toggleActivateModal}
+        buttonText="Activate"
       >
-        <p>Confirm this bookig</p>
+        <p>Reactivate this Customer</p>
       </Modal>
     </Page>
   );
 };
 
-export default CustomerBooking;
+export default Customers;

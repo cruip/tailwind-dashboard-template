@@ -11,6 +11,10 @@ import Dashboard from "./pages/Dashboard";
 import Login from "./pages/login";
 import CustomerBooking from "./pages/CustomerBooking";
 import CustomerBookingDetail from "./pages/CustomerBookingDetail";
+import Customers from "./pages/Customers";
+import Customer from "./pages/CustomaerDetails";
+import TransportCompanies from "./pages/TransportCompanies";
+import TransportCompany from "./pages/TransportCompanyDetails";
 
 function App() {
   const location = useLocation();
@@ -46,6 +50,38 @@ function App() {
           element={
             <ProtectedRoute>
               <CustomerBookingDetail />
+            </ProtectedRoute>
+          }
+        />
+         <Route
+          path="/customers"
+          element={
+            <ProtectedRoute>
+              <Customers />
+            </ProtectedRoute>
+          }
+        />
+         <Route
+          path="/customers/:id"
+          element={
+            <ProtectedRoute>
+              <Customer />
+            </ProtectedRoute>
+          }
+        />
+         <Route
+          path="/transport_companies"
+          element={
+            <ProtectedRoute>
+              <TransportCompanies />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/transport_companies/:id"
+          element={
+            <ProtectedRoute>
+              <TransportCompany />
             </ProtectedRoute>
           }
         />

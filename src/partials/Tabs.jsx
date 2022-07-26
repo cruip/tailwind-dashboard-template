@@ -15,7 +15,7 @@ export const Tabs = (props) => {
   
     return (
       <a
-        className={` inline-block w-1/2  rounded-lg px-4 py-4 shadow relative ${active ? 'bg-blue-600 text-white' : 'text-slate-600'
+        className={` inline-block w-1/2  rounded-lg px-4 py-2 shadow relative ${active ? 'bg-blue-600 text-white' : 'text-slate-600'
           }`}
         onClick={() => setActiveTab(tabIndex)}
       >

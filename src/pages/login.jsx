@@ -35,42 +35,64 @@ const Login = () => {
   };
 
   return (
-    <main>
-      <section className="flex items-center justify-center w-full h-screen px-4 py-8 mx-auto my-auto sm:px-6 lg:px-8 max-w-9xl">
-        <div className="w-full p-3 mx-auto bg-white rounded-lg shadow-lg form md:w-5/6 lg:w-2/4 ">
-          <h2 className="text-xl font-medium text-slate-700">Login As Admin</h2>
-          <div className="mt-7 form-group">
+    <main className="flex items-center justify-center h-screen">
+      <div className="w-full max-w-xs mx-auto">
+        <form className="px-8 pt-6 pb-8 mb-4 bg-white rounded shadow-md">
+          <div className="mb-4">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="email"
+            >
+              Email
+            </label>
             <input
+              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              id="email"
               type="email"
-              id=""
-              className="w-full border-2 rounded-md border-slate-400"
-              placeholder="user@gamil.com"
+              placeholder="dryvafrica@dryvafrica.com"
               value={values.email}
               onChange={handleInputChange}
               name="email"
             />
           </div>
-          <div className="mt-7 form-group">
+          <div className="mb-6">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="password"
+            >
+              Password
+            </label>
             <input
+              className="w-full px-3 py-2 mb-3 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              id="password"
               type="password"
-              id=""
-              className="w-full border-2 rounded-md border-slate-400"
-              placeholder="password"
+              placeholder="******************"
               value={values.password}
               onChange={handleInputChange}
               name="password"
             />
+            {/* <p className="text-xs italic text-red-500">Please choose a password.</p> */}
           </div>
-          <div className="flex items-center justify-center mb-4 text-center mt-7 form-group">
+          <div className="flex items-center justify-between">
             <button
-              className="flex items-center justify-center w-48 py-3 font-medium text-white bg-indigo-700 rounded-lg shadow-md"
+              className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline"
+              type="button"
               onClick={() => handleSubmit()}
             >
-              Log In
+              Sign In
             </button>
+            <a
+              className="inline-block text-sm font-bold text-blue-500 align-baseline hover:text-blue-800"
+              href="#"
+            >
+              Forgot Password?
+            </a>
           </div>
-        </div>
-      </section>
+        </form>
+        <p className="text-xs text-center text-gray-500">
+          &copy;2022 DryvAfrica. All rights reserved.
+        </p>
+      </div>
     </main>
   );
 };
