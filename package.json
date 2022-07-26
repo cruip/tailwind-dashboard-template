@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.6.9",
+    "@headlessui/react": "^1.6.6",
     "@tailwindcss/forms": "^0.4.0",
     "chart.js": "^3.5.0",
     "chartjs-adapter-moment": "^1.0.0",

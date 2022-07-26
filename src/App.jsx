@@ -10,6 +10,7 @@ import "./charts/ChartjsConfig";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/login";
 import CustomerBooking from "./pages/CustomerBooking";
+import CustomerBookingDetail from "./pages/CustomerBookingDetail";
 
 function App() {
   const location = useLocation();
@@ -37,6 +38,14 @@ function App() {
           element={
             <ProtectedRoute>
               <CustomerBooking />
+            </ProtectedRoute>
+          }
+        />
+         <Route
+          path="/booking/:id"
+          element={
+            <ProtectedRoute>
+              <CustomerBookingDetail />
             </ProtectedRoute>
           }
         />

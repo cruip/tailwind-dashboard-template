@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Card } from "../partials/card/Card";
 import Page from "../partials/page";
 import { Table } from "../partials/table";
+import DropDown from "../partials/DropDown";
 
 const Datas = [
   {
@@ -65,48 +66,38 @@ const CustomerBooking = () => {
         <td>{data?.seat_no}</td>
 
         <td>
-          <button
-            id="dropdownDefault"
-            data-dropdown-toggle="dropdown"
-            className="inline-flex items-center px-2 py-1 text-sm font-medium text-center text-white rounded-lg bg-sky-800 hover:bg-sky-600 focus:outline-none "
-            type="button"
-          >
-            action {" "}
-            <svg
-              className="w-4 h-4 ml-2"
-              aria-hidden="true"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M19 9l-7 7-7-7"
-              ></path>
-            </svg>
-          </button>
-
-          <div
-            id="dropdown"
-            className="z-10 hidden bg-white divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700"
-          >
-            <ul
-              className="py-1 text-sm text-gray-700 dark:text-gray-200"
-              aria-labelledby="dropdownDefault"
-            >
-              <li>
-                <a
-                  href="#"
-                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                >
-                  Dashboard
-                </a>
-              </li>
-            </ul>
-          </div>
+          <DropDown links={[
+            {
+              name: 'View Booking',
+              isLink: true,
+              onclick: () => {console.log('kki')},
+              link: `${data.id}`,
+            },
+            {
+              name: 'cancel Booking',
+              isLink: false,
+              onclick: () => {console.log('kki')},
+              link: '',
+            },
+            {
+              name: 'View Invoice',
+              isLink: false,
+              onclick: () => {console.log('kki')},
+              link: '',
+            },
+            {
+              name: 'Confirm Booking',
+              isLink: false,
+              onclick: () => {console.log('kki')},
+              link: '',
+            },
+            {
+              name: 'Reschedule Booking',
+              isLink: false,
+              onclick: () => {console.log('kki')},
+              link: '',
+            },
+          ]}/>
         </td>
       </tr>
     );
