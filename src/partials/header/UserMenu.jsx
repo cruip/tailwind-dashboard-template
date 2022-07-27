@@ -7,7 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import UserAvatar from '../../images/user-avatar-32.png';
 
 function UserMenu() {
-  const { user, logout } = useContext(AuthContext);
+  const { logout } = useContext(AuthContext);
+  const userData = JSON.parse(localStorage.getItem('userData'));
+  const user = userData?.authenticate?.user
   let navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -25,7 +27,7 @@ function UserMenu() {
   // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }) => {
-      if (!dropdownOpen || dropdown?.current.contains(target) || trigger.current.contains(target)) return;
+      if (!dropdownOpen || dropdown?.current?.contains(target) || trigger?.current?.contains(target)) return;
       setDropdownOpen(false);
     };
     document.addEventListener('click', clickHandler);
@@ -53,7 +55,7 @@ function UserMenu() {
       >
         <img className="w-8 h-8 rounded-full" src={UserAvatar} width="32" height="32" alt="User" />
         <div className="flex items-center truncate">
-          <span className="ml-2 text-sm font-medium truncate group-hover:text-slate-800">Acme Inc.</span>
+          <span className="ml-2 text-sm font-medium truncate group-hover:text-slate-800">{user?.firstName || ''} {user?.lastName || ''}</span>
           <svg className="w-3 h-3 ml-1 fill-current shrink-0 text-slate-400" viewBox="0 0 12 12">
             <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
           </svg>
@@ -76,11 +78,11 @@ function UserMenu() {
           onBlur={() => setDropdownOpen(false)}
         >
           <div className="pt-0.5 pb-2 px-3 mb-1 border-b border-slate-200">
-            <div className="font-medium text-slate-800">Acme Inc.</div>
-            <div className="text-xs italic text-slate-500">Administrator</div>
+            <div className="font-medium text-slate-800">{user?.firstName || ''} {user?.lastName || ''}</div>
+            <div className="text-xs italic text-slate-500">{user?.__typename}</div>
           </div>
           <ul>
-            <li>
+            {/* <li>
               <Link
                 className="flex items-center px-3 py-1 text-sm font-medium text-indigo-500 hover:text-indigo-600"
                 to="/"
@@ -88,7 +90,7 @@ function UserMenu() {
               >
                 Settings
               </Link>
-            </li>
+            </li> */}
             <li>
               <span
                 className="flex items-center px-3 py-1 text-sm font-medium text-indigo-500 cursor-pointer hover:text-indigo-600"

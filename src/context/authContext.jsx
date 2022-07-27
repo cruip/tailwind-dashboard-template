@@ -17,7 +17,7 @@ const AuthContext = createContext({
 
 const authReducer = (state, action) => {
     if(action.type === 'LOGIN') {
-        // console.log(state, action);
+        console.log(state, action.payload, 'payload');
         return {
             ...state,
             user: action.payload
