@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card } from "../partials/card/Card";
 import Page from "../partials/page";
 import { Table } from "../partials/table";
 import DropDown from "../partials/DropDown";
 import Modal from "../partials/modal/Modal";
 import { SVGIcon } from "../partials/icons/SvgIcon";
+import { useQuery } from "@apollo/client";
+import { getAllTransporter } from "../services/transportaterService";
 
 const Datas = [
   {
@@ -38,10 +40,19 @@ const TransportCompanies = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(3);
   const [tableLoad, setTableLoad] = useState(false);
-  const [data, setData] = useState(Datas);
+  const [datas, setData] = useState(null);
   const [deactivateModal, setDeactivateModal] = useState(false);
   const [activateModal, setActivateModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
+
+  const { loading, error, data } = useQuery(getAllTransporter);
+  // console.log(loading, error,data, 'seee');
+
+    useEffect(() => {
+        if(loading === false && data){
+            setData(data?.getTransporters?.nodes);
+        }
+    }, [loading, data])
 
   const onPrevPage = () => {
     setCurrentPage((prevState) => prevState - 1);
@@ -62,19 +73,19 @@ const TransportCompanies = () => {
   }
   const tableHeader = [
     "Company Name",
-    "Company Id",
+    "Company Address",
     "Company phone",
-    "Company Email",
+    "Company Website",
     "Action",
   ];
 
-  const tableRow = (data) => {
+  const tableRow = (datas) => {
     return (
-      <tr key={data?.id} className="border-b-2 border-slate-200">
-        <td>{data?.customer_name}</td>
-        <td>{data?.id}</td>
-        <td>{data?.customer_phone}</td>
-        <td>{data?.customer_email}</td>
+      <tr key={datas?._id} className="border-b-2 border-slate-200">
+        <td>{datas?.name}</td>
+        <td>{datas?.address}</td>
+        <td>{datas?.contactPhoneNumber}</td>
+        <td>{datas?.website}</td>
 
         <td>
           <DropDown
@@ -83,7 +94,7 @@ const TransportCompanies = () => {
                 name: "View Company",
                 isLink: true,
                 onclick: () => {},
-                link: `${data.id}`,
+                link: `${datas?._id}`,
               },
               {
                 name: "Edit",
@@ -182,7 +193,7 @@ const TransportCompanies = () => {
             </div>
             <div className="mt-10 ">
               <Table
-                data={data}
+                data={datas}
                 onNext={onNextPage}
                 onPrev={onPrevPage}
                 currentPage={currentPage}
