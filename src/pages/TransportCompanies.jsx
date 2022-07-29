@@ -5,35 +5,9 @@ import { Table } from "../partials/table";
 import DropDown from "../partials/DropDown";
 import Modal from "../partials/modal/Modal";
 import { SVGIcon } from "../partials/icons/SvgIcon";
-import { useQuery } from "@apollo/client";
-import { getAllTransporter } from "../services/transportaterService";
+import { useQuery, useMutation } from "@apollo/client";
+import { getAllTransporter, addTransport } from "../services/transportaterService";
 
-const Datas = [
-  {
-    id: 1,
-    customer_name: "Ballack",
-    customer_phone: "07032880693",
-    customer_email: "me@gmail.com",
-  },
-  {
-    id: 2,
-    customer_name: "Ballack",
-    customer_phone: "07032880693",
-    customer_email: "me@gmail.com",
-  },
-  {
-    id: 3,
-    customer_name: "Ballack",
-    customer_phone: "07032880693",
-    customer_email: "me@gmail.com",
-  },
-  {
-    id: 4,
-    customer_name: "Ballack",
-    customer_phone: "07032880693",
-    customer_email: "me@gmail.com",
-  },
-];
 
 const TransportCompanies = () => {
   const [limit, setLimit] = useState(10);
@@ -44,10 +18,21 @@ const TransportCompanies = () => {
   const [deactivateModal, setDeactivateModal] = useState(false);
   const [activateModal, setActivateModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
+  const [addTransportModal, setAddTransportModal] = useState(false);
+  const [values, setValues] = useState({
+    email: "",
+    name: "",
+    address: "",
+    website: '',
+    contactPhoneNumber: "",
+    logo: "",
+    status: 'true',
+    transporterId: 'guo',
+    terminals: ['629cb14b66e7a3bcc6f7212c']
+  });
 
-  const { loading, error, data } = useQuery(getAllTransporter);
-  // console.log(loading, error,data, 'seee');
-
+  const { loading, data } = useQuery(getAllTransporter);
+  const [createTransport, {  error }] = useMutation(addTransport);
     useEffect(() => {
         if(loading === false && data){
             setData(data?.getTransporters?.nodes);
@@ -71,6 +56,24 @@ const TransportCompanies = () => {
   const toggleEditModal = () => {
     setEditModal(!editModal)
   }
+
+  const toggleAddTransporModal = () => {
+    setAddTransportModal(!addTransportModal)
+  }
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setValues({
+      ...values,
+      [name]: value,
+    });
+  };
+
+  const handleCreateTranport = () => {
+    createTransport({ variables: { ...values } });
+    
+  };
+  
   const tableHeader = [
     "Company Name",
     "Company Address",
@@ -132,7 +135,7 @@ const TransportCompanies = () => {
       <section>
         <div className="flex items-center justify-between mb-6">
           <p>Add a Transport Company</p>
-          <button className="px-4 py-2 text-white rounded-md w-52 bg-sky-800">
+          <button className="px-4 py-2 text-white rounded-md w-52 bg-sky-800" onClick={toggleAddTransporModal}>
             Add Company
           </button>
         </div>
@@ -232,6 +235,158 @@ const TransportCompanies = () => {
         buttonText="Edit"
       >
         <p>Edit this Company</p>
+      </Modal>
+      <Modal
+        show={addTransportModal}
+        size="md"
+        onHide={toggleAddTransporModal}
+        buttonText="Add"
+        onClick = {handleCreateTranport}
+      >
+        <p>Add a transport company</p>
+        <div className="px-8 pt-6 pb-8 mb-4 bg-white rounded shadow-md">
+          <div className="mb-4">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="name"
+            >
+             company name
+            </label>
+            <input
+              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              id="name"
+              type="text"
+              placeholder="name"
+              value={values.name}
+              onChange={handleInputChange}
+              name="name"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="website"
+            >
+             company website
+            </label>
+            <input
+              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              id="website"
+              type="text"
+              placeholder="website"
+              value={values.website}
+              onChange={handleInputChange}
+              name="website"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="address"
+            >
+             company address
+            </label>
+            <input
+              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              id="address"
+              type="text"
+              placeholder="address"
+              value={values.address}
+              onChange={handleInputChange}
+              name="address"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="email"
+            >
+             company email
+            </label>
+            <input
+              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              id="email"
+              type="email"
+              placeholder="email"
+              value={values.email}
+              onChange={handleInputChange}
+              name="email"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="phone"
+            >
+             company Phone
+            </label>
+            <input
+              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              id="phone"
+              type="telephone"
+              placeholder="phone number"
+              value={values.contactPhoneNumber}
+              onChange={handleInputChange}
+              name="contactPhoneNumber"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="logo"
+            >
+             company Logo
+            </label>
+            <input
+              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              id="logo"
+              type="text"
+              placeholder="paste logo url"
+              value={values.logo}
+              onChange={handleInputChange}
+              name="logo"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="status"
+            >
+             company status
+            </label>
+            <select className="block w-full px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline"
+            value={values.status}
+            onChange={handleInputChange}
+            name="status"
+            >
+              <option value='true'>
+                true
+              </option>
+              <option value='false'>false</option>
+            </select>
+          </div>
+          <div className="mb-4">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="id"
+            >
+             location Id
+            </label>
+            <select className="block w-full px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline"
+            value={values.transporterId}
+            onChange={handleInputChange}
+            name="transporterId"
+            >
+              <option value=''>
+                GUO
+              </option>
+              <option value='gog'>GOG</option>
+              <option value='ekeson'>EKESON</option>
+              <option value='libra'>LIBRA</option>
+              <option value="young">THE_YOUNG</option>
+            </select>
+          </div>
+        </div>
       </Modal>
     </Page>
   );

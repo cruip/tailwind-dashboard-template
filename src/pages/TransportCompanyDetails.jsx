@@ -1,14 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card } from "../partials/card/Card";
 import { Tab, Tabs, TabPane } from "../partials/Tabs";
 import Page from "../partials/page";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Modal from "../partials/modal/Modal";
+import { useQuery } from "@apollo/client";
+import { getSingleTransport } from "../services/transportaterService";
+// import { Link, useParams} from 'react-router-dom';
 
 const TransportCompany = () => {
   const [deactivateModal, setDeactivateModal] = useState(false);
   const [activateModal, setActivateModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
+  const [datas, setData] = useState(null)
+  const {id} = useParams();
+  const userId = id
+  console.log(id, typeof id);
 
   const toggleDeactivateModal = () => {
     setDeactivateModal(!deactivateModal);
@@ -22,6 +29,23 @@ const TransportCompany = () => {
     setEditModal(!editModal)
   }
 
+  const { loading, error, data } = useQuery(getSingleTransport, {
+    variables: { 'transporterId': userId },
+  });
+  console.log(loading, error, data, 'ytry');
+  
+  useEffect(() => {
+    if(loading === false && data){
+        setData(data?.getTransporter);
+    }
+}, [loading, data])
+
+if(loading) {
+ return <div>Loading...</div>
+}
+if(error) {
+  return <div>Something went wrong</div>
+}
   return (
     <Page>
       <div>
@@ -32,21 +56,21 @@ const TransportCompany = () => {
         </Link>
       </div>
       <h2 className="text-xl font-semibold text-sky-800">
-        Welcome to GUO Company Profile
+        Welcome to {datas?.name || 'Your'} Company Profile
       </h2>
       <div className="w-full mx-auto mt-8 xl:w-4/5">
         <Card width="w-full">
           <div className="mt-5 ">
             <h2 className="mb-4 text-xl font-semibold text-slate-800">
-              Company name: GUO
+              Company name: {datas?.name}
             </h2>
             <h3 className="mb-2 text-lg text-slate-600">
-              email: okenwa1993@gmail.com
+              website: {datas?.website}
             </h3>
             <h3 className="mb-2 text-lg text-slate-600">
-              Adress: Okestina close enugu
+              Adress: {datas?.address}
             </h3>
-            <h3 className="mb-2 text-lg text-slate-600">Phone: 07023880693</h3>
+            <h3 className="mb-2 text-lg text-slate-600">Phone: {datas?.contactPhoneNumber}</h3>
           </div>
           <div className="flex flex-wrap items-center mt-6">
             <button
