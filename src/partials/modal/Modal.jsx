@@ -3,7 +3,7 @@ import { Fragment, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 // import { ExclamationIcon } from '@heroicons/react/outline';
 
-export default function Modal({show, onHide, children, buttonText, onClick}) {
+export default function Modal({show, onHide, children, buttonText, onclick}) {
   const [open, setOpen] = useState(true);
 
   const cancelButtonRef = useRef(null);
@@ -55,7 +55,9 @@ export default function Modal({show, onHide, children, buttonText, onClick}) {
                   type="button"
                   className="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-blue-500 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
                   onClick={() => {
-                    onClick? onClick(): '';
+                    console.log('kin');
+                    onclick? onclick(): '';
+                    console.log(onclick, 'click');
                     onHide()
                   }}
                 >

@@ -1,37 +1,8 @@
 import { gql } from "@apollo/client";
 import client from "../apollo-client";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-export const getAllTransporter = gql`
-query{
-  getTransporters(page: 1, size: 10){
-    pageInfo{
-      pageSize
-      lastPage
-      totalItems
-      nextPage
-      hasNextPage
-      hasPreviousPage
-    }
-    nodes{
-      _id
-      address
-      name
-      terminals{
-        _id
-        address
-        streetAddress
-        latitude
-        longitude
-        locationName
-        locationCode
-      }
-      contactPhoneNumber
-      status
-      website
-    }
-  }
- }
-`
 
 export const getSingleTransport = gql`
 query Transport($transporterId: String!) {
@@ -56,19 +27,96 @@ query Transport($transporterId: String!) {
   }
 `
 
-export const addTransport = gql`
-mutation addTrans($name: String!, $address: String!, $logo: String!, $transporterId: String!, $status: String!, $contactPhoneNumber: String!, $email: String!, $website: String!, $terminals: [String] ){
-  addTransporter(name: $name, address: $address, logo: $logo,transporterId:$transporterId, terminals: $terminals, status: $status, contactPhoneNumber: $contactPhoneNumber, email:$email, website:$website){
-    _id
-    name
-    address
-    logo
-    terminals{
-      latitude
+export const getAllTransporter = async (page = 1, size= 10) => {
+  const { data, error, loading } = await client.query({
+      query: gql`
+      query transport($page: Int, $size: Int){
+        getTransporters(page: $page, size: $size){
+          pageInfo{
+            pageSize
+            lastPage
+            totalItems
+            nextPage
+            hasNextPage
+            hasPreviousPage
+          }
+          nodes{
+            _id
+            address
+            name
+            terminals{
+              _id
+              address
+              streetAddress
+              latitude
+              longitude
+              locationName
+              locationCode
+            }
+            contactPhoneNumber
+            status
+            website
+          }
+        }
+       }
+     `,
+      variables: {
+          page,
+          size,
+      },
+  });
+  return {data, loading, error}
+};
+
+export const addTransport = async (event) => {
+  const { name, address, logo, transporterId, status, contactPhoneNumber, email, website, terminals } = event;
+  const { data, errors } = await client.mutate({
+    mutation: gql`
+    mutation addTrans($name: String!, $address: String!, $logo: String!, $transporterId: String!, $status: String!, $contactPhoneNumber: String!, $email: String!, $website: String!, $terminals: [String] ){
+      addTransporter(name: $name, address: $address, logo: $logo,transporterId:$transporterId, terminals: $terminals, status: $status, contactPhoneNumber: $contactPhoneNumber, email:$email, website:$website){
+        _id
+        name
+        address
+        logo
+        terminals{
+          latitude
+        }
+        status
+        contactPhoneNumber
+        website
+      }
     }
-    status
-    contactPhoneNumber
-    website
+    `,
+    variables: {
+      name, address, logo, transporterId, status, contactPhoneNumber, email, website, terminals
+    },
+  });
+  if(data) {
+    toast.success('Transport added successfully')
   }
+  if(errors) {
+    toast.error('oops something went wrong')
+  }
+  return {data, errors}
+};
+
+export const deleteTransport = async (transporterId) => {
+  console.log(transporterId, 'id');
+  const { data, errors } = await client.mutate({
+    mutation: gql`
+    mutation deleteTrans($transporterId: String! ){
+      deleteTransporter(transporterId: $transporterId)
+    }
+    `,
+    variables: {
+     transporterId
+    },
+  });
+  if(data?.deleteTransporter) {
+    toast.success('Transport deleted successfully')
+  }else {
+    toast.error('unable to delete Transport')
+  }
+  console.log(data, errors, 'grph');
+  return {data, errors}
 }
-`

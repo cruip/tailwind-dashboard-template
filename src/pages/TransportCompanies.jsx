@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from "react";
+import 'react-toastify/dist/ReactToastify.css';
 import { Card } from "../partials/card/Card";
 import Page from "../partials/page";
 import { Table } from "../partials/table";
 import DropDown from "../partials/DropDown";
 import Modal from "../partials/modal/Modal";
 import { SVGIcon } from "../partials/icons/SvgIcon";
-import { useQuery, useMutation } from "@apollo/client";
-import { getAllTransporter, addTransport } from "../services/transportaterService";
+import { ToastContainer } from 'react-toastify';
+// import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
+import { getAllTransporter, addTransport, deleteTransport} from "../services/transportaterService";
 
 
 const TransportCompanies = () => {
   const [limit, setLimit] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(3);
-  const [tableLoad, setTableLoad] = useState(false);
+  const [tableLoad, setTableLoad] = useState(true);
   const [datas, setData] = useState(null);
+  const [id, setId] = useState('');
   const [deactivateModal, setDeactivateModal] = useState(false);
   const [activateModal, setActivateModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
@@ -31,13 +34,14 @@ const TransportCompanies = () => {
     terminals: ['629cb14b66e7a3bcc6f7212c']
   });
 
-  const { loading, data } = useQuery(getAllTransporter);
-  const [createTransport, {  error }] = useMutation(addTransport);
+  const fetchAllTransport = async() => {
+    const {data, loading} = await getAllTransporter()
+    setTableLoad(false)
+    setData(data?.getTransporters?.nodes)
+  }
     useEffect(() => {
-        if(loading === false && data){
-            setData(data?.getTransporters?.nodes);
-        }
-    }, [loading, data])
+      fetchAllTransport()
+    }, [])
 
   const onPrevPage = () => {
     setCurrentPage((prevState) => prevState - 1);
@@ -66,13 +70,19 @@ const TransportCompanies = () => {
     setValues({
       ...values,
       [name]: value,
-    });
+    }); 
   };
 
   const handleCreateTranport = () => {
-    createTransport({ variables: { ...values } });
-    
+   if(Object.values(values).some(o => o === '')) return false;
+    addTransport({...values})
+    fetchAllTransport()
   };
+
+  // const deleteSingleTransport = () => {
+  //   console.log(id, 'id');
+  //   deleteTransport(id)
+  // }
   
   const tableHeader = [
     "Company Name",
@@ -104,14 +114,16 @@ const TransportCompanies = () => {
                 isLink: false,
                 onclick: () => {
                     toggleEditModal();
+                    setId(datas?._id)
                 },
                 link: "",
               },
               {
-                name: "De-Activate Company",
+                name: "Delete Company",
                 isLink: false,
                 onclick: () => {
                   toggleDeactivateModal();
+                  setId(datas?._id)
                 },
                 link: "",
               },
@@ -132,6 +144,7 @@ const TransportCompanies = () => {
 
   return (
     <Page>
+      <ToastContainer />
       <section>
         <div className="flex items-center justify-between mb-6">
           <p>Add a Transport Company</p>
@@ -216,9 +229,10 @@ const TransportCompanies = () => {
         show={deactivateModal}
         size="md"
         onHide={toggleDeactivateModal}
-        buttonText="De-Activate"
+        buttonText="Delete"
+        onclick={() => deleteTransport(id)}
       >
-        <p>Do you want to Deactivate this account? </p>
+        <p>Do you want to Delete this account? </p>
       </Modal>
       <Modal
         show={activateModal}
@@ -241,7 +255,7 @@ const TransportCompanies = () => {
         size="md"
         onHide={toggleAddTransporModal}
         buttonText="Add"
-        onClick = {handleCreateTranport}
+        onclick = {handleCreateTranport}
       >
         <p>Add a transport company</p>
         <div className="px-8 pt-6 pb-8 mb-4 bg-white rounded shadow-md">

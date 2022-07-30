@@ -61,7 +61,7 @@ export const Table = ({
         <>
           {data?.length ? (
             <>
-              <table className="w-full overflow-x-auto bg-white shadow-lg">
+              <table className="w-full overflow-x-auto bg-white shadow-lg table-fixed">
                 <thead>
                   <tr className="text-left bg-blue-100">
                     {headers?.length
