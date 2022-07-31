@@ -56,6 +56,31 @@ export const getAllTransporter = async (page = 1, size= 10) => {
             contactPhoneNumber
             status
             website
+            logo
+          }
+        }
+       }
+     `,
+      variables: {
+          page,
+          size,
+      },
+  });
+  return {data, loading, error}
+};
+
+export const getAllTransporterName = async (page = 1, size= 10) => {
+  const { data, error, loading } = await client.query({
+      query: gql`
+      query transport($page: Int, $size: Int){
+        getTransporters(page: $page, size: $size){
+          pageInfo{
+            pageSize
+            totalItems
+          }
+          nodes{
+            _id
+            name
           }
         }
        }
@@ -120,3 +145,35 @@ export const deleteTransport = async (transporterId) => {
   console.log(data, errors, 'grph');
   return {data, errors}
 }
+
+export const updateTransport = async (event) => {
+  const { name, address, logo, transporterId, status, contactPhoneNumber, email, website, terminals } = event;
+  const { data, errors } = await client.mutate({
+    mutation: gql`
+    mutation updateTrans($name: String!, $address: String!, $logo: String!, $transporterId: String!, $status: String!, $contactPhoneNumber: String!, $email: String!, $website: String!, $terminals: [String] ){
+      updateTransporter(name: $name, address: $address, logo: $logo,transporterId:$transporterId, terminals: $terminals, status: $status, contactPhoneNumber: $contactPhoneNumber, email:$email, website:$website){
+        _id
+        name
+        address
+        logo
+        terminals{
+          latitude
+        }
+        status
+        contactPhoneNumber
+        website
+      }
+    }
+    `,
+    variables: {
+      name, address, logo, transporterId, status, contactPhoneNumber, email, website, terminals
+    },
+  });
+  if(data) {
+    toast.success('Transport updated successfully')
+  }
+  if(errors) {
+    toast.error('oops something went wrong')
+  }
+  return {data, errors}
+};

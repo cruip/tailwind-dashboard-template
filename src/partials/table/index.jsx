@@ -17,7 +17,6 @@ export const Table = ({
   loadingText,
   paginated,
   limit,
-  onSearch,
   searchTerm,
 }) => {
   // console.log(data, totalPages, currentPage, paginated, 'table');
@@ -34,26 +33,6 @@ export const Table = ({
         ) : null}
 
         {/*<div className="col-sm-12 col-md-8">&nbsp;</div>*/}
-        {onSearch ? (
-          <div className="col-sm-12 col-md-4">
-            <div className="form-group">
-              <div className="input-group">
-                <input
-                  onChange={onSearch}
-                  type="text"
-                  className="form-control"
-                  placeholder="Search"
-                  value={searchTerm}
-                />
-                <div className="input-group-append">
-                  <button className="btn btn-sm btn-facebook" type="button">
-                    <i className="mdi mdi-magnify" />
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        ) : null}
       </div>
       {loading ? (
         <div>{loadingText}</div>

@@ -8,15 +8,16 @@ import Modal from "../partials/modal/Modal";
 import { SVGIcon } from "../partials/icons/SvgIcon";
 import { ToastContainer } from 'react-toastify';
 // import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
-import { getAllTransporter, addTransport, deleteTransport} from "../services/transportaterService";
+import { getAllTransporter, addTransport, deleteTransport, getAllTransporterName} from "../services/transportaterService";
 
 
 const TransportCompanies = () => {
   const [limit, setLimit] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(3);
   const [tableLoad, setTableLoad] = useState(true);
   const [datas, setData] = useState(null);
+  const [companyNames, setCompanyNames] = useState(null)
+  const [totalPages, setTotalPages] = useState(null);
   const [id, setId] = useState('');
   const [deactivateModal, setDeactivateModal] = useState(false);
   const [activateModal, setActivateModal] = useState(false);
@@ -33,15 +34,31 @@ const TransportCompanies = () => {
     transporterId: 'guo',
     terminals: ['629cb14b66e7a3bcc6f7212c']
   });
+  const [searchQuery, setSearchQuery] = useState("");
 
   const fetchAllTransport = async() => {
     const {data, loading} = await getAllTransporter()
     setTableLoad(false)
+    console.log(data?.getTransporters, 'kind');
     setData(data?.getTransporters?.nodes)
+    setTotalPages(Math.ceil(Number(data?.getTransporters?.pageInfo?.totalItems)/limit))
+  }
+  const fetchAllTransportName = async() => {
+    const {data, loading} = await getAllTransporterName()
+    setTableLoad(false)
+    console.log(data?.getTransporters, 'kindly');
+    setCompanyNames(data?.getTransporters?.nodes)
   }
     useEffect(() => {
       fetchAllTransport()
+      fetchAllTransportName()
     }, [])
+
+    useEffect(() => {
+     onFilter()
+     console.log(searchQuery, 'query');
+    }, [searchQuery])
+
 
   const onPrevPage = () => {
     setCurrentPage((prevState) => prevState - 1);
@@ -73,16 +90,31 @@ const TransportCompanies = () => {
     }); 
   };
 
+  const onFilter = () => {
+    if(!searchQuery) fetchAllTransport();
+    if (searchQuery) {
+      const arrayData = datas?.filter((item) => { 
+        if (
+          item.name
+            .toLowerCase()
+            .trim()
+            .includes(searchQuery.toLowerCase().trim())
+        ) {
+          
+          return item
+        }
+        return false
+      });
+      setData(arrayData);
+      // setIsSearched(true);
+    }
+  };
+
   const handleCreateTranport = () => {
    if(Object.values(values).some(o => o === '')) return false;
     addTransport({...values})
     fetchAllTransport()
   };
-
-  // const deleteSingleTransport = () => {
-  //   console.log(id, 'id');
-  //   deleteTransport(id)
-  // }
   
   const tableHeader = [
     "Company Name",
@@ -197,6 +229,7 @@ const TransportCompanies = () => {
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Search company name"
                     required
+                    onChange={(e) => setSearchQuery(e.target.value)}
                   />
                   <button
                     type="button"
@@ -219,7 +252,7 @@ const TransportCompanies = () => {
                 loading={tableLoad}
                 rowFormat={tableRow}
                 headers={tableHeader}
-                paginated={true}
+                paginated={datas?.length > 0}
               />
             </div>
           </Card>
