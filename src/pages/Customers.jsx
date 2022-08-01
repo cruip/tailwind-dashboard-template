@@ -1,46 +1,52 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card } from "../partials/card/Card";
 import Page from "../partials/page";
 import { Table } from "../partials/table";
 import DropDown from "../partials/DropDown";
 import Modal from "../partials/modal/Modal";
 import { SVGIcon } from "../partials/icons/SvgIcon";
-
-const Datas = [
-  {
-    id: 1,
-    customer_name: "Ballack",
-    customer_phone: "07032880693",
-    customer_email: "me@gmail.com",
-  },
-  {
-    id: 2,
-    customer_name: "Ballack",
-    customer_phone: "07032880693",
-    customer_email: "me@gmail.com",
-  },
-  {
-    id: 3,
-    customer_name: "Ballack",
-    customer_phone: "07032880693",
-    customer_email: "me@gmail.com",
-  },
-  {
-    id: 4,
-    customer_name: "Ballack",
-    customer_phone: "07032880693",
-    customer_email: "me@gmail.com",
-  },
-];
+import { getAllUsers } from "../services/userService";
 
 const Customers = () => {
   const [limit, setLimit] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(3);
-  const [tableLoad, setTableLoad] = useState(false);
-  const [data, setData] = useState(Datas);
+  const [totalPages, setTotalPages] = useState(1);
+  const [tableLoad, setTableLoad] = useState(true);
+  const [data, setData] = useState(null);
   const [deactivateModal, setDeactivateModal] = useState(false);
   const [activateModal, setActivateModal] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const fetchAllUser = async() => {
+    const {data, loading} = await getAllUsers(currentPage, limit)
+    setTableLoad(false)
+    setData(data?.getUsers?.nodes)
+    setCurrentPage(data?.getUsers?.pageInfo?.currentPage)
+    setTotalPages(Math.ceil(Number(data?.getUsers?.pageInfo?.totalItems)/limit))
+  }
+
+  const onFilter = () => {
+    if(!searchQuery) fetchAllUser();
+    if (searchQuery ) {
+      const arrayData = data?.filter((item) => { 
+        if (
+          item.firstName
+            .toLowerCase()
+            .trim()
+            .includes(searchQuery.toLowerCase().trim() )
+            || item.lastName
+            .toLowerCase()
+            .trim()
+            .includes(searchQuery.toLowerCase().trim() )
+        ) {
+          
+          return item
+        }
+        return false
+      });
+      setData(arrayData);
+    }
+  };
 
   const onPrevPage = () => {
     setCurrentPage((prevState) => prevState - 1);
@@ -56,9 +62,18 @@ const Customers = () => {
   const toggleActivateModal = () => {
     setActivateModal(!activateModal);
   };
+
+  useEffect(() => {
+    fetchAllUser()
+  }, [currentPage])
+
+  useEffect(() => {
+    onFilter()
+  }, [searchQuery])
+  
   const tableHeader = [
     "Customer Name",
-    "Customer Id",
+    "Booking Stat",
     "customer phone",
     "customer Email",
     "Action",
@@ -66,11 +81,11 @@ const Customers = () => {
 
   const tableRow = (data) => {
     return (
-      <tr key={data?.id} className="border-b-2 border-slate-200">
-        <td>{data?.customer_name}</td>
-        <td>{data?.id}</td>
-        <td>{data?.customer_phone}</td>
-        <td>{data?.customer_email}</td>
+      <tr key={data?._id} className="border-b-2 border-slate-200">
+        <td>{data?.firstName || ''} {data?.lastName || ''}</td>
+        <td>{data?.booking ? 'has bookings' : 'has no booking'}</td>
+        <td >{data?.phoneNo}</td>
+        <td>{data?.email}</td>
 
         <td>
           <DropDown
@@ -79,7 +94,7 @@ const Customers = () => {
                 name: "View Profile",
                 isLink: true,
                 onclick: () => {},
-                link: `${data.id}`,
+                link: `${data?._id}`,
               },
               {
                 name: "De-Activate Customer",
@@ -138,18 +153,11 @@ const Customers = () => {
       <section className="mt-10 ">
         <div className="col-12">
           <Card description={"Manage Customer"} width="w-full">
-            <div className="flex items-center justify-between w-full ">
-              <div className="flex items-center w-1/2">
-                <p className="mr-3 ">Filter By customer Name:</p>
-                <select className="block w-1/2 px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline">
-                  <option>All</option>
-                  <option>Option 2</option>
-                  <option>Option 3</option>
-                </select>
-              </div>
+            <div className="flex items-center justify-end w-full ">
+              
               <div className="flex items-center">
                 <label html="search" className="sr-only">
-                  Search
+                  Search customer name
                 </label>
                 <div className="relative w-full">
                   <input
@@ -158,6 +166,8 @@ const Customers = () => {
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Search customer"
                     required
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
                   />
                   <button
                     type="button"
@@ -180,7 +190,7 @@ const Customers = () => {
                 loading={tableLoad}
                 rowFormat={tableRow}
                 headers={tableHeader}
-                paginated={true}
+                paginated={data?.length > 0}
               />
             </div>
           </Card>

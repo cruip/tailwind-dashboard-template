@@ -15,12 +15,12 @@ export const Tabs = (props) => {
   
     return (
       <a
-        className={` inline-block w-1/2  rounded-lg px-4 py-2 shadow relative ${active ? 'bg-blue-600 text-white' : 'text-slate-600'
+        className={` inline-flex items-center justify-center w-1/2  rounded-lg px-4 py-2 shadow relative ${active ? 'bg-slate-300 text-slate-700' : 'text-slate-600'
           }`}
         onClick={() => setActiveTab(tabIndex)}
       >
        
-        <h6 className="flex items-center mb-3 font-bold">
+        <h6 className="font-bold">
           {label}
         </h6>
       </a>

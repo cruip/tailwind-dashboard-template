@@ -12,6 +12,7 @@ export const getOneTransport = async (transporterId) => {
         _id
         name
         address
+        email
         logo
         status
         contactPhoneNumber
@@ -52,6 +53,7 @@ export const getAllTransporter = async (page = 1, size= 10) => {
             _id
             address
             name
+            email
             terminals{
               _id
               address

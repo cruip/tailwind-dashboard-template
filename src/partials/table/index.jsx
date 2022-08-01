@@ -40,9 +40,9 @@ export const Table = ({
         <>
           {data?.length ? (
             <>
-              <table className="w-full overflow-x-auto bg-white shadow-lg table-fixed">
+              <table className="w-full bg-white shadow-lg table-auto">
                 <thead>
-                  <tr className="text-left bg-blue-100">
+                  <tr className="text-left bg-slate-200">
                     {headers?.length
                       ? headers.map((h, i) => {
                           return <th className="py-3" key={i}>{h}</th>;

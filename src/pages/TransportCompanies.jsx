@@ -39,9 +39,11 @@ const TransportCompanies = () => {
   const [filterValue, setFilterValue] = useState('all')
 
   const fetchAllTransport = async() => {
-    const {data, loading} = await getAllTransporter()
+    const {data, loading} = await getAllTransporter(currentPage, limit)
     setTableLoad(false)
+    console.log(data?.getTransporters?.nodes);
     setData(data?.getTransporters?.nodes)
+    setCurrentPage(Number(data?.getTransporters?.pageInfo?.nextPage) - Number(data?.getTransporters?.pageInfo?.lastPage))
     setTotalPages(Math.ceil(Number(data?.getTransporters?.pageInfo?.totalItems)/limit))
     let categories = [...new Set( data?.getTransporters?.nodes?.map((trans) => trans.name))]
     setCompanyNames(categories)
@@ -55,7 +57,7 @@ const TransportCompanies = () => {
   
     useEffect(() => {
       fetchAllTransport()
-    }, [])
+    }, [currentPage])
 
     useEffect(() => {
      onFilter()
@@ -64,6 +66,10 @@ const TransportCompanies = () => {
     useEffect(() => {
       onFilterSelect()
      }, [filterValue])
+     
+    //  useEffect(() => {
+
+    //  }, [currentPage])
 
 
   const onPrevPage = () => {
@@ -326,7 +332,7 @@ const TransportCompanies = () => {
               id="name"
               type="text"
               placeholder="name"
-              value={values.name}
+              value={values.name || ''}
               onChange={handleInputChange}
               name="name"
             />
@@ -343,7 +349,7 @@ const TransportCompanies = () => {
               id="website"
               type="text"
               placeholder="website"
-              value={values.website}
+              value={values.website || ''}
               onChange={handleInputChange}
               name="website"
             />
@@ -360,7 +366,7 @@ const TransportCompanies = () => {
               id="address"
               type="text"
               placeholder="address"
-              value={values.address}
+              value={values.address || ''}
               onChange={handleInputChange}
               name="address"
             />
@@ -377,7 +383,7 @@ const TransportCompanies = () => {
               id="email"
               type="email"
               placeholder="email"
-              value={values.email}
+              value={values.email || ''}
               onChange={handleInputChange}
               name="email"
             />
@@ -394,7 +400,7 @@ const TransportCompanies = () => {
               id="phone"
               type="tel"
               placeholder="phone number"
-              value={values.contactPhoneNumber}
+              value={values.contactPhoneNumber || ''}
               onChange={handleInputChange}
               name="contactPhoneNumber"
             />
@@ -411,7 +417,7 @@ const TransportCompanies = () => {
               id="logo"
               type="text"
               placeholder="paste logo url"
-              value={values.logo}
+              value={values.logo || ''}
               onChange={handleInputChange}
               name="logo"
             />

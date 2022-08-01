@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card } from "../partials/card/Card";
 import Page from "../partials/page";
 import { Table } from "../partials/table";
@@ -33,12 +33,17 @@ const CustomerBooking = () => {
 
   const fetchAllBookings = async() => {
     const {data, loading} = await getAllBookings()
+    console.log(data?.getBookings);
     setTableLoad(false)
-    setData(data?.getTransporters?.nodes)
+    setData(data?.getBookings?.nodes)
     setTotalPages(Math.ceil(Number(data?.getBookings?.pageInfo?.totalItems)/limit))
     // let categories = [...new Set( data?.getBookings?.nodes?.map((trans) => trans.name))]
     // setCompanyNames(categories)
   }
+
+  useEffect(() => {
+ fetchAllBookings()
+  }, [])
 
 
   const tableHeader = [
@@ -165,7 +170,7 @@ const CustomerBooking = () => {
                 loading={tableLoad}
                 rowFormat={tableRow}
                 headers={tableHeader}
-                paginated={true}
+                paginated={data?.length > 0}
               />
             </div>
           </Card>

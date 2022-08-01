@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
+import { SVGIcon } from './icons/SvgIcon';
 
 import SidebarLinkGroup from './SidebarLinkGroup';
 
@@ -62,7 +63,7 @@ function Sidebar({
         {/* Sidebar header */}
         <div className="flex justify-between pr-3 mb-10 sm:px-2">
           {/* Close button */}
-          <button
+          {/* <button
             ref={trigger}
             className="lg:hidden text-slate-500 hover:text-slate-400"
             onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -73,7 +74,7 @@ function Sidebar({
             <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path d="M10.7 18.7l1.4-1.4L7.8 13H20v-2H7.8l4.3-4.3-1.4-1.4L4 12z" />
             </svg>
-          </button>
+          </button> */}
           {/* Logo */}
           <NavLink end to="/" className="block">
             <svg width="32" height="32" viewBox="0 0 32 32">
@@ -108,60 +109,44 @@ function Sidebar({
               <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname === '/' && 'bg-slate-900'}`}>
                 <NavLink end to="/" className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname === '/' && 'hover:text-slate-200'}`}>
                   <div className="flex items-center">
-                    <svg className="w-6 h-6 shrink-0" viewBox="0 0 24 24">
-                      <path className={`fill-current text-slate-400 ${pathname === '/' && '!text-indigo-500'}`} d="M12 0C5.383 0 0 5.383 0 12s5.383 12 12 12 12-5.383 12-12S18.617 0 12 0z" />
-                      <path className={`fill-current text-slate-600 ${pathname === '/' && 'text-indigo-600'}`} d="M12 3c-4.963 0-9 4.037-9 9s4.037 9 9 9 9-4.037 9-9-4.037-9-9-9z" />
-                      <path className={`fill-current text-slate-400 ${pathname === '/' && 'text-indigo-200'}`} d="M12 15c-1.654 0-3-1.346-3-3 0-.462.113-.894.3-1.285L6 6l4.714 3.301A2.973 2.973 0 0112 9c1.654 0 3 1.346 3 3s-1.346 3-3 3z" />
-                    </svg>
-                    <span className="ml-3 text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">Dashboard</span>
+                  <SVGIcon name="dashboard" />
+                    <span className={`ml-3 text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100`}>Dashboard</span>
                   </div>
                 </NavLink>
               </li>
               {/* Bookings */}
-              <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname.includes('analytics') && 'bg-slate-900'}`}>
-                <NavLink end to="/booking" className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes('analytics') && 'hover:text-slate-200'}`}>
+              <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname.includes('booking') && 'bg-slate-900'}`}>
+                <NavLink end to="/booking" className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes('booking') && 'hover:text-slate-200'}`}>
                   <div className="flex items-center">
-                    <svg className="w-6 h-6 shrink-0" viewBox="0 0 24 24">
-                      <path className={`fill-current text-slate-600 ${pathname.includes('analytics') && 'text-indigo-500'}`} d="M0 20h24v2H0z" />
-                      <path className={`fill-current text-slate-400 ${pathname.includes('analytics') && 'text-indigo-300'}`} d="M4 18h2a1 1 0 001-1V8a1 1 0 00-1-1H4a1 1 0 00-1 1v9a1 1 0 001 1zM11 18h2a1 1 0 001-1V3a1 1 0 00-1-1h-2a1 1 0 00-1 1v14a1 1 0 001 1zM17 12v5a1 1 0 001 1h2a1 1 0 001-1v-5a1 1 0 00-1-1h-2a1 1 0 00-1 1z" />
-                    </svg>
+                  <SVGIcon name="book" />
                     <span className="ml-3 text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">Customer Booking</span>
                   </div>
                 </NavLink>
               </li>
               {/* Customers */}
-              <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname.includes('analytics') && 'bg-slate-900'}`}>
-                <NavLink end to="/customers" className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes('analytics') && 'hover:text-slate-200'}`}>
+              <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname.includes('customers') && 'bg-slate-900'}`}>
+                <NavLink end to="/customers" className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes('customers') && 'hover:text-slate-200'}`}>
                   <div className="flex items-center">
-                    <svg className="w-6 h-6 shrink-0" viewBox="0 0 24 24">
-                      <path className={`fill-current text-slate-600 ${pathname.includes('analytics') && 'text-indigo-500'}`} d="M0 20h24v2H0z" />
-                      <path className={`fill-current text-slate-400 ${pathname.includes('analytics') && 'text-indigo-300'}`} d="M4 18h2a1 1 0 001-1V8a1 1 0 00-1-1H4a1 1 0 00-1 1v9a1 1 0 001 1zM11 18h2a1 1 0 001-1V3a1 1 0 00-1-1h-2a1 1 0 00-1 1v14a1 1 0 001 1zM17 12v5a1 1 0 001 1h2a1 1 0 001-1v-5a1 1 0 00-1-1h-2a1 1 0 00-1 1z" />
-                    </svg>
+                  <SVGIcon name="users" />
                     <span className="ml-3 text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">Customers</span>
                   </div>
                 </NavLink>
               </li>
                {/* Transport Companies */}
-               <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname.includes('analytics') && 'bg-slate-900'}`}>
-                <NavLink end to="/transport_companies" className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes('analytics') && 'hover:text-slate-200'}`}>
+               <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname.includes('transport_companies') && 'bg-slate-900'}`}>
+                <NavLink end to="/transport_companies" className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes('transport_companies') && 'hover:text-slate-200'}`}>
                   <div className="flex items-center">
-                    <svg className="w-6 h-6 shrink-0" viewBox="0 0 24 24">
-                      <path className={`fill-current text-slate-600 ${pathname.includes('analytics') && 'text-indigo-500'}`} d="M0 20h24v2H0z" />
-                      <path className={`fill-current text-slate-400 ${pathname.includes('analytics') && 'text-indigo-300'}`} d="M4 18h2a1 1 0 001-1V8a1 1 0 00-1-1H4a1 1 0 00-1 1v9a1 1 0 001 1zM11 18h2a1 1 0 001-1V3a1 1 0 00-1-1h-2a1 1 0 00-1 1v14a1 1 0 001 1zM17 12v5a1 1 0 001 1h2a1 1 0 001-1v-5a1 1 0 00-1-1h-2a1 1 0 00-1 1z" />
-                    </svg>
+                  <SVGIcon name="bus" />
                     <span className="ml-3 text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">Transport Companies</span>
                   </div>
                 </NavLink>
               </li>
 
               {/* Admin pricing */}
-              <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname.includes('analytics') && 'bg-slate-900'}`}>
-                <NavLink end to="/admin_pricing" className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes('analytics') && 'hover:text-slate-200'}`}>
+              <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname.includes('admin_pricing') && 'bg-slate-900'}`}>
+                <NavLink end to="/admin_pricing" className={`block text-slate-200 hover:text-white truncate transition duration-150 ${pathname.includes('admin_pricing') && 'hover:text-slate-200'}`}>
                   <div className="flex items-center">
-                    <svg className="w-6 h-6 shrink-0" viewBox="0 0 24 24">
-                      <path className={`fill-current text-slate-600 ${pathname.includes('analytics') && 'text-indigo-500'}`} d="M0 20h24v2H0z" />
-                      <path className={`fill-current text-slate-400 ${pathname.includes('analytics') && 'text-indigo-300'}`} d="M4 18h2a1 1 0 001-1V8a1 1 0 00-1-1H4a1 1 0 00-1 1v9a1 1 0 001 1zM11 18h2a1 1 0 001-1V3a1 1 0 00-1-1h-2a1 1 0 00-1 1v14a1 1 0 001 1zM17 12v5a1 1 0 001 1h2a1 1 0 001-1v-5a1 1 0 00-1-1h-2a1 1 0 00-1 1z" />
-                    </svg>
+                  <SVGIcon name="pricing" />
                     <span className="ml-3 text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">Admin Pricing</span>
                   </div>
                 </NavLink>

@@ -158,7 +158,7 @@ if(fetched && !datas) {
               id="name"
               type="text"
               placeholder="name"
-              value={values.name}
+              value={values.name || ''}
               onChange={handleInputChange}
               name="name"
             />
@@ -175,7 +175,7 @@ if(fetched && !datas) {
               id="website"
               type="text"
               placeholder="website"
-              value={values.website}
+              value={values.website || ''}
               onChange={handleInputChange}
               name="website"
             />
@@ -192,7 +192,7 @@ if(fetched && !datas) {
               id="address"
               type="text"
               placeholder="address"
-              value={values.address}
+              value={values.address || ''}
               onChange={handleInputChange}
               name="address"
             />
@@ -209,7 +209,7 @@ if(fetched && !datas) {
               id="email"
               type="email"
               placeholder="email"
-              value={values.email}
+              value={values.email || ''}
               onChange={handleInputChange}
               name="email"
             />
@@ -226,7 +226,7 @@ if(fetched && !datas) {
               id="phone"
               type="tel"
               placeholder="phone number"
-              value={values.contactPhoneNumber}
+              value={values.contactPhoneNumber || ''}
               onChange={handleInputChange}
               name="contactPhoneNumber"
             />
@@ -243,7 +243,7 @@ if(fetched && !datas) {
               id="logo"
               type="text"
               placeholder="paste logo url"
-              value={values.logo}
+              value={values.logo || ''}
               onChange={handleInputChange}
               name="logo"
             />
