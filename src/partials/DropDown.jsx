@@ -38,10 +38,11 @@ export default function DropDown({ name, links }) {
                       to={item.link}
                       className={classNames(
                         active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                        "block px-4 py-2 text-sm"
+                        " px-4 py-2 text-sm flex items-center"
                       )}
                     >
-                      {item.name}
+                       <SVGIcon name={`${item.icon || "info"}`} /> 
+                      <span className="ml-2 ">{item.name}</span>
                     </Link>
                   )}
                 </Menu.Item>
@@ -51,11 +52,12 @@ export default function DropDown({ name, links }) {
                     <span
                       className={classNames(
                         active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                        "block px-4 py-2 text-sm"
+                        "flex items-center px-4 py-2 text-sm"
                       )}
                       onClick={item.onclick}
                     >
-                      {item.name}
+                     <SVGIcon name={`${item.icon || "info"}`} /> 
+                      <span className="ml-2 ">{item.name}</span>
                     </span>
                   )}
                 </Menu.Item>

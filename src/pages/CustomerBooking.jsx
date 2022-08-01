@@ -5,44 +5,14 @@ import { Table } from "../partials/table";
 import DropDown from "../partials/DropDown";
 import Modal from "../partials/modal/Modal";
 import { SVGIcon } from "../partials/icons/SvgIcon";
-
-const Datas = [
-  {
-    id: 1,
-    customer_name: "Ballack",
-    company_name: "GUO",
-    amount: "100,000",
-    seat_no: "4A",
-  },
-  {
-    id: 2,
-    customer_name: "Ballack",
-    company_name: "GUO",
-    amount: "100,000",
-    seat_no: "4A",
-  },
-  {
-    id: 3,
-    customer_name: "Ballack",
-    company_name: "GUO",
-    amount: "100,000",
-    seat_no: "4A",
-  },
-  {
-    id: 4,
-    customer_name: "Ballack",
-    company_name: "GUO",
-    amount: "100,000",
-    seat_no: "4A",
-  },
-];
+import { getAllBookings } from "../services/bookingsService";
 
 const CustomerBooking = () => {
   const [limit, setLimit] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(3);
-  const [tableLoad, setTableLoad] = useState(false);
-  const [data, setData] = useState(Datas);
+  const [tableLoad, setTableLoad] = useState(true);
+  const [data, setData] = useState(null);
   const [cancelModal, setCancelModal] = useState(false);
   const [confirmModal, setConfirmModal] = useState(false);
 
@@ -60,6 +30,17 @@ const CustomerBooking = () => {
   const toggleConfirmModal = () => {
     setConfirmModal(!confirmModal);
   };
+
+  const fetchAllBookings = async() => {
+    const {data, loading} = await getAllBookings()
+    setTableLoad(false)
+    setData(data?.getTransporters?.nodes)
+    setTotalPages(Math.ceil(Number(data?.getBookings?.pageInfo?.totalItems)/limit))
+    // let categories = [...new Set( data?.getBookings?.nodes?.map((trans) => trans.name))]
+    // setCompanyNames(categories)
+  }
+
+
   const tableHeader = [
     "Customer Name",
     "Company Name",
@@ -70,8 +51,8 @@ const CustomerBooking = () => {
 
   const tableRow = (data) => {
     return (
-      <tr key={data?.id} className="border-b-2 border-slate-200">
-        <td>{data?.customer_name}</td>
+      <tr key={data?._id} className="border-b-2 border-slate-200">
+        <td>{data?.user?.name}</td>
         <td>{data?.company_name}</td>
         <td>{data?.amount}</td>
         <td>{data?.seat_no}</td>

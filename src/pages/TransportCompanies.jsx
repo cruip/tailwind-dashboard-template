@@ -49,7 +49,6 @@ const TransportCompanies = () => {
 
   const fetchSingleTransport = async(transId) => {
     const {data} = await getOneTransport(transId)
-    console.log(data, 'human');
     setValues({...data?.getTransporter})
     setSingleData(data?.getTransporter)
   }
@@ -175,6 +174,7 @@ const TransportCompanies = () => {
                     fetchSingleTransport(datas?._id)
                 },
                 link: "",
+                icon: 'edit'
               },
               {
                 name: "Delete Company",
