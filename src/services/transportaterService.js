@@ -4,28 +4,36 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-export const getSingleTransport = gql`
-query Transport($transporterId: String!) {
-  getTransporter(transporterId: $transporterId) {
-      _id
-      name
-      address
-      logo
-      status
-      contactPhoneNumber
-      website
-      terminals{
+export const getOneTransport = async (transporterId) => {
+  const { data, errors, loading } = await client.query({
+    query: gql`
+    query getOneTrans($transporterId: String! ){
+      getTransporter(transporterId: $transporterId) {
         _id
-        city
-        cityCode
-        latitude
-        longitude
-        locationName
-        locationCode
+        name
+        address
+        logo
+        status
+        contactPhoneNumber
+        website
+        terminals{
+          _id
+          city
+          cityCode
+          latitude
+          longitude
+          locationName
+          locationCode
+        }
       }
     }
-  }
-`
+    `,
+    variables: {
+      transporterId
+     },
+  });
+  return {data, errors, loading}
+}
 
 export const getAllTransporter = async (page = 1, size= 10) => {
   const { data, error, loading } = await client.query({
@@ -69,7 +77,7 @@ export const getAllTransporter = async (page = 1, size= 10) => {
   return {data, loading, error}
 };
 
-export const getAllTransporterName = async (page = 1, size= 10) => {
+export const getAllTransporterName = async (page = 1, size= 20) => {
   const { data, error, loading } = await client.query({
       query: gql`
       query transport($page: Int, $size: Int){
@@ -150,8 +158,8 @@ export const updateTransport = async (event) => {
   const { name, address, logo, transporterId, status, contactPhoneNumber, email, website, terminals } = event;
   const { data, errors } = await client.mutate({
     mutation: gql`
-    mutation updateTrans($name: String!, $address: String!, $logo: String!, $transporterId: String!, $status: String!, $contactPhoneNumber: String!, $email: String!, $website: String!, $terminals: [String] ){
-      updateTransporter(name: $name, address: $address, logo: $logo,transporterId:$transporterId, terminals: $terminals, status: $status, contactPhoneNumber: $contactPhoneNumber, email:$email, website:$website){
+    mutation updateTrans($name: String!, $address: String!, $logo: String!, $transporterId: String!, $status: String!, $contactPhoneNumber: String!, $email: String!, $website: String!, $terminals: String ){
+      updateTransporter(name: $name, address: $address, logo: $logo, status: $status, contactPhoneNumber: $contactPhoneNumber, email:$email, website:$website ,transporterId:$transporterId, terminals: $terminals){
         _id
         name
         address
@@ -171,8 +179,7 @@ export const updateTransport = async (event) => {
   });
   if(data) {
     toast.success('Transport updated successfully')
-  }
-  if(errors) {
+  }else {
     toast.error('oops something went wrong')
   }
   return {data, errors}

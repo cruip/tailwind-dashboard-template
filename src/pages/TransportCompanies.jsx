@@ -8,7 +8,7 @@ import Modal from "../partials/modal/Modal";
 import { SVGIcon } from "../partials/icons/SvgIcon";
 import { ToastContainer } from 'react-toastify';
 // import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
-import { getAllTransporter, addTransport, deleteTransport, getAllTransporterName} from "../services/transportaterService";
+import { getAllTransporter, addTransport, deleteTransport, getOneTransport, updateTransport} from "../services/transportaterService";
 
 
 const TransportCompanies = () => {
@@ -16,6 +16,7 @@ const TransportCompanies = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [tableLoad, setTableLoad] = useState(true);
   const [datas, setData] = useState(null);
+  const [Singledatas, setSingleData] = useState(null);
   const [companyNames, setCompanyNames] = useState(null)
   const [totalPages, setTotalPages] = useState(null);
   const [id, setId] = useState('');
@@ -24,40 +25,46 @@ const TransportCompanies = () => {
   const [editModal, setEditModal] = useState(false);
   const [addTransportModal, setAddTransportModal] = useState(false);
   const [values, setValues] = useState({
-    email: "",
-    name: "",
-    address: "",
-    website: '',
-    contactPhoneNumber: "",
-    logo: "",
-    status: 'true',
+    email: Singledatas?.email || "",
+    name: Singledatas?.name || "",
+    address: Singledatas?.address || "",
+    website: Singledatas?.website || '',
+    contactPhoneNumber: Singledatas?.contactPhoneNumber || "",
+    logo: Singledatas?.logo || "",
+    status: Singledatas?.status || 'true',
     transporterId: 'guo',
-    terminals: ['629cb14b66e7a3bcc6f7212c']
+    terminals: Singledatas?.terminals || ['629cb14b66e7a3bcc6f7212c']
   });
   const [searchQuery, setSearchQuery] = useState("");
+  const [filterValue, setFilterValue] = useState('all')
 
   const fetchAllTransport = async() => {
     const {data, loading} = await getAllTransporter()
     setTableLoad(false)
-    console.log(data?.getTransporters, 'kind');
     setData(data?.getTransporters?.nodes)
     setTotalPages(Math.ceil(Number(data?.getTransporters?.pageInfo?.totalItems)/limit))
+    let categories = [...new Set( data?.getTransporters?.nodes?.map((trans) => trans.name))]
+    setCompanyNames(categories)
   }
-  const fetchAllTransportName = async() => {
-    const {data, loading} = await getAllTransporterName()
-    setTableLoad(false)
-    console.log(data?.getTransporters, 'kindly');
-    setCompanyNames(data?.getTransporters?.nodes)
+
+  const fetchSingleTransport = async(transId) => {
+    const {data} = await getOneTransport(transId)
+    console.log(data, 'human');
+    setValues({...data?.getTransporter})
+    setSingleData(data?.getTransporter)
   }
+  
     useEffect(() => {
       fetchAllTransport()
-      fetchAllTransportName()
     }, [])
 
     useEffect(() => {
      onFilter()
-     console.log(searchQuery, 'query');
     }, [searchQuery])
+
+    useEffect(() => {
+      onFilterSelect()
+     }, [filterValue])
 
 
   const onPrevPage = () => {
@@ -92,13 +99,13 @@ const TransportCompanies = () => {
 
   const onFilter = () => {
     if(!searchQuery) fetchAllTransport();
-    if (searchQuery) {
+    if (searchQuery ) {
       const arrayData = datas?.filter((item) => { 
         if (
           item.name
             .toLowerCase()
             .trim()
-            .includes(searchQuery.toLowerCase().trim())
+            .includes(searchQuery.toLowerCase().trim() )
         ) {
           
           return item
@@ -106,7 +113,25 @@ const TransportCompanies = () => {
         return false
       });
       setData(arrayData);
-      // setIsSearched(true);
+    }
+  };
+
+  const onFilterSelect = () => {
+    if(filterValue === 'all') fetchAllTransport();
+    if (filterValue !== 'all' ) {
+      const arrayData = datas?.filter((item) => { 
+        if (
+          item.name
+            .toLowerCase()
+            .trim()
+            .includes(filterValue.toLowerCase().trim() )
+        ) {
+          
+          return item
+        }
+        return false
+      });
+      setData(arrayData);
     }
   };
 
@@ -147,6 +172,7 @@ const TransportCompanies = () => {
                 onclick: () => {
                     toggleEditModal();
                     setId(datas?._id)
+                    fetchSingleTransport(datas?._id)
                 },
                 link: "",
               },
@@ -212,10 +238,14 @@ const TransportCompanies = () => {
             <div className="flex items-center justify-between w-full mt-4">
               <div className="flex items-center w-1/2">
                 <p className="mr-3 ">Filter By company Name:</p>
-                <select className="block w-1/2 px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline">
-                  <option>All</option>
-                  <option>Option 2</option>
-                  <option>Option 3</option>
+                <select className="block w-1/2 px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline"
+                value={filterValue}
+                onChange={(e) => setFilterValue(e.target.value)}
+                >
+                  <option value='all'>All</option>
+                  {
+                    companyNames?.map((item, i) => <option key={i} value={item}>{item}</option>)
+                  }
                 </select>
               </div>
               <div className="flex items-center">
@@ -280,8 +310,131 @@ const TransportCompanies = () => {
         size="md"
         onHide={toggleEditModal}
         buttonText="Edit"
+        onclick={() => updateTransport({...values, transporterId: id, terminals: '629cb14b66e7a3bcc6f7212c'})}
       >
         <p>Edit this Company</p>
+        <div className="px-8 pt-6 pb-8 mb-4 bg-white rounded shadow-md">
+          <div className="mb-4">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="name"
+            >
+             company name
+            </label>
+            <input
+              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              id="name"
+              type="text"
+              placeholder="name"
+              value={values.name}
+              onChange={handleInputChange}
+              name="name"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="website"
+            >
+             company website
+            </label>
+            <input
+              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              id="website"
+              type="text"
+              placeholder="website"
+              value={values.website}
+              onChange={handleInputChange}
+              name="website"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="address"
+            >
+             company address
+            </label>
+            <input
+              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              id="address"
+              type="text"
+              placeholder="address"
+              value={values.address}
+              onChange={handleInputChange}
+              name="address"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="email"
+            >
+             company email
+            </label>
+            <input
+              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              id="email"
+              type="email"
+              placeholder="email"
+              value={values.email}
+              onChange={handleInputChange}
+              name="email"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="phone"
+            >
+             company Phone
+            </label>
+            <input
+              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              id="phone"
+              type="tel"
+              placeholder="phone number"
+              value={values.contactPhoneNumber}
+              onChange={handleInputChange}
+              name="contactPhoneNumber"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="logo"
+            >
+             company Logo
+            </label>
+            <input
+              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              id="logo"
+              type="text"
+              placeholder="paste logo url"
+              value={values.logo}
+              onChange={handleInputChange}
+              name="logo"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="status"
+            >
+             company status
+            </label>
+            <select className="block w-full px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline"
+            value={values.status || 'true'}
+            onChange={handleInputChange}
+            name="status"
+            >
+              <option value='true'>
+                true
+              </option>
+              <option value='false'>false</option>
+            </select>
+          </div>
+        </div>
       </Modal>
       <Modal
         show={addTransportModal}
@@ -370,7 +523,7 @@ const TransportCompanies = () => {
             <input
               className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
               id="phone"
-              type="telephone"
+              type="tel"
               placeholder="phone number"
               value={values.contactPhoneNumber}
               onChange={handleInputChange}

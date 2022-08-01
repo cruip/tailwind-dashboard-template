@@ -23,7 +23,7 @@ export const Table = ({
   
   return (
     <>
-      <div className="flex justify-between w-full">
+      <div className="flex justify-between w-full overflow-x-auto">
         {onExport ? (
           <div className=" columns-12">
             <button onClick={onExport} className="btn btn-sm btn-primary">

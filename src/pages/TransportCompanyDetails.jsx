@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Card } from "../partials/card/Card";
+import 'react-toastify/dist/ReactToastify.css';
 import { Tab, Tabs, TabPane } from "../partials/Tabs";
 import Page from "../partials/page";
 import { Link, useParams } from "react-router-dom";
 import Modal from "../partials/modal/Modal";
-import { useQuery } from "@apollo/client";
-import { getSingleTransport } from "../services/transportaterService";
+import { ToastContainer } from 'react-toastify';
+import {  getOneTransport, updateTransport} from "../services/transportaterService";
 // import { Link, useParams} from 'react-router-dom';
 
 const TransportCompany = () => {
@@ -13,10 +14,22 @@ const TransportCompany = () => {
   const [activateModal, setActivateModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [datas, setData] = useState(null)
-  const {id} = useParams();
-  const userId = id
-  console.log(id, typeof id);
+  const [fetched, setFetched] = useState(false)
+  const [values, setValues] = useState({
+    email: datas?.email || "",
+    name: datas?.name || "",
+    address: datas?.address || "",
+    website: datas?.website || '',
+    contactPhoneNumber: datas?.contactPhoneNumber || "",
+    logo: datas?.logo || "",
+    status: datas?.status || 'true',
+    // transporterId: 'guo',
+    terminals: datas?.terminals || '629cb14b66e7a3bcc6f7212c'
+  });
 
+
+  const {id} = useParams();
+ 
   const toggleDeactivateModal = () => {
     setDeactivateModal(!deactivateModal);
   };
@@ -29,25 +42,36 @@ const TransportCompany = () => {
     setEditModal(!editModal)
   }
 
-  const { loading, error, data } = useQuery(getSingleTransport, {
-    variables: { 'transporterId': userId },
-  });
-  console.log(loading, error, data, 'ytry');
+  const fecthTransport = async() => {
+    const {data, loading, errors} = await getOneTransport(id)
+    if(data) {
+      setData(data?.getTransporter)
+      setValues({...data?.getTransporter})
+    setFetched(true)
+    }
+  }
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setValues({
+      ...values,
+      [name]: value,
+    }); 
+  };
   
   useEffect(() => {
-    if(loading === false && data){
-        setData(data?.getTransporter);
-    }
-}, [loading, data])
+   fecthTransport()
+}, [])
 
-if(loading) {
+if(!datas) {
  return <div>Loading...</div>
 }
-if(error) {
+if(fetched && !datas) {
   return <div>Something went wrong</div>
 }
   return (
     <Page>
+       <ToastContainer />
       <div>
         <Link to={"/transport_companies"}>
           <button className="py-3 mb-3 text-black rounded-lg shadow-md bg-slate-200 mr-7 w-52 focus:border-0 focus:outline-none hover:bg-slate-300">
@@ -118,8 +142,131 @@ if(error) {
         size="md"
         onHide={toggleEditModal}
         buttonText="Edit"
+        onclick={() => updateTransport({...values, transporterId: id, terminals: '629cb14b66e7a3bcc6f7212c'})}
       >
         <p>Edit this Company</p>
+        <div className="px-8 pt-6 pb-8 mb-4 bg-white rounded shadow-md">
+          <div className="mb-4">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="name"
+            >
+             company name
+            </label>
+            <input
+              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              id="name"
+              type="text"
+              placeholder="name"
+              value={values.name}
+              onChange={handleInputChange}
+              name="name"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="website"
+            >
+             company website
+            </label>
+            <input
+              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              id="website"
+              type="text"
+              placeholder="website"
+              value={values.website}
+              onChange={handleInputChange}
+              name="website"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="address"
+            >
+             company address
+            </label>
+            <input
+              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              id="address"
+              type="text"
+              placeholder="address"
+              value={values.address}
+              onChange={handleInputChange}
+              name="address"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="email"
+            >
+             company email
+            </label>
+            <input
+              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              id="email"
+              type="email"
+              placeholder="email"
+              value={values.email}
+              onChange={handleInputChange}
+              name="email"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="phone"
+            >
+             company Phone
+            </label>
+            <input
+              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              id="phone"
+              type="tel"
+              placeholder="phone number"
+              value={values.contactPhoneNumber}
+              onChange={handleInputChange}
+              name="contactPhoneNumber"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="logo"
+            >
+             company Logo
+            </label>
+            <input
+              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              id="logo"
+              type="text"
+              placeholder="paste logo url"
+              value={values.logo}
+              onChange={handleInputChange}
+              name="logo"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="status"
+            >
+             company status
+            </label>
+            <select className="block w-full px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline"
+            value={values.status || 'true'}
+            onChange={handleInputChange}
+            name="status"
+            >
+              <option value='true'>
+                true
+              </option>
+              <option value='false'>false</option>
+            </select>
+          </div>
+        </div>
       </Modal>
     </Page>
   );

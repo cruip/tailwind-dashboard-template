@@ -57,7 +57,6 @@ export default function Modal({show, onHide, children, buttonText, onclick}) {
                   onClick={() => {
                     console.log('kin');
                     onclick? onclick(): '';
-                    console.log(onclick, 'click');
                     onHide()
                   }}
                 >
