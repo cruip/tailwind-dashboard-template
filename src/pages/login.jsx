@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useLazyQuery } from "@apollo/client";
-import { GET_LOGIN } from "../services/authService";
+import { GET_LOGIN, Auth } from "../services/authService";
 import { AuthContext } from "../context/authContext";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -9,6 +9,7 @@ const Login = () => {
     email: "",
     password: "",
   });
+  const [isLoading, setIsLoading] = useState(false)
   const context = useContext(AuthContext);
   let navigate = useNavigate();
   const { state } = useLocation();
@@ -22,16 +23,28 @@ const Login = () => {
     });
   };
 
-  const [login, { loading, error, data }] = useLazyQuery(GET_LOGIN);
+  // const [login, { loading, error, data }] = useLazyQuery(GET_LOGIN);
   // console.log(loading, error, data, 'auth');
   const handleSubmit = () => {
-    login({ variables: { ...values } });
-    if (data?.authenticate.token) {
-      context.login(data);
+    Auth({...values})
+    .then((r) => {
+      setIsLoading(true)
+      context.login(r.data)
+      localStorage.setItem('token', r?.data?.authenticate.token.accessToken)
+      localStorage.setItem('userData', JSON.stringify(r?.data))
       setTimeout(() => {
         navigate(state?.path || "/", { replace: true });
-      }, 500);
-    }
+      }, 300)
+    })
+    // login({ variables: { ...values } });
+    // console.log('haaaaa');
+    // if (data?.authenticate.token) {
+    //   console.log('hooooo');
+    //   context.login(data);
+    // }
+    //  setTimeout(() => {
+    //   navigate(state?.path || "/", { replace: true });
+    //    }, 1000);
   };
 
   return (
@@ -79,7 +92,9 @@ const Login = () => {
               type="button"
               onClick={() => handleSubmit()}
             >
-              Sign In
+             {
+              isLoading ? 'Loading...' : ' Sign In'
+             }
             </button>
             <a
               className="inline-block text-sm font-bold text-blue-500 align-baseline hover:text-blue-800"

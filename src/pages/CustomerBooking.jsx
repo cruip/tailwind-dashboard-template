@@ -15,6 +15,7 @@ const CustomerBooking = () => {
   const [data, setData] = useState(null);
   const [cancelModal, setCancelModal] = useState(false);
   const [confirmModal, setConfirmModal] = useState(false);
+  const [bookModal, setBookModal] = useState(false);
 
   const onPrevPage = () => {
     setCurrentPage((prevState) => prevState - 1);
@@ -31,9 +32,13 @@ const CustomerBooking = () => {
     setConfirmModal(!confirmModal);
   };
 
+  const toggleBookModal = () => {
+    setBookModal(!bookModal)
+  }
+
   const fetchAllBookings = async() => {
     const {data, loading} = await getAllBookings()
-    console.log(data?.getBookings);
+    console.log(data?.getBookings, 'bookings');
     setTableLoad(false)
     setData(data?.getBookings?.nodes)
     setTotalPages(Math.ceil(Number(data?.getBookings?.pageInfo?.totalItems)/limit))
@@ -99,7 +104,7 @@ const CustomerBooking = () => {
       <section>
         <div className="flex items-center justify-between mb-6">
           <p>Book a seat</p>
-          <button className="px-4 py-2 text-white rounded-md w-52 bg-sky-800">
+          <button className="px-4 py-2 text-white rounded-md w-52 bg-sky-800" onClick={toggleBookModal}>
             Book Seat
           </button>
         </div>
@@ -191,6 +196,33 @@ const CustomerBooking = () => {
         buttonText="confirm"
       >
         <p>Confirm this bookig</p>
+      </Modal>
+      <Modal
+        show={bookModal}
+        size="md"
+        onHide={toggleBookModal}
+        buttonText="create"
+      >
+        <p>Book a Seat</p>
+        <div className="px-8 pt-6 pb-8 mb-4 bg-white rounded shadow-md">
+        <div className="mb-4">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="name"
+            >
+             customer name
+            </label>
+            <input
+              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              id="name"
+              type="text"
+              placeholder="name"
+              value={''}
+              onChange={() => console.log('click')}
+              name="name"
+            />
+          </div>
+        </div>
       </Modal>
     </Page>
   );
