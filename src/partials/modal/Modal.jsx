@@ -45,9 +45,9 @@ export default function Modal({show, onHide, children, buttonText, onclick}) {
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <div
-              className="inline-block overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+              className="inline-block overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full"
             >
-              <div className="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4">
+              <div className="px-4 pt-5 pb-4 mt-5 bg-white sm:p-6 sm:pb-4">
                 {children}
               </div>
               <div className="px-4 py-3 bg-gray-50 sm:px-6 sm:flex sm:flex-row-reverse">

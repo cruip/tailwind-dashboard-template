@@ -1,25 +1,32 @@
 import React, { useState, useEffect } from "react";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 import { Card } from "../partials/card/Card";
 import Page from "../partials/page";
 import { Table } from "../partials/table";
 import DropDown from "../partials/DropDown";
 import Modal from "../partials/modal/Modal";
 import { SVGIcon } from "../partials/icons/SvgIcon";
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from "react-toastify";
 // import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
-import { getAllTransporter, addTransport, deleteTransport, getOneTransport, updateTransport} from "../services/transportaterService";
-
+import {
+  getAllTransporter,
+  addTransport,
+  deleteTransport,
+  getOneTransport,
+  updateTransport,
+} from "../services/transporterService";
 
 const TransportCompanies = () => {
   const [limit, setLimit] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [tableLoad, setTableLoad] = useState(true);
   const [datas, setData] = useState(null);
+ const [activeCompany, setActiveCompany] = useState(0)
+ const [inActiveCompany, setInActiveCompany] = useState(0)
   const [Singledatas, setSingleData] = useState(null);
-  const [companyNames, setCompanyNames] = useState(null)
+  const [companyNames, setCompanyNames] = useState(null);
   const [totalPages, setTotalPages] = useState(null);
-  const [id, setId] = useState('');
+  const [id, setId] = useState("");
   const [deactivateModal, setDeactivateModal] = useState(false);
   const [activateModal, setActivateModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
@@ -28,49 +35,59 @@ const TransportCompanies = () => {
     email: Singledatas?.email || "",
     name: Singledatas?.name || "",
     address: Singledatas?.address || "",
-    website: Singledatas?.website || '',
+    website: Singledatas?.website || "",
     contactPhoneNumber: Singledatas?.contactPhoneNumber || "",
     logo: Singledatas?.logo || "",
-    status: Singledatas?.status || 'true',
-    transporterId: 'guo',
-    terminals: Singledatas?.terminals || ['629cb14b66e7a3bcc6f7212c']
+    status: Singledatas?.status || "true",
+    transporterId: "guo",
+    terminals: Singledatas?.terminals || ["629cb14b66e7a3bcc6f7212c"],
   });
   const [searchQuery, setSearchQuery] = useState("");
-  const [filterValue, setFilterValue] = useState('all')
+  const [filterValue, setFilterValue] = useState("all");
 
-  const fetchAllTransport = async() => {
-    const {data, loading} = await getAllTransporter(currentPage, limit)
-    setTableLoad(false)
-    console.log(data?.getTransporters?.nodes);
-    setData(data?.getTransporters?.nodes)
-    setCurrentPage(Number(data?.getTransporters?.pageInfo?.nextPage) - Number(data?.getTransporters?.pageInfo?.lastPage))
-    setTotalPages(Math.ceil(Number(data?.getTransporters?.pageInfo?.totalItems)/limit))
-    let categories = [...new Set( data?.getTransporters?.nodes?.map((trans) => trans.name))]
-    setCompanyNames(categories)
-  }
+  const fetchAllTransport = async () => {
+    const { data, loading } = await getAllTransporter(currentPage, limit);
+    setTableLoad(false);
+    setData(data?.getTransporters?.nodes);
+    setCurrentPage(Number(data?.getTransporters?.pageInfo?.currentPage));
+    setTotalPages(
+      Math.ceil(Number(data?.getTransporters?.pageInfo?.totalItems) / limit)
+    );
+    let categories = [
+      ...new Set(data?.getTransporters?.nodes?.map((trans) => trans.name)),
+    ];
+    setCompanyNames(categories);
+  };
 
-  const fetchSingleTransport = async(transId) => {
-    const {data} = await getOneTransport(transId)
-    setValues({...data?.getTransporter})
-    setSingleData(data?.getTransporter)
-  }
-  
-    useEffect(() => {
-      fetchAllTransport()
-    }, [currentPage])
+  const fetchUnpaginatedTransport = async () => {
+    const { data} = await getAllTransporter(1, 100000);
+    const activeCompany = data?.getTransporters?.nodes?.filter((item) => item.status)
+    const inActiveCompany = data?.getTransporters?.nodes?.filter((item) => !item.status)
+    setActiveCompany(activeCompany?.length)
+    setInActiveCompany(inActiveCompany?.length)
+  };
 
-    useEffect(() => {
-     onFilter()
-    }, [searchQuery])
+  const fetchSingleTransport = async (transId) => {
+    const { data } = await getOneTransport(transId);
+    setValues({ ...data?.getTransporter });
+    setSingleData(data?.getTransporter);
+  };
 
-    useEffect(() => {
-      onFilterSelect()
-     }, [filterValue])
-     
-    //  useEffect(() => {
+  useEffect(() => {
+    fetchUnpaginatedTransport()
+  }, []);
 
-    //  }, [currentPage])
+  useEffect(() => {
+    fetchAllTransport();
+  }, [currentPage]);
 
+  useEffect(() => {
+    onFilter();
+  }, [searchQuery]);
+
+  useEffect(() => {
+    onFilterSelect();
+  }, [filterValue]);
 
   const onPrevPage = () => {
     setCurrentPage((prevState) => prevState - 1);
@@ -87,65 +104,63 @@ const TransportCompanies = () => {
     setActivateModal(!activateModal);
   };
   const toggleEditModal = () => {
-    setEditModal(!editModal)
-  }
+    setEditModal(!editModal);
+  };
 
   const toggleAddTransporModal = () => {
-    setAddTransportModal(!addTransportModal)
-  }
+    setAddTransportModal(!addTransportModal);
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setValues({
       ...values,
       [name]: value,
-    }); 
+    });
   };
 
   const onFilter = () => {
-    if(!searchQuery) fetchAllTransport();
-    if (searchQuery ) {
-      const arrayData = datas?.filter((item) => { 
+    if (!searchQuery) fetchAllTransport();
+    if (searchQuery) {
+      const arrayData = datas?.filter((item) => {
         if (
           item.name
             .toLowerCase()
             .trim()
-            .includes(searchQuery.toLowerCase().trim() )
+            .includes(searchQuery.toLowerCase().trim())
         ) {
-          
-          return item
+          return item;
         }
-        return false
+        return false;
       });
       setData(arrayData);
     }
   };
 
   const onFilterSelect = () => {
-    if(filterValue === 'all') fetchAllTransport();
-    if (filterValue !== 'all' ) {
-      const arrayData = datas?.filter((item) => { 
+    if (filterValue === "all") fetchAllTransport();
+    if (filterValue !== "all") {
+      const arrayData = datas?.filter((item) => {
         if (
           item.name
             .toLowerCase()
             .trim()
-            .includes(filterValue.toLowerCase().trim() )
+            .includes(filterValue.toLowerCase().trim())
         ) {
-          
-          return item
+          return item;
         }
-        return false
+        return false;
       });
       setData(arrayData);
     }
   };
 
   const handleCreateTranport = () => {
-   if(Object.values(values).some(o => o === '')) return false;
-    addTransport({...values})
-    fetchAllTransport()
+    if (Object.values(values).some((o) => o === "")) return false;
+    addTransport({ ...values, status: 'true' });
+    fetchAllTransport();
   };
-  
+
   const tableHeader = [
     "Company Name",
     "Company Address",
@@ -153,6 +168,11 @@ const TransportCompanies = () => {
     "Company Website",
     "Action",
   ];
+
+  const handleDelete = async (id) => {
+    deleteTransport(id);
+    await fetchAllTransport();
+  };
 
   const tableRow = (datas) => {
     return (
@@ -175,19 +195,19 @@ const TransportCompanies = () => {
                 name: "Edit",
                 isLink: false,
                 onclick: () => {
-                    toggleEditModal();
-                    setId(datas?._id)
-                    fetchSingleTransport(datas?._id)
+                  toggleEditModal();
+                  setId(datas?._id);
+                  fetchSingleTransport(datas?._id);
                 },
                 link: "",
-                icon: 'edit'
+                icon: "edit",
               },
               {
                 name: "Delete Company",
                 isLink: false,
                 onclick: () => {
                   toggleDeactivateModal();
-                  setId(datas?._id)
+                  setId(datas?._id);
                 },
                 link: "",
               },
@@ -212,7 +232,10 @@ const TransportCompanies = () => {
       <section>
         <div className="flex items-center justify-between mb-6">
           <p>Add a Transport Company</p>
-          <button className="px-4 py-2 text-white rounded-md w-52 bg-sky-800" onClick={toggleAddTransporModal}>
+          <button
+            className="px-4 py-2 text-white rounded-md w-52 bg-sky-800"
+            onClick={toggleAddTransporModal}
+          >
             Add Company
           </button>
         </div>
@@ -222,7 +245,7 @@ const TransportCompanies = () => {
             description="Total Number of Active Transport Companies"
           >
             <h3 className="mt-5 text-right">
-              <span className="text-xl font-semibold text-sky-800">1000</span>{" "}
+              <span className="text-xl font-semibold text-sky-800">{activeCompany || 0}</span>{" "}
               Companies
             </h3>
           </Card>
@@ -231,7 +254,7 @@ const TransportCompanies = () => {
             description="Total Number of Inactive Transport Companies"
           >
             <h3 className="mt-5 text-right ">
-              <span className="text-xl font-semibold text-sky-800">4000</span>{" "}
+              <span className="text-xl font-semibold text-sky-800">{inActiveCompany || 0}</span>{" "}
               Companies
             </h3>
           </Card>
@@ -244,14 +267,17 @@ const TransportCompanies = () => {
             <div className="flex items-center justify-between w-full mt-4">
               <div className="flex items-center w-1/2">
                 <p className="mr-3 ">Filter By company Name:</p>
-                <select className="block w-1/2 px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline"
-                value={filterValue}
-                onChange={(e) => setFilterValue(e.target.value)}
+                <select
+                  className="block w-1/2 px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline"
+                  value={filterValue}
+                  onChange={(e) => setFilterValue(e.target.value)}
                 >
-                  <option value='all'>All</option>
-                  {
-                    companyNames?.map((item, i) => <option key={i} value={item}>{item}</option>)
-                  }
+                  <option value="all">All</option>
+                  {companyNames?.map((item, i) => (
+                    <option key={i} value={item}>
+                      {item}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div className="flex items-center">
@@ -299,7 +325,7 @@ const TransportCompanies = () => {
         size="md"
         onHide={toggleDeactivateModal}
         buttonText="Delete"
-        onclick={() => deleteTransport(id)}
+        onclick={() => handleDelete(id)}
       >
         <p>Do you want to Delete this account? </p>
       </Modal>
@@ -316,7 +342,13 @@ const TransportCompanies = () => {
         size="md"
         onHide={toggleEditModal}
         buttonText="Edit"
-        onclick={() => updateTransport({...values, transporterId: id, terminals: '629cb14b66e7a3bcc6f7212c'})}
+        onclick={() =>
+          updateTransport({
+            ...values,
+            transporterId: id,
+            terminals: "629cb14b66e7a3bcc6f7212c",
+          })
+        }
       >
         <p>Edit this Company</p>
         <div className="px-8 pt-6 pb-8 mb-4 bg-white rounded shadow-md">
@@ -325,14 +357,14 @@ const TransportCompanies = () => {
               className="block mb-2 text-sm font-bold text-gray-700"
               htmlFor="name"
             >
-             company name
+              company name
             </label>
             <input
               className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
               id="name"
               type="text"
               placeholder="name"
-              value={values.name || ''}
+              value={values.name || ""}
               onChange={handleInputChange}
               name="name"
             />
@@ -342,14 +374,14 @@ const TransportCompanies = () => {
               className="block mb-2 text-sm font-bold text-gray-700"
               htmlFor="website"
             >
-             company website
+              company website
             </label>
             <input
               className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
               id="website"
               type="text"
               placeholder="website"
-              value={values.website || ''}
+              value={values.website || ""}
               onChange={handleInputChange}
               name="website"
             />
@@ -359,14 +391,14 @@ const TransportCompanies = () => {
               className="block mb-2 text-sm font-bold text-gray-700"
               htmlFor="address"
             >
-             company address
+              company address
             </label>
             <input
               className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
               id="address"
               type="text"
               placeholder="address"
-              value={values.address || ''}
+              value={values.address || ""}
               onChange={handleInputChange}
               name="address"
             />
@@ -376,14 +408,14 @@ const TransportCompanies = () => {
               className="block mb-2 text-sm font-bold text-gray-700"
               htmlFor="email"
             >
-             company email
+              company email
             </label>
             <input
               className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
               id="email"
               type="email"
               placeholder="email"
-              value={values.email || ''}
+              value={values.email || ""}
               onChange={handleInputChange}
               name="email"
             />
@@ -393,14 +425,14 @@ const TransportCompanies = () => {
               className="block mb-2 text-sm font-bold text-gray-700"
               htmlFor="phone"
             >
-             company Phone
+              company Phone
             </label>
             <input
               className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
               id="phone"
               type="tel"
               placeholder="phone number"
-              value={values.contactPhoneNumber || ''}
+              value={values.contactPhoneNumber || ""}
               onChange={handleInputChange}
               name="contactPhoneNumber"
             />
@@ -410,14 +442,14 @@ const TransportCompanies = () => {
               className="block mb-2 text-sm font-bold text-gray-700"
               htmlFor="logo"
             >
-             company Logo
+              company Logo
             </label>
             <input
               className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
               id="logo"
               type="text"
               placeholder="paste logo url"
-              value={values.logo || ''}
+              value={values.logo || ""}
               onChange={handleInputChange}
               name="logo"
             />
@@ -427,17 +459,16 @@ const TransportCompanies = () => {
               className="block mb-2 text-sm font-bold text-gray-700"
               htmlFor="status"
             >
-             company status
+              company status
             </label>
-            <select className="block w-full px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline"
-            value={values.status || 'true'}
-            onChange={handleInputChange}
-            name="status"
+            <select
+              className="block w-full px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline"
+              value={values.status || "true"}
+              onChange={handleInputChange}
+              name="status"
             >
-              <option value='true'>
-                true
-              </option>
-              <option value='false'>false</option>
+              <option value="true">true</option>
+              <option value="false">false</option>
             </select>
           </div>
         </div>
@@ -447,7 +478,7 @@ const TransportCompanies = () => {
         size="md"
         onHide={toggleAddTransporModal}
         buttonText="Add"
-        onclick = {handleCreateTranport}
+        onclick={handleCreateTranport}
       >
         <p>Add a transport company</p>
         <div className="px-8 pt-6 pb-8 mb-4 bg-white rounded shadow-md">
@@ -456,7 +487,7 @@ const TransportCompanies = () => {
               className="block mb-2 text-sm font-bold text-gray-700"
               htmlFor="name"
             >
-             company name
+              company name
             </label>
             <input
               className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
@@ -473,7 +504,7 @@ const TransportCompanies = () => {
               className="block mb-2 text-sm font-bold text-gray-700"
               htmlFor="website"
             >
-             company website
+              company website
             </label>
             <input
               className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
@@ -490,7 +521,7 @@ const TransportCompanies = () => {
               className="block mb-2 text-sm font-bold text-gray-700"
               htmlFor="address"
             >
-             company address
+              company address
             </label>
             <input
               className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
@@ -507,7 +538,7 @@ const TransportCompanies = () => {
               className="block mb-2 text-sm font-bold text-gray-700"
               htmlFor="email"
             >
-             company email
+              company email
             </label>
             <input
               className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
@@ -524,7 +555,7 @@ const TransportCompanies = () => {
               className="block mb-2 text-sm font-bold text-gray-700"
               htmlFor="phone"
             >
-             company Phone
+              company Phone
             </label>
             <input
               className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
@@ -541,7 +572,7 @@ const TransportCompanies = () => {
               className="block mb-2 text-sm font-bold text-gray-700"
               htmlFor="logo"
             >
-             company Logo
+              company Logo
             </label>
             <input
               className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
@@ -553,42 +584,24 @@ const TransportCompanies = () => {
               name="logo"
             />
           </div>
-          <div className="mb-4">
-            <label
-              className="block mb-2 text-sm font-bold text-gray-700"
-              htmlFor="status"
-            >
-             company status
-            </label>
-            <select className="block w-full px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline"
-            value={values.status}
-            onChange={handleInputChange}
-            name="status"
-            >
-              <option value='true'>
-                true
-              </option>
-              <option value='false'>false</option>
-            </select>
-          </div>
+        
           <div className="mb-4">
             <label
               className="block mb-2 text-sm font-bold text-gray-700"
               htmlFor="id"
             >
-             location Id
+              location Id
             </label>
-            <select className="block w-full px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline"
-            value={values.transporterId}
-            onChange={handleInputChange}
-            name="transporterId"
+            <select
+              className="block w-full px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline"
+              value={values.transporterId}
+              onChange={handleInputChange}
+              name="transporterId"
             >
-              <option value=''>
-                GUO
-              </option>
-              <option value='gog'>GOG</option>
-              <option value='ekeson'>EKESON</option>
-              <option value='libra'>LIBRA</option>
+              <option value="">GUO</option>
+              <option value="gog">GOG</option>
+              <option value="ekeson">EKESON</option>
+              <option value="libra">LIBRA</option>
               <option value="young">THE_YOUNG</option>
             </select>
           </div>

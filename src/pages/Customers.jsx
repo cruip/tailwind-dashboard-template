@@ -13,6 +13,8 @@ const Customers = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [tableLoad, setTableLoad] = useState(true);
   const [data, setData] = useState(null);
+  const [activeUser, setActiveUser] = useState(0)
+  const [totalUsers, setTotalUsers] = useState(0)
   const [deactivateModal, setDeactivateModal] = useState(false);
   const [activateModal, setActivateModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -24,6 +26,13 @@ const Customers = () => {
     setCurrentPage(data?.getUsers?.pageInfo?.currentPage)
     setTotalPages(Math.ceil(Number(data?.getUsers?.pageInfo?.totalItems)/limit))
   }
+
+  const fetchUnpaginatedUser = async () => {
+    const { data} = await getAllUsers(1, 100000);
+    const activeUsers = data?.getUsers?.nodes?.filter((item) => item.isEmailVerified)
+    setActiveUser(activeUsers?.length)
+    setTotalUsers(data?.getUsers?.nodes?.length)
+  };
 
   const onFilter = () => {
     if(!searchQuery) fetchAllUser();
@@ -62,6 +71,10 @@ const Customers = () => {
   const toggleActivateModal = () => {
     setActivateModal(!activateModal);
   };
+
+  useEffect(() => {
+    fetchUnpaginatedUser()
+  }, [])
 
   useEffect(() => {
     fetchAllUser()
@@ -122,19 +135,14 @@ const Customers = () => {
   return (
     <Page>
       <section>
-        {/* <div className="flex items-center justify-between mb-6">
-          <p>Book a seat</p>
-          <button className="px-4 py-2 text-white rounded-md w-52 bg-sky-800">
-            Book Seat
-          </button>
-        </div> */}
+       
         <div className="gap-8 columns-2">
           <Card
             name={"Active Customers"}
-            description="Total Number of Active Customers"
+            description="Total Number of Customers with Verified email"
           >
             <h3 className="mt-5 text-right">
-              <span className="text-xl font-semibold text-sky-800">1000</span>{" "}
+              <span className="text-xl font-semibold text-sky-800">{activeUser || 0}</span>{" "}
               Customers
             </h3>
           </Card>
@@ -143,7 +151,7 @@ const Customers = () => {
             description="Total Number of Customers"
           >
             <h3 className="mt-5 text-right ">
-              <span className="text-xl font-semibold text-sky-800">4000</span>{" "}
+              <span className="text-xl font-semibold text-sky-800">{totalUsers || 0}</span>{" "}
               Customers
             </h3>
           </Card>

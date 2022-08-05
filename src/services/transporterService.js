@@ -48,6 +48,7 @@ export const getAllTransporter = async (page = 1, size= 10) => {
             nextPage
             hasNextPage
             hasPreviousPage
+            currentPage
           }
           nodes{
             _id
@@ -152,7 +153,6 @@ export const deleteTransport = async (transporterId) => {
   }else {
     toast.error('unable to delete Transport')
   }
-  console.log(data, errors, 'grph');
   return {data, errors}
 }
 

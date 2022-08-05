@@ -6,47 +6,36 @@ export const getAllBookings = async (page = 1, size= 10) => {
         query: gql`
         query bookings($page: Int, $size: Int){
             getBookings(page: $page, size: $size){
-                pageInfo{
-                  pageSize
-                  totalItems
-                  lastPage
-                }
-                nodes{
+              nodes{
+                _id
+                seatNumbers
+                to
+                from
+                route
+                amount
+                status
+                phone
+                email
+                bookingDate
+                tripType
+                user{
                   _id
-                  phone
-                  amount
-                  passengers{
-                    name
-                    gender
-                    age
-                  }
-                  passengerType
-                  tripType
-                  route
-                  status
-                  seatNumbers
-                  referenceId
-                  bookingDate
-                  billingId
-                  user{
-                    _id
-                    firstName
-                    lastName
-                    phoneNo
-                    email
-                    bookings{
-                      _id
-                    }
-                  }
-                  from
-                  to
-                  departureDetails{
-                    city
-                    location
-                    time
-                    date
-                  }
+                  phoneNo
+                  firstName
+                  lastName
+                  email
                 }
+                passengers{
+                  name
+                  gender
+                  age
+                }
+              }
+              pageInfo{
+                lastPage
+                currentPage
+                totalItems
+              }
               }
          }
        `,
@@ -59,11 +48,12 @@ export const getAllBookings = async (page = 1, size= 10) => {
     return {data, loading, errors}
   };
 
-  export const createBooking = async() => {
+  export const createBooking = async(event) => {
+    const {from, to, transporter, user, route, amount, departureDate, returningDate, seatNumbers, status, phone, email, bookingDate, billingId, passengerType,tripType, passengers,} = event
     const {data, errors} = await client.mutate({
       mutation: gql`
-      mutation createBooking() {
-        createBooking(from:"lagos", to:"ibadan", user:"Vics", route:"Lagos",departureDate:"may 10", returningDate:"23 june", amount:"10000", seatNumbers:3, status:"true", referenceId:"", phone:"123", email:"g@g.com", bookingDate:"20 dec", passengers:{name:"vics",gender:"male",age:"10" }, departureDetails:{city:"lagos",location:"ojo",time:"12 am", date:"12 may"}, bookingType:"one", tripType:"One Way"){
+      mutation createBooking($from:String, $to:String, $transporter: String, $user:String, $route:String, $amount:String, $departureDate:String, $returningDate:String, $seatNumbers:Int, $status:String, $phone:String, $email:String, $bookingDate:String, $billingId:String, $passengerType: String, $tripType:String, $passengers: Passengers ) {
+        createBooking(from:"62e7a1585b2487f64db7f71e", transporter:"62e7ba1d5b2487f64db7f738", user:"62c016aaaadaaa0ca64640c3", to:"62e7a1a45b2487f64db7f722", route:"62e82e160ad926f607a77349", amount:"1000", departureDate:"12 may", returningDate:"30 may", seatNumbers:10, status:"true", phone:"0908344", email:"e@gmail.com", bookingDate:"12 may", billingId:"234", tripType:"One Way", passengers:{name:"vics", gender:"male", age:"20"}, passengerType:"adult"){
           _id
           from
           to
@@ -93,7 +83,10 @@ export const getAllBookings = async (page = 1, size= 10) => {
           tripType
         }
       }
-      `
+      `,
+      variables: {
+        from, to, transporter, user, route, amount, departureDate, returningDate, seatNumbers, status, phone, email, bookingDate, billingId, passengerType,tripType, passengers
+      }
     });
     return { data, errors}
   }
@@ -118,4 +111,13 @@ export const getAllBookings = async (page = 1, size= 10) => {
   //    }
   //  }
   //  }
+
+  // mutation{
+  //   createBooking(from:"62e7a1585b2487f64db7f71e", transporter:"62e7ba1d5b2487f64db7f738", user:"62c016aaaadaaa0ca64640c3", to:"62e7a1a45b2487f64db7f722", route:"62e82e160ad926f607a77349", amount:"1000", departureDate:"12 may", returningDate:"30 may", seatNumbers:10, status:"true", phone:"0908344", email:"e@gmail.com", bookingDate:"12 may", billingId:"234", passengerType:"adult", tripType:"One Way", passengers:{name:"Tayo", gender:"male", age:"20"}){
+  //     _id
+  //     from
+  //     to
+  //     route
+  //   }
+  // }
   

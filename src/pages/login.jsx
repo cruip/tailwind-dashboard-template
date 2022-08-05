@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useLazyQuery } from "@apollo/client";
-import { GET_LOGIN, Auth } from "../services/authService";
+import { Auth } from "../services/authService";
 import { AuthContext } from "../context/authContext";
 import { useNavigate, useLocation } from "react-router-dom";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   const [values, setValues] = useState({
@@ -23,8 +24,6 @@ const Login = () => {
     });
   };
 
-  // const [login, { loading, error, data }] = useLazyQuery(GET_LOGIN);
-  // console.log(loading, error, data, 'auth');
   const handleSubmit = () => {
     Auth({...values})
     .then((r) => {
@@ -36,19 +35,16 @@ const Login = () => {
         navigate(state?.path || "/", { replace: true });
       }, 300)
     })
-    // login({ variables: { ...values } });
-    // console.log('haaaaa');
-    // if (data?.authenticate.token) {
-    //   console.log('hooooo');
-    //   context.login(data);
-    // }
-    //  setTimeout(() => {
-    //   navigate(state?.path || "/", { replace: true });
-    //    }, 1000);
+    .catch((error) => {
+      setIsLoading(false)
+      toast.error('oops something went wrong')
+    })
+   
   };
 
   return (
     <main className="flex items-center justify-center h-screen">
+      <ToastContainer />
       <div className="w-full max-w-xs mx-auto">
         <form className="px-8 pt-6 pb-8 mb-4 bg-white rounded shadow-md">
           <div className="mb-4">

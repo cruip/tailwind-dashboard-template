@@ -12,7 +12,7 @@ import Login from "./pages/login";
 import CustomerBooking from "./pages/CustomerBooking";
 import CustomerBookingDetail from "./pages/CustomerBookingDetail";
 import Customers from "./pages/Customers";
-import Customer from "./pages/CustomaerDetails";
+import Customer from "./pages/CustomerDetails";
 import TransportCompanies from "./pages/TransportCompanies";
 import TransportCompany from "./pages/TransportCompanyDetails";
 import AdminPricing from "./pages/AdminPricing";

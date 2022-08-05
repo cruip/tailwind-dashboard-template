@@ -6,7 +6,7 @@ import Page from "../partials/page";
 import { Link, useParams } from "react-router-dom";
 import Modal from "../partials/modal/Modal";
 import { ToastContainer } from 'react-toastify';
-import {  getOneTransport, updateTransport} from "../services/transportaterService";
+import {  getOneTransport, updateTransport} from "../services/transporterService";
 // import { Link, useParams} from 'react-router-dom';
 
 const TransportCompany = () => {
