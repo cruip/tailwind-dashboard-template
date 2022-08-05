@@ -127,12 +127,6 @@ export const addTransport = async (event) => {
       name, address, logo, transporterId, status, contactPhoneNumber, email, website, terminals
     },
   });
-  if(data) {
-    toast.success('Transport added successfully')
-  }
-  if(errors) {
-    toast.error('oops something went wrong')
-  }
   return {data, errors}
 };
 
@@ -148,11 +142,6 @@ export const deleteTransport = async (transporterId) => {
      transporterId
     },
   });
-  if(data?.deleteTransporter) {
-    toast.success('Transport deleted successfully')
-  }else {
-    toast.error('unable to delete Transport')
-  }
   return {data, errors}
 }
 
@@ -179,10 +168,5 @@ export const updateTransport = async (event) => {
       name, address, logo, transporterId, status, contactPhoneNumber, email, website, terminals
     },
   });
-  if(data) {
-    toast.success('Transport updated successfully')
-  }else {
-    toast.error('oops something went wrong')
-  }
   return {data, errors}
 };

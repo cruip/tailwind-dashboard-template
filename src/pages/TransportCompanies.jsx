@@ -6,7 +6,7 @@ import { Table } from "../partials/table";
 import DropDown from "../partials/DropDown";
 import Modal from "../partials/modal/Modal";
 import { SVGIcon } from "../partials/icons/SvgIcon";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 // import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
 import {
   getAllTransporter,
@@ -21,8 +21,8 @@ const TransportCompanies = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [tableLoad, setTableLoad] = useState(true);
   const [datas, setData] = useState(null);
- const [activeCompany, setActiveCompany] = useState(0)
- const [inActiveCompany, setInActiveCompany] = useState(0)
+  const [activeCompany, setActiveCompany] = useState(0);
+  const [inActiveCompany, setInActiveCompany] = useState(0);
   const [Singledatas, setSingleData] = useState(null);
   const [companyNames, setCompanyNames] = useState(null);
   const [totalPages, setTotalPages] = useState(null);
@@ -46,6 +46,7 @@ const TransportCompanies = () => {
   const [filterValue, setFilterValue] = useState("all");
 
   const fetchAllTransport = async () => {
+    console.log("transport fetched");
     const { data, loading } = await getAllTransporter(currentPage, limit);
     setTableLoad(false);
     setData(data?.getTransporters?.nodes);
@@ -60,11 +61,15 @@ const TransportCompanies = () => {
   };
 
   const fetchUnpaginatedTransport = async () => {
-    const { data} = await getAllTransporter(1, 100000);
-    const activeCompany = data?.getTransporters?.nodes?.filter((item) => item.status)
-    const inActiveCompany = data?.getTransporters?.nodes?.filter((item) => !item.status)
-    setActiveCompany(activeCompany?.length)
-    setInActiveCompany(inActiveCompany?.length)
+    const { data } = await getAllTransporter(1, 100000);
+    const activeCompany = data?.getTransporters?.nodes?.filter(
+      (item) => item.status
+    );
+    const inActiveCompany = data?.getTransporters?.nodes?.filter(
+      (item) => !item.status
+    );
+    setActiveCompany(activeCompany?.length);
+    setInActiveCompany(inActiveCompany?.length);
   };
 
   const fetchSingleTransport = async (transId) => {
@@ -74,7 +79,7 @@ const TransportCompanies = () => {
   };
 
   useEffect(() => {
-    fetchUnpaginatedTransport()
+    fetchUnpaginatedTransport();
   }, []);
 
   useEffect(() => {
@@ -157,8 +162,57 @@ const TransportCompanies = () => {
 
   const handleCreateTranport = () => {
     if (Object.values(values).some((o) => o === "")) return false;
-    addTransport({ ...values, status: 'true' });
-    fetchAllTransport();
+    addTransport({ ...values, status: "true" })
+      .then(() => {
+        toast.success("Transport added successfully");
+        setTableLoad(true)
+        fetchAllTransport();
+        setValues({
+          email: "",
+          name: "",
+          address: "",
+          website: "",
+          contactPhoneNumber: "",
+          logo: "",
+          status: "true",
+          transporterId: "guo",
+          terminals: ["629cb14b66e7a3bcc6f7212c"],
+        });
+      })
+      .catch(() => toast.error("Oops! something went wrong"));
+  };
+  const handleUpdateTranport = (id) => {
+    if (Object.values(values).some((o) => o === "")) return false;
+    updateTransport({
+      ...values,
+      transporterId: id,
+      terminals: "629cb14b66e7a3bcc6f7212c",
+    })
+      .then(() => {
+        toast.success("Transport updated successfully");
+        fetchAllTransport();
+        setValues({
+          email: "",
+          name: "",
+          address: "",
+          website: "",
+          contactPhoneNumber: "",
+          logo: "",
+          status: "true",
+          transporterId: "guo",
+          terminals: ["629cb14b66e7a3bcc6f7212c"],
+        });
+      })
+      .catch(() => toast.error("Oops! something went wrong"));
+  };
+  const handleDelete = async (id) => {
+    deleteTransport(id)
+      .then(() => {
+        toast.success("Transport deleted successfully");
+        setTableLoad(true)
+        fetchAllTransport();
+      })
+      .catch(() => toast.error("could not delete transport"));
   };
 
   const tableHeader = [
@@ -168,11 +222,6 @@ const TransportCompanies = () => {
     "Company Website",
     "Action",
   ];
-
-  const handleDelete = async (id) => {
-    deleteTransport(id);
-    await fetchAllTransport();
-  };
 
   const tableRow = (datas) => {
     return (
@@ -245,7 +294,9 @@ const TransportCompanies = () => {
             description="Total Number of Active Transport Companies"
           >
             <h3 className="mt-5 text-right">
-              <span className="text-xl font-semibold text-sky-800">{activeCompany || 0}</span>{" "}
+              <span className="text-xl font-semibold text-sky-800">
+                {activeCompany || 0}
+              </span>{" "}
               Companies
             </h3>
           </Card>
@@ -254,7 +305,9 @@ const TransportCompanies = () => {
             description="Total Number of Inactive Transport Companies"
           >
             <h3 className="mt-5 text-right ">
-              <span className="text-xl font-semibold text-sky-800">{inActiveCompany || 0}</span>{" "}
+              <span className="text-xl font-semibold text-sky-800">
+                {inActiveCompany || 0}
+              </span>{" "}
               Companies
             </h3>
           </Card>
@@ -342,13 +395,7 @@ const TransportCompanies = () => {
         size="md"
         onHide={toggleEditModal}
         buttonText="Edit"
-        onclick={() =>
-          updateTransport({
-            ...values,
-            transporterId: id,
-            terminals: "629cb14b66e7a3bcc6f7212c",
-          })
-        }
+        onclick={() =>handleUpdateTranport(id)}
       >
         <p>Edit this Company</p>
         <div className="px-8 pt-6 pb-8 mb-4 bg-white rounded shadow-md">
@@ -584,7 +631,7 @@ const TransportCompanies = () => {
               name="logo"
             />
           </div>
-        
+
           <div className="mb-4">
             <label
               className="block mb-2 text-sm font-bold text-gray-700"

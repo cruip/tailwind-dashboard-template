@@ -10,6 +10,7 @@ export const Auth = async (event) => {
            user {
              firstName
              lastName
+             _id
            }
            token {
              accessToken

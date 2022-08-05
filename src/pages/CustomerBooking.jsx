@@ -1,12 +1,14 @@
 import React, { useEffect, useState, useMemo } from "react";
+import "react-toastify/dist/ReactToastify.css";
 import { Card } from "../partials/card/Card";
 import Page from "../partials/page";
 import { Table } from "../partials/table";
 import DropDown from "../partials/DropDown";
 import Modal from "../partials/modal/Modal";
 import { SVGIcon } from "../partials/icons/SvgIcon";
-import { getAllBookings } from "../services/bookingsService";
+import { getAllBookings, createBooking } from "../services/bookingsService";
 import { getAllRoutes } from "../services/routeService";
+import { ToastContainer, toast } from "react-toastify";
 import { getAllUsers, getSingleUsers } from "../services/userService";
 
 const CustomerBooking = () => {
@@ -16,37 +18,35 @@ const CustomerBooking = () => {
   const [tableLoad, setTableLoad] = useState(true);
   const [data, setData] = useState(null);
   const [user, setUser] = useState(null);
-  const [states, setStates] = useState(null)
-  const [routes, setRoutes] = useState(null)
-  const [filterRoutes, setFilterRoutes] = useState(null)
+  const [routes, setRoutes] = useState(null);
+  const [filterRoutes, setFilterRoutes] = useState(null);
   const [cancelModal, setCancelModal] = useState(false);
   const [confirmModal, setConfirmModal] = useState(false);
   const [bookModal, setBookModal] = useState(false);
   const [values, setValues] = useState({
-    from: '',
-    to: '',
-    departureDate: '',
-    returningDate: '',
-    route: '',
-    transporter: '',
-    amount: '',
-    seatNumbers: '',
-    phone: '',
-    email: '',
-    user: '',
-    passengers: {
-      name: '',
-      gender: '',
-      age: '',
-    },
-    tripType: '',
-    passengerType: ''
-  })
+    from: "",
+    to: "",
+    departureDate: "",
+    returningDate: "",
+    route: "",
+    transporter: "",
+    amount: "",
+    seatNumbers: 0,
+    phone: "",
+    email: "",
+    name: "",
+    gender: "",
+    age: "",
+    tripType: "Round Trip",
+    passengerType: "adult",
+  });
+
+  const date = new Date();
 
   const [locationCities, setLocationCities] = useState(null);
-  const [locationCity, setLocationCity] = useState('')
   const [destinationCities, setDestinationCities] = useState(null);
-  const [destinationCity, setDestinationCity] = useState('')
+  const userData = JSON.parse(localStorage.getItem('userData'));
+  const userId = userData?.authenticate?.user?._id
 
   const onPrevPage = () => {
     setCurrentPage((prevState) => prevState - 1);
@@ -72,28 +72,8 @@ const CustomerBooking = () => {
     setValues({
       ...values,
       [name]: value,
-    }); 
+    });
   };
-
-  //fetch states in Nigeria
-
-  const getStates = async() => {
-    const resp = await fetch( "http://locationsng-api.herokuapp.com/api/v1/states");
-    const data = await resp.json()
-    setStates(data)
-  }
-
-  const getLocationCities = async() => {
-    const resp = await fetch(  `http://locationsng-api.herokuapp.com/api/v1/states/${values.from}/lgas`);
-    const data = await resp.json()
-    setLocationCities(data)
-  }
-
-  const getDestinationCities = async() => {
-    const resp = await fetch(  `http://locationsng-api.herokuapp.com/api/v1/states/${values.to}/lgas`);
-    const data = await resp.json()
-    setDestinationCities(data)
-  }
 
   const fetchAllBookings = async () => {
     const { data, loading } = await getAllBookings();
@@ -105,11 +85,43 @@ const CustomerBooking = () => {
     );
   };
 
-  const fetchAllRoutes = async() => {
+  const fetchAllRoutes = async () => {
     const { data } = await getAllRoutes(1, 10000);
-    console.log(data, 'routes');
-    setRoutes(data?.getRoutes?.nodes)
-  }
+    console.log(data, "routes");
+    setRoutes(data?.getRoutes?.nodes);
+    const location = [];
+    data?.getRoutes?.nodes?.map((item) => {
+      location.push(item.from);
+    });
+
+    setLocationCities(location);
+  };
+
+  const handleBooking = () => {
+    if (Object.values(values).some((o) => o === "")) return false;
+    createBooking({ ...values, status: "true", bookingDate: date, user: userId })
+      .then(() => {
+        toast.success("seat booked successfully");
+        setValues({
+          from: "",
+          to: "",
+          departureDate: "",
+          returningDate: "",
+          route: "",
+          transporter: "",
+          amount: "",
+          seatNumbers: "",
+          phone: "",
+          email: "",
+          name: "",
+          gender: "",
+          age: "",
+          tripType: "",
+          passengerType: "",
+        });
+      })
+      .catch(() => toast.error("Oops! something went wrong"));
+  };
 
   // const getUsers = async() => {
   //   const {data} = await getAllUsers(1, 10000)
@@ -117,50 +129,52 @@ const CustomerBooking = () => {
   //   setUser(data?.getUsers?.nodes)
   //   // const name = data?.getUser?.firstName;
   //   // return name
-  // }  
-
-  
+  // }
 
   useEffect(() => {
     fetchAllBookings();
     // getUsers()
-    getStates()
-    fetchAllRoutes()
-    console.log(user, 'kil');
+    fetchAllRoutes();
   }, []);
 
   useEffect(() => {
-    if(values.from){
-      getLocationCities()
-     
-    }
+    if (values.from) {
+      let destination = [];
+      routes?.map((item) => {
+        destination.push(item.to);
+      });
 
-    if(values.to) {
-      getDestinationCities()
+      setDestinationCities(destination);
     }
-  }, [values.from, values.to])
+  }, [values.from]);
 
   useEffect(() => {
-    console.log('sond');
-    if(values.to && values.from){
-      console.log('ss');
-      const filterdRoutes = routes?.filter((item) =>{
-          if(item.from?.city?.toLowerCase().trim().includes(locationCity.toLowerCase().trim()) &&  item.to?.city?.toLowerCase().trim().includes(destinationCity.toLowerCase().trim())){
-            return item
-          }
-          return false
-      })
-      setFilterRoutes(filterdRoutes)
-     }
-  }, [destinationCity, locationCity])
-
+    if (values.to && values.from) {
+      const filterdRoutes = routes?.filter((item) => {
+        if (
+          item.from?._id
+            ?.toLowerCase()
+            .trim()
+            .includes(values.from.toLowerCase().trim()) &&
+          item.to?._id
+            ?.toLowerCase()
+            .trim()
+            .includes(values.to.toLowerCase().trim())
+        ) {
+          return item;
+        }
+        return false;
+      });
+      setFilterRoutes(filterdRoutes);
+    }
+  }, [values.to, values.from]);
 
   // const getUserName = (id) => {
   // // console.log(id, 'id');
   //   const username = user?.find((item) => {
   //     console.log(item._id, 'id', id, item);
   //     return item._id === id
-  //   }) 
+  //   })
   //   // console.log(username, 'username');
   //   return username?.firstName
 
@@ -183,7 +197,11 @@ const CustomerBooking = () => {
         </td>
         <td>{data?.company_name}</td>
         <td>N{data?.amount}</td>
-        <td>{data?.seatNumbers?.map((item) => <span key={item}>{item}</span>)}</td>
+        <td>
+          {data?.seatNumbers?.map((item) => (
+            <span key={item}>{item}</span>
+          ))}
+        </td>
 
         <td>
           <DropDown
@@ -219,6 +237,7 @@ const CustomerBooking = () => {
 
   return (
     <Page>
+       <ToastContainer />
       <section>
         <div className="flex items-center justify-between mb-6">
           <p>Book a seat</p>
@@ -324,6 +343,7 @@ const CustomerBooking = () => {
         size="md"
         onHide={toggleBookModal}
         buttonText="create"
+        onclick={() => handleBooking()}
       >
         <p className="text-lg font-medium text-sky-800">Book a Seat</p>
         <div className="px-8 pt-6 pb-8 mb-4 overflow-y-auto bg-white rounded shadow-md">
@@ -341,37 +361,26 @@ const CustomerBooking = () => {
                   id="grid-location"
                   value={values.from}
                   name="from"
-                  onChange={(e)=> handleInputChange(e)}
+                  onChange={(e) => handleInputChange(e)}
                 >
-                  <option value="" disabled={true} hidden={true}> select location state</option>
-                  {
-                    states?.map((state, i) => <option key={i} value={state.name}>{state.name}</option>)
-                  }
+                  <option value="" disabled={true} hidden={true}>
+                    {" "}
+                    select location city
+                  </option>
+                  {locationCities?.length < 1 ? (
+                    <option value="" disabled={true}>
+                      {" "}
+                      No City Found
+                    </option>
+                  ) : (
+                    locationCities?.map((cities, i) => (
+                      <option key={i} value={cities._id}>
+                        {cities.city}
+                      </option>
+                    ))
+                  )}
                 </select>
               </div>
-              <div className="w-full px-3 md:w-1/2">
-                <label
-                  className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
-                  htmlFor="grid-location-city"
-                >
-                  Location city
-                </label>
-                <select
-                  className="block w-full px-4 py-3 pr-8 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-                  id="grid-location-city"
-                  value={locationCity}
-                  name="locationCity"
-                  onChange={(e)=> setLocationCity(e.target.value)}
-                >
-                   <option value="" disabled={true} hidden={true}> select location city</option>
-                   {
-                    values.from == 'Federal Capital Territory' ? <option value="Abuja">Abuja</option>
-                    : locationCities?.map((city, i) => <option key={i} value={city}>{city}</option>)
-                  }
-                </select>
-              </div>
-            </div>
-            <div className="flex flex-wrap mb-6 -mx-3">
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label
                   className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
@@ -384,36 +393,28 @@ const CustomerBooking = () => {
                   id="grid-destination"
                   value={values.to}
                   name="to"
-                  onChange={(e)=> handleInputChange(e)}
+                  onChange={(e) => handleInputChange(e)}
                 >
-                  <option value="" disabled={true} hidden={true}> select destination state</option>
-                  {
-                    states?.map((state, i) => <option key={i} value={state.name}>{state.name}</option>)
-                  }
-                </select>
-              </div>
-              <div className="w-full px-3 md:w-1/2">
-                <label
-                  className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
-                  htmlFor="grid-destination-city"
-                >
-                  Destination city
-                </label>
-                <select
-                  className="block w-full px-4 py-3 pr-8 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-                  id="grid-destination-city"
-                  value={destinationCity}
-                  name="destination-city"
-                  onChange={(e)=> setDestinationCity(e.target.value)}
-                >
-                   <option value="" disabled={true} hidden={true}> select destination city</option>
-                   {
-                     values.to == 'Federal Capital Territory' ? <option value="Abuja">Abuja</option>
-                    :destinationCities?.map((city, i) => <option key={i} value={city}>{city}</option>)
-                  }
+                  <option value="" disabled={true} hidden={true}>
+                    {" "}
+                    select destination state
+                  </option>
+                  {!destinationCities ? (
+                    <option value="" disabled={true}>
+                      {" "}
+                      kindly choose a location city
+                    </option>
+                  ) : (
+                    destinationCities?.map((cities, i) => (
+                      <option key={i} value={cities._id}>
+                        {cities.city}
+                      </option>
+                    ))
+                  )}
                 </select>
               </div>
             </div>
+
             <div className="flex flex-wrap mb-6 -mx-3">
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label
@@ -428,7 +429,7 @@ const CustomerBooking = () => {
                   type="date"
                   value={values.departureDate}
                   name="departureDate"
-                  onChange={(e)=> handleInputChange(e)}
+                  onChange={(e) => handleInputChange(e)}
                 />
               </div>
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
@@ -444,7 +445,7 @@ const CustomerBooking = () => {
                   type="date"
                   value={values.returningDate}
                   name="returningDate"
-                  onChange={(e)=> handleInputChange(e)}
+                  onChange={(e) => handleInputChange(e)}
                 />
               </div>
             </div>
@@ -461,13 +462,23 @@ const CustomerBooking = () => {
                   id="grid-location"
                   value={values.route}
                   name="route"
-                  onChange={(e)=> handleInputChange(e)}
+                  onChange={(e) => handleInputChange(e)}
                 >
-                    <option value="" disabled={true} hidden={true}> select route</option>
-                 {
-                  filterRoutes?.length === 0 ?  <option value={""} disabled={true}>No routes available</option> : filterRoutes?.map((route, i) => <option key={i} value={route._id}>{route.name}</option>)
-                  
-                 }
+                  <option value="" disabled={true} hidden={true}>
+                    {" "}
+                    select route
+                  </option>
+                  {!filterRoutes ? (
+                    <option value={""} disabled={true}>
+                      No routes available
+                    </option>
+                  ) : (
+                    filterRoutes?.map((route, i) => (
+                      <option key={i} value={route._id}>
+                        {route.name}
+                      </option>
+                    ))
+                  )}
                 </select>
               </div>
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
@@ -482,10 +493,23 @@ const CustomerBooking = () => {
                   id="grid-transport"
                   value={values.transporter}
                   name="transporter"
-                  onChange={(e)=> handleInputChange(e)}
+                  onChange={(e) => handleInputChange(e)}
                 >
-                  <option>GUO</option>
-                  <option>PEACE MASS</option>
+                  <option value="" disabled={true} hidden={true}>
+                    {" "}
+                    select Transport Company
+                  </option>
+                  {!filterRoutes ? (
+                    <option value={""} disabled={true}>
+                      No company available
+                    </option>
+                  ) : (
+                    filterRoutes?.map((route, i) => (
+                      <option key={i} value={route.bus?.transporter?._id}>
+                        {route.bus?.transporter?.name || "GUO"}
+                      </option>
+                    ))
+                  )}
                 </select>
               </div>
             </div>
@@ -502,11 +526,23 @@ const CustomerBooking = () => {
                   id="grid-amount"
                   value={values.amount}
                   name="amount"
-                  onChange={(e)=> handleInputChange(e)}
+                  onChange={(e) => handleInputChange(e)}
                 >
-                  <option>1000</option>
-                  <option>2000</option>
-                  <option>30000</option>
+                  <option value="" disabled={true} hidden={true}>
+                    {" "}
+                    select Amount
+                  </option>
+                  {!filterRoutes ? (
+                    <option value={""} disabled={true}>
+                      No price available
+                    </option>
+                  ) : (
+                    filterRoutes?.map((route, i) => (
+                      <option key={i} value={route.price || "1000"}>
+                        {route.price || "1000"}
+                      </option>
+                    ))
+                  )}
                 </select>
               </div>
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
@@ -521,15 +557,27 @@ const CustomerBooking = () => {
                   id="grid-seatNo"
                   value={values.seatNumbers}
                   name="seatNumbers"
-                  onChange={(e)=> handleInputChange(e)}
+                  onChange={(e) => handleInputChange(e)}
                 >
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
+                  <option value="" disabled={true} hidden={true}>
+                    {" "}
+                    select seat
+                  </option>
+                  {!filterRoutes ? (
+                    <option value={""} disabled={true}>
+                      No seat available
+                    </option>
+                  ) : (
+                    filterRoutes?.map((route, i) => (
+                      <option key={i} value={route.bus?.numberOfSeats}>
+                        {route.bus?.numberOfSeats}
+                      </option>
+                    ))
+                  )}
                 </select>
               </div>
             </div>
-           
+
             <div className="flex flex-wrap mb-6 -mx-3">
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label
@@ -545,7 +593,7 @@ const CustomerBooking = () => {
                   placeholder="070238383939"
                   value={values.phone}
                   name="phone"
-                  onChange={(e)=> handleInputChange(e)}
+                  onChange={(e) => handleInputChange(e)}
                 />
               </div>
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
@@ -562,12 +610,12 @@ const CustomerBooking = () => {
                   placeholder="email@email.com"
                   value={values.email}
                   name="email"
-                  onChange={(e)=> handleInputChange(e)}
+                  onChange={(e) => handleInputChange(e)}
                 />
               </div>
             </div>
             <div className="flex flex-wrap mb-6 -mx-3">
-              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+              {/* <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label
                   className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
                   htmlFor="grid-user"
@@ -581,9 +629,9 @@ const CustomerBooking = () => {
                   placeholder="victor"
                   value={values.user}
                   name="user"
-                  onChange={(e)=> handleInputChange(e)}
+                  onChange={(e) => handleInputChange(e)}
                 />
-              </div>
+              </div> */}
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label
                   className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
@@ -596,7 +644,7 @@ const CustomerBooking = () => {
                   id="grid-passenger-name"
                   type="text"
                   placeholder="name"
-                  value={values.passengers.name}
+                  value={values.name}
                   name="name"
                   onChange={(e) => handleInputChange(e)}
                 />
@@ -613,12 +661,16 @@ const CustomerBooking = () => {
                 <select
                   className="block w-full px-4 py-3 pr-8 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
                   id="grid-gender"
-                  value={values.passengers.gender}
+                  value={values.gender}
                   name="gender"
                   onChange={(e) => handleInputChange(e)}
                 >
-                  <option>male</option>
-                  <option>female</option>
+                   <option value="" disabled={true} hidden={true}>
+                    {" "}
+                    select gender..
+                  </option>
+                  <option value={'male'}>male</option>
+                  <option value={'female'}>female</option>
                 </select>
               </div>
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
@@ -633,13 +685,13 @@ const CustomerBooking = () => {
                   id="grid-age"
                   type="number"
                   min={0}
-                  value={values.passengers.age}
+                  value={values.age}
                   name="age"
                   onChange={(e) => handleInputChange(e)}
                 />
               </div>
             </div>
-            
+
             <div className="flex flex-wrap mb-6 -mx-3">
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label
@@ -653,10 +705,10 @@ const CustomerBooking = () => {
                   id="grid-trip-type"
                   value={values.tripType}
                   name="tripType"
-                  onChange={(e)=> handleInputChange(e)}
+                  onChange={(e) => handleInputChange(e)}
                 >
-                  <option>Round</option>
-                  <option>Single</option>
+                  <option value={'Round Trip'}>Round Trip</option>
+                  <option value={'One Way'}>One Way</option>
                 </select>
               </div>
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
@@ -671,10 +723,11 @@ const CustomerBooking = () => {
                   id="grid-passenger-type"
                   value={values.passengerType}
                   name="passengerType"
-                  onChange={(e)=> handleInputChange(e)}
+                  onChange={(e) => handleInputChange(e)}
                 >
-                  <option>Adult</option>
-                  <option>Child</option>
+                  <option value={'adult'}>Adult</option>
+                  <option value={'children'}>children</option>
+                  <option value="infants">infants</option>
                 </select>
               </div>
             </div>
