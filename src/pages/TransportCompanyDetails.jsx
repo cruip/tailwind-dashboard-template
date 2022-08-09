@@ -5,7 +5,7 @@ import { Tab, Tabs, TabPane } from "../partials/Tabs";
 import Page from "../partials/page";
 import { Link, useParams } from "react-router-dom";
 import Modal from "../partials/modal/Modal";
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import {  getOneTransport, updateTransport} from "../services/transporterService";
 // import { Link, useParams} from 'react-router-dom';
 
@@ -21,7 +21,6 @@ const TransportCompany = () => {
     address: datas?.address || "",
     website: datas?.website || '',
     contactPhoneNumber: datas?.contactPhoneNumber || "",
-    logo: datas?.logo || "",
     status: datas?.status || 'true',
     // transporterId: 'guo',
     terminals: datas?.terminals || '629cb14b66e7a3bcc6f7212c'
@@ -59,6 +58,32 @@ const TransportCompany = () => {
     }); 
   };
   
+  const handleUpdateTranport = (id) => {
+    if (Object.values(values).some((o) => o === "") ) return false;
+    updateTransport({
+      ...values,
+      transporterId: id,
+      logo: datas?.logo,
+      terminals: "62f112c985493aecdd3b071e"
+    })
+      .then(() => {
+        toast.success("Transport updated successfully");
+        fetchAllTransport();
+        setValues({
+          email: "",
+          name: "",
+          address: "",
+          website: "",
+          contactPhoneNumber: "",
+          logo: "",
+          status: "true",
+          transporterId: "guo",
+        });
+        setLogoUrl(null)
+      })
+      .catch(() => toast.error("Oops! something went wrong"));
+  };
+
   useEffect(() => {
    fecthTransport()
 }, [])
@@ -85,7 +110,8 @@ if(fetched && !datas) {
       <div className="w-full mx-auto mt-8 xl:w-4/5">
         <Card width="w-full">
           <div className="mt-5 ">
-            <h2 className="mb-4 text-xl font-semibold text-slate-800">
+            <h2 className="flex items-center mb-4 text-xl font-semibold text-slate-800">
+              <img src={datas?.logo} alt="logo"  className="w-48 h-48 mr-6 rounded-full "/>
               Company name: {datas?.name}
             </h2>
             <h3 className="mb-2 text-lg text-slate-600">
@@ -142,7 +168,7 @@ if(fetched && !datas) {
         size="md"
         onHide={toggleEditModal}
         buttonText="Edit"
-        onclick={() => updateTransport({...values, transporterId: id, terminals: '629cb14b66e7a3bcc6f7212c'})}
+        onclick={() => handleUpdateTranport(id)}
       >
         <p>Edit this Company</p>
         <div className="px-8 pt-6 pb-8 mb-4 bg-white rounded shadow-md">
@@ -231,23 +257,7 @@ if(fetched && !datas) {
               name="contactPhoneNumber"
             />
           </div>
-          <div className="mb-4">
-            <label
-              className="block mb-2 text-sm font-bold text-gray-700"
-              htmlFor="logo"
-            >
-             company Logo
-            </label>
-            <input
-              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-              id="logo"
-              type="text"
-              placeholder="paste logo url"
-              value={values.logo || ''}
-              onChange={handleInputChange}
-              name="logo"
-            />
-          </div>
+          
           <div className="mb-4">
             <label
               className="block mb-2 text-sm font-bold text-gray-700"

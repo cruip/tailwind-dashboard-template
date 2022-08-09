@@ -149,7 +149,7 @@ export const updateTransport = async (event) => {
   const { name, address, logo, transporterId, status, contactPhoneNumber, email, website, terminals } = event;
   const { data, errors } = await client.mutate({
     mutation: gql`
-    mutation updateTrans($name: String!, $address: String!, $logo: String!, $transporterId: String!, $status: String!, $contactPhoneNumber: String!, $email: String!, $website: String!, $terminals: String ){
+    mutation updateTrans($name: String!, $address: String!, $logo: String!, $transporterId: String!, $status: String!, $contactPhoneNumber: String!, $email: String!, $website: String!,  $terminals: [String] ){
       updateTransporter(name: $name, address: $address, logo: $logo, status: $status, contactPhoneNumber: $contactPhoneNumber, email:$email, website:$website ,transporterId:$transporterId, terminals: $terminals){
         _id
         name

@@ -89,34 +89,4 @@ export const getAllBookings = async (page = 1, size= 10) => {
     });
     return { data, errors}
   }
-//add routes
-  // mutation{
-  //   addRoute(name:"lagos-abuja", departureDate:"20 may", departureTime:"10 am", startLocation:"62e7a1585b2487f64db7f71e", endLocation:"62e7a1a45b2487f64db7f722", busId:"62e7a0135b2487f64db7f719"){
-  //    _id
-  //    from{
-  //      _id
-  //      city
-  //    }
-  //    to{
-  //      _id
-  //      city
-  //    }
-  //    price
-  //    bus{
-  //      _id
-  //      vehicleNo
-  //      availableSeats
-  //      numberOfSeats
-  //    }
-  //  }
-  //  }
-
-  // mutation{
-  //   createBooking(from:"62e7a1585b2487f64db7f71e", transporter:"62e7ba1d5b2487f64db7f738", user:"62c016aaaadaaa0ca64640c3", to:"62e7a1a45b2487f64db7f722", route:"62e82e160ad926f607a77349", amount:"1000", departureDate:"12 may", returningDate:"30 may", seatNumbers:10, status:"true", phone:"0908344", email:"e@gmail.com", bookingDate:"12 may", billingId:"234", passengerType:"adult", tripType:"One Way", passengers:{name:"Tayo", gender:"male", age:"20"}){
-  //     _id
-  //     from
-  //     to
-  //     route
-  //   }
-  // }
   

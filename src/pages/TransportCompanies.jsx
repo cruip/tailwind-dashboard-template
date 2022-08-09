@@ -7,7 +7,6 @@ import DropDown from "../partials/DropDown";
 import Modal from "../partials/modal/Modal";
 import { SVGIcon } from "../partials/icons/SvgIcon";
 import { ToastContainer, toast } from "react-toastify";
-// import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
 import {
   getAllTransporter,
   addTransport,
@@ -15,12 +14,14 @@ import {
   getOneTransport,
   updateTransport,
 } from "../services/transporterService";
+import { getAllLocations } from "../services/locationService";
 
 const TransportCompanies = () => {
   const [limit, setLimit] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [tableLoad, setTableLoad] = useState(true);
   const [datas, setData] = useState(null);
+  // const [locations, setLocations] = useState(null)
   const [activeCompany, setActiveCompany] = useState(0);
   const [inActiveCompany, setInActiveCompany] = useState(0);
   const [Singledatas, setSingleData] = useState(null);
@@ -37,16 +38,16 @@ const TransportCompanies = () => {
     address: Singledatas?.address || "",
     website: Singledatas?.website || "",
     contactPhoneNumber: Singledatas?.contactPhoneNumber || "",
-    logo: Singledatas?.logo || "",
     status: Singledatas?.status || "true",
     transporterId: "guo",
-    terminals: Singledatas?.terminals || ["629cb14b66e7a3bcc6f7212c"],
   });
+
+  const [logoUrl, setLogoUrl] = useState(Singledatas?.logo || null);
+  // const [terminals, setTerminals] = useState([])
   const [searchQuery, setSearchQuery] = useState("");
   const [filterValue, setFilterValue] = useState("all");
 
   const fetchAllTransport = async () => {
-    console.log("transport fetched");
     const { data, loading } = await getAllTransporter(currentPage, limit);
     setTableLoad(false);
     setData(data?.getTransporters?.nodes);
@@ -58,6 +59,7 @@ const TransportCompanies = () => {
       ...new Set(data?.getTransporters?.nodes?.map((trans) => trans.name)),
     ];
     setCompanyNames(categories);
+    console.log("transport fetched", data?.getTransporters?.nodes);
   };
 
   const fetchUnpaginatedTransport = async () => {
@@ -72,14 +74,22 @@ const TransportCompanies = () => {
     setInActiveCompany(inActiveCompany?.length);
   };
 
+  // const fetchLocations = async () => {
+  //   const { data } = await getAllLocations();
+  //  console.log(data, 'loca');
+  //  setLocations(data?.getLocations?.nodes)
+  // };
+
   const fetchSingleTransport = async (transId) => {
     const { data } = await getOneTransport(transId);
     setValues({ ...data?.getTransporter });
+    setLogoUrl(data?.getTransporter?.logo);
     setSingleData(data?.getTransporter);
   };
 
   useEffect(() => {
     fetchUnpaginatedTransport();
+    // fetchLocations()
   }, []);
 
   useEffect(() => {
@@ -123,6 +133,12 @@ const TransportCompanies = () => {
       [name]: value,
     });
   };
+  // const handleTerminal = (value) => {
+  //   setTerminals([
+  //     ...terminals, value
+  //   ])
+  //   console.log(terminals, 'terminal');
+  // }
 
   const onFilter = () => {
     if (!searchQuery) fetchAllTransport();
@@ -160,33 +176,54 @@ const TransportCompanies = () => {
     }
   };
 
+  const uploadImage = (files) => {
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "wni0bhqi");
+    data.append("cloud_name", "dryvafrica");
+    fetch("  https://api.cloudinary.com/v1_1/dryvafrica/image/upload", {
+      method: "post",
+      body: data,
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        setLogoUrl(data.url);
+      });
+  };
+
   const handleCreateTranport = () => {
-    if (Object.values(values).some((o) => o === "")) return false;
-    addTransport({ ...values, status: "true" })
-      .then(() => {
-        toast.success("Transport added successfully");
-        setTableLoad(true)
-        fetchAllTransport();
-        setValues({
-          email: "",
-          name: "",
-          address: "",
-          website: "",
-          contactPhoneNumber: "",
-          logo: "",
-          status: "true",
-          transporterId: "guo",
-          terminals: ["629cb14b66e7a3bcc6f7212c"],
-        });
-      })
-      .catch(() => toast.error("Oops! something went wrong"));
+    if (Object.values(values).some((o) => o === "") && !logoUrl) return false;
+    setTimeout(() => {
+      addTransport({ ...values, status: "true", logo: logoUrl })
+        .then(async() => {
+          toast.success("Transport added successfully");
+          // setTimeout(() => {
+            await fetchAllTransport();
+            console.log('lol');
+          // }, 1000);
+          setValues({
+            email: "",
+            name: "",
+            address: "",
+            website: "",
+            contactPhoneNumber: "",
+            logo: "",
+            status: "true",
+            transporterId: "guo",
+          });
+          setLogoUrl(null);
+        })
+        .catch(() => toast.error("Oops! something went wrong"));
+    }, 2000);
   };
   const handleUpdateTranport = (id) => {
-    if (Object.values(values).some((o) => o === "")) return false;
+    console.log(logoUrl, "logo");
+    if (Object.values(values).some((o) => o === "") && !logoUrl) return false;
     updateTransport({
       ...values,
       transporterId: id,
-      terminals: "629cb14b66e7a3bcc6f7212c",
+      logo: logoUrl,
+      terminals: "62f112c985493aecdd3b071e",
     })
       .then(() => {
         toast.success("Transport updated successfully");
@@ -200,17 +237,20 @@ const TransportCompanies = () => {
           logo: "",
           status: "true",
           transporterId: "guo",
-          terminals: ["629cb14b66e7a3bcc6f7212c"],
         });
+        setLogoUrl(null);
       })
       .catch(() => toast.error("Oops! something went wrong"));
   };
   const handleDelete = async (id) => {
     deleteTransport(id)
-      .then(() => {
+      .then(async() => {
         toast.success("Transport deleted successfully");
-        setTableLoad(true)
-        fetchAllTransport();
+        setTableLoad(true);
+        // setTimeout(async() => {
+          await fetchAllTransport();
+          console.log('kingdt');
+        // }, 500);
       })
       .catch(() => toast.error("could not delete transport"));
   };
@@ -395,7 +435,7 @@ const TransportCompanies = () => {
         size="md"
         onHide={toggleEditModal}
         buttonText="Edit"
-        onclick={() =>handleUpdateTranport(id)}
+        onclick={() => handleUpdateTranport(id)}
       >
         <p>Edit this Company</p>
         <div className="px-8 pt-6 pb-8 mb-4 bg-white rounded shadow-md">
@@ -416,6 +456,22 @@ const TransportCompanies = () => {
               name="name"
             />
           </div>
+          {/* <div className="mb-4">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="logo"
+            >
+              company Logo
+            </label>
+            <input
+              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              id="logo"
+              type="file"
+              placeholder="paste logo url"
+              onChange= {(e)=> uploadImage(e.target.files)}
+              name="logo"
+            />
+          </div> */}
           <div className="mb-4">
             <label
               className="block mb-2 text-sm font-bold text-gray-700"
@@ -487,23 +543,6 @@ const TransportCompanies = () => {
           <div className="mb-4">
             <label
               className="block mb-2 text-sm font-bold text-gray-700"
-              htmlFor="logo"
-            >
-              company Logo
-            </label>
-            <input
-              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-              id="logo"
-              type="text"
-              placeholder="paste logo url"
-              value={values.logo || ""}
-              onChange={handleInputChange}
-              name="logo"
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              className="block mb-2 text-sm font-bold text-gray-700"
               htmlFor="status"
             >
               company status
@@ -544,6 +583,22 @@ const TransportCompanies = () => {
               value={values.name}
               onChange={handleInputChange}
               name="name"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="logo"
+            >
+              company Logo
+            </label>
+            <input
+              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              id="logo"
+              type="file"
+              placeholder="paste logo url"
+              onChange={(e) => uploadImage(e.target.files)}
+              name="logo"
             />
           </div>
           <div className="mb-4">
@@ -612,23 +667,6 @@ const TransportCompanies = () => {
               value={values.contactPhoneNumber}
               onChange={handleInputChange}
               name="contactPhoneNumber"
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              className="block mb-2 text-sm font-bold text-gray-700"
-              htmlFor="logo"
-            >
-              company Logo
-            </label>
-            <input
-              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-              id="logo"
-              type="text"
-              placeholder="paste logo url"
-              value={values.logo}
-              onChange={handleInputChange}
-              name="logo"
             />
           </div>
 
