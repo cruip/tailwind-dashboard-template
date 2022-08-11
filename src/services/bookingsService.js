@@ -17,6 +17,8 @@ export const getAllBookings = async (page = 1, size= 10) => {
                 phone
                 email
                 bookingDate
+                departureDate
+                returningDate
                 tripType
                 user{
                   _id
@@ -48,7 +50,7 @@ export const getAllBookings = async (page = 1, size= 10) => {
   };
 
   export const createBooking = async(event) => {
-    const {from, to, transporter, user, route, amount, departureDate, returningDate, seatNumbers, status, phone, email, bookingDate, billingId, passengerType,tripType, name, age, gender} = event
+    const {from, to, transporter, user, route, amount, departureDate, returningDate, seatNumbers, status, phone, email, bookingDate, billingId, passengerType,tripType, passengers} = event
     const {data, errors} = await client.mutate({
       mutation: gql`
       mutation createBooking($from:String!, $to:String, $transporter: String, $user:String, $route:String, $amount:String, $departureDate:String, $returningDate:String, $seatNumbers:[Int], $status:String, $phone:String, $email:String, $bookingDate:String, $billingId:String, $passengerType: String, $tripType:String, $passengers: Passengers ) {
@@ -80,13 +82,27 @@ export const getAllBookings = async (page = 1, size= 10) => {
       }
       `,
       variables: {
-        from, to, transporter, user, route, amount, departureDate, returningDate, seatNumbers, status, phone, email, bookingDate, billingId, passengerType,tripType, passengers:{
-          name,
-          gender,
-          age
-        }
+        from, to, transporter, user, route, amount, departureDate, returningDate, seatNumbers, status, phone, email, bookingDate, billingId, passengerType,tripType, passengers
       }
     });
     return { data, errors}
   }
+
+  export const cancelConfirmBooking = async (event) => {
+    const { bookingId, status } = event;
+    console.log(bookingId, 'id');
+    const { data, errors } = await client.mutate({
+      mutation: gql`
+      mutation cancelConfirm($bookingId: String!, $status: String!){
+        updateBooking( status: $status, bookingId:$bookingId){
+          status
+        }
+      }
+      `,
+      variables: {
+        bookingId, status
+      },
+    });
+    return {data, errors}
+  };
   

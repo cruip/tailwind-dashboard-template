@@ -146,11 +146,11 @@ export const deleteTransport = async (transporterId) => {
 }
 
 export const updateTransport = async (event) => {
-  const { name, address, logo, transporterId, status, contactPhoneNumber, email, website, terminals } = event;
+  const { name, address, logo, transporterId, status, contactPhoneNumber, email, website } = event;
   const { data, errors } = await client.mutate({
     mutation: gql`
-    mutation updateTrans($name: String!, $address: String!, $logo: String!, $transporterId: String!, $status: String!, $contactPhoneNumber: String!, $email: String!, $website: String!,  $terminals: [String] ){
-      updateTransporter(name: $name, address: $address, logo: $logo, status: $status, contactPhoneNumber: $contactPhoneNumber, email:$email, website:$website ,transporterId:$transporterId, terminals: $terminals){
+    mutation updateTrans($name: String!, $address: String!, $logo: String!, $transporterId: String!, $status: String!, $contactPhoneNumber: String!, $email: String!, $website: String! ){
+      updateTransporter(name: $name, address: $address, logo: $logo, status: $status, contactPhoneNumber: $contactPhoneNumber, email:$email, website:$website ,transporterId:$transporterId){
         _id
         name
         address
@@ -165,7 +165,26 @@ export const updateTransport = async (event) => {
     }
     `,
     variables: {
-      name, address, logo, transporterId, status, contactPhoneNumber, email, website, terminals
+      name, address, logo, transporterId, status, contactPhoneNumber, email, website
+    },
+  });
+  return {data, errors}
+};
+
+
+export const ActivateDeactivateTransport = async (event) => {
+  const { transporterId, status } = event;
+  const { data, errors } = await client.mutate({
+    mutation: gql`
+    mutation updateTrans($transporterId: String!, $status: String!){
+      updateTransporter( status: $status, transporterId:$transporterId){
+        _id
+        status
+      }
+    }
+    `,
+    variables: {
+       transporterId, status
     },
   });
   return {data, errors}

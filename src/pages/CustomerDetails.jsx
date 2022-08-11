@@ -1,22 +1,48 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
+import moment from "moment";
 import { Card } from "../partials/card/Card";
 import { Tab, Tabs, TabPane } from "../partials/Tabs";
 import Page from "../partials/page";
+import { Table } from "../partials/table";
 import { Link, useParams } from "react-router-dom";
 import Modal from "../partials/modal/Modal";
 import { getSingleUsers } from "../services/userService";
+import { getAllBookings } from "../services/bookingsService";
+import { getAllRoutes } from "../services/routeService";
 
 const Customer = () => {
   const { id } = useParams();
+  const [limit, setLimit] = useState(100);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [tableLoad, setTableLoad] = useState(true);
   const [deactivateModal, setDeactivateModal] = useState(false);
   const [activateModal, setActivateModal] = useState(false);
   const [data, setData] = useState(null);
+  const [bookings, setBookings] = useState(null);
+  const [routes, setRoutes] = useState(null);
   const [emailModal, setEmailModal] = useState(false);
   const [passwordModal, setPasswordModal] = useState(false);
 
   const fetchUser = async (id) => {
     const { data, errors } = await getSingleUsers(id);
     setData(data.getUser);
+  };
+
+  const fetchAllBookings = async () => {
+    const { data, loading } = await getAllBookings(1, 1000);
+    setTableLoad(false);
+    const filterBookings = data?.getBookings?.nodes?.filter((item) => {
+      if (item.user?._id == id) {
+        return item;
+      }
+      return false;
+    });
+    setBookings(filterBookings);
+  };
+
+  const fetchAllRoutes = async () => {
+    const { data } = await getAllRoutes(1, 10000);
+    setRoutes(data?.getRoutes?.nodes);
   };
 
   const toggleDeactivateModal = () => {
@@ -35,9 +61,40 @@ const Customer = () => {
     setPasswordModal(!passwordModal);
   };
 
+  const onPrevPage = () => {};
+
+  const onNextPage = () => {};
+
   useEffect(() => {
     fetchUser(id);
+    fetchAllBookings();
+    fetchAllRoutes()
   }, []);
+
+  const getRoute = (id) => {
+    const route = routes?.find((item) => {
+      return item._id === id;
+    });
+    return route?.name;
+  };
+
+  const tableHeader = ["Route", "Passenger Name(s)", "Amount(N)", "Booking Date"];
+
+  const tableRow = (booking) => {
+    return (
+      <tr key={booking?._id} className="border-b-2 border-slate-200">
+        <td>{useMemo(() => getRoute(booking?.route), [routes])}</td>
+        <td>
+          {" "}
+          {booking?.passengers?.map((item, i) => (
+            <span key={i}>{item.name}</span>
+          ))}
+        </td>
+        <td>{booking?.amount}</td>
+        <td>{moment(booking?.bookingDate).format(" MMM Do, YYYY | h:mm a")}</td>
+      </tr>
+    );
+  };
 
   if (!data) {
     return <h2>Loading</h2>;
@@ -109,6 +166,23 @@ const Customer = () => {
                   <h2 className="mb-4 text-xl font-semibold text-slate-800">
                     List of customer transport History
                   </h2>
+                  <Card description={"view customer booking history"} width="w-full">
+                    <div className="mt-10 ">
+                      <Table
+                        data={bookings}
+                        onNext={onNextPage}
+                        onPrev={onPrevPage}
+                        currentPage={currentPage}
+                        totalPages={1}
+                        emptyMessage="No bookings"
+                        loadingText="Loading bookings..."
+                        loading={tableLoad}
+                        rowFormat={tableRow}
+                        headers={tableHeader}
+                        paginated={false}
+                      />
+                    </div>
+                  </Card>
                 </div>
               </TabPane>
             </div>

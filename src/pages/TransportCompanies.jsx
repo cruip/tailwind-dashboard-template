@@ -59,16 +59,16 @@ const TransportCompanies = () => {
       ...new Set(data?.getTransporters?.nodes?.map((trans) => trans.name)),
     ];
     setCompanyNames(categories);
-    console.log("transport fetched", data?.getTransporters?.nodes);
+    // console.log("transport fetched", data?.getTransporters?.nodes);
   };
 
   const fetchUnpaginatedTransport = async () => {
     const { data } = await getAllTransporter(1, 100000);
     const activeCompany = data?.getTransporters?.nodes?.filter(
-      (item) => item.status
+      (item) => item.status == 'true'
     );
     const inActiveCompany = data?.getTransporters?.nodes?.filter(
-      (item) => !item.status
+      (item) => item.status != 'true'
     );
     setActiveCompany(activeCompany?.length);
     setInActiveCompany(inActiveCompany?.length);
@@ -197,10 +197,7 @@ const TransportCompanies = () => {
       addTransport({ ...values, status: "true", logo: logoUrl })
         .then(async() => {
           toast.success("Transport added successfully");
-          // setTimeout(() => {
             await fetchAllTransport();
-            console.log('lol');
-          // }, 1000);
           setValues({
             email: "",
             name: "",
@@ -217,7 +214,6 @@ const TransportCompanies = () => {
     }, 2000);
   };
   const handleUpdateTranport = (id) => {
-    console.log(logoUrl, "logo");
     if (Object.values(values).some((o) => o === "") && !logoUrl) return false;
     updateTransport({
       ...values,
@@ -247,10 +243,7 @@ const TransportCompanies = () => {
       .then(async() => {
         toast.success("Transport deleted successfully");
         setTableLoad(true);
-        // setTimeout(async() => {
           await fetchAllTransport();
-          console.log('kingdt');
-        // }, 500);
       })
       .catch(() => toast.error("could not delete transport"));
   };
@@ -260,6 +253,7 @@ const TransportCompanies = () => {
     "Company Address",
     "Company phone",
     "Company Website",
+    "status",
     "Action",
   ];
 
@@ -270,7 +264,7 @@ const TransportCompanies = () => {
         <td>{datas?.address}</td>
         <td>{datas?.contactPhoneNumber}</td>
         <td>{datas?.website}</td>
-
+         <td>{datas?.status == 'true' ? 'Active' : 'Inactive'}</td>
         <td>
           <DropDown
             links={[
@@ -299,15 +293,7 @@ const TransportCompanies = () => {
                   setId(datas?._id);
                 },
                 link: "",
-              },
-              {
-                name: "Re-Activate Company",
-                isLink: false,
-                onclick: () => {
-                  toggleActivateModal();
-                },
-                link: "",
-              },
+              }
             ]}
           />
         </td>
@@ -402,8 +388,8 @@ const TransportCompanies = () => {
                 onPrev={onPrevPage}
                 currentPage={currentPage}
                 totalPages={totalPages}
-                emptyMessage="No Data"
-                loadingText="Loading Data..."
+                emptyMessage="No transports"
+                loadingText="Loading transports..."
                 loading={tableLoad}
                 rowFormat={tableRow}
                 headers={tableHeader}
@@ -421,14 +407,6 @@ const TransportCompanies = () => {
         onclick={() => handleDelete(id)}
       >
         <p>Do you want to Delete this account? </p>
-      </Modal>
-      <Modal
-        show={activateModal}
-        size="md"
-        onHide={toggleActivateModal}
-        buttonText="Activate"
-      >
-        <p>Reactivate this Company</p>
       </Modal>
       <Modal
         show={editModal}

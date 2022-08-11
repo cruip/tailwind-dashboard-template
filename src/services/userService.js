@@ -50,7 +50,6 @@ export const getAllUsers = async(page = 1, size= 10) => {
 }
 
 export const getSingleUsers = async(userId) => {
-    console.log(userId, 'user id');
     const {data, errors} = await client.query({
        query: gql`
        query user($userId: String){

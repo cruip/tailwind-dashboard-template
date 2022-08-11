@@ -6,7 +6,11 @@ import { Table } from "../partials/table";
 import DropDown from "../partials/DropDown";
 import Modal from "../partials/modal/Modal";
 import { SVGIcon } from "../partials/icons/SvgIcon";
-import { getAllBookings, createBooking } from "../services/bookingsService";
+import {
+  getAllBookings,
+  createBooking,
+  cancelConfirmBooking,
+} from "../services/bookingsService";
 import { getAllRoutes } from "../services/routeService";
 import { getAllTransporter } from "../services/transporterService";
 import { ToastContainer, toast } from "react-toastify";
@@ -16,6 +20,7 @@ const CustomerBooking = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(3);
   const [tableLoad, setTableLoad] = useState(true);
+  const [id, setId] = useState("");
   const [data, setData] = useState(null);
   const [availableSeat, setAvailableSeat] = useState(null);
   const [routes, setRoutes] = useState(null);
@@ -34,16 +39,22 @@ const CustomerBooking = () => {
     amount: "",
     phone: "",
     email: "",
-    name: "",
-    gender: "",
-    age: "",
     tripType: "Round Trip",
     passengerType: "adult",
   });
+  const [passengerss, setPassengerss] = useState([
+    {
+      name: "",
+      age: "",
+      gender: "",
+    },
+  ]);
 
-  const [seatNumbers, setSeatNumbers] = useState('')
+  const [seatNumbers, setSeatNumbers] = useState("");
 
   const date = new Date();
+
+  let today = Date.parse(date);
 
   const [locationCities, setLocationCities] = useState(null);
   const [destinationCities, setDestinationCities] = useState(null);
@@ -77,6 +88,24 @@ const CustomerBooking = () => {
     });
   };
 
+  const addPassenger = () => {
+    setPassengerss([
+      ...passengerss,
+      {
+        name: "",
+        age: "",
+        gender: "",
+      },
+    ]);
+  };
+
+  const handlePassengerInput = (index, event) => {
+    const { name, value } = event.target;
+    const passenger = passengerss;
+    passenger[index][name] = value;
+    setPassengerss([...passenger]);
+  };
+
   const fetchAllBookings = async () => {
     const { data, loading } = await getAllBookings();
     console.log(data?.getBookings, "bookings");
@@ -93,29 +122,27 @@ const CustomerBooking = () => {
     setRoutes(data?.getRoutes?.nodes);
     const location = {};
     data?.getRoutes?.nodes?.map((item) => {
-      location[item.from.city] = item.from
+      location[item.from.city] = item.from;
     });
-
-    console.log(Object.values(location), data?.getRoutes?.nodes, 'heyye');
 
     setLocationCities(Object.values(location));
   };
 
   const fetchAllTransport = async () => {
     const { data, loading } = await getAllTransporter(1, 100000);
-    console.log(data?.getTransporters, "llol");
     setTransports(data?.getTransporters?.nodes);
   };
 
   const handleBooking = () => {
-    if (Object.values(values).some((o) => o === "") && !seatNumbers) return false;
+    if (Object.values(values).some((o) => o === "") && !seatNumbers)
+      return false;
     createBooking({
       ...values,
+      passengers: [...passengerss],
       status: "true",
       bookingDate: date,
       user: userId,
-      seatNumbers: parseInt(seatNumbers)
-      
+      seatNumbers: parseInt(seatNumbers),
     })
       .then(() => {
         toast.success("seat booked successfully");
@@ -129,12 +156,28 @@ const CustomerBooking = () => {
           amount: "",
           phone: "",
           email: "",
-          name: "",
-          gender: "",
-          age: "",
           tripType: "",
           passengerType: "",
         });
+      })
+      .catch(() => toast.error("Oops! something went wrong"));
+  };
+
+  const handlBookingStatus = (id, status) => {
+    cancelConfirmBooking({
+      bookingId: id,
+      status: status,
+    })
+      .then(async (r) => {
+        toast.success(
+          `${
+            status == "false"
+              ? "Booking cancelled succesfully"
+              : "Booking Confirmed"
+          }`
+        );
+        await fetchAllBookings();
+        setId("");
       })
       .catch(() => toast.error("Oops! something went wrong"));
   };
@@ -149,7 +192,7 @@ const CustomerBooking = () => {
     if (values.from) {
       let destination = {};
       routes?.map((item) => {
-       destination[item.to.city] = item.to
+        destination[item.to.city] = item.to;
       });
 
       setDestinationCities(Object.values(destination));
@@ -173,26 +216,26 @@ const CustomerBooking = () => {
         }
         return false;
       });
-      
+
       setFilterRoutes(filterdRoutes);
-      console.log(filterdRoutes, 'filter', filterRoutes);
     }
   }, [values.to, values.from]);
 
   useEffect(() => {
-     if(values.route){
-      let route = routes?.find((item) => item._id == values.route)
-      let transport = transports?.find((item) => item._id == route?.bus?.transporter?._id)
+    if (values.route) {
+      let route = routes?.find((item) => item._id == values.route);
+      let transport = transports?.find(
+        (item) => item._id == route?.bus?.transporter?._id
+      );
       setValues({
         ...values,
         transporter: transport._id,
-        amount: route?.price
-      })
+        amount: route?.price,
+      });
       // setAvailableSeat(route?.bus?.availableSeats)
-      setAvailableSeat([1, 2, 3, 4, 5, 6])
-     }
-  }, [values.route])
-
+      setAvailableSeat([1, 2, 3, 4, 5, 6]);
+    }
+  }, [values.route]);
 
   const getRoute = (id) => {
     const route = routes?.find((item) => {
@@ -206,6 +249,7 @@ const CustomerBooking = () => {
     "Route",
     "Amount Paid",
     "Seat No",
+    "staus",
     "Action",
   ];
 
@@ -224,32 +268,50 @@ const CustomerBooking = () => {
             <span key={item}>{item}</span>
           ))}
         </td>
+        <td>{data?.status == "true" ? "Booked" : "Cancelled"}</td>
 
         <td>
           <DropDown
             links={[
-              {
-                name: "View Booking",
-                isLink: true,
-                onclick: () => {},
-                link: `${data._id}`,
-              },
-              {
-                name: "cancel Booking",
-                isLink: false,
-                onclick: () => {
-                  toggleCancelModal();
-                },
-                link: "",
-              },
-              {
-                name: "Confirm Booking",
-                isLink: false,
-                onclick: () => {
-                  toggleConfirmModal();
-                },
-                link: "",
-              },
+              // {
+              //   name: "View Booking",
+              //   isLink: true,
+              //   onclick: () => {},
+              //   link: `${data._id}`,
+              // },
+              data?.status == "true"
+                ? {
+                    name: "cancel Booking",
+                    isLink: false,
+                    onclick: () => {
+                      setId(data?._id);
+                      toggleCancelModal();
+                    },
+                  }
+                : {
+                    name: "Confirm Booking",
+                    isLink: false,
+                    onclick: () => {
+                      setId(data?._id);
+                      toggleConfirmModal();
+                    },
+                  },
+              Date.parse(data?.departureDate) >= today
+                ? {
+                    name: "Reschedule Booking",
+                    isLink: false,
+                    onclick: () => {
+                      setId(data?._id);
+                      toggleConfirmModal();
+                    },
+                  }
+                : {
+                    name: "View Invoice",
+                    isLink: false,
+                    onclick: () => {
+                      toggleConfirmModal();
+                    },
+                  },
             ]}
           />
         </td>
@@ -276,7 +338,9 @@ const CustomerBooking = () => {
             description="Total Number of booked seats"
           >
             <h3 className="mt-5 text-right">
-              <span className="text-xl font-semibold text-sky-800">{data?.length}</span>{" "}
+              <span className="text-xl font-semibold text-sky-800">
+                {data?.length}
+              </span>{" "}
               Seats
             </h3>
           </Card>
@@ -296,7 +360,6 @@ const CustomerBooking = () => {
         <div className="col-12">
           <Card description={"Manage Booking"} width="w-full">
             <div className="flex items-center justify-end w-full ">
-             
               <div className="flex items-center">
                 <label html="search" className="sr-only">
                   Search
@@ -340,7 +403,8 @@ const CustomerBooking = () => {
         show={cancelModal}
         size="md"
         onHide={toggleCancelModal}
-        buttonText="Cancel"
+        buttonText="Cancel Booking"
+        onclick={() => handlBookingStatus(id, "false")}
       >
         <p>Do you want to cancel this booking? </p>
       </Modal>
@@ -349,6 +413,7 @@ const CustomerBooking = () => {
         size="md"
         onHide={toggleConfirmModal}
         buttonText="confirm"
+        onclick={() => handlBookingStatus(id, "true")}
       >
         <p>Confirm this bookig</p>
       </Modal>
@@ -489,13 +554,15 @@ const CustomerBooking = () => {
                     </option>
                   ) : (
                     filterRoutes?.map((route, i) => {
-                      const transport = transports?.find((item) => item._id == route.bus?.transporter?._id)
-                      return(
+                      const transport = transports?.find(
+                        (item) => item._id == route.bus?.transporter?._id
+                      );
+                      return (
                         <option key={i} value={route._id}>
-                        {route.name} by {transport?.name || ''}
-                      </option>
-                      )
-                  })
+                          {route.name} by {transport?.name || ""}
+                        </option>
+                      );
+                    })
                   )}
                 </select>
               </div>
@@ -608,62 +675,22 @@ const CustomerBooking = () => {
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label
                   className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
-                  htmlFor="grid-passenger-name"
+                  htmlFor="grid-passenger-type"
                 >
-                  Passenger Name
-                </label>
-                <input
-                  className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white"
-                  id="grid-passenger-name"
-                  type="text"
-                  placeholder="name"
-                  value={values.name}
-                  name="name"
-                  onChange={(e) => handleInputChange(e)}
-                />
-              </div>
-              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-                <label
-                  className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
-                  htmlFor="grid-gender"
-                >
-                  passenger gender
+                  Passenger type
                 </label>
                 <select
                   className="block w-full px-4 py-3 pr-8 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-                  id="grid-gender"
-                  value={values.gender}
-                  name="gender"
+                  id="grid-passenger-type"
+                  value={values.passengerType}
+                  name="passengerType"
                   onChange={(e) => handleInputChange(e)}
                 >
-                  <option value="" disabled={true} hidden={true}>
-                    {" "}
-                    select gender..
-                  </option>
-                  <option value={"male"}>male</option>
-                  <option value={"female"}>female</option>
+                  <option value={"adult"}>Adult</option>
+                  <option value={"children"}>children</option>
+                  <option value="infants">infants</option>
                 </select>
               </div>
-            </div>
-            <div className="flex flex-wrap mb-6 -mx-3">
-              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-                <label
-                  className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
-                  htmlFor="grid-age"
-                >
-                  Passenger age
-                </label>
-                <input
-                  className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white"
-                  id="grid-age"
-                  type="number"
-                  min={0}
-                  value={values.age}
-                  name="age"
-                  onChange={(e) => handleInputChange(e)}
-                />
-              </div>
-
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label
                   className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
@@ -683,27 +710,78 @@ const CustomerBooking = () => {
                 </select>
               </div>
             </div>
-
-            <div className="flex flex-wrap mb-6 -mx-3">
-              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-                <label
-                  className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
-                  htmlFor="grid-passenger-type"
-                >
-                  Passenger type
-                </label>
-                <select
-                  className="block w-full px-4 py-3 pr-8 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-                  id="grid-passenger-type"
-                  value={values.passengerType}
-                  name="passengerType"
-                  onChange={(e) => handleInputChange(e)}
-                >
-                  <option value={"adult"}>Adult</option>
-                  <option value={"children"}>children</option>
-                  <option value="infants">infants</option>
-                </select>
+            {passengerss.map((item, i) => (
+              <div
+                className="flex flex-wrap pt-4 mb-6 -mx-3 border-t-2 border-slate-300"
+                key={i}
+              >
+                <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+                  <label
+                    className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
+                    htmlFor="grid-passenger-name"
+                  >
+                    Passenger Name
+                  </label>
+                  <input
+                    className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white"
+                    id="grid-passenger-name"
+                    type="text"
+                    placeholder="name"
+                    value={item.name}
+                    name="name"
+                    onChange={(e) => handlePassengerInput(i, e)}
+                  />
+                </div>
+                <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+                  <label
+                    className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
+                    htmlFor="grid-gender"
+                  >
+                    passenger gender
+                  </label>
+                  <select
+                    className="block w-full px-4 py-3 pr-8 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="grid-gender"
+                    value={item.gender}
+                    name="gender"
+                    onChange={(e) => handlePassengerInput(i, e)}
+                  >
+                    <option value="" disabled={true} hidden={true}>
+                      {" "}
+                      select gender..
+                    </option>
+                    <option value={"male"}>male</option>
+                    <option value={"female"}>female</option>
+                  </select>
+                </div>
+                <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+                  <label
+                    className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
+                    htmlFor="grid-age"
+                  >
+                    Passenger age
+                  </label>
+                  <input
+                    className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white"
+                    id="grid-age"
+                    type="number"
+                    min={0}
+                    value={item.age}
+                    name="age"
+                    onChange={(e) => handlePassengerInput(i, e)}
+                  />
+                </div>
               </div>
+            ))}
+
+            <div className="flex items-center justify-between ">
+              <p>add another passenger</p>
+              <span
+                className="px-2 py-1 text-black border-2 rounded-lg cursor-pointer border-slate-300 bg-slate-50 focus:outline-none"
+                onClick={() => addPassenger()}
+              >
+                add
+              </span>
             </div>
           </form>
         </div>

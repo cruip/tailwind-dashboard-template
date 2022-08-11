@@ -23,6 +23,7 @@ const Customers = () => {
     const {data, loading} = await getAllUsers(currentPage, limit)
     setTableLoad(false)
     setData(data?.getUsers?.nodes)
+    // console.log(data?.getUsers?.nodes, 'pop')
     setCurrentPage(data?.getUsers?.pageInfo?.currentPage)
     setTotalPages(Math.ceil(Number(data?.getUsers?.pageInfo?.totalItems)/limit))
   }
