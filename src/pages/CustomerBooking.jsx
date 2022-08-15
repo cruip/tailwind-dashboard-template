@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import { Card } from "../partials/card/Card";
 import Page from "../partials/page";
@@ -14,6 +14,7 @@ import {
 import { getAllRoutes } from "../services/routeService";
 import { getAllTransporter } from "../services/transporterService";
 import { ToastContainer, toast } from "react-toastify";
+import Select from "react-select";
 
 const CustomerBooking = () => {
   const [limit, setLimit] = useState(10);
@@ -22,7 +23,7 @@ const CustomerBooking = () => {
   const [tableLoad, setTableLoad] = useState(true);
   const [id, setId] = useState("");
   const [data, setData] = useState(null);
-  const [availableSeat, setAvailableSeat] = useState(null);
+  const [availableSeat, setAvailableSeat] = useState([]);
   const [routes, setRoutes] = useState(null);
   const [transports, setTransports] = useState(null);
   const [filterRoutes, setFilterRoutes] = useState(null);
@@ -36,9 +37,9 @@ const CustomerBooking = () => {
     returningDate: "",
     route: "",
     transporter: "",
-    amount: "",
     phone: "",
     email: "",
+    seatNumbers: "",
     tripType: "Round Trip",
     passengerType: "adult",
   });
@@ -50,7 +51,9 @@ const CustomerBooking = () => {
     },
   ]);
 
-  const [seatNumbers, setSeatNumbers] = useState("");
+  const [seatNumber, setSeatNumber] = useState([]);
+  const [price, setPrice] = useState('')
+  const [totalPrice, setTotalPrice] = useState('')
 
   const date = new Date();
 
@@ -108,7 +111,7 @@ const CustomerBooking = () => {
 
   const fetchAllBookings = async () => {
     const { data, loading } = await getAllBookings();
-    console.log(data?.getBookings, "bookings");
+    // console.log(data?.getBookings, "bookings");
     setTableLoad(false);
     setData(data?.getBookings?.nodes);
     setTotalPages(
@@ -118,7 +121,7 @@ const CustomerBooking = () => {
 
   const fetchAllRoutes = async () => {
     const { data } = await getAllRoutes(1, 10000);
-    console.log(data, "routes");
+    // console.log(data, "routes");
     setRoutes(data?.getRoutes?.nodes);
     const location = {};
     data?.getRoutes?.nodes?.map((item) => {
@@ -134,17 +137,17 @@ const CustomerBooking = () => {
   };
 
   const handleBooking = () => {
-    if (Object.values(values).some((o) => o === "") && !seatNumbers)
+    if (Object.values(values).some((o) => o === "") && !passengerss)
       return false;
     createBooking({
       ...values,
       passengers: [...passengerss],
       status: "true",
+      amount: totalPrice,
       bookingDate: date,
       user: userId,
-      seatNumbers: parseInt(seatNumbers),
     })
-      .then(() => {
+      .then(async() => {
         toast.success("seat booked successfully");
         setValues({
           from: "",
@@ -153,12 +156,20 @@ const CustomerBooking = () => {
           returningDate: "",
           route: "",
           transporter: "",
-          amount: "",
           phone: "",
           email: "",
+          seatNumbers: "",
           tripType: "",
           passengerType: "",
         });
+        setPassengerss([
+          {
+            name: "",
+            age: "",
+            gender: "",
+          },
+        ])
+        await fetchAllBookings()
       })
       .catch(() => toast.error("Oops! something went wrong"));
   };
@@ -230,12 +241,32 @@ const CustomerBooking = () => {
       setValues({
         ...values,
         transporter: transport._id,
-        amount: route?.price,
       });
+      setPrice(route?.price)
+      setTotalPrice(route?.price)
       // setAvailableSeat(route?.bus?.availableSeats)
-      setAvailableSeat([1, 2, 3, 4, 5, 6]);
+      setAvailableSeat([
+        { value: "1", label: "1" },
+        { value: "2", label: "2" },
+        { value: "3", label: "3" },
+      ]);
     }
   }, [values.route]);
+
+  useEffect(() => {
+    if (seatNumber) {
+      const totalPrices = price;
+      let seat = {};
+      seatNumber.map((item) => {
+        seat[item.value] = Number(item.value);
+      });
+      setValues({
+        ...values,
+        seatNumbers: Object.values(seat),
+      });
+      setTotalPrice((Number(totalPrices)*seatNumber.length).toString())
+    } 
+  }, [seatNumber]);
 
   const getRoute = (id) => {
     const route = routes?.find((item) => {
@@ -256,14 +287,14 @@ const CustomerBooking = () => {
   const tableRow = (data) => {
     return (
       <tr key={data?._id} className="border-b-2 border-slate-200">
-        <td>
+        <td className="multiple-span">
           {data?.passengers?.map((item, i) => (
             <span key={i}>{item.name}</span>
           ))}
         </td>
-        <td>{useMemo(() => getRoute(data?.route), [routes])}</td>
+        <td>{getRoute(data?.route)}</td>
         <td>N{data?.amount}</td>
-        <td>
+        <td className="multiple-span">
           {data?.seatNumbers?.map((item) => (
             <span key={item}>{item}</span>
           ))}
@@ -566,23 +597,6 @@ const CustomerBooking = () => {
                   )}
                 </select>
               </div>
-              {/* <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
-                <label
-                  className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
-                  htmlFor="grid-transport"
-                >
-                  Transport Company
-                </label>
-                <input
-                  className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white"
-                  id="grid-transport"
-                  type="text"
-                  placeholder="transport company"
-                  value={values.transporter}
-                  name="transporter"
-                  readOnly
-                />
-              </div> */}
             </div>
             <div className="flex flex-wrap mb-6 -mx-3">
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
@@ -590,14 +604,14 @@ const CustomerBooking = () => {
                   className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
                   htmlFor="grid-amount"
                 >
-                  Amount
+                  Amount per seat
                 </label>
                 <input
                   className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white"
                   id="grid-amount"
                   type="text"
                   placeholder="price"
-                  value={values.amount}
+                  value={price}
                   name="amount"
                   readOnly
                 />
@@ -609,29 +623,12 @@ const CustomerBooking = () => {
                 >
                   Seat No
                 </label>
-                <select
-                  className="block w-full px-4 py-3 pr-8 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-                  id="grid-seatNo"
-                  value={seatNumbers}
-                  name="seatNumbers"
-                  onChange={(e) => setSeatNumbers(e.target.value)}
-                >
-                  <option value="" disabled={true} hidden={true}>
-                    {" "}
-                    select seat
-                  </option>
-                  {!availableSeat ? (
-                    <option value={""} disabled={true}>
-                      No seat available
-                    </option>
-                  ) : (
-                    availableSeat?.map((seat, i) => (
-                      <option key={i} value={seat}>
-                        {seat}
-                      </option>
-                    ))
-                  )}
-                </select>
+                <Select
+                  className="block w-full leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
+                  isMulti
+                  options={availableSeat}
+                  onChange={(item) => setSeatNumber(item)}
+                />
               </div>
             </div>
 
@@ -782,6 +779,10 @@ const CustomerBooking = () => {
               >
                 add
               </span>
+            </div>
+            <div className="flex items-center justify-between mt-4">
+              <span>Total Amount</span>
+              <span className="text-xl font-semibold text-emerald-600">N{totalPrice || '0.00'}</span>
             </div>
           </form>
         </div>

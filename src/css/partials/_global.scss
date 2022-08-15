@@ -1,31 +1,48 @@
 //pagination
 .pagination {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.5rem 0;
-  }
-  
-  .pagination-right {
-    margin-top: 30px;
-    margin-right: 20px;
-    justify-content: flex-end;
-  }
-  
-  .pagination .disabled {
-    opacity: 0.25;
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+}
 
-  td:not(:first-child) {
-    padding-top:20px;
-    padding-bottom:20px;
-    padding-right:20px;       
-  }
+.pagination-right {
+  margin-top: 30px;
+  margin-right: 20px;
+  justify-content: flex-end;
+}
 
-  td:first-child {
-    padding-left: 0.5rem;
-  }
+.pagination .disabled {
+  opacity: 0.25;
+}
 
-  th:first-child {
-    padding-left: 0.5rem;
+td:not(:first-child) {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-right: 20px;
+}
+
+td:first-child {
+  padding-left: 0.5rem;
+}
+
+th:first-child {
+  padding-left: 0.5rem;
+}
+
+.css-1s2u09g-control {
+  background-color: inherit !important;
+  padding: 0.25rem 0.1rem !important;
+  border: none !important;
+
+ 
+}
+
+.multiple-span {
+  span{
+    &:not(:last-child)::after{
+      content: ", ";
+      margin-right: 0.2rem;
+    }
   }
+}
