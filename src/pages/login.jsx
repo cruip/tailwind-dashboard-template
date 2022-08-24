@@ -3,6 +3,7 @@ import { Auth } from "../services/authService";
 import { AuthContext } from "../context/authContext";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast, ToastContainer } from 'react-toastify';
+import { getToken } from "../utils/Utils";
 import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
@@ -41,6 +42,13 @@ const Login = () => {
     })
    
   };
+
+  useEffect(() => {
+   if(getToken()){
+    console.log(getToken(), 'sup');
+    navigate( "/", { replace: true });
+   }
+  }, [])
 
   return (
     <main className="flex items-center justify-center h-screen">

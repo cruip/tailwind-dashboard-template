@@ -1,4 +1,5 @@
 import React, { useReducer, useContext, createContext} from "react";
+import { Logout } from "../utils/Utils";
 
 const initialState = {
     user: null
@@ -46,8 +47,7 @@ const AuthProvider = (props) => {
     }
 
     const logout = () => {
-        localStorage.removeItem('token')
-        localStorage.removeItem('userData')
+        Logout();
         dispatch({
             type: 'LOGOUT',
             
