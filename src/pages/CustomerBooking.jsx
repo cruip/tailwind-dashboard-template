@@ -197,6 +197,10 @@ const CustomerBooking = () => {
     fetchAllBookings();
     fetchAllRoutes();
     fetchAllTransport();
+
+    return () => {
+      setData(null); // This worked for me
+    };
   }, []);
 
   useEffect(() => {

@@ -22,10 +22,6 @@ export const getAllBookings = async (page = 1, size= 10) => {
                 tripType
                 user{
                   _id
-                  phoneNo
-                  firstName
-                  lastName
-                  email
                 }
                 passengers{
                   name
@@ -90,7 +86,6 @@ export const getAllBookings = async (page = 1, size= 10) => {
 
   export const cancelConfirmBooking = async (event) => {
     const { bookingId, status } = event;
-    console.log(bookingId, 'id');
     const { data, errors } = await client.mutate({
       mutation: gql`
       mutation cancelConfirm($bookingId: String!, $status: String!){

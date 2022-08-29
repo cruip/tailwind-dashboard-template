@@ -27,3 +27,10 @@ export const formatValue = (value) => Intl.NumberFormat('en-US', {
   maximumSignificantDigits: 3,
   notation: 'compact',
 }).format(value);
+
+export const getToken = () => localStorage.getItem("token");
+
+export const Logout = () => {
+  localStorage.removeItem('token')
+  localStorage.removeItem('userData')
+}

@@ -1,19 +1,26 @@
-import { ApolloClient, InMemoryCache, createHttpLink, Observable, ApolloLink } from "@apollo/client";
-import {setContext } from '@apollo/client/link/context';
+import {
+  ApolloClient,
+  InMemoryCache,
+  createHttpLink,
+  Observable,
+  ApolloLink,
+} from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
 import { toast } from "react-toastify";
+import { Logout } from "./utils/Utils";
 
-const Logout = () => {
-    localStorage.removeItem('token')
-    localStorage.removeItem('userData')
-   toast.error('token expired')
+const logout = () => {
+  Logout();
+  toast.error("token expired");
   setTimeout(() => {
-    window.location.href = '/login'
+    window.location.href = "/login";
   }, 1000);
-  }
+};
 
 const httpLink = createHttpLink({
-    uri: "http://ec2-54-80-92-162.compute-1.amazonaws.com:3000/graphql",
-})
+  // uri: "https://dryvafrica-gateway.herokuapp.com/graphql",
+  uri: "https://www.dryvafrica.tk/graphql",
+});
 
 // const authLink = setContext((_, {headers}) => {
 //     return(
@@ -32,52 +39,51 @@ const authLink = new ApolloLink((operation, forward) => {
   // Set outgoing Authorization headers
   const setHeaders = () =>
     operation.setContext(({ store, headers, ...rest }) => {
-       // get the authentication token from local storage if it exists
-       const token = localStorage.getItem('token');
-       // return the headers to the context so httpLink can read them
+      // get the authentication token from local storage if it exists
+      const token = localStorage.getItem("token");
+      // return the headers to the context so httpLink can read them
 
       return {
         ...rest,
         store,
         headers: {
           ...headers,
-          authorization: `Bearer ${token}`
-        }
+          authorization: `Bearer ${token}`,
+        },
       };
     });
 
   setHeaders();
 
-  return new Observable(obs => {
+  return new Observable((obs) => {
     const subscriber = {
       next: obs.next.bind(obs),
       // Handle auth errors. Only network or runtime errors appear here.
-      error: error => {
+      error: (error) => {
         if (isAuthError(error.statusCode)) {
           // Trigger an auth refresh.
-                Logout()
-                  .then(setHeaders)
-                  .then(() => forward(operation).subscribe(subscriber));
+          logout()
+            .then(setHeaders)
+            .then(() => forward(operation).subscribe(subscriber));
         } else {
           obs.error(error);
         }
       },
-      complete: obs.complete.bind(obs)
+      complete: obs.complete.bind(obs),
     };
 
     forward(operation).subscribe(subscriber);
   });
 });
 
-
 const client = new ApolloClient({
-    link: authLink.concat(httpLink),
-    cache: new InMemoryCache(),
-    defaultOptions: {
-        query:{
-            fetchPolicy: 'no-cache'
-        }
-    }
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(),
+  defaultOptions: {
+    query: {
+      fetchPolicy: "no-cache",
+    },
+  },
 });
 
 export default client;
