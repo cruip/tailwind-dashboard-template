@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## [1.7.0] - 2022-08-30
+
+- Update sidebar
+- Fix mobile menu issue
+
 ## [1.6.0] - 2022-07-15
 
 - Replace Sass with CSS files
