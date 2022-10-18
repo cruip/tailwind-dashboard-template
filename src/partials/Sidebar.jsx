@@ -10,7 +10,8 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
   const trigger = useRef(null);
   const sidebar = useRef(null);
 
-  const storedSidebarExpanded = localStorage.getItem('sidebar-expanded');
+	// Solve ssr problem to access localStorage while DOM is not loaded yet
+  const storedSidebarExpanded = (typeof window !== "undefined") ? localStorage.getItem('sidebar-expanded') : null;
   const [sidebarExpanded, setSidebarExpanded] = useState(storedSidebarExpanded === null ? false : storedSidebarExpanded === 'true');
 
   // close on click outside
