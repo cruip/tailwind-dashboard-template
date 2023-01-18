@@ -12,6 +12,7 @@ export default defineConfig({
   },
   plugins: [react()],
   resolve: {
+    extensions: [".js", ".mjs", ".jsx", ".json"],
     alias: [
       {
         find: /^~.+/,
@@ -22,8 +23,8 @@ export default defineConfig({
     ],
   },
   build: {
-    commonjsOptions: {
-      transformMixedEsModules: true,
-    }
-  } 
+    // commonjsOptions: {
+    //   transformMixedEsModules: true,
+    // }
+  }
 })
