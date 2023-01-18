@@ -6,6 +6,7 @@ import EditMenu from '../EditMenu';
 
 // Import utilities
 import { tailwindConfig, hexToRGB } from '../../utils/Utils';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 function DashboardCard02() {
 
@@ -64,32 +65,27 @@ function DashboardCard02() {
       <div className="px-5 pt-5">
         <header className="flex justify-between items-start mb-2">
           {/* Icon */}
-          <img src={Icon} width="32" height="32" alt="Icon 02" />
-          {/* Menu button */}
-          <EditMenu className="relative inline-flex">
-            <li>
-              <Link className="font-medium text-sm text-slate-600 hover:text-slate-800 flex py-1 px-3" to="#0">Option 1</Link>
-            </li>
-            <li>
-              <Link className="font-medium text-sm text-slate-600 hover:text-slate-800 flex py-1 px-3" to="#0">Option 2</Link>
-            </li>
-            <li>
-              <Link className="font-medium text-sm text-rose-500 hover:text-rose-600 flex py-1 px-3" to="#0">Remove</Link>
-            </li>
-          </EditMenu>
+          <div className="">
+            <div className=" flex items-center justify-center z-10">
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] from-indigo-400 to-violet-900 shadow-md">
+                <FontAwesomeIcon icon="fa-brands fa-twitter z-0" className="text-white"/>
+              </div>
+            </div>
+
+          </div>
         </header>
-        <h2 className="text-lg font-semibold text-slate-800 mb-2">Acme Advanced</h2>
-        <div className="text-xs font-semibold text-slate-400 uppercase mb-1">Sales</div>
+        <h2 className="text-lg font-semibold text-slate-800 mb-2">Twitter</h2>
+        <div className="text-xs font-semibold text-slate-400 uppercase mb-1">Followers</div>
         <div className="flex items-start">
-          <div className="text-3xl font-bold text-slate-800 mr-2">$17,489</div>
-          <div className="text-sm font-semibold text-white px-1.5 bg-yellow-500 rounded-full">-14%</div>
+          <div className="text-3xl font-bold text-slate-800 mr-2">7,400</div>
+          {/*<div className="text-sm font-semibold text-white px-1.5 bg-yellow-500 rounded-full">-14%</div>*/}
         </div>
       </div>
-      {/* Chart built with Chart.js 3 */}
-      <div className="grow">
-        {/* Change the height attribute to adjust the chart height */}
-        <LineChart data={chartData} width={389} height={128} />
-      </div>
+      {/*/!* Chart built with Chart.js 3 *!/*/}
+      {/*<div className="grow">*/}
+      {/*  /!* Change the height attribute to adjust the chart height *!/*/}
+      {/*  <LineChart data={chartData} width={389} height={128} />*/}
+      {/*</div>*/}
     </div>
   );
 }
