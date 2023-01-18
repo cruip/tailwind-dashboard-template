@@ -50,7 +50,7 @@ export const Demographics = () => {
   return (
     <div className="flex flex-col col-span-1/2 sm:col-span-7 bg-white shadow-lg rounded-sm border border-slate-200">
       <header className="px-5 py-4 border-b border-slate-100">
-        <h2 className="font-semibold text-slate-800 text-lg">Demographics</h2>
+        <h2 className="font-semibold text-slate-800 text-lg">Video Demographics</h2>
       </header>
       {/* Chart built with Chart.js 3 */}
       {/* Change the height attribute to adjust the chart height */}

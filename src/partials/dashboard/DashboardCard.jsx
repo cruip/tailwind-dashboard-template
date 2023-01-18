@@ -84,7 +84,7 @@ export const DashboardCard = ({ title, countType, total, link, blurb }) => {
   };
 
   return (
-    <div className="flex flex-col col-span-full sm:col-span-2 xl:col-span-3 bg-white shadow-lg rounded-sm border border-slate-200">
+    <div className="flex flex-col col-span-full sm:col-span-3 xl:col-span-3 bg-white shadow-lg rounded-sm border border-slate-200">
       <div className="px-5 pt-5">
         <header className="flex justify-between items-start mb-2">
           {/* Icon */}

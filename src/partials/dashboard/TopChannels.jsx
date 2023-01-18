@@ -2,9 +2,9 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { iconStyling } from "../../utils/Utils";
 
-export const TopChannels = () => {
+export const TopChannels = ({size}) => {
   return (
-    <div className="col-span-full xl:col-span-4 bg-white shadow-lg rounded-sm border border-slate-200">
+    <div className={`col-span-full ${size !== "large" ? `xl:col-span-4` : `xl:col-span-6`} bg-white shadow-lg rounded-sm border border-slate-200`}>
       <header className="px-5 py-4 border-b border-slate-100">
         <h2 className="font-semibold text-slate-800">Top Posts</h2>
       </header>

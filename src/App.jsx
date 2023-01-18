@@ -26,6 +26,10 @@ function App() {
     <>
       <Routes>
         <Route exact path="/" element={<Dashboard />} />
+        <Route exact path="/media-7z2c9kds9" element={<Dashboard rates={true} demographics={true} />} />
+        <Route exact path="/media-100z2c9kds9" element={<Dashboard rates={true} demographics={false} />} />
+        {/*<Route exact path="/media-2ntt" element={<Dashboard rates={true} demographics={false} tiktok={false}/>} />*/}
+
       </Routes>
     </>
   );

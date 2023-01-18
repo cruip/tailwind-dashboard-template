@@ -26,8 +26,9 @@ import KCCURE from "../images/kccure.png";
 import PhotoTitleLinkTable, {
   DynamicTable,
 } from "../partials/dashboard/DynamicTable";
+import COA from "../partials/dashboard/COA";
 
-export const Dashboard = () => {
+export const Dashboard = ({rates, demographics}) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const socialData = [
     {
@@ -209,12 +210,12 @@ export const Dashboard = () => {
   return (
     <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}
-      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+      {/*<Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />*/}
 
       {/* Content area */}
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
         {/*  Site header */}
-        <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+        {/*<Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />*/}
 
         <main>
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
@@ -222,7 +223,7 @@ export const Dashboard = () => {
             <WelcomeBanner />
 
             <div className="text-3xl font-bold text-slate-800 mt-20 mb-7">
-              Social Media Profile
+              Socials and Media
             </div>
 
             {/* Cards */}
@@ -239,20 +240,24 @@ export const Dashboard = () => {
               ))}
             </div>
             <div className="grid grid-cols-12 gap-6">
-              <TopChannels />
-              <Customers />
-              <Rates />
-              <Demographics />
+
+              {rates ? <TopChannels size="small" /> : <TopChannels size="large" />}
+              {rates ? <Customers size="small" /> : <Customers size="large" />}
+              {rates ? <Rates /> : null}
+
               <DynamicTable
                 data={podcasts}
                 tableTitle={"Podcasts"}
-                size={"small"}
+                size={demographics ? "small" : "large"}
               />
+              {demographics ? <Demographics /> : null }
               <DynamicTable
                 data={articles}
                 tableTitle={"News/Articles"}
-                size={"large"}
+                size="large"
               />
+
+              <COA />
 
               {/*<PhotoTitleLinkTable*/}
               {/* Card (Recent Activity) */}

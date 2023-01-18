@@ -5,12 +5,20 @@ import Insighters from "../../images/insighters.png";
 import LaRoche from "../../images/laroche.jpeg";
 
 export const DynamicTable = ({ data, nameAlias, tableTitle, size }) => {
-  console.log(data);
+  console.log(data[0]);
+  const cssSize = () => {
+    if (size === "large") {
+      return `xl:col-span-12`;
+    } else if (size === "medium") {
+      return  `xl:col-span-8`;
+    } else {
+      return `xl:col-span-5`;
+    }
+  }
+  console.log(cssSize());
   return (
     <div
-      className={`col-span-full ${
-        size === "small" ? `xl:col-span-5` : `xl:col-span-12`
-      } bg-white shadow-lg rounded-sm border border-slate-200`}
+      className={`col-span-full ${cssSize()} bg-white shadow-lg rounded-sm border border-slate-200`}
     >
       <header className="px-5 py-4 border-b border-slate-100 flex flex-row justify-between">
         <h2 className="font-semibold text-slate-800">{tableTitle}</h2>
