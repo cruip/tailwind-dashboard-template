@@ -19,7 +19,7 @@ import INSIDE from "../images/insider.png";
 import KAISER from "../images/kaiser.png";
 import SEVEN_NEWS from "../images/7news.png";
 import YAHOO from "../images/yahoo.jpeg";
-import NIH from "../images/nih.png";
+import NIH from "../images/NIH.png";
 import MSN from "../images/msn.png";
 import KCCURE from "../images/kccure.png";
 
