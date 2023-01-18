@@ -23,7 +23,6 @@ import NIH from "../images/NIH.png";
 import MSN from "../images/msn.png";
 import KCCURE from "../images/kccure.png";
 
-
 import PhotoTitleLinkTable, {
   DynamicTable,
 } from "../partials/dashboard/DynamicTable";
