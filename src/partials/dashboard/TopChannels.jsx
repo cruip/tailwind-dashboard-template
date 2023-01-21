@@ -22,7 +22,7 @@ export const TopChannels = ({size}) => {
                   <div className="font-semibold text-center">Average Views</div>
                 </th>
                 <th className="p-2">
-                  <div className="font-semibold text-center">Top Views</div>
+                  <div className="font-semibold text-center">Top Post</div>
                 </th>
               </tr>
             </thead>

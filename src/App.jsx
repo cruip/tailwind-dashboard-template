@@ -11,6 +11,9 @@ import './charts/ChartjsConfig';
 
 // Import pages
 import Dashboard from './pages/Dashboard';
+import News from "./pages/News";
+import Podcasts from "./pages/Podcasts";
+import Query from "./pages/Query";
 
 function App() {
 
@@ -25,10 +28,15 @@ function App() {
   return (
     <>
       <Routes>
-        <Route exact path="/" element={<Dashboard />} />
-        <Route exact path="/media-7z2c9kds9" element={<Dashboard rates={true} demographics={true} />} />
-        <Route exact path="/media-100z2c9kds9" element={<Dashboard rates={true} demographics={false} />} />
-        {/*<Route exact path="/media-2ntt" element={<Dashboard rates={true} demographics={false} tiktok={false}/>} />*/}
+        <Route exact path="/" element={<Dashboard rates={false} demographics={false}  type="social"/>} />
+        <Route exact path="/media-100z2c9kds9" element={<Dashboard rates={true} demographics={true} type="media" />} />
+        {/*<Route exact path="/writing-123120" element={<Dashboard rates={false} demographics={false} type="media" />} />*/}
+        <Route exact path="/podcasts" element={<Podcasts type="podcasts"/>} />
+        <Route exact path="/news" element={<News type="news"/>} />
+        <Route exact path="/query-123120/news" element={<News type="news"/>} />
+        <Route exact path="/query-123120/podcasts" element={<Podcasts type="podcasts"/>} />
+        <Route exact path="/query-123120" element={<Query rates={false} demographics={false} type="query"/>} />
+
       </Routes>
     </>
   );

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import LineChart from "../../charts/LineChart01";
 import Icon from "../../images/icon-01.svg";
 import EditMenu from "../EditMenu";
-import COA from "../../images/Orange_COA.png"
+import COA_LOGO from "../../images/Orange_COA.png"
 
 // Import utilities
 import { tailwindConfig, hexToRGB, iconStyling } from "../../utils/Utils";
@@ -16,7 +16,7 @@ import {
   faSquareArrowUpRight,
 } from "@fortawesome/free-solid-svg-icons";
 
-export const DashboardCard = () => {
+export const COA = ({type}) => {
   library.add(fab);
 
   return (
@@ -26,7 +26,7 @@ export const DashboardCard = () => {
           {/* Icon */}
         <div className="hidden  sm:block">
           <div className="flex items-start ">
-            <div className="text-3xl font-bold text-slate-800 mr-2">Donate</div>
+             <div className="text-3xl font-bold text-slate-800 mr-2">{type === "query" ? "" : "Donate"}</div>
             <a href="https://kidneycoa.org" target="_blank" className="text-orange-400">
               <FontAwesomeIcon icon={faSquareArrowUpRight} />
             </a>
@@ -37,7 +37,7 @@ export const DashboardCard = () => {
           <div className="w-40 h-40 rounded-lg w-full mr-5 mb-5 w-full">
             <img
               className="h-full w-full"
-              src={COA}
+              src={COA_LOGO}
               width="100"
               height="100"
               alt="COA"
@@ -57,7 +57,7 @@ export const DashboardCard = () => {
 
           </div>
           <div className="flex items-start lg:hidden xl:hidden md:hidden sm:hidden 2xl:hidden mb-5">
-            <div className="text-3xl font-bold text-slate-800 mr-2">Donate</div>
+            <div className="text-3xl font-bold text-slate-800 mr-2">{type === "query" ? "" : "Donate"}</div>
             <a href="https://kidneycoa.org" target="_blank" className="text-orange-400">
               <FontAwesomeIcon icon={faSquareArrowUpRight} />
             </a>
@@ -77,4 +77,4 @@ export const DashboardCard = () => {
   );
 };
 
-export default DashboardCard;
+export default COA;

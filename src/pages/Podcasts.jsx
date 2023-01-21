@@ -28,14 +28,12 @@ import PhotoTitleLinkTable, {
 } from "../partials/dashboard/DynamicTable";
 import COA from "../partials/dashboard/COA";
 import { articles, podcasts, socialData } from "../utils/Data";
+import PodcastCard from "../partials/dashboard/PodcastCard";
 
-export const Dashboard = ({rates, demographics, type}) => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+export const Podcasts = ({type}) => {
 
   return (
     <div className="flex h-screen overflow-hidden">
-      {/* Sidebar */}
-      {/*<Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />*/}
 
       {/* Content area */}
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
@@ -48,54 +46,16 @@ export const Dashboard = ({rates, demographics, type}) => {
             <WelcomeBanner type={type} />
 
             <div className="text-3xl font-bold text-slate-800 mt-12 mb-7">
-              {type === "media" ? "Media " : null} Dashboard
+              Podcast Episodes
             </div>
 
-            {/* Cards */}
             <div className="grid grid-cols-12 gap-6 mb-6 ">
-              {socialData(type).map((social) => (
-                <DashboardCard
-                  key={social.id}
-                  title={social.title}
-                  total={social.total}
-                  countType={social.countType}
-                  link={social.link}
-                  blurb={social.blurb}
-                  type={type}
-                />
+              {podcasts(type).map((podcast) => (
+                <PodcastCard title={podcast.name} blurb={podcast.description} type="podcast" link={podcast.link} key={podcast.id} image={podcast.image}/>
               ))}
             </div>
-            <div className="grid grid-cols-12 gap-6">
-              {type === "media" || type === "query" ? (
-                <>
-                  {rates ? <TopChannels size="small" /> : <TopChannels size="large" />}
-                  {rates ? <Customers size="small" /> : <Customers size="large" />}
-                </>
-              ) : null}
-
-
-              {rates ? <Rates /> : null}
-
-              <DynamicTable
-                data={podcasts(type)}
-                tableTitle={"Podcasts"}
-                size={demographics ? "small" : "large"}
-
-              />
-              {demographics ? <Demographics /> : null }
-              <DynamicTable
-                data={articles}
-                tableTitle={"News/Articles"}
-                size="large"
-              />
-
-              <COA />
-
-              {/*<PhotoTitleLinkTable*/}
-              {/* Card (Recent Activity) */}
-              {/*<DashboardCard12 />*/}
             </div>
-          </div>
+
         </main>
 
         <Banner />
@@ -104,4 +64,4 @@ export const Dashboard = ({rates, demographics, type}) => {
   );
 };
 
-export default Dashboard;
+export default Podcasts;

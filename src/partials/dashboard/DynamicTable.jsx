@@ -5,7 +5,6 @@ import Insighters from "../../images/insighters.png";
 import LaRoche from "../../images/laroche.jpeg";
 
 export const DynamicTable = ({ data, nameAlias, tableTitle, size }) => {
-  console.log(data[0]);
   const cssSize = () => {
     if (size === "large") {
       return `xl:col-span-12`;
@@ -15,7 +14,6 @@ export const DynamicTable = ({ data, nameAlias, tableTitle, size }) => {
       return `xl:col-span-5`;
     }
   }
-  console.log(cssSize());
   return (
     <div
       className={`col-span-full ${cssSize()} bg-white shadow-lg rounded-sm border border-slate-200`}
@@ -23,7 +21,7 @@ export const DynamicTable = ({ data, nameAlias, tableTitle, size }) => {
       <header className="px-5 py-4 border-b border-slate-100 flex flex-row justify-between">
         <h2 className="font-semibold text-slate-800">{tableTitle}</h2>
         {size === "large" ? (
-          <div className=" w-8 font-semibold text-white px-1.5 bg-indigo-500 rounded-full">
+          <div className=" w-8 font-semibold text-white text-center px-1.5 bg-indigo-500 rounded-full">
             {data.length}
           </div>
         ) : null}
@@ -92,6 +90,7 @@ export const DynamicTable = ({ data, nameAlias, tableTitle, size }) => {
                 );
               })}
             </tbody>
+
           </table>
         </div>
       </div>
