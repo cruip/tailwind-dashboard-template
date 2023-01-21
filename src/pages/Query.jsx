@@ -372,7 +372,6 @@ export const Query = ({ rates, demographics, type }) => {
                 />
               ))}
             </div>
-            {type}
             <div className="grid grid-cols-12 gap-6">
               <TopChannels size="large" />
               <Customers size="large" />
@@ -396,7 +395,7 @@ export const Query = ({ rates, demographics, type }) => {
 
             <hr className="w-full mt-6" />
             <div className="text-3xl font-bold text-slate-800 mt-12 mb-7">
-              Sample - Life Refocus
+              Sample - Life Refocused
             </div>
             <div className="flex flex-col col-span-full sm:col-span-15 xl:col-span-15 bg-white shadow-lg rounded-sm border border-slate-200">
               <div className="px-5 pt-5">
@@ -469,8 +468,6 @@ export const Query = ({ rates, demographics, type }) => {
             <Videos />
           </div>
         </main>
-
-        <Banner />
       </div>
     </div>
   );

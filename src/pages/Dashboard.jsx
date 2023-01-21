@@ -29,7 +29,7 @@ import PhotoTitleLinkTable, {
 import COA from "../partials/dashboard/COA";
 import { articles, podcasts, socialData } from "../utils/Data";
 
-export const Dashboard = ({rates, demographics, type}) => {
+export const Dashboard = ({ rates, demographics, type }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -68,11 +68,18 @@ export const Dashboard = ({rates, demographics, type}) => {
             <div className="grid grid-cols-12 gap-6">
               {type === "media" || type === "query" ? (
                 <>
-                  {rates ? <TopChannels size="small" /> : <TopChannels size="large" />}
-                  {rates ? <Customers size="small" /> : <Customers size="large" />}
+                  {rates ? (
+                    <TopChannels size="small" />
+                  ) : (
+                    <TopChannels size="large" />
+                  )}
+                  {rates ? (
+                    <Customers size="small" />
+                  ) : (
+                    <Customers size="large" />
+                  )}
                 </>
               ) : null}
-
 
               {rates ? <Rates /> : null}
 
@@ -80,9 +87,8 @@ export const Dashboard = ({rates, demographics, type}) => {
                 data={podcasts(type)}
                 tableTitle={"Podcasts"}
                 size={demographics ? "small" : "large"}
-
               />
-              {demographics ? <Demographics /> : null }
+              {demographics ? <Demographics /> : null}
               <DynamicTable
                 data={articles}
                 tableTitle={"News/Articles"}
@@ -97,8 +103,6 @@ export const Dashboard = ({rates, demographics, type}) => {
             </div>
           </div>
         </main>
-
-        <Banner />
       </div>
     </div>
   );

@@ -28,11 +28,9 @@ import PhotoTitleLinkTable, {
 } from "../partials/dashboard/DynamicTable";
 import { articles, podcasts, socialData } from "../utils/Data";
 
-export const News = ({type}) => {
-
+export const News = ({ type }) => {
   return (
     <div className="flex h-screen overflow-hidden">
-
       {/* Content area */}
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
         {/*  Site header */}
@@ -47,15 +45,13 @@ export const News = ({type}) => {
               News and Articles
             </div>
 
-              <DynamicTable
-                data={articles}
-                tableTitle={"News/Articles"}
-                size="large"
-              />
-            </div>
+            <DynamicTable
+              data={articles}
+              tableTitle={"News/Articles"}
+              size="large"
+            />
+          </div>
         </main>
-
-        <Banner />
       </div>
     </div>
   );

@@ -30,11 +30,9 @@ import COA from "../partials/dashboard/COA";
 import { articles, podcasts, socialData } from "../utils/Data";
 import PodcastCard from "../partials/dashboard/PodcastCard";
 
-export const Podcasts = ({type}) => {
-
+export const Podcasts = ({ type }) => {
   return (
     <div className="flex h-screen overflow-hidden">
-
       {/* Content area */}
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
         {/*  Site header */}
@@ -51,14 +49,18 @@ export const Podcasts = ({type}) => {
 
             <div className="grid grid-cols-12 gap-6 mb-6 ">
               {podcasts(type).map((podcast) => (
-                <PodcastCard title={podcast.name} blurb={podcast.description} type="podcast" link={podcast.link} key={podcast.id} image={podcast.image}/>
+                <PodcastCard
+                  title={podcast.name}
+                  blurb={podcast.description}
+                  type="podcast"
+                  link={podcast.link}
+                  key={podcast.id}
+                  image={podcast.image}
+                />
               ))}
             </div>
-            </div>
-
+          </div>
         </main>
-
-        <Banner />
       </div>
     </div>
   );
