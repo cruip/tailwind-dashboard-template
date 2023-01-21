@@ -213,10 +213,13 @@ export const Query = ({ rates, demographics, type }) => {
                               cancer. My story has been featured in national
                               news articles such as NBC, Today and Yahoo and it
                               was highlighted on the national CBS Evening News
-                              as well. I'm an introvert by nature so this has
-                              all been a big change for me but I have found that
-                              sharing my story helps make other patients feel
-                              less alone.
+                              as well. I'm an introvert by nature so sharing my
+                              life publicly has been a big change but the
+                              experience of sharing my story has been incredibly
+                              rewarding as I've been able to connect with other
+                              patients and survivors and the process has helped
+                              has helped me grow in ways I never thought
+                              possible.
                             </p>
 
                             <p className="p-1">
