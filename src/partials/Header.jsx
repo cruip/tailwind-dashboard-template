@@ -16,7 +16,7 @@ function Header({}) {
             <NavLink
               to="/"
               className={`${pathname === "/" ? "text-blue-700" : null}  ${
-                pathname === "/query-123120" ||
+                pathname === "/query-123120/" ||
                 pathname === "/query-123120/news" ||
                 pathname === "/query-123120/podcasts"
                   ? "hidden"
@@ -35,6 +35,7 @@ function Header({}) {
               pathname === "/" ||
               pathname === "/podcasts" ||
               pathname === "/news" ||
+              pathname === "/query-123120/" ||
               pathname === "/query-123120" ||
               pathname === "/query-123120/news" ||
               pathname === "/query-123120/podcasts"
@@ -50,6 +51,7 @@ function Header({}) {
               className={`${
                 pathname === "/podcasts" ? "text-blue-700" : null
               } ${
+                pathname === "/query-123120/" ||
                 pathname === "/query-123120" ||
                 pathname === "/query-123120/news" ||
                 pathname === "/query-123120/podcasts"
@@ -63,6 +65,7 @@ function Header({}) {
             <NavLink
               to="/news"
               className={`${pathname === "/news" ? "text-blue-700" : null} ${
+                pathname === "/query-123120/" ||
                 pathname === "/query-123120" ||
                 pathname === "/query-123120/podcasts" ||
                 pathname === "/query-123120/news"
@@ -83,6 +86,7 @@ function Header({}) {
                   : null
               } ${
                 pathname === "/query-123120/news" ||
+                pathname === "/query-123120/" ||
                 pathname === "/query-123120" ||
                 pathname === "/query-123120/podcasts"
                   ? null
@@ -100,6 +104,7 @@ function Header({}) {
                   ? "text-blue-700"
                   : null
               } ${
+                pathname === "/query-123120/" ||
                 pathname === "/query-123120" ||
                 pathname === "/query-123120/news" ||
                 pathname === "/query-123120/podcasts"
@@ -113,6 +118,7 @@ function Header({}) {
             <NavLink
               to="/query-123120"
               className={`${
+                pathname === "/query-123120/" ||
                 pathname === "/query-123120" ||
                 pathname === "/query-123120/news" ||
                 pathname === "/query-123120/podcasts"
