@@ -226,8 +226,8 @@ export const Query = ({ rates, demographics, type }) => {
                               In addition to my advocacy work, I am a software
                               engineer and I have even found a new job during my
                               treatment. I was transparent about my diagnosis
-                              through the interview process with gained a lot of
-                              attention but helped provide me with insight on
+                              through the interview process which gained a lot
+                              of attention but helped provide me with insight on
                               how navigate the difficult task. I am also the
                               founder of a non-profit organization and I am
                               currently starting a new podcast with another
