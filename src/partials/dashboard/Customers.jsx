@@ -4,7 +4,7 @@ import Fairmont from "../../images/fairmont.png";
 import Insighters from "../../images/insighters.png";
 import LaRoche from "../../images/laroche.jpeg";
 
-export const Customers = ({size}) => {
+export const Customers = ({ size }) => {
   const customers = [
     {
       id: "0",
@@ -32,7 +32,11 @@ export const Customers = ({size}) => {
   ];
 
   return (
-    <div  className={`col-span-full ${size !== "large" ? `xl:col-span-4` : `xl:col-span-6`} bg-white shadow-lg rounded-sm border border-slate-200`}>
+    <div
+      className={`col-span-full ${
+        size !== "large" ? `xl:col-span-4` : `xl:col-span-6`
+      } bg-white shadow-lg rounded-sm border border-slate-200`}
+    >
       <header className="px-5 py-4 border-b border-slate-100">
         <h2 className="font-semibold text-slate-800">Collaborations</h2>
       </header>
@@ -74,7 +78,7 @@ export const Customers = ({size}) => {
                     </td>
                     <td className="p-2 whitespace-nowrap">
                       <a
-                        className="font-medium text-xs text-indigo-500 hover:text-indigo-600"
+                        className="font-medium text-xs text-blue-500 hover:text-blue-600"
                         href={customer.link}
                         target="_blank"
                       >

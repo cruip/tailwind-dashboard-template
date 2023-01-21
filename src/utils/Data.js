@@ -27,6 +27,8 @@ export const socialData = (type) => {
       blurb:
         type === "media"
           ? "Videos posted several times a week. Followers are cancer survivors, caregivers, and supporters."
+          : type === "query"
+          ? "Over 3M views on just my videos that specifically feature or talk about my story. I post videos several times a week here. Followers are cancer survivors, caregivers, and supporters."
           : "Posts several times a week. Patient focused and vlog style content.",
     },
     {
@@ -56,6 +58,46 @@ export const socialData = (type) => {
       link: "https://www.youtube.com/channel/UCcf5yVgHvI8-__g0RHjfrTw",
       blurb:
         "Videos posted every few months. Patient perspective content on the treatments/proceedures I've had and general updates. YouTube shorts, once a week.",
+    },
+  ];
+};
+
+export const tikTokVideos = () => {
+  return [
+    {
+      id: "tiktok1",
+      title: "Arriving at the ER",
+      viewCount: "434,900",
+      link: "https://www.tiktok.com/embed/7131845393905634602",
+    },
+    {
+      id: "tiktok4",
+      title: "No Active Cancer!",
+      viewCount: "434,900",
+      link: "https://www.tiktok.com/embed/7161238018118962474",
+    },
+    {
+      id: "tiktok2",
+      title: "Biopsy Complication Part 2",
+      viewCount: "434,900",
+      link: "https://www.tiktok.com/embed/7150488325600660779",
+    },
+    {
+      id: "tiktok3",
+      title: "Biopsy Complication",
+      viewCount: "434,900",
+      link: "https://www.tiktok.com/embed/7145649944307993902",
+    },
+  ];
+};
+
+export const youtubeVideos = () => {
+  return [
+    {
+      id: "youtube",
+      title: "YouTube • My Stage IV Kidney Cancer Diagnosis Story",
+      viewCount: "434,900",
+      link: "https://www.youtube.com/embed/JcLkww0tEIc",
     },
   ];
 };
@@ -168,14 +210,13 @@ export const podcasts = (type) => {
           ? `"Ranked in top 25% of podcasts. Experts discuss mental health.",`
           : `Ep. 27: Facing the Rarest of Cancers`
       }`,
-      image: doctorsArt
+      image: doctorsArt,
     },
     {
       id: "1",
       name: "The Accelerators",
       link: "https://accelerators.buzzsprout.com/1839275/11948820-the-experts-discuss-patients-mental-health-and-mindfulness",
-      description:
-      `${
+      description: `${
         type === "media"
           ? `3rd most popular medical podcast`
           : `The Experts Discuss Patients’ Mental Health and Mindfulness`
@@ -186,14 +227,16 @@ export const podcasts = (type) => {
       id: "2",
       name: "The Accelerators",
       link: "https://accelerators.buzzsprout.com/1839275/11447574-on-clinical-trials-the-patient-perspective-with-julie-and-katie",
-      description: "On Clinical Trials: The Patient Perspective With Julie and Katie",
+      description:
+        "On Clinical Trials: The Patient Perspective With Julie and Katie",
       image: accelerators,
     },
     {
       id: "3",
       name: "The Accelerators",
       link: "https://accelerators.buzzsprout.com/1839275/11673786-on-clinical-trials-patient-education-with-julie-katie-and-david",
-      description: "On Clinical Trials: Patient Education With Julie, Katie, and David",
+      description:
+        "On Clinical Trials: Patient Education With Julie, Katie, and David",
       image: accelerators,
     },
     {
@@ -250,5 +293,3 @@ export const comparables = [
     publisher: "St. Martin's Press",
   },
 ];
-
-
