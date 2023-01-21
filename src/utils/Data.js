@@ -28,7 +28,7 @@ export const socialData = (type) => {
         type === "media"
           ? "Videos posted several times a week. Followers are cancer survivors, caregivers, and supporters."
           : type === "query"
-          ? "Over 3M views on just my videos that specifically feature or talk about my story. I post videos several times a week here. Followers are cancer survivors, caregivers, and supporters."
+          ? "Over 3M views on the videos that specifically feature or talk about my story. I post videos several times a week here. Followers are cancer survivors, caregivers, and supporters."
           : "Posts several times a week. Patient focused and vlog style content.",
     },
     {

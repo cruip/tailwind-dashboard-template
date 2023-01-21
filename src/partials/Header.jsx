@@ -17,6 +17,7 @@ function Header({}) {
               to="/"
               className={`${pathname === "/" ? "text-blue-700" : null}  ${
                 pathname === "/query-123120/" ||
+                pathname === "/query-123120" ||
                 pathname === "/query-123120/news" ||
                 pathname === "/query-123120/podcasts"
                   ? "hidden"
