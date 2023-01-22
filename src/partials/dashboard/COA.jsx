@@ -75,7 +75,6 @@ export const COA = ({ type }) => {
             <div className="text-3xl font-bold text-slate-800 mr-2">
               {type === "query" || type === "media" ? "" : "Donate"}
             </div>
-            {type}
             <a
               href="https://kidneycoa.org"
               target="_blank"
