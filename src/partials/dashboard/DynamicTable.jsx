@@ -33,7 +33,7 @@ export const DynamicTable = ({ data, nameAlias, tableTitle, size }) => {
             {/* Table header */}
             <thead className="text-xs font-semibold uppercase text-slate-400 bg-slate-50">
               <tr>
-                <th className="p-2 whitespace-nowrap">
+                <th className="p-2 w-1/2   md:whitespace-nowrap">
                   <div className="font-semibold text-left">
                     {nameAlias ? nameAlias : "Name"}
                   </div>
@@ -56,7 +56,7 @@ export const DynamicTable = ({ data, nameAlias, tableTitle, size }) => {
               {data.map((data) => {
                 return (
                   <tr key={data.id}>
-                    <td className="p-2 whitespace-nowrap">
+                    <td className="p-2 md:whitespace-nowrap">
                       <div className="flex items-center">
                         {data.image ? (
                           <div className="w-5 h-5 shrink-0 mr-4 sm:mr-3 ">
