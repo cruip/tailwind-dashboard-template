@@ -40,8 +40,8 @@ import VideoCard from "../partials/dashboard/VideoCard";
 export const Videos = ({ type }) => {
   return (
     <div className="">
-      <div className="text-3xl font-bold text-slate-800 mt-12 mb-7">
-        My Story in Videos
+      <div className="text-3xl font-bold text-slate-800 mt-10 mb-7">
+        {type === "query" ? "My Story in Videos" : "Videos"}
       </div>
       {/*youtube video*/}
       <div className="mb-6">

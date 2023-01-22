@@ -28,6 +28,8 @@ import PhotoTitleLinkTable, {
 } from "../partials/dashboard/DynamicTable";
 import COA from "../partials/dashboard/COA";
 import { articles, podcasts, socialData } from "../utils/Data";
+import VideoCard from "../partials/dashboard/VideoCard";
+import Videos from "./Videos";
 
 export const Dashboard = ({ rates, demographics, type }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -89,18 +91,22 @@ export const Dashboard = ({ rates, demographics, type }) => {
                 size={demographics ? "small" : "large"}
               />
               {demographics ? <Demographics /> : null}
-              <DynamicTable
-                data={articles}
-                tableTitle={"News/Articles"}
-                size="large"
-              />
+              <COA type={type} />
 
-              <COA />
+              {type === "media" ? (
+                <DynamicTable
+                  data={articles}
+                  tableTitle={"News/Articles"}
+                  size="large"
+                />
+              ) : null}
 
               {/*<PhotoTitleLinkTable*/}
               {/* Card (Recent Activity) */}
               {/*<DashboardCard12 />*/}
             </div>
+            <hr className="w-full mt-10" />
+            <Videos />
           </div>
         </main>
       </div>

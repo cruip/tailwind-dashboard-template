@@ -1,7 +1,7 @@
 import React from "react";
 import headshot from "../../images/katie-head-shot.png";
 
-function WelcomeBanner({email, type}) {
+function WelcomeBanner({ email, type }) {
   return (
     <div className={`relative p-4 sm:p-4 rounded-sm overflow-hidden`}>
       {/* Background illustration */}
@@ -70,7 +70,6 @@ function WelcomeBanner({email, type}) {
 
       {/* Content */}
       <div className="flex flex-col self-center">
-
         <div className="relative z-0">
           <img
             className="aspect-square rounded-full w-40 border mx-auto border-2 object-cover "
@@ -85,9 +84,7 @@ function WelcomeBanner({email, type}) {
             Katie Coleman
           </h1>
           <p className="text-center italic mt-1">
-            {`Stage IV Cancer Survivor • Software Engineer • ${ type === "media" || type === "query" ? `Content Creator • Writer (Memoir)` : `Writer (Memoir)`  }
-             ${type === "query" ? ` • Non-Profit Founder` : ``} `}`
-
+            {`Stage IV Cancer Survivor • Patient Advocate • Software Engineer • Writer (Memoir)`}
           </p>
 
           {/*<p className="text-sm italic">*/}

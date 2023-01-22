@@ -1,42 +1,64 @@
-import React, { useEffect } from 'react';
-import {
-  Routes,
-  Route,
-  useLocation
-} from 'react-router-dom';
+import React, { useEffect } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 
-import './css/style.css';
+import "./css/style.css";
 
-import './charts/ChartjsConfig';
+import "./charts/ChartjsConfig";
 
 // Import pages
-import Dashboard from './pages/Dashboard';
+import Dashboard from "./pages/Dashboard";
 import News from "./pages/News";
 import Podcasts from "./pages/Podcasts";
 import Query from "./pages/Query";
 
 function App() {
-
   const location = useLocation();
 
   useEffect(() => {
-    document.querySelector('html').style.scrollBehavior = 'auto'
-    window.scroll({ top: 0 })
-    document.querySelector('html').style.scrollBehavior = ''
+    document.querySelector("html").style.scrollBehavior = "auto";
+    window.scroll({ top: 0 });
+    document.querySelector("html").style.scrollBehavior = "";
   }, [location.pathname]); // triggered on route change
 
   return (
     <>
       <Routes>
-        <Route exact path="/" element={<Dashboard rates={false} demographics={false}  type="social"/>} />
-        <Route exact path="/media-100z2c9kds9" element={<Dashboard rates={true} demographics={true} type="media" />} />
+        <Route
+          exact
+          path="/"
+          element={
+            <Dashboard rates={false} demographics={false} type="social" />
+          }
+        />
+        <Route
+          exact
+          path="/media-100z2c9kds9"
+          element={<Dashboard rates={true} demographics={true} type="media" />}
+        />
+        <Route
+          exact
+          path="/media-100z2c9kds9/news"
+          element={<News type="news" />}
+        />
+        <Route
+          exact
+          path="/media-100z2c9kds9/podcasts"
+          element={<Podcasts type="podcasts" />}
+        />
         {/*<Route exact path="/writing-123120" element={<Dashboard rates={false} demographics={false} type="media" />} />*/}
-        <Route exact path="/podcasts" element={<Podcasts type="podcasts"/>} />
-        <Route exact path="/news" element={<News type="news"/>} />
-        <Route exact path="/query-123120/news" element={<News type="news"/>} />
-        <Route exact path="/query-123120/podcasts" element={<Podcasts type="podcasts"/>} />
-        <Route exact path="/query-123120" element={<Query rates={false} demographics={false} type="query"/>} />
-
+        <Route exact path="/podcasts" element={<Podcasts type="podcasts" />} />
+        <Route exact path="/news" element={<News type="news" />} />
+        <Route exact path="/query-123120/news" element={<News type="news" />} />
+        <Route
+          exact
+          path="/query-123120/podcasts"
+          element={<Podcasts type="podcasts" />}
+        />
+        <Route
+          exact
+          path="/query-123120"
+          element={<Query rates={false} demographics={false} type="query" />}
+        />
       </Routes>
     </>
   );

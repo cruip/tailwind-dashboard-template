@@ -468,7 +468,7 @@ export const Query = ({ rates, demographics, type }) => {
             </div>
 
             <hr className="w-full mt-12" />
-            <Videos />
+            <Videos type={"query"} />
           </div>
         </main>
       </div>

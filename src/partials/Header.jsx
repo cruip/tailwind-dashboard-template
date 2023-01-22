@@ -8,6 +8,58 @@ import { NavLink, useLocation } from "react-router-dom";
 function Header({}) {
   const location = useLocation();
   const { pathname } = location;
+
+  const routes = [
+    "/",
+    "/podcasts",
+    "/news",
+    "/query-123120/",
+    "/query-123120",
+    "/query-123120/news",
+    "/query-123120/podcasts",
+    "/media-100z2c9kds9/",
+    "/media-100z2c9kds9",
+  ];
+  const queryRoutes = [
+    "/query-123120/",
+    "/query-123120",
+    "/query-123120/news",
+    "/query-123120/news/",
+    "/query-123120/podcasts",
+    "/query-123120/podcasts/",
+  ];
+
+  const mediaRoutes = [
+    "/media-100z2c9kds9/",
+    "/media-100z2c9kds9",
+    "/media-100z2c9kds9/news",
+    "/media-100z2c9kds9/news/",
+    "/media-100z2c9kds9/podcasts",
+    "/media-100z2c9kds9/podcasts/",
+  ];
+
+  const dashboardRoutes = [
+    "media-100z2c9kds9",
+    "media-100z2c9kds9/",
+    "media-100z2c9kds9/news",
+    "media-100z2c9kds9/news/",
+    "media-100z2c9kds9/podcasts",
+    "media-100z2c9kds9/podcasts/",
+    "query-123120/",
+    "query-123120",
+    "query-123120/news",
+    "query-123120/news/",
+    "query-123120/podcasts",
+    "query-123120/podcasts/",
+  ];
+
+  const standardRoutes = ["/", "/podcasts", "/news"];
+  const hideNavigation = routes.includes(pathname) ? "hidden" : null;
+  const hideMedia = mediaRoutes.includes(pathname) ? "hidden" : null;
+  const hideQuery = queryRoutes.includes(pathname) ? "hidden" : null;
+  const hideStandard = standardRoutes.includes(pathname) ? "hidden" : null;
+  const hideDashboard = dashboardRoutes.includes(pathname) ? "hidden" : null;
+
   return (
     <header className="sticky top-0 bg-white border-b border-slate-200 z-30">
       <div className="px-4 sm:px-6 lg:px-8">
@@ -15,64 +67,55 @@ function Header({}) {
           <div className="flex items-center">
             <NavLink
               to="/"
-              className={`${pathname === "/" ? "text-blue-700" : null}  ${
-                pathname === "/query-123120/" ||
-                pathname === "/query-123120" ||
-                pathname === "/query-123120/news" ||
-                pathname === "/query-123120/podcasts"
-                  ? "hidden"
-                  : null
-              }  ml-4 text-slate-500 hover:text-slate-600`}
+              className={`${
+                pathname === "/" ? "text-blue-700" : null
+              }  ${hideQuery} ${hideMedia}  ml-4 text-slate-500 hover:text-slate-600`}
             >
               <div>Dashboard</div>
             </NavLink>
-
+            {/*Media specific pages*/}
             <NavLink
               to="/media-100z2c9kds9"
               className={` ${
                 pathname === "/media-100z2c9kds9" ? "text-blue-700" : null
               } {\` 
-            ${
-              pathname === "/" ||
-              pathname === "/podcasts" ||
-              pathname === "/news" ||
-              pathname === "/query-123120/" ||
-              pathname === "/query-123120" ||
-              pathname === "/query-123120/news" ||
-              pathname === "/query-123120/podcasts"
-                ? "hidden"
-                : null
-            } ml-4 text-slate-500 hover:text-slate-600`}
+            ${hideQuery} ${hideStandard} ml-4 text-slate-500 hover:text-slate-600`}
             >
               <div>Media</div>
+            </NavLink>
+
+            <NavLink
+              to="/media-100z2c9kds9/news"
+              className={`${
+                pathname === "/news" || pathname === "/media-100z2c9kds9/news"
+                  ? "text-blue-700"
+                  : null
+              } ${hideStandard} ${hideQuery} ml-4 text-slate-500 hover:text-slate-600`}
+            >
+              <div>News</div>
+            </NavLink>
+
+            <NavLink
+              to="/media-100z2c9kds9/podcasts"
+              className={`text-slate-500 ${hideQuery} ${hideStandard} ml-4  hover:text-blue-500`}
+            >
+              <div>Podcasts</div>
             </NavLink>
 
             <NavLink
               to="/podcasts"
               className={`${
                 pathname === "/podcasts" ? "text-blue-700" : null
-              } ${
-                pathname === "/query-123120/" ||
-                pathname === "/query-123120" ||
-                pathname === "/query-123120/news" ||
-                pathname === "/query-123120/podcasts"
-                  ? "hidden"
-                  : null
-              } ml-4 text-slate-500 hover:text-slate-600`}
+              } ${hideMedia} ${hideQuery} ml-4 text-slate-500 hover:text-slate-600`}
             >
               <div>Podcasts</div>
             </NavLink>
 
             <NavLink
               to="/news"
-              className={`${pathname === "/news" ? "text-blue-700" : null} ${
-                pathname === "/query-123120/" ||
-                pathname === "/query-123120" ||
-                pathname === "/query-123120/podcasts" ||
-                pathname === "/query-123120/news"
-                  ? "hidden"
-                  : null
-              } ml-4 text-slate-500 hover:text-slate-600`}
+              className={`${
+                pathname === "/news" ? "text-blue-700" : null
+              } ${hideMedia} ${hideQuery} ml-4 text-slate-500 hover:text-slate-600`}
             >
               <div>News</div>
             </NavLink>
