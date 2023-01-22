@@ -386,7 +386,7 @@ export const Query = ({ rates, demographics, type }) => {
                 tableTitle={"Podcasts"}
                 size={demographics ? "small" : "large"}
               />
-              {demographics ? <Demographics /> : null}
+              {/*{demographics ? <Demographics /> : null}*/}
               <DynamicTable
                 data={articles}
                 tableTitle={"News/Articles"}

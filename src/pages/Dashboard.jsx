@@ -90,7 +90,9 @@ export const Dashboard = ({ rates, demographics, type }) => {
                 tableTitle={"Podcasts"}
                 size={demographics ? "small" : "large"}
               />
-              {demographics ? <Demographics /> : null}
+              {demographics ? (
+                <Demographics className="md:block hidden" />
+              ) : null}
               <COA type={type} />
 
               {type === "media" ? (
