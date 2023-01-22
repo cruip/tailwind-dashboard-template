@@ -16,6 +16,8 @@ function Header({}) {
     "/query-123120/",
     "/query-123120",
     "/query-123120/news",
+    "/query-123120/news/",
+    "/query-123120/podcasts/",
     "/query-123120/podcasts",
     "/media-100z2c9kds9/",
     "/media-100z2c9kds9",
@@ -53,7 +55,7 @@ function Header({}) {
     "query-123120/podcasts/",
   ];
 
-  const standardRoutes = ["/", "/podcasts", "/news"];
+  const standardRoutes = ["/", "/podcasts", "/podcasts/", "/news/", "/news"];
   const hideNavigation = routes.includes(pathname) ? "hidden" : null;
   const hideMedia = mediaRoutes.includes(pathname) ? "hidden" : null;
   const hideQuery = queryRoutes.includes(pathname) ? "hidden" : null;
@@ -114,7 +116,9 @@ function Header({}) {
             <NavLink
               to="/news"
               className={`${
-                pathname === "/news" ? "text-blue-700" : null
+                pathname === "/news" || pathname === "/news/"
+                  ? "text-blue-700"
+                  : null
               } ${hideMedia} ${hideQuery} ml-4 text-slate-500 hover:text-slate-600`}
             >
               <div>News</div>
