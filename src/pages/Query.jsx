@@ -134,6 +134,9 @@ export const Query = ({ rates, demographics, type }) => {
                   </p>
                 </div>
               </div>
+
+              {/*Notable Events*/}
+              <StandOut />
               {/*Audience*/}
               <div>
                 <div className="text-3xl font-bold text-slate-800 mt-12 mb-4">
@@ -141,7 +144,7 @@ export const Query = ({ rates, demographics, type }) => {
                 </div>
                 <div className="flex flex-col col-span-full sm:col-span-4 xl:col-span-4 bg-white shadow-lg rounded-sm border border-slate-200">
                   <ul className="list-disc text-sm ml-4 p-4">
-                    <li className="p-">
+                    <li className="p-1">
                       <b>Cancer survivors and their families:</b> My story is
                       relatable and inspiring for those who have gone through a
                       similar experience.{" "}
@@ -471,6 +474,59 @@ export const Query = ({ rates, demographics, type }) => {
             <Videos type={"query"} />
           </div>
         </main>
+      </div>
+    </div>
+  );
+};
+
+export const StandOut = () => {
+  return (
+    <div>
+      <div className="text-3xl font-bold text-slate-800 mt-5 mb-4">
+        What makes my story stand out
+      </div>
+      <div className="text-sm p-4 flex flex-col col-span-full sm:col-span-12 xl:col-span-12 bg-white shadow-lg rounded-sm border border-slate-200">
+        <ul className="list-disc text-sm ml-4 p-4">
+          <li className="p-1">
+            Having a one in a hundred million cancer (single digit case reports)
+          </li>
+          <li className="p-1">
+            Being diagnosed just two months after getting married, at 29 years
+            old
+          </li>
+          <li className="p-1">
+            The dramatic shift in prognosis I had after perservering through
+            many obstacles and learning to advocate for myself
+          </li>
+          <li className="p-1">Battling cancer through a pandemic</li>
+          <li className="p-1">
+            Perspective from someone who has been afraid of everything my entire
+            life, I don't paint myself as a "strong" fighter. I share the
+            realness of my story as the poster child for, "if you can't beat
+            fear, do it scared"
+          </li>
+          <li className="p-1">
+            Offering a new definition of strength: "strength isn't the absense
+            of fear but instead a product of perservering through it"
+          </li>
+          <li className="p-1">
+            I share the impact social media can have for young adults with
+            cancer or rare diseases (it saved my life more than once)
+          </li>
+          <li className="p-1">
+            Overcoming medical complications, a blood shortage and almost losing
+            my one chance at surgery as my team tried to prepare resources for a
+            "catastrophic bleed"
+          </li>
+          <li className="p-1">
+            Sharing the evolution of journey from being too scared to talk to a
+            stranger to sharing my life as an open book online with millions
+          </li>
+          <li className="p-1">
+            Focus on gratitude and tangible advice of what helped me refocus and
+            reframe my thinking and how I learned to live in the moment
+          </li>
+        </ul>
       </div>
     </div>
   );
