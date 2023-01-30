@@ -111,7 +111,7 @@ export const Query = ({ rates, demographics, type }) => {
                     diagnosed with an extremely rare (single digits, worldwide,
                     in history) Stage IV cancer on New Year's Eve 2020, as a 29
                     year old newly wed. I take readers through the shock and
-                    disbelief I struggled to over come after years of being told
+                    disbelief I struggled to overcome after years of being told
                     by doctors that I was "too young for cancer" and the
                     difficult decisions I had to make, such as forgoing my
                     honeymoon and moving across the country in search of
