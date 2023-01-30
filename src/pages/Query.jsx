@@ -502,7 +502,7 @@ export const StandOut = () => {
           <li className="p-1">
             Perspective from someone who has been afraid of everything my entire
             life, I don't paint myself as a "strong" fighter. I share the
-            realness of my story as the poster child for, "if you can't beat
+            realness of my story as the poster child for "if you can't beat
             fear, do it scared"
           </li>
           <li className="p-1">
@@ -523,8 +523,8 @@ export const StandOut = () => {
             stranger to sharing my life as an open book online with millions
           </li>
           <li className="p-1">
-            Focus on gratitude and tangible advice of what helped me refocus and
-            reframe my thinking and how I learned to live in the moment
+            Focus on gratitude and tangible advice on what helped me reframe my
+            thinking and how I learned to live in the moment
           </li>
         </ul>
       </div>
