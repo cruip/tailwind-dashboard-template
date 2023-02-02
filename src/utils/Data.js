@@ -45,7 +45,7 @@ export const socialData = (type) => {
     {
       id: "instagram",
       title: "Instagram",
-      total: "1,248",
+      total: "1,256",
       countType: "followers",
       link: "https://www.instagram.com/katiekickscancer/",
       blurb: "Stories posted daily from the day after I was diagnosed.",
@@ -53,7 +53,7 @@ export const socialData = (type) => {
     {
       id: "youtube",
       title: "YouTube",
-      total: "1,226",
+      total: "1,230",
       countType: "subscribers",
       link: "https://www.youtube.com/channel/UCcf5yVgHvI8-__g0RHjfrTw",
       blurb:
@@ -207,7 +207,7 @@ export const podcasts = (type) => {
       link: "https://www.thedoctorsart.com/episodes/ep27",
       description: `${
         type === "media"
-          ? `"Ranked in top 25% of podcasts. Experts discuss mental health.",`
+          ? `#3 in most popular medical podcast. Ep. 27: Facing the Rarest of Cancers`
           : `Ep. 27: Facing the Rarest of Cancers`
       }`,
       image: doctorsArt,
@@ -218,9 +218,10 @@ export const podcasts = (type) => {
       link: "https://accelerators.buzzsprout.com/1839275/11948820-the-experts-discuss-patients-mental-health-and-mindfulness",
       description: `${
         type === "media"
-          ? `3rd most popular medical podcast`
+          ? `Ranked in top 25% of all podcasts. Experts discuss mental health.`
           : `The Experts Discuss Patients’ Mental Health and Mindfulness`
       }`,
+
       image: accelerators,
     },
     {

@@ -45,7 +45,13 @@ function App() {
           path="/media-100z2c9kds9/podcasts"
           element={<Podcasts type="podcasts" />}
         />
-        {/*<Route exact path="/writing-123120" element={<Dashboard rates={false} demographics={false} type="media" />} />*/}
+        <Route
+          exact
+          path="/media-123120"
+          element={
+            <Dashboard rates={false} demographics={false} type="media" />
+          }
+        />
         <Route exact path="/podcasts" element={<Podcasts type="podcasts" />} />
         <Route exact path="/news" element={<News type="news" />} />
         <Route exact path="/query-123120/news" element={<News type="news" />} />

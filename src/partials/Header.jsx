@@ -9,6 +9,8 @@ function Header({}) {
   const location = useLocation();
   const { pathname } = location;
 
+  // This is a terrible navigation strategy, todo: rework it
+
   const routes = [
     "/",
     "/podcasts",
@@ -21,6 +23,8 @@ function Header({}) {
     "/query-123120/podcasts",
     "/media-100z2c9kds9/",
     "/media-100z2c9kds9",
+    "/media-123120",
+    "/media-123120/",
   ];
   const queryRoutes = [
     "/query-123120/",
@@ -29,9 +33,13 @@ function Header({}) {
     "/query-123120/news/",
     "/query-123120/podcasts",
     "/query-123120/podcasts/",
+    "/media-123120",
+    "/media-123120/",
   ];
 
   const mediaRoutes = [
+    "/media-123120",
+    "/media-123120/",
     "/media-100z2c9kds9/",
     "/media-100z2c9kds9",
     "/media-100z2c9kds9/news",
@@ -41,6 +49,8 @@ function Header({}) {
   ];
 
   const dashboardRoutes = [
+    "media-123120",
+    "media-123120/",
     "media-100z2c9kds9",
     "media-100z2c9kds9/",
     "media-100z2c9kds9/news",
@@ -78,6 +88,21 @@ function Header({}) {
             {/*Media specific pages*/}
             <NavLink
               to="/media-100z2c9kds9"
+              className={` ${
+                pathname === "/media-100z2c9kds9" ? "text-blue-700" : null
+              } {\` 
+            ${hideQuery} ${hideStandard} ${
+                pathname === "/media-123120" ? "hidden" : null
+              } ml-4 text-slate-500 hover:text-slate-600`}
+            >
+              <div>
+                Media Dashboard | {pathname} |{" "}
+                {pathname === "/media-123120" ? "yes" : "no"}
+              </div>
+            </NavLink>
+
+            <NavLink
+              to="/media-123120"
               className={` ${
                 pathname === "/media-100z2c9kds9" ? "text-blue-700" : null
               } {\` 
