@@ -95,19 +95,6 @@ function Header({}) {
                 pathname === "/media-123120" ? "hidden" : null
               } ml-4 text-slate-500 hover:text-slate-600`}
             >
-              <div>
-                Media Dashboard | {pathname} |{" "}
-                {pathname === "/media-123120" ? "yes" : "no"}
-              </div>
-            </NavLink>
-
-            <NavLink
-              to="/media-123120"
-              className={` ${
-                pathname === "/media-100z2c9kds9" ? "text-blue-700" : null
-              } {\` 
-            ${hideQuery} ${hideStandard} ml-4 text-slate-500 hover:text-slate-600`}
-            >
               <div>Media</div>
             </NavLink>
 
