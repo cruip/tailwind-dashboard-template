@@ -21,7 +21,7 @@ export const socialData = (type) => {
     {
       id: "tiktok",
       title: "TikTok",
-      total: "52,800",
+      total: "52,752",
       countType: "followers",
       link: "https://www.tiktok.com/@katiekickscancer",
       blurb:
