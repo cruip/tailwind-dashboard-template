@@ -290,7 +290,7 @@ export const comparables = [
     description:
       "A first-person account from a young critical care physician describes how toward the end of her medical training she suddenly became a patient fighting for her own life, revealing how her experiences exposed her to flaws in today's care standards and how to better embrace the emotional bond between doctor and patient.",
     pages: "272",
-    author: "Paul Kalanithi",
+    author: "Rana Awdish, MD, FCCP",
     publisher: "St. Martin's Press",
   },
 ];
