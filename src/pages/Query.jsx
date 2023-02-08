@@ -434,7 +434,7 @@ export const Query = ({ rates, demographics, type }) => {
                   </div>
                   <div className="flex w-3/4">
                     <a
-                      href="https://docs.google.com/document/d/1e-EKszKP4nbMNtuQ1PyJ2xKC5ljR2zlSsU8jXF4DO0M/edit?usp=sharing"
+                      href="https://docs.google.com/document/d/1lgIVsf36_a33npvomi1URrBW74ruT-9DmFG7vb0ZfFM/edit?usp=sharing"
                       target="_blank"
                     >
                       <div className="flex flex-col">
