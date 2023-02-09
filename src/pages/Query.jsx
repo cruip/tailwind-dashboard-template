@@ -488,7 +488,8 @@ export const StandOut = () => {
       <div className="text-sm p-4 flex flex-col col-span-full sm:col-span-12 xl:col-span-12 bg-white shadow-lg rounded-sm border border-slate-200">
         <ul className="list-disc text-sm ml-4 p-4">
           <li className="p-1">
-            Having a one in a hundred million cancer (single digit case reports)
+            Having an extremely rare cancer (single digit case reports,
+            worldwide, in history)
           </li>
           <li className="p-1">
             Being diagnosed just two months after getting married, at 29 years
@@ -510,17 +511,17 @@ export const StandOut = () => {
             of fear but instead a product of perservering through it"
           </li>
           <li className="p-1">
-            I share the impact social media can have for young adults with
-            cancer or rare diseases (it saved my life more than once)
-          </li>
-          <li className="p-1">
             Overcoming medical complications, a blood shortage and almost losing
             my one chance at surgery as my team tried to prepare resources for a
             "catastrophic bleed"
           </li>
           <li className="p-1">
-            Sharing the evolution of journey from being too scared to talk to a
-            stranger to sharing my life as an open book online with millions
+            The dedication of my life after surgery to giving back and helping
+            others. Changing careers and building an app for patients
+          </li>
+          <li className="p-1">
+            Sharing a evolutionary journey from being too scared to talk to
+            strangers to sharing my life as an open book online with millions
           </li>
           <li className="p-1">
             Focus on gratitude and tangible advice on what helped me reframe my

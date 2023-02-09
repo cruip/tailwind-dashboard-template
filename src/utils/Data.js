@@ -21,7 +21,7 @@ export const socialData = (type) => {
     {
       id: "tiktok",
       title: "TikTok",
-      total: "52,752",
+      total: "52,782",
       countType: "followers",
       link: "https://www.tiktok.com/@katiekickscancer",
       blurb:
@@ -34,7 +34,7 @@ export const socialData = (type) => {
     {
       id: "twitter",
       title: "Twitter",
-      total: "7,490",
+      total: "7,592",
       countType: "followers",
       link: "https://twitter.com/kaydaustin",
       blurb:
@@ -45,7 +45,7 @@ export const socialData = (type) => {
     {
       id: "instagram",
       title: "Instagram",
-      total: "1,260",
+      total: "1,279",
       countType: "followers",
       link: "https://www.instagram.com/katiekickscancer/",
       blurb: "Stories posted daily from the day after I was diagnosed.",
