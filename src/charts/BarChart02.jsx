@@ -36,8 +36,8 @@ function BarChart02({
         scales: {
           y: {
             stacked: true,
-            grid: {
-              drawBorder: false,
+            border: {
+              display: false,
             },
             beginAtZero: true,
             ticks: {
@@ -55,9 +55,11 @@ function BarChart02({
                 month: 'MMM YY',
               },
             },
+            border: {
+              display: false,
+            },
             grid: {
               display: false,
-              drawBorder: false,
             },
             ticks: {
               autoSkipPadding: 48,

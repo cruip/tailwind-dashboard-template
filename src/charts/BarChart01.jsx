@@ -36,8 +36,8 @@ function BarChart01({
         },
         scales: {
           y: {
-            grid: {
-              drawBorder: false,
+            border: {
+              display: false,
             },
             ticks: {
               maxTicksLimit: 5,
@@ -53,9 +53,11 @@ function BarChart01({
                 month: 'MMM YY',
               },
             },
+            border: {
+              display: false,
+            },
             grid: {
               display: false,
-              drawBorder: false,
             },
           },
         },
