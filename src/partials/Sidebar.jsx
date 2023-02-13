@@ -121,8 +121,8 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                     <React.Fragment>
                       <a
                         href="#0"
-                        className={`block text-slate-200 hover:text-white truncate transition duration-150 ${
-                          (pathname === '/' || pathname.includes('dashboard')) && 'hover:text-slate-200'
+                        className={`block text-slate-200 truncate transition duration-150 ${
+                          pathname === '/' || pathname.includes('dashboard') ? 'hover:text-slate-200' : 'hover:text-white'
                         }`}
                         onClick={(e) => {
                           e.preventDefault();
@@ -217,8 +217,8 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                     <React.Fragment>
                       <a
                         href="#0"
-                        className={`block text-slate-200 hover:text-white truncate transition duration-150 ${
-                          pathname.includes('ecommerce') && 'hover:text-slate-200'
+                        className={`block text-slate-200 truncate transition duration-150 ${
+                          pathname.includes('ecommerce') ? 'hover:text-slate-200' : 'hover:text-white'
                         }`}
                         onClick={(e) => {
                           e.preventDefault();
@@ -398,8 +398,8 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                     <React.Fragment>
                       <a
                         href="#0"
-                        className={`block text-slate-200 hover:text-white truncate transition duration-150 ${
-                          pathname.includes('community') && 'hover:text-slate-200'
+                        className={`block text-slate-200 truncate transition duration-150 ${
+                          pathname.includes('community') ? 'hover:text-slate-200' : 'hover:text-white'
                         }`}
                         onClick={(e) => {
                           e.preventDefault();
@@ -549,8 +549,8 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                     <React.Fragment>
                       <a
                         href="#0"
-                        className={`block text-slate-200 hover:text-white truncate transition duration-150 ${
-                          pathname.includes('finance') && 'hover:text-slate-200'
+                        className={`block text-slate-200 truncate transition duration-150 ${
+                          pathname.includes('finance') ? 'hover:text-slate-200' : 'hover:text-white'
                         }`}
                         onClick={(e) => {
                           e.preventDefault();
@@ -639,8 +639,8 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                     <React.Fragment>
                       <a
                         href="#0"
-                        className={`block text-slate-200 hover:text-white truncate transition duration-150 ${
-                          pathname.includes('job') && 'hover:text-slate-200'
+                        className={`block text-slate-200 truncate transition duration-150 ${
+                          pathname.includes('job') ? 'hover:text-slate-200' : 'hover:text-white'
                         }`}
                         onClick={(e) => {
                           e.preventDefault();
@@ -729,8 +729,8 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                     <React.Fragment>
                       <a
                         href="#0"
-                        className={`block text-slate-200 hover:text-white truncate transition duration-150 ${
-                          pathname.includes('tasks') && 'hover:text-slate-200'
+                        className={`block text-slate-200 truncate transition duration-150 ${
+                          pathname.includes('tasks') ? 'hover:text-slate-200' : 'hover:text-white'
                         }`}
                         onClick={(e) => {
                           e.preventDefault();
@@ -804,8 +804,8 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                 <NavLink
                   end
                   to="/messages"
-                  className={`block text-slate-200 hover:text-white truncate transition duration-150 ${
-                    pathname.includes('messages') && 'hover:text-slate-200'
+                  className={`block text-slate-200 truncate transition duration-150 ${
+                    pathname.includes('messages') ? 'hover:text-slate-200' : 'hover:text-white'
                   }`}
                 >
                   <div className="flex items-center justify-between">
@@ -836,8 +836,8 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                 <NavLink
                   end
                   to="/inbox"
-                  className={`block text-slate-200 hover:text-white truncate transition duration-150 ${
-                    pathname.includes('inbox') && 'hover:text-slate-200'
+                  className={`block text-slate-200 truncate transition duration-150 ${
+                    pathname.includes('inbox') ? 'hover:text-slate-200' : 'hover:text-white'
                   }`}
                 >
                   <div className="flex items-center">
@@ -860,8 +860,8 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                 <NavLink
                   end
                   to="/calendar"
-                  className={`block text-slate-200 hover:text-white truncate transition duration-150 ${
-                    pathname.includes('calendar') && 'hover:text-slate-200'
+                  className={`block text-slate-200 truncate transition duration-150 ${
+                    pathname.includes('calendar') ? 'hover:text-slate-200' : 'hover:text-white'
                   }`}
                 >
                   <div className="flex items-center">
@@ -883,8 +883,8 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                 <NavLink
                   end
                   to="/campaigns"
-                  className={`block text-slate-200 hover:text-white truncate transition duration-150 ${
-                    pathname.includes('campaigns') && 'hover:text-slate-200'
+                  className={`block text-slate-200 truncate transition duration-150 ${
+                    pathname.includes('campaigns') ? 'hover:text-slate-200' : 'hover:text-white'
                   }`}
                 >
                   <div className="flex items-center">
@@ -911,8 +911,8 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                     <React.Fragment>
                       <a
                         href="#0"
-                        className={`block text-slate-200 hover:text-white truncate transition duration-150 ${
-                          pathname.includes('settings') && 'hover:text-slate-200'
+                        className={`block text-slate-200 truncate transition duration-150 ${
+                          pathname.includes('settings') ? 'hover:text-slate-200' : 'hover:text-white'
                         }`}
                         onClick={(e) => {
                           e.preventDefault();
@@ -1044,8 +1044,8 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                     <React.Fragment>
                       <a
                         href="#0"
-                        className={`block text-slate-200 hover:text-white truncate transition duration-150 ${
-                          pathname.includes('utility') && 'hover:text-slate-200'
+                        className={`block text-slate-200 truncate transition duration-150 ${
+                          pathname.includes('utility') ? 'hover:text-slate-200' : 'hover:text-white'
                         }`}
                         onClick={(e) => {
                           e.preventDefault();
@@ -1196,7 +1196,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                     <React.Fragment>
                       <a
                         href="#0"
-                        className={`block text-slate-200 hover:text-white truncate transition duration-150 ${open && 'hover:text-slate-200'}`}
+                        className={`block text-slate-200 truncate transition duration-150 ${open ? 'hover:text-slate-200' : 'hover:text-white'}`}
                         onClick={(e) => {
                           e.preventDefault();
                           sidebarExpanded ? handleClick() : setSidebarExpanded(true);
@@ -1256,7 +1256,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                     <React.Fragment>
                       <a
                         href="#0"
-                        className={`block text-slate-200 hover:text-white truncate transition duration-150 ${open && 'hover:text-slate-200'}`}
+                        className={`block text-slate-200 truncate transition duration-150 ${open ? 'hover:text-slate-200' : 'hover:text-white'}`}
                         onClick={(e) => {
                           e.preventDefault();
                           sidebarExpanded ? handleClick() : setSidebarExpanded(true);
@@ -1329,8 +1329,8 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                     <React.Fragment>
                       <a
                         href="#0"
-                        className={`block text-slate-200 hover:text-white truncate transition duration-150 ${
-                          pathname.includes('component') && 'hover:text-slate-200'
+                        className={`block text-slate-200 truncate transition duration-150 ${
+                          pathname.includes('component') ? 'hover:text-slate-200' : 'hover:text-white'
                         }`}
                         onClick={(e) => {
                           e.preventDefault();
