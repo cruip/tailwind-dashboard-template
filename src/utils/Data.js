@@ -21,7 +21,7 @@ export const socialData = (type) => {
     {
       id: "tiktok",
       title: "TikTok",
-      total: "52,804",
+      total: "52,914",
       countType: "followers",
       link: "https://www.tiktok.com/@katiekickscancer",
       blurb:
@@ -34,7 +34,7 @@ export const socialData = (type) => {
     {
       id: "twitter",
       title: "Twitter",
-      total: "7,592",
+      total: "8,092",
       countType: "followers",
       link: "https://twitter.com/kaydaustin",
       blurb:
@@ -45,7 +45,7 @@ export const socialData = (type) => {
     {
       id: "instagram",
       title: "Instagram",
-      total: "1,279",
+      total: "1,325",
       countType: "followers",
       link: "https://www.instagram.com/katiekickscancer/",
       blurb: "Stories posted daily from the day after I was diagnosed.",
@@ -53,7 +53,7 @@ export const socialData = (type) => {
     {
       id: "youtube",
       title: "YouTube",
-      total: "1,250",
+      total: "1,252",
       countType: "subscribers",
       link: "https://www.youtube.com/channel/UCcf5yVgHvI8-__g0RHjfrTw",
       blurb:
