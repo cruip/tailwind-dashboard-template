@@ -245,9 +245,9 @@ export const Query = ({ rates, demographics, type }) => {
                               and dedication to advocacy make me the perfect
                               author for this memoir. I hope to inspire others
                               to find purpose in life and to never give up hope.
-                              I am excited to share my story with the world and
-                              I hope to make a difference in the lives of
-                              others.
+                              I am donating the proceeds of this book for
+                              research and am excited to share my story with the
+                              world.
                             </p>
                           </div>
                         </div>
