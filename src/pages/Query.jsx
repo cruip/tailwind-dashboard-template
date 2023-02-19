@@ -499,6 +499,10 @@ export const StandOut = () => {
             The dramatic shift in prognosis I had after perservering through
             many obstacles and learning to advocate for myself
           </li>
+          <li className="p-1">
+            I donate everything I make from social media to research and will be
+            donating everything from this book as well
+          </li>
           <li className="p-1">Battling cancer through a pandemic</li>
           <li className="p-1">
             Perspective from someone who has been afraid of everything my entire
