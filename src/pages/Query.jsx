@@ -496,8 +496,9 @@ export const StandOut = () => {
             old
           </li>
           <li className="p-1">
-            The dramatic shift in prognosis I had after perservering through
-            many obstacles and learning to advocate for myself
+            The dramatic shift in prognosis (from terminal to no evidence of
+            disease) I had after perservering through many obstacles and
+            learning to advocate for myself
           </li>
           <li className="p-1">
             I donate everything I make from social media to research and will be
