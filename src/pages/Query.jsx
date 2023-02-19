@@ -126,7 +126,7 @@ export const Query = ({ rates, demographics, type }) => {
                     softball, spread to my liver with over 15 tumors throughout.
                     Giving me a Stage IV cancer diagnosis that would render me
                     inoperable. I take readers through what it was like to go
-                    form being inoperable with an advanced cancer and a bleak
+                    from being inoperable with an advanced cancer and a bleak
                     prognosis to no active cancer through a series of
                     serendipitous events that would teach me many life lessons
                     along the way, that anyone looking to make the most of life
