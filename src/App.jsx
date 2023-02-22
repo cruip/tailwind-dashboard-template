@@ -26,7 +26,7 @@ function App() {
         <Route
           exact
           path="/"
-          element={<Query rates={false} demographics={false} type="query" />}
+          element={<Dashboard rates={false} demographics={false} />}
         />
         <Route
           exact
