@@ -84,7 +84,16 @@ function WelcomeBanner({ email, type }) {
             Katie Coleman
           </h1>
           <p className="text-center italic mt-1">
-            {`Stage IV Cancer Survivor • Patient Advocate • Software Engineer • Writer (Memoir)`}
+            {`Stage IV Kidney Cancer Survivor • Patient Advocate • Writer (Memoir)`}
+          </p>
+          <p className="text-center italic mt-1">
+            Donates all proceeds from social media to research
+          </p>
+          <p className="text-center italic mt-1 text-sm">
+            Inquiries and collaborations{" "}
+            <a href="mailto:katiekickscancer@gmail.com">
+              katiekickscancer@gmail.com
+            </a>
           </p>
 
           {/*<p className="text-sm italic">*/}
