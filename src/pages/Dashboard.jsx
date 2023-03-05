@@ -11,18 +11,6 @@ import DashboardCard12 from "../partials/dashboard/DashboardCard12";
 import Banner from "../partials/Banner";
 import { Rates } from "../partials/dashboard/Rates";
 
-import CBS from "../images/cbs.png";
-import NBC from "../images/nbc.png";
-import TODAY from "../images/Today_logo.svg.png";
-import INSIDE_EDITION from "../images/inside-edition.png";
-import INSIDE from "../images/insider.png";
-import KAISER from "../images/kaiser.png";
-import SEVEN_NEWS from "../images/7news.png";
-import YAHOO from "../images/yahoo.jpeg";
-import NIH from "../images/NIH.png";
-import MSN from "../images/msn.png";
-import KCCURE from "../images/kccure.png";
-
 import PhotoTitleLinkTable, {
   DynamicTable,
 } from "../partials/dashboard/DynamicTable";

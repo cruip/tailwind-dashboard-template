@@ -207,22 +207,22 @@ export const Query = ({ rates, demographics, type }) => {
                           <div className="text-sm">
                             <p className="p-1">
                               {" "}
-                              My name is Katie and I am a 29-year-old cancer
-                              survivor and patient advocate. I was diagnosed
-                              with a rare stage IV cancer just two months after
-                              getting married, but I have not let cancer define
-                              me. Instead, I have used my personal experience to
-                              become a visible patient advocate for kidney
-                              cancer. My story has been featured in national
-                              news articles such as NBC, Today and Yahoo and it
-                              was highlighted on the national CBS Evening News
-                              as well. I'm an introvert by nature so sharing my
-                              life publicly has been a big change but the
-                              experience of sharing my story has been incredibly
-                              rewarding as I've been able to connect with other
-                              patients and survivors and the process has helped
-                              has helped me grow in ways I never thought
-                              possible.
+                              My name is Katie and I am a cancer survivor and
+                              patient advocate. I was diagnosed with a rare
+                              stage IV cancer at 29-years old and just two
+                              months after getting married, but I have not let
+                              cancer define me. Instead, I have used my personal
+                              experience to become a visible patient advocate
+                              for kidney cancer. My story has been featured in
+                              national news articles such as NBC, Today and
+                              Yahoo and it was highlighted on the national CBS
+                              Evening News as well. I'm an introvert by nature
+                              so sharing my life publicly has been a big change
+                              but the experience of sharing my story has been
+                              incredibly rewarding as I've been able to connect
+                              with other patients and survivors and the process
+                              has helped has helped me grow in ways I never
+                              thought possible.
                             </p>
 
                             <p className="p-1">

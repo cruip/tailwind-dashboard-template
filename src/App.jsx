@@ -10,6 +10,7 @@ import Dashboard from "./pages/Dashboard";
 import News from "./pages/News";
 import Podcasts from "./pages/Podcasts";
 import Query from "./pages/Query";
+import Advocacy from "./pages/Advocacy";
 
 function App() {
   const location = useLocation();
@@ -63,6 +64,7 @@ function App() {
           path="/query-123120"
           element={<Query rates={false} demographics={false} type="query" />}
         />
+        <Route exact path="/advocacy" element={<Advocacy />} />
       </Routes>
     </>
   );

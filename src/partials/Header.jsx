@@ -35,6 +35,7 @@ function Header({}) {
     "/query-123120/podcasts/",
     "/media-123120",
     "/media-123120/",
+    "/advocacy",
   ];
 
   const mediaRoutes = [
@@ -46,6 +47,7 @@ function Header({}) {
     "/media-100z2c9kds9/news/",
     "/media-100z2c9kds9/podcasts",
     "/media-100z2c9kds9/podcasts/",
+    "/advocacy",
   ];
 
   const dashboardRoutes = [
@@ -63,6 +65,7 @@ function Header({}) {
     "query-123120/news/",
     "query-123120/podcasts",
     "query-123120/podcasts/",
+    "/advocacy",
   ];
 
   const standardRoutes = ["/", "/podcasts", "/podcasts/", "/news/", "/news"];

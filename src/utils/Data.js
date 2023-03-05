@@ -15,6 +15,7 @@ import doctorsArt from "../images/doctorsArt.jpeg";
 import BTK from "../images/betweentwokingdoms.jpeg";
 import BREATH from "../images/breath.jpeg";
 import SHOCK from "../images/shock.jpeg";
+import { faBullhorn } from "@fortawesome/free-solid-svg-icons";
 
 export const socialData = (type) => {
   return [
@@ -292,5 +293,59 @@ export const comparables = [
     pages: "272",
     author: "Rana Awdish, MD, FCCP",
     publisher: "St. Martin's Press",
+  },
+];
+
+export const advocacy = [
+  {
+    id: "1",
+    icon: "awareness",
+    title: "Spreading awareness",
+    link: "https://twitter.com/kaydaustin/status/1631716918926221312?s=20",
+    description:
+      "Spreading awareness helps connect patients to experts and resources for their disease and feel supported by their community. Learn how a kidney cancer awareness campaign in 2021 was the catalyst that changed a local stage IV kidney cancer survivor's life.",
+  },
+  {
+    id: "2",
+    icon: "funding",
+    title: "Funding research",
+    link: "https://www.kidneycoa.org",
+    description:
+      "Awareness campaigns help fund crucial and important research to improve outcomes for patients. For rare cancers, a little bit goes a long way. Just $50k can fund a years worth of research. Chromophobe kidney cancer, currently doesn't have any dedicated treatment options. Funding research helps change this for future patients.",
+  },
+  {
+    id: "3",
+    icon: "outcomes",
+    title: "Better outcomes",
+    link: "https://www.kidneycancer.org/kidney-cancer-awareness-month/",
+    description:
+      "For patients with rare diseases and cancers, finding experts can be a crucial part of their care. Advocacy campaigns help these patients connect with and find experts for their disease which can lead to better outcomes.",
+  },
+];
+
+export const advocacy2 = [
+  {
+    id: "1",
+    icon: "awareness",
+    title: "Spreading awareness",
+    link: "https://www.instagram.com/katiekickscancer/?hl=en",
+    description:
+      "Take a photo with the orange lights or of you wearing orange and tag a kidney cancer survivor you love and support or tag @katiekickscancer to show your support for cause using the hashtag #OrangeUp. Don't forget to tag the business whose lights you saw as well.",
+  },
+  {
+    id: "2",
+    icon: "funding",
+    title: "Donate",
+    link: "https://www.kidneycoa.org",
+    description:
+      "Donate to help fund research for Chromophobe Renal Cell Carcinoma (rare kidney cancer) this year. All donations go directly to helping fund research.",
+  },
+  {
+    id: "3",
+    icon: "outcomes",
+    title: "Advocate",
+    link: "https://www.katiekickscancer.com",
+    description:
+      "Know any businesses that'd like to get involved? Contact Katie at katiekickscancer@gmail.com",
   },
 ];
