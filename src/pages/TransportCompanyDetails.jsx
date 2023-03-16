@@ -3,15 +3,15 @@ import { Card } from "../partials/card/Card";
 import "react-toastify/dist/ReactToastify.css";
 import Page from "../partials/page";
 import { Table } from "../partials/table";
+import DropDown from "../partials/DropDown";
 import { Link, useParams } from "react-router-dom";
-import Modal from "../partials/modal/Modal";
-import { ToastContainer, toast } from "react-toastify";
 import {
   getOneTransport,
-  updateTransport,
-  ActivateDeactivateTransport,
 } from "../services/transporterService";
+import { getAllBuses } from "../services/busService";
 import { getAllRoutes } from "../services/routeService";
+import {DeactivateTransport, ActivateTransportModal, EditTransportModal, AddRouteModal, AddBusModal, AddBusRouteModal, DeleteRouteModal} from "../componets/modals";
+import Loader from "../partials/Loader";
 
 const TransportCompany = () => {
   const [limit, setLimit] = useState(100);
@@ -20,19 +20,15 @@ const TransportCompany = () => {
   const [deactivateModal, setDeactivateModal] = useState(false);
   const [activateModal, setActivateModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
+  const [addRouteModal, setAddRouteModal] = useState(false);
+  const [addBusRouteModal, setAddBusRouteModal] = useState(false);
+  const [addBusModal, setAddBusModal] = useState(false);
+  const [deleteRouteModal, setDeleteRouteModal] = useState(false);
   const [datas, setData] = useState(null);
-  const [routes, setRoutes] = useState(null);
+  const [routes, setRoutes] = useState([]);
+  const [buses, setBuses] = useState([]);
   const [fetched, setFetched] = useState(false);
-  const [values, setValues] = useState({
-    email: datas?.email || "",
-    name: datas?.name || "",
-    address: datas?.address || "",
-    website: datas?.website || "",
-    contactPhoneNumber: datas?.contactPhoneNumber || "",
-    status: datas?.status || "true",
-    // transporterId: 'guo',
-    // terminals: datas?.terminals || '629cb14b66e7a3bcc6f7212c'
-  });
+  const [routeId, setRouteId] = useState('');
 
   const { id } = useParams();
 
@@ -48,6 +44,22 @@ const TransportCompany = () => {
     setEditModal(!editModal);
   };
 
+  const toggleAddRouteModal = () => {
+    setAddRouteModal(!addRouteModal);
+  };
+  const toggleAddBusRouteModal = (id) => {
+    setRouteId(id)
+    setAddBusRouteModal(!addBusRouteModal);
+    
+  };
+
+  const toggleDeleteRouteModal = () => {
+    setDeleteRouteModal(!deleteRouteModal)
+  }
+  const toggleAddBusModal = () => {
+    setAddBusModal(!addBusModal);
+  };
+
   const onPrevPage = () => {};
 
   const onNextPage = () => {};
@@ -56,8 +68,15 @@ const TransportCompany = () => {
     const { data, loading, errors } = await getOneTransport(id);
     if (data) {
       setData(data?.getTransporter);
-      setValues({ ...data?.getTransporter });
       setFetched(true);
+    }
+  };
+
+  const fecthBuses = async () => {
+    const { data, loading, errors } = await getAllBuses();
+    if (data) {
+      setBuses(data?.getBuses.nodes);
+      // setFetched(true);
     }
   };
 
@@ -65,68 +84,24 @@ const TransportCompany = () => {
     const { data, loading, errors } = await getAllRoutes();
     if (data) {
      
-      const filterRoutes = data?.getRoutes?.nodes?.filter((item) => {
-        if (item.bus?.transporter?._id == id) {
-          return item;
-        }
-        return false;
-      });
-      setRoutes(filterRoutes);
+      // const filterRoutes = data?.getRoutes?.nodes?.filter((item) => {
+      //   if (item.bus?.transporter?._id == id) {
+      //     return item;
+      //   }
+      //   return false;
+      // });
+      setRoutes(data?.getRoutes?.nodes);
      setTimeout(() => {
       setTableLoad(false);
      }, 300);
-      setLimit(filterRoutes?.length);
+      setLimit(data?.getRoutes?.nodes?.length);
     }
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setValues({
-      ...values,
-      [name]: value,
-    });
-  };
-
-  const handleUpdateTranport = (id) => {
-    if (Object.values(values).some((o) => o === "")) return false;
-    updateTransport({
-      ...values,
-      transporterId: id,
-      logo: datas?.logo,
-      terminals: "62f112c985493aecdd3b071e",
-    })
-      .then(() => {
-        toast.success("Transport updated successfully");
-        fecthTransport();
-        setValues({
-          email: "",
-          name: "",
-          address: "",
-          website: "",
-          contactPhoneNumber: "",
-          logo: "",
-          status: "true",
-          transporterId: "guo",
-        });
-      })
-      .catch(() => toast.error("Oops! something went wrong"));
-  };
-
-  const handlActivationTranport = (id, status) => {
-    ActivateDeactivateTransport({
-      transporterId: id,
-      status: status,
-    })
-      .then(async (r) => {
-        toast.success("Transport status updated successfully");
-        await fecthTransport();
-      })
-      .catch(() => toast.error("Oops! something went wrong"));
   };
 
   useEffect(() => {
     fecthTransport();
     fecthRoutes();
+    fecthBuses()
   }, []);
 
   const tableHeader = [
@@ -135,6 +110,7 @@ const TransportCompany = () => {
     "Tentative Price",
     "Depature Date",
     "Route Name",
+    "Action",
   ];
 
   const tableRow = (routes) => {
@@ -145,19 +121,61 @@ const TransportCompany = () => {
         <td>{routes?.price}</td>
         <td>{routes?.departureTime}</td>
         <td>{routes?.name}</td>
+        <td>
+          <DropDown
+            links={[
+              {
+                name: "View Route",
+                isLink: true,
+                onclick: () => {},
+                link: `/route/${routes?._id}`,
+              },
+              {
+                name: "Assign Bus",
+                isLink: false,
+                onclick: () => {
+                  toggleAddBusRouteModal(routes?._id)
+                },
+                link: '',
+              },
+              // {
+              //   name: "Edit",
+              //   isLink: false,
+              //   // onclick: () => {
+              //   //   toggleEditModal();
+              //   //   setId(datas?._id);
+              //   //   SingleData(datas?._id);
+              //   // },
+              //   link: "",
+              //   icon: "edit",
+              // },
+              {
+                name: "Delete Route",
+                isLink: false,
+                onclick: () => {
+                  toggleDeleteRouteModal();
+                  setRouteId(routes?._id)
+                },
+                link: "",
+              }
+            ]}
+          />
+        </td>
       </tr>
     );
   };
 
   if (!datas) {
-    return <div>Loading...</div>;
+    return <div className="flex items-center justify-center w-full h-screen ">
+        <Loader />
+    </div>;
   }
   if (fetched && !datas) {
     return <div>Something went wrong</div>;
   }
   return (
     <Page>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <div>
         <Link to={"/transport_companies"}>
           <button className="py-3 mb-3 text-black rounded-lg shadow-md bg-slate-200 mr-7 w-52 focus:border-0 focus:outline-none hover:bg-slate-300">
@@ -215,6 +233,18 @@ const TransportCompany = () => {
             >
               Edit
             </button>
+            <button
+              className="py-3 mb-3 text-white bg-blue-500 rounded-lg shadow-md mr-7 w-52 focus:border-0 focus:outline-none hover:bg-blue-600"
+              onClick={() => toggleAddRouteModal()}
+            >
+             Add Route
+            </button>
+            <button
+              className="py-3 mb-3 text-white bg-blue-500 rounded-lg shadow-md mr-7 w-52 focus:border-0 focus:outline-none hover:bg-blue-600"
+              onClick={() => toggleAddBusModal()}
+            >
+             Add Bus
+            </button>
           </div>
         </Card>
       </div>
@@ -238,138 +268,13 @@ const TransportCompany = () => {
       </Card>
 
       {/* //modals */}
-      <Modal
-        show={deactivateModal}
-        size="md"
-        onHide={toggleDeactivateModal}
-        buttonText="De-Activate"
-        onclick={() => handlActivationTranport(id, "false")}
-      >
-        <p>Do you want to Deactivate this account? </p>
-      </Modal>
-      <Modal
-        show={activateModal}
-        size="md"
-        onHide={toggleActivateModal}
-        buttonText="Activate"
-        onclick={() => handlActivationTranport(id, "true")}
-      >
-        <p>Reactivate this Customer</p>
-      </Modal>
-      <Modal
-        show={editModal}
-        size="md"
-        onHide={toggleEditModal}
-        buttonText="Edit"
-        onclick={() => handleUpdateTranport(id)}
-      >
-        <p>Edit this Company</p>
-        <div className="px-8 pt-6 pb-8 mb-4 bg-white rounded shadow-md">
-          <div className="mb-4">
-            <label
-              className="block mb-2 text-sm font-bold text-gray-700"
-              htmlFor="name"
-            >
-              company name
-            </label>
-            <input
-              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-              id="name"
-              type="text"
-              placeholder="name"
-              value={values.name || ""}
-              onChange={handleInputChange}
-              name="name"
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              className="block mb-2 text-sm font-bold text-gray-700"
-              htmlFor="website"
-            >
-              company website
-            </label>
-            <input
-              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-              id="website"
-              type="text"
-              placeholder="website"
-              value={values.website || ""}
-              onChange={handleInputChange}
-              name="website"
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              className="block mb-2 text-sm font-bold text-gray-700"
-              htmlFor="address"
-            >
-              company address
-            </label>
-            <input
-              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-              id="address"
-              type="text"
-              placeholder="address"
-              value={values.address || ""}
-              onChange={handleInputChange}
-              name="address"
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              className="block mb-2 text-sm font-bold text-gray-700"
-              htmlFor="email"
-            >
-              company email
-            </label>
-            <input
-              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-              id="email"
-              type="email"
-              placeholder="email"
-              value={values.email || ""}
-              onChange={handleInputChange}
-              name="email"
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              className="block mb-2 text-sm font-bold text-gray-700"
-              htmlFor="phone"
-            >
-              company Phone
-            </label>
-            <input
-              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-              id="phone"
-              type="tel"
-              placeholder="phone number"
-              value={values.contactPhoneNumber || ""}
-              onChange={handleInputChange}
-              name="contactPhoneNumber"
-            />
-          </div>
-
-          <div className="mb-4">
-            <label
-              className="block mb-2 text-sm font-bold text-gray-700"
-              htmlFor="status"
-            >
-              company status
-            </label>
-            <select
-              className="block w-full px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline"
-              value={values.status || "true"}
-              onChange={handleInputChange}
-              name="status"
-            >
-              <option value="true">true</option>
-              <option value="false">false</option>
-            </select>
-          </div>
-        </div>
-      </Modal>
+      <DeactivateTransport show={deactivateModal}  onHide={toggleDeactivateModal} id={id} callBack={fecthTransport}/>
+      <AddRouteModal show={addRouteModal}  onHide={toggleAddRouteModal} id={id} name={datas?.name} callBack={fecthTransport} routes={routes}/>
+      <AddBusRouteModal show={addBusRouteModal}  onHide={toggleAddBusRouteModal} id={routeId} name={datas?.name} buses={buses}/>
+      <AddBusModal show={addBusModal}  onHide={toggleAddBusModal} id={id} name={datas?.name} callBack={fecthTransport}/>
+      <ActivateTransportModal show={activateModal}  onHide={toggleActivateModal} id={id} callBack={fecthTransport}/>
+      <EditTransportModal show={editModal} onHide={toggleEditModal} id={id} callBack={fecthTransport} datas={datas} />
+      <DeleteRouteModal show={deleteRouteModal} onHide={toggleDeleteRouteModal} id={routeId} callBack={fecthRoutes} />
     </Page>
   );
 };

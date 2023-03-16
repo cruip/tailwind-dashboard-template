@@ -4,15 +4,10 @@ import { Card } from "../partials/card/Card";
 import Page from "../partials/page";
 import { Table } from "../partials/table";
 import DropDown from "../partials/DropDown";
-import Modal from "../partials/modal/Modal";
 import { SVGIcon } from "../partials/icons/SvgIcon";
-import { ToastContainer, toast } from "react-toastify";
+import { EditTransportModal, AddTransportModal, DeleteTransportModal } from "../componets/modals";
 import {
   getAllTransporter,
-  addTransport,
-  deleteTransport,
-  getOneTransport,
-  updateTransport,
 } from "../services/transporterService";
 import { getAllLocations } from "../services/locationService";
 
@@ -32,17 +27,7 @@ const TransportCompanies = () => {
   const [activateModal, setActivateModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [addTransportModal, setAddTransportModal] = useState(false);
-  const [values, setValues] = useState({
-    email: Singledatas?.email || "",
-    name: Singledatas?.name || "",
-    address: Singledatas?.address || "",
-    website: Singledatas?.website || "",
-    contactPhoneNumber: Singledatas?.contactPhoneNumber || "",
-    status: Singledatas?.status || "true",
-    transporterId: "guo",
-  });
-
-  const [logoUrl, setLogoUrl] = useState(Singledatas?.logo || null);
+  
   // const [terminals, setTerminals] = useState([])
   const [searchQuery, setSearchQuery] = useState("");
   const [filterValue, setFilterValue] = useState("all");
@@ -80,20 +65,14 @@ const TransportCompanies = () => {
   //  setLocations(data?.getLocations?.nodes)
   // };
 
-  const fetchSingleTransport = async (transId) => {
-    const { data } = await getOneTransport(transId);
-    setValues({ ...data?.getTransporter });
-    setLogoUrl(data?.getTransporter?.logo);
-    setSingleData(data?.getTransporter);
-  };
-
-  useEffect(() => {
-    fetchUnpaginatedTransport();
-    // fetchLocations()
-  }, []);
+  const SingleData = (id) => {
+    const data = datas.find((item)=> item._id === id)
+    setSingleData(data)
+  }
 
   useEffect(() => {
     fetchAllTransport();
+    fetchUnpaginatedTransport();
   }, [currentPage]);
 
   useEffect(() => {
@@ -126,13 +105,6 @@ const TransportCompanies = () => {
     setAddTransportModal(!addTransportModal);
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setValues({
-      ...values,
-      [name]: value,
-    });
-  };
   // const handleTerminal = (value) => {
   //   setTerminals([
   //     ...terminals, value
@@ -175,79 +147,7 @@ const TransportCompanies = () => {
       setData(arrayData);
     }
   };
-
-  const uploadImage = (files) => {
-    const data = new FormData();
-    data.append("file", files[0]);
-    data.append("upload_preset", "wni0bhqi");
-    data.append("cloud_name", "dryvafrica");
-    fetch("  https://api.cloudinary.com/v1_1/dryvafrica/image/upload", {
-      method: "post",
-      body: data,
-    })
-      .then((resp) => resp.json())
-      .then((data) => {
-        setLogoUrl(data.url);
-      });
-  };
-
-  const handleCreateTranport = () => {
-    if (Object.values(values).some((o) => o === "") && !logoUrl) return false;
-    setTimeout(() => {
-      addTransport({ ...values, status: "true", logo: logoUrl })
-        .then(async() => {
-          toast.success("Transport added successfully");
-            await fetchAllTransport();
-          setValues({
-            email: "",
-            name: "",
-            address: "",
-            website: "",
-            contactPhoneNumber: "",
-            logo: "",
-            status: "true",
-            transporterId: "guo",
-          });
-          setLogoUrl(null);
-        })
-        .catch(() => toast.error("Oops! something went wrong"));
-    }, 2000);
-  };
-  const handleUpdateTranport = (id) => {
-    if (Object.values(values).some((o) => o === "") && !logoUrl) return false;
-    updateTransport({
-      ...values,
-      transporterId: id,
-      logo: logoUrl,
-      terminals: "62f112c985493aecdd3b071e",
-    })
-      .then(() => {
-        toast.success("Transport updated successfully");
-        fetchAllTransport();
-        setValues({
-          email: "",
-          name: "",
-          address: "",
-          website: "",
-          contactPhoneNumber: "",
-          logo: "",
-          status: "true",
-          transporterId: "guo",
-        });
-        setLogoUrl(null);
-      })
-      .catch(() => toast.error("Oops! something went wrong"));
-  };
-  const handleDelete = async (id) => {
-    deleteTransport(id)
-      .then(async() => {
-        toast.success("Transport deleted successfully");
-        setTableLoad(true);
-          await fetchAllTransport();
-      })
-      .catch(() => toast.error("could not delete transport"));
-  };
-
+ 
   const tableHeader = [
     "Company Name",
     "Company Address",
@@ -280,7 +180,7 @@ const TransportCompanies = () => {
                 onclick: () => {
                   toggleEditModal();
                   setId(datas?._id);
-                  fetchSingleTransport(datas?._id);
+                  SingleData(datas?._id);
                 },
                 link: "",
                 icon: "edit",
@@ -303,7 +203,6 @@ const TransportCompanies = () => {
 
   return (
     <Page>
-      <ToastContainer />
       <section>
         <div className="flex items-center justify-between mb-6">
           <p>Add a Transport Company</p>
@@ -399,277 +298,10 @@ const TransportCompanies = () => {
           </Card>
         </div>
       </section>
-      <Modal
-        show={deactivateModal}
-        size="md"
-        onHide={toggleDeactivateModal}
-        buttonText="Delete"
-        onclick={() => handleDelete(id)}
-      >
-        <p>Do you want to Delete this account? </p>
-      </Modal>
-      <Modal
-        show={editModal}
-        size="md"
-        onHide={toggleEditModal}
-        buttonText="Edit"
-        onclick={() => handleUpdateTranport(id)}
-      >
-        <p>Edit this Company</p>
-        <div className="px-8 pt-6 pb-8 mb-4 bg-white rounded shadow-md">
-          <div className="mb-4">
-            <label
-              className="block mb-2 text-sm font-bold text-gray-700"
-              htmlFor="name"
-            >
-              company name
-            </label>
-            <input
-              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-              id="name"
-              type="text"
-              placeholder="name"
-              value={values.name || ""}
-              onChange={handleInputChange}
-              name="name"
-            />
-          </div>
-          {/* <div className="mb-4">
-            <label
-              className="block mb-2 text-sm font-bold text-gray-700"
-              htmlFor="logo"
-            >
-              company Logo
-            </label>
-            <input
-              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-              id="logo"
-              type="file"
-              placeholder="paste logo url"
-              onChange= {(e)=> uploadImage(e.target.files)}
-              name="logo"
-            />
-          </div> */}
-          <div className="mb-4">
-            <label
-              className="block mb-2 text-sm font-bold text-gray-700"
-              htmlFor="website"
-            >
-              company website
-            </label>
-            <input
-              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-              id="website"
-              type="text"
-              placeholder="website"
-              value={values.website || ""}
-              onChange={handleInputChange}
-              name="website"
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              className="block mb-2 text-sm font-bold text-gray-700"
-              htmlFor="address"
-            >
-              company address
-            </label>
-            <input
-              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-              id="address"
-              type="text"
-              placeholder="address"
-              value={values.address || ""}
-              onChange={handleInputChange}
-              name="address"
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              className="block mb-2 text-sm font-bold text-gray-700"
-              htmlFor="email"
-            >
-              company email
-            </label>
-            <input
-              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-              id="email"
-              type="email"
-              placeholder="email"
-              value={values.email || ""}
-              onChange={handleInputChange}
-              name="email"
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              className="block mb-2 text-sm font-bold text-gray-700"
-              htmlFor="phone"
-            >
-              company Phone
-            </label>
-            <input
-              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-              id="phone"
-              type="tel"
-              placeholder="phone number"
-              value={values.contactPhoneNumber || ""}
-              onChange={handleInputChange}
-              name="contactPhoneNumber"
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              className="block mb-2 text-sm font-bold text-gray-700"
-              htmlFor="status"
-            >
-              company status
-            </label>
-            <select
-              className="block w-full px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline"
-              value={values.status || "true"}
-              onChange={handleInputChange}
-              name="status"
-            >
-              <option value="true">true</option>
-              <option value="false">false</option>
-            </select>
-          </div>
-        </div>
-      </Modal>
-      <Modal
-        show={addTransportModal}
-        size="md"
-        onHide={toggleAddTransporModal}
-        buttonText="Add"
-        onclick={handleCreateTranport}
-      >
-        <p>Add a transport company</p>
-        <div className="px-8 pt-6 pb-8 mb-4 bg-white rounded shadow-md">
-          <div className="mb-4">
-            <label
-              className="block mb-2 text-sm font-bold text-gray-700"
-              htmlFor="name"
-            >
-              company name
-            </label>
-            <input
-              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-              id="name"
-              type="text"
-              placeholder="name"
-              value={values.name}
-              onChange={handleInputChange}
-              name="name"
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              className="block mb-2 text-sm font-bold text-gray-700"
-              htmlFor="logo"
-            >
-              company Logo
-            </label>
-            <input
-              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-              id="logo"
-              type="file"
-              placeholder="paste logo url"
-              onChange={(e) => uploadImage(e.target.files)}
-              name="logo"
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              className="block mb-2 text-sm font-bold text-gray-700"
-              htmlFor="website"
-            >
-              company website
-            </label>
-            <input
-              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-              id="website"
-              type="text"
-              placeholder="website"
-              value={values.website}
-              onChange={handleInputChange}
-              name="website"
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              className="block mb-2 text-sm font-bold text-gray-700"
-              htmlFor="address"
-            >
-              company address
-            </label>
-            <input
-              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-              id="address"
-              type="text"
-              placeholder="address"
-              value={values.address}
-              onChange={handleInputChange}
-              name="address"
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              className="block mb-2 text-sm font-bold text-gray-700"
-              htmlFor="email"
-            >
-              company email
-            </label>
-            <input
-              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-              id="email"
-              type="email"
-              placeholder="email"
-              value={values.email}
-              onChange={handleInputChange}
-              name="email"
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              className="block mb-2 text-sm font-bold text-gray-700"
-              htmlFor="phone"
-            >
-              company Phone
-            </label>
-            <input
-              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-              id="phone"
-              type="tel"
-              placeholder="phone number"
-              value={values.contactPhoneNumber}
-              onChange={handleInputChange}
-              name="contactPhoneNumber"
-            />
-          </div>
-
-          <div className="mb-4">
-            <label
-              className="block mb-2 text-sm font-bold text-gray-700"
-              htmlFor="id"
-            >
-              location Id
-            </label>
-            <select
-              className="block w-full px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline"
-              value={values.transporterId}
-              onChange={handleInputChange}
-              name="transporterId"
-            >
-              <option value="">GUO</option>
-              <option value="gog">GOG</option>
-              <option value="ekeson">EKESON</option>
-              <option value="libra">LIBRA</option>
-              <option value="young">THE_YOUNG</option>
-            </select>
-          </div>
-        </div>
-      </Modal>
+      
+      <DeleteTransportModal show={deactivateModal} onHide={toggleDeactivateModal} id={id} callBack={fetchAllTransport} />
+      <EditTransportModal show={editModal} onHide={toggleEditModal} id={id} callBack={fetchAllTransport} datas={Singledatas} />
+      <AddTransportModal show={addTransportModal} onHide={toggleAddTransporModal} callBack={fetchAllTransport} />
     </Page>
   );
 };

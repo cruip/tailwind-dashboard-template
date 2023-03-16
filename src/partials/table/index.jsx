@@ -1,6 +1,7 @@
 import React from "react";
 import { Empty} from "./empty";
 import { SVGIcon } from "../icons/SvgIcon";
+import Loader from "../Loader";
 
 export const Table = ({
   data,
@@ -19,7 +20,7 @@ export const Table = ({
   limit,
   searchTerm,
 }) => {
-  // console.log(data, totalPages, currentPage, paginated, 'table');
+  console.log(data, totalPages, currentPage, paginated, 'table');
   
   return (
     <>
@@ -35,7 +36,7 @@ export const Table = ({
         {/*<div className="col-sm-12 col-md-8">&nbsp;</div>*/}
       </div>
       {loading ? (
-        <div>{loadingText}</div>
+        <Loader />
       ) : (
         <>
           {data?.length ? (
@@ -57,9 +58,9 @@ export const Table = ({
                 </tbody>
               </table>
             </>
-          ) : null}
+          ) : <Empty message={emptyMessage} />}
 
-          {!data?.length ? <Empty message={emptyMessage} /> : null}
+          {/* {!data?.length ? <Empty message={emptyMessage} /> : null} */}
           {paginated ? (
             <Pagination
               limit={limit}
