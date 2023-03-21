@@ -3,9 +3,9 @@ import { Card } from "../partials/card/Card";
 import Page from "../partials/page";
 import { Table } from "../partials/table";
 import DropDown from "../partials/DropDown";
-import Modal from "../partials/modal/Modal";
 import { SVGIcon } from "../partials/icons/SvgIcon";
 import { getAllUsers } from "../services/userService";
+import { ActivateCustomerModal, DeActivateCustomerModal, DeleteCustomerModal } from "../componets/modals";
 
 const Customers = () => {
   const [limit, setLimit] = useState(10);
@@ -17,13 +17,14 @@ const Customers = () => {
   const [totalUsers, setTotalUsers] = useState(0)
   const [deactivateModal, setDeactivateModal] = useState(false);
   const [activateModal, setActivateModal] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [userId, setUserId] = useState("");
 
   const fetchAllUser = async() => {
     const {data, loading} = await getAllUsers(currentPage, limit)
     setTableLoad(false)
     setData(data?.getUsers?.nodes)
-    // console.log(data?.getUsers?.nodes, 'pop')
     setCurrentPage(data?.getUsers?.pageInfo?.currentPage)
     setTotalPages(Math.ceil(Number(data?.getUsers?.pageInfo?.totalItems)/limit))
   }
@@ -69,16 +70,20 @@ const Customers = () => {
     setDeactivateModal(!deactivateModal);
   };
 
+  const toggleDeleteModal = () => {
+    setDeleteModal(!deleteModal)
+  }
+
   const toggleActivateModal = () => {
     setActivateModal(!activateModal);
   };
 
-  useEffect(() => {
-    fetchUnpaginatedUser()
-  }, [])
-
+  // useEffect(() => {
+  // }, [])
+  
   useEffect(() => {
     fetchAllUser()
+    fetchUnpaginatedUser()
   }, [currentPage])
 
   useEffect(() => {
@@ -111,21 +116,30 @@ const Customers = () => {
                 link: `${data?._id}`,
               },
               {
-                name: "De-Activate Customer",
+                name: "Deete User",
                 isLink: false,
                 onclick: () => {
-                  toggleDeactivateModal();
+                  toggleDeleteModal();
+                  setUserId(data?._id)
                 },
                 link: "",
               },
-              {
-                name: "Re-Activate Customer",
-                isLink: false,
-                onclick: () => {
-                  toggleActivateModal();
-                },
-                link: "",
-              },
+              // {
+              //   name: "De-Activate Customer",
+              //   isLink: false,
+              //   onclick: () => {
+              //     toggleDeactivateModal();
+              //   },
+              //   link: "",
+              // },
+              // {
+              //   name: "Re-Activate Customer",
+              //   isLink: false,
+              //   onclick: () => {
+              //     toggleActivateModal();
+              //   },
+              //   link: "",
+              // },
             ]}
           />
         </td>
@@ -205,22 +219,10 @@ const Customers = () => {
           </Card>
         </div>
       </section>
-      <Modal
-        show={deactivateModal}
-        size="md"
-        onHide={toggleDeactivateModal}
-        buttonText="De-Activate"
-      >
-        <p>Do you want to Deactivate this account? </p>
-      </Modal>
-      <Modal
-        show={activateModal}
-        size="md"
-        onHide={toggleActivateModal}
-        buttonText="Activate"
-      >
-        <p>Reactivate this Customer</p>
-      </Modal>
+      {/* <DeActivateCustomerModal  show={deactivateModal} onHide={toggleDeactivateModal} id={userId} callBack={fetchAllUser}/> */}
+      <DeleteCustomerModal  show={deleteModal} onHide={toggleDeleteModal} id={userId} callBack={fetchAllUser}/>
+      {/* <ActivateCustomerModal  show={activateModal} onHide={toggleActivateModal} id={userId} callBack={fetchAllUser}/> */}
+      
     </Page>
   );
 };

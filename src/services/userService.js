@@ -1,32 +1,35 @@
 import { gql } from "@apollo/client";
 import client from "../apollo-client";
 
-export const getAllUsers = async(page = 1, size= 10) => {
-    const {data, errors} = await client.query({
-       query: gql`
-       query users($page: Int, $size: Int){
-        getUsers(page: $page, size: $size, filters:{column:"", operator:"", value:""}){
-          pageInfo{
+export const getAllUsers = async (page = 1, size = 10) => {
+  const { data, errors } = await client.query({
+    query: gql`
+      query users($page: Int, $size: Int) {
+        getUsers(
+          page: $page
+          size: $size
+          filters: { column: "", operator: "", value: "" }
+        ) {
+          pageInfo {
             pageSize
             lastPage
             nextPage
             currentPage
             totalItems
           }
-          nodes{
+          nodes {
             _id
-            bookings{
+            bookings {
               _id
               from
               to
-              user{
+              user {
                 _id
                 lastName
                 firstName
                 email
                 phoneNo
               }
-              route
             }
             firstName
             lastName
@@ -35,53 +38,64 @@ export const getAllUsers = async(page = 1, size= 10) => {
             isEmailVerified
             userType
             imageUrl
-            
           }
         }
       }
-       ` ,
-       variables: {
-        page,
-        size,
+    `,
+    variables: {
+      page,
+      size,
     },
-    })
+  });
 
-    return {data, errors}
-}
+  return { data, errors };
+};
 
-export const getSingleUsers = async(userId) => {
-    const {data, errors} = await client.query({
-       query: gql`
-       query user($userId: String){
-        getUser(userId: $userId){
+export const getSingleUsers = async (userId) => {
+  const { data, errors } = await client.query({
+    query: gql`
+      query user($userId: String) {
+        getUser(userId: $userId) {
+          _id
+          firstName
+          lastName
+          phoneNo
+          email
+          isEmailVerified
+          imageUrl
+          bookings {
             _id
-            firstName
-            lastName
-            phoneNo
             email
-            isEmailVerified
-            imageUrl
-            bookings{
-              _id
-              email
-              billingId
-              phone
-              amount
-              seatNumbers
-              bookingDate
-              departureDate
-              to
-              from
-              route
-              
-            }
+            billingId
+            phone
+            amount
+            seatNumbers
+            bookingDate
+            departureDate
+            to
+            from
           }
+        }
       }
-       ` ,
-       variables: {
-        userId
+    `,
+    variables: {
+      userId,
     },
-    })
+  });
 
-    return {data, errors}
-}
+  return { data, errors };
+};
+
+export const deleteUser = async (userId) => {
+  const { data, errors } = await client.mutate({
+    mutation: gql`
+      mutation deleteUser($userId: String!) {
+        deleteUser(userId: $userId)
+      }
+    `,
+    variables: {
+      userId,
+    },
+  });
+  return { data, errors };
+};
