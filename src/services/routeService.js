@@ -86,7 +86,7 @@ export const addRoute = async (event) => {
   const { companyId, routeId } = event;
   const { data, errors } = await client.mutate({
     mutation: gql`
-      mutation addRoute($companyId: String!, $routeId: String!) {
+      mutation addRouteToCompany($companyId: String!, $routeId: String!) {
         addRouteToCompany(companyId: $companyId, routeId: $routeId) {
           _id
           name

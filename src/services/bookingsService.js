@@ -19,7 +19,8 @@ export const getAllBookings = async (event) => {
             departureDate
             returningDate
             tripType
-
+            paymentStatus
+            status
             passengers {
               name
               gender

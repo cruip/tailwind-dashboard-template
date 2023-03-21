@@ -207,7 +207,7 @@ const TransportCompanies = () => {
         <div className="flex items-center justify-between mb-6">
           <p>Add a Transport Company</p>
           <button
-            className="px-4 py-2 text-white rounded-md w-52 bg-sky-800"
+            className="px-4 py-2 text-white transition-shadow rounded-md shadow-md  hover:shadow-lg w-52 bg-sky-800"
             onClick={toggleAddTransporModal}
           >
             Add Company

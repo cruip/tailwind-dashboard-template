@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import Modal from "../../../partials/modal/Modal";
 import { ToastContainer, toast } from "react-toastify";
 import { createBooking, getAllTrips } from "../../../services/bookingsService";
+import moment from "moment";
 import Select from "react-select";
 
 
@@ -126,7 +127,7 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
   };
   const getTrips = async () => {
     setIsRouting(true)
-    const {data} = await getAllTrips({page: 1, size: 10000, filters: {to: values.to, from: values.from, date:  "12 may 2020 8am"}})
+    const {data} = await getAllTrips({page: 1, size: 10000, filters: {to: values.to, from: values.from, date: moment(values.departureDate).format(" MMM Do, YYYY | h:mm a")}})
     console.log(data.getTrips.nodes, 'trips');
     setRoutes(data.getTrips.nodes)
     const busesArray = []
@@ -139,7 +140,8 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
             number: el.vehicleNo,
             transporter: el.transporter.name,
             price: item.price,
-            availableSeats: el.availableSeats
+            availableSeats: el.availableSeats,
+            transporterId: el.transporter._id
           })
         })
       }
@@ -163,11 +165,11 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
   // );
 
   useEffect(() => {
-   if(values.from && values.to){
+   if(values.from && values.to && values.departureDate ){
     getTrips()
    }
     
-  }, [values.from, values.to]);
+  }, [values.from, values.to, values.departureDate]);
 
   useEffect(() => {
     const bus = buses?.find((item) => item._id === values.busId)
@@ -175,7 +177,7 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
     // setSeats(bus?.availableSeats)
     setValues({
       ...values,
-      transporter: bus?.transporter,
+      transporter: bus?.transporterId,
       amount: ( Number(bus?.price || 0) * (values.seatNumbers.length ? values.seatNumbers.length : 1)).toString(),
     })
    
@@ -319,7 +321,7 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
                     </option>
                   ) : !isRouting && (!buses || !buses.length) ? (
                     <option value={""} disabled={true}>
-                   No Route for the locations choosen
+                   No Route for the locations and date choosen
                    </option>
                   ):
                   (

@@ -32,23 +32,21 @@ const Route = () => {
   }, []);
 
   const tableHeader = [
-    "Location",
-    "Destination",
-    "Tentative Price",
-    "Depature Date",
-    "Route Name",
-    "Action",
+    "Brand",
+    "Model",
+    "Plate Number",
+    "No of Seats",
   ];
 
   const tableRow = (buses) => {
     return (
       <tr key={buses?._id} className="border-b-2 border-slate-200">
-        <td>{buses?.from}</td>
-        <td>{buses?.to}</td>
-        <td>{buses?.price}</td>
-        <td>{buses?.departureTime}</td>
+        <td>{buses?.vehicleBrand}</td>
+        <td>{buses?.vehicleModel}</td>
+        <td>{buses?.vehicleNo}</td>
+        <td>{buses?.numberOfSeats} Seats</td>
         <td>{buses?.name}</td>
-        <td>
+        {/* <td>
           <DropDown
             links={[
               //   {
@@ -77,7 +75,7 @@ const Route = () => {
               },
             ]}
           />
-        </td>
+        </td> */}
       </tr>
     );
   };
@@ -128,38 +126,7 @@ const Route = () => {
                 <span className=" text-slate-900">{data?.departureTime}</span>
               </h5>
              
-              {/* <h3 className="mb-2 text-lg text-slate-600">
-              website: {datas?.website}
-            </h3>
-            <h3 className="mb-2 text-lg text-slate-600">
-              Adress: {datas?.address}
-            </h3>
-            <h3 className="mb-2 text-lg text-slate-600">
-              Phone: {datas?.contactPhoneNumber}
-            </h3> */}
             </div>
-          {/* </div> */}
-          {/* <div className="flex flex-wrap items-center mt-6">
-          
-          <button
-            className="py-3 mb-3 text-white bg-blue-500 rounded-lg shadow-md mr-7 w-52 focus:border-0 focus:outline-none hover:bg-blue-600"
-            onClick={() => toggleEditModal()}
-          >
-            Edit
-          </button>
-          <button
-            className="py-3 mb-3 text-white bg-blue-500 rounded-lg shadow-md mr-7 w-52 focus:border-0 focus:outline-none hover:bg-blue-600"
-            onClick={() => toggleAddRouteModal()}
-          >
-           Add Route
-          </button>
-          <button
-            className="py-3 mb-3 text-white bg-blue-500 rounded-lg shadow-md mr-7 w-52 focus:border-0 focus:outline-none hover:bg-blue-600"
-            onClick={() => toggleAddBusModal()}
-          >
-           Add Bus
-          </button>
-        </div> */}
         </Card>
       </div>
 
@@ -180,14 +147,6 @@ const Route = () => {
           />
         </div>
       </Card>
-
-      {/* //modals */}
-      {/* <DeactivateTransport show={deactivateModal}  onHide={toggleDeactivateModal} id={id} callBack={fecthTransport}/>
-    <AddRouteModal show={addRouteModal}  onHide={toggleAddRouteModal} id={id} name={datas?.name} callBack={fecthTransport} routes={routes}/>
-    <AddBusRouteModal show={addBusRouteModal}  onHide={toggleAddBusRouteModal} id={routeId} name={datas?.name} buses={buses}/>
-    <AddBusModal show={addBusModal}  onHide={toggleAddBusModal} id={id} name={datas?.name} callBack={fecthTransport}/>
-    <ActivateTransportModal show={activateModal}  onHide={toggleActivateModal} id={id} callBack={fecthTransport}/>
-    <EditTransportModal show={editModal} onHide={toggleEditModal} id={id} callBack={fecthTransport} datas={datas} /> */}
     </Page>
   );
 };

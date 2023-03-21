@@ -252,7 +252,7 @@ const TransportCompany = () => {
       <Card description={"view company routes"} width="w-full">
         <div className="mt-10 ">
           <Table
-            data={routes}
+            data={datas.routes}
             onNext={onNextPage}
             onPrev={onPrevPage}
             currentPage={currentPage}

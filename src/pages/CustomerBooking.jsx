@@ -149,7 +149,7 @@ const CustomerBooking = () => {
             <span key={item}>{item}</span>
           ))}
         </td>
-        <td>{data?.status == "true" ? "Booked" : "Cancelled"}</td>
+        <td>{data?.paymentStatus == "true" ? "Booked" : "Cancelled"}</td>
 
         <td>
           <DropDown
@@ -203,7 +203,7 @@ const CustomerBooking = () => {
         <div className="flex items-center justify-between mb-6">
           <p>Book a seat</p>
           <button
-            className="px-4 py-2 text-white rounded-md w-52 bg-sky-800"
+            className="px-4 py-2 text-white transition-shadow duration-150 rounded-md shadow-md w-52 bg-sky-800 hover:shadow-lg"
             onClick={toggleBookModal}
           >
             Book Seat
