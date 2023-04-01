@@ -73,10 +73,11 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
   };
 
   const deleteSeat = (ix) => {
-    values.seatNumbers.splice(ix, 1)
+    // values.seatNumbers.splice(ix, 1)
+    const seatno = values.seatNumbers.filter((_, i) => i !== ix)
     setValues({
       ...values,
-      seatNumbers: [...values.seatNumbers]
+      seatNumbers: [...seatno]
     })
   }
 
@@ -127,7 +128,8 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
   };
   const getTrips = async () => {
     setIsRouting(true)
-    const {data} = await getAllTrips({page: 1, size: 10000, filters: {to: values.to, from: values.from, date: moment(values.departureDate).format(" MMM Do, YYYY | h:mm a")}})
+    // moment(values.departureDate).format(" MMM Do, YYYY | h:mm a")
+    const {data} = await getAllTrips({page: 1, size: 10000, filters: {to: values.to, from: values.from, date: "12 may 2020 8am"}})
     console.log(data.getTrips.nodes, 'trips');
     setRoutes(data.getTrips.nodes)
     const busesArray = []
