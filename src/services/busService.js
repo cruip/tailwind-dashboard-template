@@ -16,6 +16,7 @@ export const getAllBuses = async (page = 1, size = 10) => {
             vehicleModel
             vehicleBrand
             busImage
+            availableSeats
           }
         }
       }

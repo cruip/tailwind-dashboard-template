@@ -149,12 +149,12 @@ const CustomerBooking = () => {
             <span key={item}>{item}</span>
           ))}
         </td>
-        <td>{data?.paymentStatus == "true" ? "Booked" : "Cancelled"}</td>
+        <td>{data?.status ?  data?.status : "Unknown"}</td>
 
         <td>
           <DropDown
             links={[
-              data?.status == "true"
+              data?.status !== "pending"
                 ? {
                     name: "cancel Booking",
                     isLink: false,
@@ -186,7 +186,8 @@ const CustomerBooking = () => {
                     name: "View Invoice",
                     isLink: false,
                     onclick: () => {
-                      toggleConfirmModal();
+                      console.log('lol');
+                      // toggleConfirmModal();
                     },
                   },
             ]}
