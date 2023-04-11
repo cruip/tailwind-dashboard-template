@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## [1.7.4] - 2023-04-11
+
+- Update dependencies
+
 ## [1.7.3] - 2023-02-13
 
 - Further sidebar color improvements
