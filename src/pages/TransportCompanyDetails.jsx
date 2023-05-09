@@ -10,6 +10,7 @@ import {
 } from "../services/transporterService";
 import { getAllBuses } from "../services/busService";
 import { getAllRoutes } from "../services/routeService";
+import { getTerminals } from "../services/locationService";
 import {DeactivateTransport, ActivateTransportModal, EditTransportModal, AddRouteModal, AddBusModal, AddBusRouteModal, DeleteRouteModal} from "../componets/modals";
 import Loader from "../partials/Loader";
 
@@ -17,8 +18,8 @@ const TransportCompany = () => {
   const [limit, setLimit] = useState(100);
   const [currentPage, setCurrentPage] = useState(1);
   const [tableLoad, setTableLoad] = useState(true);
-  const [deactivateModal, setDeactivateModal] = useState(false);
-  const [activateModal, setActivateModal] = useState(false);
+  // const [deactivateModal, setDeactivateModal] = useState(false);
+  // const [activateModal, setActivateModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [addRouteModal, setAddRouteModal] = useState(false);
   const [addBusRouteModal, setAddBusRouteModal] = useState(false);
@@ -26,19 +27,20 @@ const TransportCompany = () => {
   const [deleteRouteModal, setDeleteRouteModal] = useState(false);
   const [datas, setData] = useState(null);
   const [routes, setRoutes] = useState([]);
+  const [terminals, setTerminals] = useState([]);
   const [buses, setBuses] = useState([]);
   const [fetched, setFetched] = useState(false);
   const [routeId, setRouteId] = useState('');
 
   const { id } = useParams();
 
-  const toggleDeactivateModal = () => {
-    setDeactivateModal(!deactivateModal);
-  };
+  // const toggleDeactivateModal = () => {
+  //   setDeactivateModal(!deactivateModal);
+  // };
 
-  const toggleActivateModal = () => {
-    setActivateModal(!activateModal);
-  };
+  // const toggleActivateModal = () => {
+  //   setActivateModal(!activateModal);
+  // };
 
   const toggleEditModal = () => {
     setEditModal(!editModal);
@@ -80,8 +82,15 @@ const TransportCompany = () => {
     }
   };
 
+  const fetchTerminals = async () => {
+    const { data } = await getTerminals();
+  //  console.log(data, 'terminals');
+   setTerminals(data?.getTerminals?.nodes)
+  };
+
   const fecthRoutes = async () => {
     const { data, loading, errors } = await getAllRoutes();
+    // console.log(data, 'routes');
     if (data) {
      
       // const filterRoutes = data?.getRoutes?.nodes?.filter((item) => {
@@ -102,13 +111,14 @@ const TransportCompany = () => {
     fecthTransport();
     fecthRoutes();
     fecthBuses()
+    fetchTerminals()
   }, []);
 
   const tableHeader = [
     "Location",
     "Destination",
-    "Tentative Price",
-    "Depature Date",
+    "Distance",
+    "Expected Time",
     "Route Name",
     "Action",
   ];
@@ -118,18 +128,18 @@ const TransportCompany = () => {
       <tr key={routes?._id} className="border-b-2 border-slate-200">
         <td>{routes?.from?.city}</td>
         <td>{routes?.to?.city}</td>
-        <td>{routes?.price}</td>
-        <td>{routes?.departureTime}</td>
+        <td>{routes?.distance}</td>
+        <td>{routes?.expectedTime}</td>
         <td>{routes?.name}</td>
         <td>
           <DropDown
             links={[
-              {
-                name: "View Route",
-                isLink: true,
-                onclick: () => {},
-                link: `/route/${routes?._id}`,
-              },
+              // {
+              //   name: "View Route",
+              //   isLink: true,
+              //   onclick: () => {},
+              //   link: `/route/${routes?._id}`,
+              // },
               {
                 name: "Assign Bus",
                 isLink: false,
@@ -212,7 +222,7 @@ const TransportCompany = () => {
             </div>
           </div>
           <div className="flex flex-wrap items-center mt-6">
-            {datas?.status == "true" ? (
+            {/* {datas?.status == "true" ? (
               <button
                 className="py-3 mb-3 text-white bg-blue-500 rounded-lg shadow-md mr-7 w-52 focus:border-0 focus:outline-none hover:bg-blue-600"
                 onClick={toggleDeactivateModal}
@@ -226,7 +236,7 @@ const TransportCompany = () => {
               >
                 Re Activate Account
               </button>
-            )}
+            )} */}
             <button
               className="py-3 mb-3 text-white bg-blue-500 rounded-lg shadow-md mr-7 w-52 focus:border-0 focus:outline-none hover:bg-blue-600"
               onClick={() => toggleEditModal()}
@@ -268,12 +278,12 @@ const TransportCompany = () => {
       </Card>
 
       {/* //modals */}
-      <DeactivateTransport show={deactivateModal}  onHide={toggleDeactivateModal} id={id} callBack={fecthTransport}/>
+      {/* <DeactivateTransport show={deactivateModal}  onHide={toggleDeactivateModal} id={id} callBack={fecthTransport}/> */}
       <AddRouteModal show={addRouteModal}  onHide={toggleAddRouteModal} id={id} name={datas?.name} callBack={fecthTransport} routes={routes}/>
       <AddBusRouteModal show={addBusRouteModal}  onHide={toggleAddBusRouteModal} id={routeId} name={datas?.name} buses={buses}/>
-      <AddBusModal show={addBusModal}  onHide={toggleAddBusModal} id={id} name={datas?.name} callBack={fecthTransport}/>
-      <ActivateTransportModal show={activateModal}  onHide={toggleActivateModal} id={id} callBack={fecthTransport}/>
-      <EditTransportModal show={editModal} onHide={toggleEditModal} id={id} callBack={fecthTransport} datas={datas} />
+      <AddBusModal show={addBusModal}  onHide={toggleAddBusModal} id={id} name={datas?.name} callBack={fecthTransport} terminals={terminals} routes={routes}/>
+      {/* <ActivateTransportModal show={activateModal}  onHide={toggleActivateModal} id={id} callBack={fecthTransport}/> */}
+      <EditTransportModal show={editModal} onHide={toggleEditModal} id={id} callBack={fecthTransport} datas={datas} terminals={terminals}/>
       <DeleteRouteModal show={deleteRouteModal} onHide={toggleDeleteRouteModal} id={routeId} callBack={fecthRoutes} />
     </Page>
   );

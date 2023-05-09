@@ -8,7 +8,7 @@ export const AddRouteModal = ({ show, onHide, id, callBack, name, routes }) => {
   const [routeId, setRouteId] = useState("");
 
   const addRouteToCompany = (id) => {
-    setSaving(!saving);
+    setSaving(true);
     addRoute({
       companyId: id,
       routeId,
@@ -18,8 +18,9 @@ export const AddRouteModal = ({ show, onHide, id, callBack, name, routes }) => {
         await callBack();
         onHide();
       })
-      .catch(() => toast.error("Oops! something went wrong"));
-    setSaving(!saving);
+      .catch(() => toast.error("Oops! something went wrong"))
+      .finally(() =>  setSaving(false))
+   
   };
 
   return (

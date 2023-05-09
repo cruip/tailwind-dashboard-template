@@ -3,18 +3,19 @@ import Modal from "../../partials/modal/Modal";
 import { ToastContainer, toast } from "react-toastify";
 import { addTransport } from "../../services/transporterService";
 
-export const AddTransportModal = ({ show, onHide, callBack }) => {
+export const AddTransportModal = ({ show, onHide, callBack, terminals }) => {
   const [saving, setSaving] = useState(false);
+  const [loadingLogo, setLoadingLogo] = useState(false);
   const [logoUrl, setLogoUrl] = useState(null);
   const [values, setValues] = useState({
-    email: "",
+    // email: "",
     name: "",
     address: "",
-    website: "",
+    // website: "",
     contactPhoneNumber: "",
     status: "true",
     // transporterId: 'guo',
-    // terminals: datas?.terminals || '629cb14b66e7a3bcc6f7212c'
+    terminals: [],
   });
 
   const handleInputChange = (e) => {
@@ -26,6 +27,7 @@ export const AddTransportModal = ({ show, onHide, callBack }) => {
   };
 
   const uploadImage = (files) => {
+    setLoadingLogo(true);
     const data = new FormData();
     data.append("file", files[0]);
     data.append("upload_preset", "wni0bhqi");
@@ -37,33 +39,59 @@ export const AddTransportModal = ({ show, onHide, callBack }) => {
       .then((resp) => resp.json())
       .then((data) => {
         setLogoUrl(data.url);
-      });
+      })
+      .catch((error) => console.log(error))
+      .finally(() => setLoadingLogo(false));
+  };
+
+  const handleSelectTerminal = (e) => {
+    const item = values.terminals.find((el) => el === e.target.value);
+    if (item) {
+      return;
+    }
+    setValues({
+      ...values,
+      terminals: [...values.terminals, e.target.value],
+    });
+  };
+
+  const deleteTerminal = (ix) => {
+    // values.seatNumbers.splice(ix, 1)
+    const newTerminal = values.terminals.filter((_, i) => i !== ix);
+    setValues({
+      ...values,
+      terminals: [...newTerminal],
+    });
   };
 
   const handleCreateTranport = () => {
     if (Object.values(values).some((o) => o === "") && !logoUrl) return false;
-    setSaving(!saving);
-    setTimeout(() => {
-      addTransport({ ...values, status: "true", logo: logoUrl,  transporterId: "guo", })
-        .then(async () => {
-          toast.success("Transport added successfully");
-          await callBack();
-          setValues({
-            email: "",
-            name: "",
-            address: "",
-            website: "",
-            contactPhoneNumber: "",
-            logo: "",
-            status: "true",
-            transporterId: "guo",
-          });
-          setLogoUrl(null);
-          onHide()
-        })
-        .catch(() => toast.error("Oops! something went wrong"));
-    }, 2000);
-    setSaving(!saving);
+    setSaving(true);
+    // setTimeout(() => {
+    addTransport({
+      ...values,
+      status: "true",
+      logo: logoUrl,
+      transporterCode: "guo",
+    })
+      .then(async () => {
+        toast.success("Transport added successfully");
+        await callBack();
+        setValues({
+          email: "",
+          name: "",
+          address: "",
+          website: "",
+          contactPhoneNumber: "",
+          logo: "",
+          status: "true",
+        });
+        setLogoUrl(null);
+        onHide();
+      })
+      .catch(() => toast.error("Oops! something went wrong"))
+      .finally(() => setSaving(false));
+    // }, 2000);
   };
 
   return (
@@ -94,7 +122,7 @@ export const AddTransportModal = ({ show, onHide, callBack }) => {
               className="block mb-2 text-sm font-bold text-gray-700"
               htmlFor="logo"
             >
-              company Logo
+              {loadingLogo ? "Loading Image" : " company Logo"}
             </label>
             <input
               className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
@@ -105,7 +133,55 @@ export const AddTransportModal = ({ show, onHide, callBack }) => {
               name="logo"
             />
           </div>
+          {/* this is for terminal select  */}
+
           <div className="mb-4">
+            <label
+              className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
+              htmlFor="grid-seatNo"
+            >
+              Select Terminals
+            </label>
+
+            <select
+              className="block w-full px-4 py-2 pr-8 mb-1 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline"
+              value=""
+              name="seats"
+              onChange={(e) => {
+                handleSelectTerminal(e);
+                // handlePrice(e.target.value)
+              }}
+            >
+              <option value="" disabled={true} hidden={true}>
+                {" "}
+                select terminal
+              </option>
+              {!terminals || !terminals.length ? (
+                <option value={""} disabled={true}>
+                  No Terminal Available
+                </option>
+              ) : (
+                terminals?.map((terminal, i) => (
+                  <option key={i} value={terminal?._id}>
+                    {terminal?.city} {terminal?.locationCode}
+                  </option>
+                ))
+              )}
+            </select>
+            {values.terminals.length
+              ? values.terminals.map((item, i) => (
+                  <span
+                    onClick={() => deleteTerminal(i)}
+                    className="px-4 py-1 mr-1 text-sm text-black bg-gray-200 rounded-md cursor-pointer"
+                    key={i}
+                  >
+                    {item}
+                  </span>
+                ))
+              : ""}
+          </div>
+
+          {/* <div className="mb-4">
             <label
               className="block mb-2 text-sm font-bold text-gray-700"
               htmlFor="website"
@@ -121,7 +197,7 @@ export const AddTransportModal = ({ show, onHide, callBack }) => {
               onChange={handleInputChange}
               name="website"
             />
-          </div>
+          </div> */}
           <div className="mb-4">
             <label
               className="block mb-2 text-sm font-bold text-gray-700"
@@ -139,7 +215,7 @@ export const AddTransportModal = ({ show, onHide, callBack }) => {
               name="address"
             />
           </div>
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <label
               className="block mb-2 text-sm font-bold text-gray-700"
               htmlFor="email"
@@ -155,7 +231,7 @@ export const AddTransportModal = ({ show, onHide, callBack }) => {
               onChange={handleInputChange}
               name="email"
             />
-          </div>
+          </div> */}
           <div className="mb-4">
             <label
               className="block mb-2 text-sm font-bold text-gray-700"

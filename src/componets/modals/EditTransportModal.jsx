@@ -3,31 +3,51 @@ import Modal from "../../partials/modal/Modal";
 import { ToastContainer, toast } from "react-toastify";
 import { updateTransport } from "../../services/transporterService";
 
-export const EditTransportModal = ({ show, onHide, id, callBack, datas }) => {
+export const EditTransportModal = ({ show, onHide, id, callBack, datas, terminals }) => {
 
 const [saving,  setSaving] = useState(false)
   const [values, setValues] = useState({
-    email:  "",
+    // email:  "",
     name:  "",
     address:  "",
-    website: "",
+    // website: "",
     contactPhoneNumber: "",
     status:  "true",
     // transporterId: 'guo',
-    // terminals: datas?.terminals || '629cb14b66e7a3bcc6f7212c'
+    terminals: []
   });
+  // const [terminals, setTerminals] = useState([])
+
+  const handleSelectTerminal = (e) => {
+    const item = values.terminals.find((el) => el === e.target.value)
+   if(item) {
+    return
+   }
+   setValues({
+    ...values,
+    terminals: [...values.terminals,  e.target.value]
+  })
+  };
+
+  const deleteTerminal = (ix) => {
+    // values.seatNumbers.splice(ix, 1)
+    const newTerminal = values.terminals.filter((_, i) => i !== ix)
+    setValues({
+      ...values,
+      terminals: [...newTerminal]
+    })
+  }
 
   useEffect(() => {
     setValues({
-        email: datas?.email || "",
+        // email: datas?.email || "",
         name: datas?.name || "",
         address: datas?.address || "",
-        website: datas?.website || "",
+        // website: datas?.website || "",
         contactPhoneNumber: datas?.contactPhoneNumber || "",
         status: datas?.status || "true",
+        terminals: datas?.terminals ? datas?.terminals.map((el) => el._id) : []
     })
-
-    console.log(datas, 'dats');
   
   }, [datas])
   
@@ -42,20 +62,18 @@ const [saving,  setSaving] = useState(false)
 
   const handleUpdateTranport = (id) => {
     if (Object.values(values).some((o) => o === "")) return false;
-    setSaving(!saving)
+    setSaving(true)
     updateTransport({
       ...values,
       transporterId: id,
+      transporterCode: 'guo',
       logo: datas?.logo,
-      terminals: "62f112c985493aecdd3b071e",
     })
       .then(async () => {
         toast.success("Transport updated successfully");
         setValues({
-          email: "",
           name: "",
           address: "",
-          website: "",
           contactPhoneNumber: "",
           logo: "",
           status: "true",
@@ -67,8 +85,9 @@ const [saving,  setSaving] = useState(false)
       .catch((error) => {
         console.log(error);
         toast.error("Oops! something went wrong");
-      });
-      setSaving(!saving)
+      })
+      .finally(() =>  setSaving(false))
+     
   };
 
   return (
@@ -94,7 +113,7 @@ const [saving,  setSaving] = useState(false)
               name="name"
             />
           </div>
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <label
               className="block mb-2 text-sm font-bold text-gray-700"
               htmlFor="website"
@@ -110,7 +129,7 @@ const [saving,  setSaving] = useState(false)
               onChange={handleInputChange}
               name="website"
             />
-          </div>
+          </div> */}
           <div className="mb-4">
             <label
               className="block mb-2 text-sm font-bold text-gray-700"
@@ -128,7 +147,55 @@ const [saving,  setSaving] = useState(false)
               name="address"
             />
           </div>
+          {/* this is for terminals  */}
+
           <div className="mb-4">
+            <label
+              className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
+              htmlFor="grid-seatNo"
+            >
+              Select Terminals
+            </label>
+
+            <select
+              className="block w-full px-4 py-2 pr-8 mb-1 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline"
+              value=""
+              name="seats"
+              onChange={(e) => {
+                handleSelectTerminal(e);
+                // handlePrice(e.target.value)
+              }}
+            >
+              <option value="" disabled={true} hidden={true}>
+                {" "}
+                select terminal
+              </option>
+              {!terminals || !terminals.length ? (
+                <option value={""} disabled={true}>
+                  No Terminal Available
+                </option>
+              ) : (
+                terminals?.map((terminal, i) => (
+                  <option key={i} value={terminal?._id}>
+                    {terminal?.city} {terminal?.locationCode}
+                  </option>
+                ))
+              )}
+            </select>
+            {values.terminals?.length
+              ? values.terminals.map((item, i) => (
+                  <span
+                    onClick={() => deleteTerminal(i)}
+                    className="px-4 py-1 mr-1 text-sm text-black bg-gray-200 rounded-md cursor-pointer"
+                    key={i}
+                  >
+                    {item}
+                  </span>
+                ))
+              : ""}
+          </div>
+
+          {/* <div className="mb-4">
             <label
               className="block mb-2 text-sm font-bold text-gray-700"
               htmlFor="email"
@@ -144,7 +211,7 @@ const [saving,  setSaving] = useState(false)
               onChange={handleInputChange}
               name="email"
             />
-          </div>
+          </div> */}
           <div className="mb-4">
             <label
               className="block mb-2 text-sm font-bold text-gray-700"

@@ -21,8 +21,8 @@ const Customers = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [userId, setUserId] = useState("");
 
-  const fetchAllUser = async() => {
-    const {data, loading} = await getAllUsers(currentPage, limit)
+  const fetchAllUser = async(size=10, page) => {
+    const {data, loading} = await getAllUsers({size, page})
     setTableLoad(false)
     setData(data?.getUsers?.nodes)
     setCurrentPage(data?.getUsers?.pageInfo?.currentPage)
@@ -82,7 +82,7 @@ const Customers = () => {
   // }, [])
   
   useEffect(() => {
-    fetchAllUser()
+    fetchAllUser(10, currentPage)
     fetchUnpaginatedUser()
   }, [currentPage])
 
@@ -102,7 +102,7 @@ const Customers = () => {
     return (
       <tr key={data?._id} className="border-b-2 border-slate-200">
         <td>{data?.firstName || ''} {data?.lastName || ''}</td>
-        <td>{data?.booking ? 'has bookings' : 'has no booking'}</td>
+        <td>{data?.booking?.length ? 'has bookings' : 'has no booking'}</td>
         <td >{data?.phoneNo}</td>
         <td>{data?.email}</td>
 

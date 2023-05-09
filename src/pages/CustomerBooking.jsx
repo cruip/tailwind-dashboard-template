@@ -11,7 +11,7 @@ import {
   cancelConfirmBooking,
 } from "../services/bookingsService";
 import { getAllRoutes } from "../services/routeService";
-import { getAllLocations } from "../services/locationService";
+import { getAllLocations,getTerminals } from "../services/locationService";
 import { BookSeatModal, ToggleStatusModal } from "../componets/modals";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -30,6 +30,7 @@ const CustomerBooking = () => {
 
 
   const date = new Date();
+  // console.log(date, 'date');
 
   let today = Date.parse(date);
 
@@ -65,8 +66,9 @@ const CustomerBooking = () => {
     );
   };
   const fetchLocations = async () => {
-    const { data } = await getAllLocations();
-    setLocation(data?.getLocations?.nodes);
+    const { data } = await getTerminals();
+    console.log(data, 'terminals');
+    setLocation(data?.getTerminals?.nodes);
   };
 
   // const fetchAllRoutes = async () => {

@@ -9,7 +9,7 @@ import { EditTransportModal, AddTransportModal, DeleteTransportModal } from "../
 import {
   getAllTransporter,
 } from "../services/transporterService";
-import { getAllLocations } from "../services/locationService";
+import { getAllLocations, getTerminals } from "../services/locationService";
 
 const TransportCompanies = () => {
   const [limit, setLimit] = useState(10);
@@ -28,12 +28,12 @@ const TransportCompanies = () => {
   const [editModal, setEditModal] = useState(false);
   const [addTransportModal, setAddTransportModal] = useState(false);
   
-  // const [terminals, setTerminals] = useState([])
+  const [terminals, setTerminals] = useState([])
   const [searchQuery, setSearchQuery] = useState("");
   const [filterValue, setFilterValue] = useState("all");
 
-  const fetchAllTransport = async () => {
-    const { data, loading } = await getAllTransporter(currentPage, limit);
+  const fetchAllTransport = async (size=10, page) => {
+    const { data, loading } = await getAllTransporter({size, page});
     setTableLoad(false);
     setData(data?.getTransporters?.nodes);
     setCurrentPage(Number(data?.getTransporters?.pageInfo?.currentPage));
@@ -62,8 +62,15 @@ const TransportCompanies = () => {
   // const fetchLocations = async () => {
   //   const { data } = await getAllLocations();
   //  console.log(data, 'loca');
-  //  setLocations(data?.getLocations?.nodes)
+  // //  setLocations(data?.getLocations?.nodes)
   // };
+
+   const fetchTerminals = async () => {
+    const { data } = await getTerminals();
+  //  console.log(data, 'loca');
+   setTerminals(data?.getTerminals?.nodes)
+  };
+
 
   const SingleData = (id) => {
     const data = datas.find((item)=> item._id === id)
@@ -71,8 +78,9 @@ const TransportCompanies = () => {
   }
 
   useEffect(() => {
-    fetchAllTransport();
+    fetchAllTransport(10, currentPage);
     fetchUnpaginatedTransport();
+    fetchTerminals()
   }, [currentPage]);
 
   useEffect(() => {
@@ -153,7 +161,7 @@ const TransportCompanies = () => {
     "Company Address",
     "Company phone",
     "Company Website",
-    "status",
+    // "status",
     "Action",
   ];
 
@@ -163,8 +171,8 @@ const TransportCompanies = () => {
         <td>{datas?.name}</td>
         <td>{datas?.address}</td>
         <td>{datas?.contactPhoneNumber}</td>
-        <td>{datas?.website}</td>
-         <td>{datas?.status == 'true' ? 'Active' : 'Inactive'}</td>
+        <td>{datas?.website || 'No Website'}</td>
+         {/* <td>{datas?.status == 'true' ? 'Active' : 'Inactive'}</td> */}
         <td>
           <DropDown
             links={[
@@ -207,7 +215,7 @@ const TransportCompanies = () => {
         <div className="flex items-center justify-between mb-6">
           <p>Add a Transport Company</p>
           <button
-            className="px-4 py-2 text-white transition-shadow rounded-md shadow-md  hover:shadow-lg w-52 bg-sky-800"
+            className="px-4 py-2 text-white transition-shadow rounded-md shadow-md hover:shadow-lg w-52 bg-sky-800"
             onClick={toggleAddTransporModal}
           >
             Add Company
@@ -300,8 +308,8 @@ const TransportCompanies = () => {
       </section>
       
       <DeleteTransportModal show={deactivateModal} onHide={toggleDeactivateModal} id={id} callBack={fetchAllTransport} />
-      <EditTransportModal show={editModal} onHide={toggleEditModal} id={id} callBack={fetchAllTransport} datas={Singledatas} />
-      <AddTransportModal show={addTransportModal} onHide={toggleAddTransporModal} callBack={fetchAllTransport} />
+      <EditTransportModal show={editModal} onHide={toggleEditModal} id={id} callBack={fetchAllTransport} datas={Singledatas} terminals={terminals}/>
+      <AddTransportModal show={addTransportModal} onHide={toggleAddTransporModal} callBack={fetchAllTransport} terminals={terminals}/>
     </Page>
   );
 };
