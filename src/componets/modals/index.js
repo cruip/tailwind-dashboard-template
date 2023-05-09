@@ -7,6 +7,8 @@ export * from "./AddRouteModal";
 export * from "./AddBusModal";
 export * from "./AddBusRouteModal";
 export * from "./DeleteRouteModal";
+export * from "./CreateRouteModal";
+export * from "./CreateTerminalModal";
 export * from "./customers/ActivateCustomerModal";
 export * from "./customers/DeActivateCustomerModal";
 export * from "./customers/DeleteCustomerModal";

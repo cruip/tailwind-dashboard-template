@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Page from '../partials/page';
 
 import WelcomeBanner from '../partials/dashboard/WelcomeBanner';
@@ -19,8 +19,32 @@ import DashboardCard11 from '../partials/dashboard/DashboardCard11';
 import DashboardCard12 from '../partials/dashboard/DashboardCard12';
 import DashboardCard13 from '../partials/dashboard/DashboardCard13';
 import Banner from '../partials/Banner';
+import { getTerminals } from '../services/locationService';
+import { CreateRouteModal, CreateTerminalModal } from '../componets/modals';
 
 function Dashboard() {
+  const [terminals, setTerminals] = useState([])
+  const [addRouteModal, setAddRouteModal] = useState(false);
+  const [addTerminalModal, setAddTerminalModal] = useState(false);
+
+  const fetchTerminals = async () => {
+    const { data } = await getTerminals();
+  //  console.log(data, 'terminals');
+   setTerminals(data?.getTerminals?.nodes)
+  };
+
+  const toggleAddRouteModal = () => {
+    setAddRouteModal(!addRouteModal);
+  };
+
+  const toggleAddTerminalModal = () => {
+    setAddTerminalModal(!addTerminalModal);
+  };
+
+  useEffect(() => {
+    fetchTerminals()
+  }, [])
+  
 
   // const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -52,7 +76,23 @@ function Dashboard() {
                     <span className="hidden ml-2 xs:block">Add view</span>
                 </button>                
               </div>
+             
+            </div>
 
+            {/* add buttons actions  */}
+            <div className='flex items-center mb-3'>
+            <button className="mr-5 text-white bg-indigo-500 btn hover:bg-indigo-600" onClick={toggleAddRouteModal}>
+                    <svg className="w-4 h-4 opacity-50 fill-current shrink-0" viewBox="0 0 16 16">
+                        <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
+                    </svg>
+                    <span className="hidden ml-2 xs:block">Add New Routes</span>
+                </button>
+                <button className="text-white bg-indigo-500 btn hover:bg-indigo-600" onClick={toggleAddTerminalModal}>
+                    <svg className="w-4 h-4 opacity-50 fill-current shrink-0" viewBox="0 0 16 16">
+                        <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
+                    </svg>
+                    <span className="hidden ml-2 xs:block">Add New Terminals</span>
+                </button>  
             </div>
 
             {/* Cards */}
@@ -86,7 +126,9 @@ function Dashboard() {
               <DashboardCard13 />
               
             </div>
-
+            <CreateRouteModal show={addRouteModal} onHide={toggleAddRouteModal} terminals={terminals} />
+            <CreateTerminalModal show={addTerminalModal} onHide={toggleAddTerminalModal} />
+            {/* <CreateRouteModal shhow={addRouteModal}  onHide={toggleAddRouteModal}  terminals={terminals}/> */}
           </Page>
 
 

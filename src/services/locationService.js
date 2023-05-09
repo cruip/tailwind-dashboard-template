@@ -54,3 +54,60 @@ export const getTerminals = async (page = 1, size = 10000) => {
   });
   return { data, loading, errors };
 };
+
+export const createTerminal = async (event) => {
+  const {
+    locationName,
+    locationCode,
+    address,
+    city,
+    streetAddress,
+    cityCode,
+    stateCode,
+    longitude,
+    latitude,
+  } = event;
+  const { data, errors } = await client.mutate({
+    mutation: gql`
+      mutation createTerminal(
+        locationName: String!
+locationCode: String
+address: String
+city: String!
+streetAddress: String
+cityCode: String
+stateCode: String
+longitude: String
+latitude: String
+      ) {
+        addTerminal(
+          locationName: $locationName
+          locationCode: $locationCode
+          address: $address
+          city: $city
+          streetAddress: $streetAddress
+          cityCode: $cityCode
+          stateCode: $stateCode
+          longitude: $longitude
+          latitude: $latitude
+        ) {
+          _id
+          name
+          address
+        }
+      }
+    `,
+    variables: {
+      locationName,
+      locationCode,
+      address,
+      city,
+      streetAddress,
+      cityCode,
+      stateCode,
+      longitude,
+      latitude,
+    },
+  });
+  return { data, errors };
+};
