@@ -4,7 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { addBus } from "../../services/busService";
 import { enumToArray } from "../../utils/helper";
 import { busClassEnum, busTypeEnum } from "../../utils/enum";
-import DatePicker from "react-multi-date-picker";
+import DatePicker, { DateObject } from "react-multi-date-picker";
 
 export const AddBusModal = ({
   show,
@@ -54,16 +54,6 @@ export const AddBusModal = ({
     });
   };
 
-  // const handleSelectSeat = (e) => {
-  //   const item = values.availableSeats.find((el) => el === e.target.value);
-  //   if (item) {
-  //     return;
-  //   }
-  //   setValues({
-  //     ...values,
-  //     availableSeats: [...values.availableSeats, e.target.value],
-  //   });
-  // };
 
   const handleSelectSeat = useCallback(
     (e, type) => {
@@ -124,10 +114,13 @@ export const AddBusModal = ({
   };
 
   const handleCreateTranport = () => {
+    const newDepatureDate = departureDate.map((item) => item.format('YYYY-MM-DD'))
+    // console.log(departureDate, 'date', newDepatureDate)
+    // return
     if (Object.values(values).some((o) => o === "") && !logoUrl && !departureDate.length) return false;
     setSaving(true);
     // setTimeout(() => {
-    addBus({ ...values, busImage: logoUrl, companyId: id, departureDate: departureDate, status: values.status ==='true' ? true : false, hasAC: values.hasAC ==='true' ? true : false })
+    addBus({ ...values, busImage: logoUrl, companyId: id, departureDate: newDepatureDate, status: values.status ==='true' ? true : false, hasAC: values.hasAC ==='true' ? true : false })
       .then(async () => {
         toast.success("Bus added successfully");
         await callBack();
@@ -227,14 +220,7 @@ export const AddBusModal = ({
             >
               Depature Date
             </label>
-            {/* <input
-              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-              id="date"
-              type="date"
-              value={values.departureDate}
-              onChange={handleInputChange}
-              name="departureDate"
-            /> */}
+            
             <DatePicker containerClassName=' w-full' inputClass='w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline' multiple value={departureDate} onChange={setDepartureDates} />
           </div>
           <div className="mb-4">

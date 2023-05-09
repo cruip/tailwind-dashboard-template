@@ -133,9 +133,10 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
             gender: "",
           },
         ])
-        await fetchAllBookings()
+        await callBack()
       })
-      .catch(() => toast.error("Oops! something went wrong"));
+      .catch(() => toast.error("Oops! something went wrong"))
+      .finally(() => onHide())
   };
   
   const getTrips = async (filters) => {
@@ -184,7 +185,7 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
     if(values.from === values.to){
       return
     }
-    getTrips({to: values?.to, from: values?.from, date: values?.departureDate})
+    getTrips({to: values?.to, from: values?.from, date: values.departureDate})
    }
     
   }, [values.from, values.to, values.departureDate]);

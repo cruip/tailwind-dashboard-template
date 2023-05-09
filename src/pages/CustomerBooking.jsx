@@ -29,8 +29,8 @@ const CustomerBooking = () => {
   const [bookModal, setBookModal] = useState(false);
 
 
-  const date = new Date();
-  // console.log(date, 'date');
+  const date = new Date('2023-05-10');
+  console.log(date.getDate(), 'date');
 
   let today = Date.parse(date);
 
