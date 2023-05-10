@@ -12,11 +12,36 @@ export const getAllBuses = async (page = 1, size = 10) => {
           }
           nodes {
             _id
-            vehicleNo
-            vehicleModel
-            vehicleBrand
+            class
+            type
+            route {
+              _id
+              name
+              distance
+              expectedTime
+              from {
+                _id
+                city
+                locationName
+                address
+              }
+              to {
+                _id
+                locationName
+                address
+                city
+              }
+            }
+            departureDate
+            departureTime
+            price
             busImage
+            numberOfSeats
             availableSeats
+            occupiedSeat
+            departureTerminal
+            arrivalTerminal
+            status
           }
         }
       }
@@ -31,46 +56,81 @@ export const getAllBuses = async (page = 1, size = 10) => {
 
 export const addBus = async (event) => {
   const {
-    vehicleNo,
-    vehicleModel,
-    vehicleBrand,
+    type,
+    route,
+    clas,
+    departureTime,
+    departureDate,
+    expectedArrival,
     numberOfSeats,
-    transporter,
+    availableSeats,
+    occupiedSeat,
+    companyId,
     busImage,
+    price,
+    departureTerminal,
+    arrivalTerminal,
+    hasAC,
     status,
   } = event;
   const { data, errors } = await client.mutate({
     mutation: gql`
       mutation busAdd(
-        $vehicleNo: String!
-        $vehicleModel: String
-        $vehicleBrand: String
+        $clas: String
+        $type: String
+        $route: String
+        $departureTime: String
+        $departureDate: [Date]
+        $expectedArrival: String
         $numberOfSeats: String
-        $transporter: String
+        $availableSeats: [String]
+        $occupiedSeat: [String]
+        $companyId: String!
         $busImage: String
+        $price: String
+        $departureTerminal: String
+        $arrivalTerminal: String
+        $hasAC: Boolean
         $status: Boolean
       ) {
         addBus(
-          vehicleNo: $vehicleNo
-          vehicleModel: $vehicleModel
-          vehicleBrand: $vehicleBrand
+          class: $clas
+          type: $type
+          route: $route
+          departureTime: $departureTime
+          departureDate: $departureDate
+          expectedArrival: $expectedArrival
           numberOfSeats: $numberOfSeats
-          transporter: $transporter
+          availableSeats: $availableSeats
+          occupiedSeat: $occupiedSeat
+          companyId: $companyId
+          price: $price
+          departureTerminal: $departureTerminal
+          arrivalTerminal: $arrivalTerminal
+          hasAC: $hasAC
           busImage: $busImage
           status: $status
         ) {
           _id
-          vehicleNo
         }
       }
     `,
     variables: {
-      vehicleNo,
-      vehicleModel,
-      vehicleBrand,
+      type,
+      route,
+      clas,
+      departureTime,
+      departureDate,
+      expectedArrival,
       numberOfSeats,
-      transporter,
+      availableSeats,
+      occupiedSeat,
+      companyId,
       busImage,
+      price,
+      departureTerminal,
+      arrivalTerminal,
+      hasAC,
       status,
     },
   });

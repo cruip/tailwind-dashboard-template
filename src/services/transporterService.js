@@ -11,11 +11,8 @@ export const getOneTransport = async (transporterId) => {
           _id
           name
           address
-          email
           logo
-          status
           contactPhoneNumber
-          website
           terminals {
             _id
             city
@@ -24,10 +21,13 @@ export const getOneTransport = async (transporterId) => {
             longitude
             locationName
             locationCode
+            address
           }
           routes {
             _id
             name
+            distance
+            expectedTime
             from {
               _id
               city
@@ -40,9 +40,6 @@ export const getOneTransport = async (transporterId) => {
               address
               city
             }
-            price
-            date
-            departureTime
           }
         }
       }
@@ -54,7 +51,8 @@ export const getOneTransport = async (transporterId) => {
   return { data, errors, loading };
 };
 
-export const getAllTransporter = async (page = 1, size = 10) => {
+export const getAllTransporter = async (event) => {
+  const { page, size } = event;
   const { data, error, loading } = await client.query({
     query: gql`
       query transport($page: Int, $size: Int) {
@@ -72,7 +70,6 @@ export const getAllTransporter = async (page = 1, size = 10) => {
             _id
             address
             name
-            email
             terminals {
               _id
               address
@@ -83,8 +80,6 @@ export const getAllTransporter = async (page = 1, size = 10) => {
               locationCode
             }
             contactPhoneNumber
-            status
-            website
             logo
           }
         }
@@ -127,11 +122,9 @@ export const addTransport = async (event) => {
     name,
     address,
     logo,
-    transporterId,
+    transporterCode,
     status,
     contactPhoneNumber,
-    email,
-    website,
     terminals,
   } = event;
   const { data, errors } = await client.mutate({
@@ -140,23 +133,19 @@ export const addTransport = async (event) => {
         $name: String!
         $address: String!
         $logo: String!
-        $transporterId: String!
+        $transporterCode: String!
         $status: String!
         $contactPhoneNumber: String!
-        $email: String!
-        $website: String!
         $terminals: [String]
       ) {
         addTransporter(
           name: $name
           address: $address
           logo: $logo
-          transporterId: $transporterId
+          transporterCode: $transporterCode
           terminals: $terminals
           status: $status
           contactPhoneNumber: $contactPhoneNumber
-          email: $email
-          website: $website
         ) {
           _id
           name
@@ -165,9 +154,7 @@ export const addTransport = async (event) => {
           terminals {
             latitude
           }
-          status
           contactPhoneNumber
-          website
         }
       }
     `,
@@ -175,11 +162,11 @@ export const addTransport = async (event) => {
       name,
       address,
       logo,
-      transporterId,
+      transporterCode,
       status,
       contactPhoneNumber,
-      email,
-      website,
+      // email,
+      // website,
       terminals,
       // transporterId,
     },
@@ -208,10 +195,11 @@ export const updateTransport = async (event) => {
     address,
     logo,
     transporterId,
+    transporterCode,
     status,
     contactPhoneNumber,
-    email,
-    website,
+    // email,
+    // website,
   } = event;
   const { data, errors } = await client.mutate({
     mutation: gql`
@@ -220,10 +208,9 @@ export const updateTransport = async (event) => {
         $address: String!
         $logo: String!
         $transporterId: String!
+        $transporterCode: String!
         $status: String!
         $contactPhoneNumber: String!
-        $email: String!
-        $website: String!
       ) {
         updateTransporter(
           name: $name
@@ -231,9 +218,8 @@ export const updateTransport = async (event) => {
           logo: $logo
           status: $status
           contactPhoneNumber: $contactPhoneNumber
-          email: $email
-          website: $website
           transporterId: $transporterId
+          transporterCode: $transporterCode
         ) {
           _id
           name
@@ -242,9 +228,7 @@ export const updateTransport = async (event) => {
           terminals {
             latitude
           }
-          status
           contactPhoneNumber
-          website
         }
       }
     `,
@@ -253,10 +237,9 @@ export const updateTransport = async (event) => {
       address,
       logo,
       transporterId,
+      transporterCode,
       status,
       contactPhoneNumber,
-      email,
-      website,
     },
   });
   return { data, errors };

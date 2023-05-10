@@ -25,9 +25,8 @@ export const getAllRoutes = async (page = 1, size = 10) => {
               address
               city
             }
-            price
-            date
-            departureTime
+            distance
+            expectedTime
           }
         }
       }
@@ -47,9 +46,8 @@ export const getRoute = async (routeId) => {
         getRoute(routeId: $routeId) {
           _id
           name
-          price
-          date
-          departureTime
+          distance
+          expectedTime
           from {
             _id
             city
@@ -64,13 +62,18 @@ export const getRoute = async (routeId) => {
           }
           buses {
             _id
-            vehicleNo
-            vehicleModel
-            vehicleBrand
+            class
+            type
+            departureDate
+            departureTime
+            price
             busImage
             numberOfSeats
             availableSeats
             occupiedSeat
+            departureTerminal
+            arrivalTerminal
+            status
           }
         }
       }
@@ -97,6 +100,41 @@ export const addRoute = async (event) => {
     variables: {
       companyId,
       routeId,
+    },
+  });
+  return { data, errors };
+};
+
+export const createRoute = async (event) => {
+  const { name, from, to, dstance, expectedTime } = event;
+  const { data, errors } = await client.mutate({
+    mutation: gql`
+      mutation createRoute(
+        $name: String
+        $from: String
+        $to: String
+        $distance: String
+        $expectedTime: String
+      ) {
+        addRoute(
+          name: $name
+          from: $from
+          to: $to
+          distance: $distance
+          expectedTime: $expectedTime
+        ) {
+          _id
+          name
+          address
+        }
+      }
+    `,
+    variables: {
+      name,
+      from,
+      to,
+      dstance,
+      expectedTime,
     },
   });
   return { data, errors };

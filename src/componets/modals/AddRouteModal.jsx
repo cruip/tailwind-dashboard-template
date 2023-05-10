@@ -8,7 +8,7 @@ export const AddRouteModal = ({ show, onHide, id, callBack, name, routes }) => {
   const [routeId, setRouteId] = useState("");
 
   const addRouteToCompany = (id) => {
-    setSaving(!saving);
+    setSaving(true);
     addRoute({
       companyId: id,
       routeId,
@@ -18,28 +18,32 @@ export const AddRouteModal = ({ show, onHide, id, callBack, name, routes }) => {
         await callBack();
         onHide();
       })
-      .catch(() => toast.error("Oops! something went wrong"));
-    setSaving(!saving);
+      .catch(() => toast.error("Oops! something went wrong"))
+      .finally(() => setSaving(false));
   };
 
   return (
     <>
       <ToastContainer />
       <Modal show={show} size="md" onHide={onHide} width="30%">
-       <div className="mx-2 mb-8">
-       <p className="mb-5 font-semibold text-blue-700">Add Route to {name}</p>
-        <select
-          className="block w-full px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline"
-          value={routeId}
-          onChange={(e) => setRouteId(e.target.value)}
-          name="routeId"
-        >
-          <option value="">select a route</option>
-          {routes?.map((item) => (
-            <option key={item._id} value={item._id}>{item.name}</option>
-          ))}
-        </select>
-       </div>
+        <div className="mx-2 mb-8">
+          <p className="mb-5 font-semibold text-blue-700">
+            Add Route to {name}
+          </p>
+          <select
+            className="block w-full px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline"
+            value={routeId}
+            onChange={(e) => setRouteId(e.target.value)}
+            name="routeId"
+          >
+            <option value="">select a route</option>
+            {routes?.map((item) => (
+              <option key={item._id} value={item._id}>
+                {item.name}
+              </option>
+            ))}
+          </select>
+        </div>
         <div className="flex justify-between px-4 py-5 bg-gray-50 sm:px-6 sm:flex-row-reverse">
           <button
             type="button"

@@ -1,26 +1,100 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Modal from "../../partials/modal/Modal";
 import { ToastContainer, toast } from "react-toastify";
 import { addBus } from "../../services/busService";
+import { enumToArray } from "../../utils/helper";
+import { busClassEnum, busTypeEnum } from "../../utils/enum";
+import DatePicker, { DateObject } from "react-multi-date-picker";
 
-export const AddBusModal = ({ show, onHide, callBack, id, name }) => {
+export const AddBusModal = ({
+  show,
+  onHide,
+  callBack,
+  id,
+  name,
+  terminals,
+  routes
+}) => {
   const [saving, setSaving] = useState(false);
   const [logoUrl, setLogoUrl] = useState(null);
   const [values, setValues] = useState({
-    vehicleNo: "",
-    vehicleModel: "",
-    vehicleBrand: "",
-    numberOfSeats: 14,
-    status: "true",
-    // transporterId: 'guo',
-    // terminals: datas?.terminals || '629cb14b66e7a3bcc6f7212c'
+    clas: "",
+    type: "",
+    route: "",
+    departureTime: "",
+    // departureDate: [],
+    expectedArrival: "",
+    numberOfSeats: "",
+    availableSeats: [],
+    occupiedSeat: [],
+    // companyId: "",
+    busImage: "",
+    price: "",
+    departureTerminal: "",
+    arrivalTerminal: "",
+    hasAC: false,
+    status: false,
   });
+  const [departureDate, setDepartureDates] = useState([]);
+
+  const busType = enumToArray(busTypeEnum);
+  const busClass = enumToArray(busClassEnum);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    let newAvailableSeat = values.availableSeats
+    if(name === 'numberOfSeats'){
+       newAvailableSeat = [...Array(Number(values.numberOfSeats)).keys()].map((_, i) => ((i + 1).toString()))
+
+    }
     setValues({
       ...values,
       [name]: value,
+      availableSeats: newAvailableSeat
+    });
+  };
+
+
+  const handleSelectSeat = useCallback(
+    (e, type) => {
+      if (type === "occupied") {
+        if (values.occupiedSeat.includes(e.target.value)) {
+          return;
+        }
+        const newAvailable = values.availableSeats.filter(
+          (el) => el !== e.target.value
+        );
+        const newOccupied = [...values.occupiedSeat, e.target.value];
+        setValues({
+          ...values,
+          occupiedSeat: newOccupied,
+          availableSeats: newAvailable,
+        });
+      }
+      if (type === "available") {
+        if (values.availableSeats.includes(e.target.value)) {
+          return;
+        }
+        const newOccupied = values.occupiedSeat.filter(
+          (el) => el !== e.target.value
+        );
+        const newAvailable = [...values.availableSeats, e.target.value];
+        setValues({
+          ...values,
+          occupiedSeat: newOccupied,
+          availableSeats: newAvailable,
+        });
+      }
+    },
+    [values.numberOfSeats, values.availableSeats, values.occupiedSeat]
+  );
+
+  const deleteSeat = (ix) => {
+    // values.seatNumbers.splice(ix, 1)
+    const seatno = values.availableSeats.filter((_, i) => i !== ix);
+    setValues({
+      ...values,
+      availableSeats: [...seatno],
     });
   };
 
@@ -40,20 +114,24 @@ export const AddBusModal = ({ show, onHide, callBack, id, name }) => {
   };
 
   const handleCreateTranport = () => {
-    if (Object.values(values).some((o) => o === "") && !logoUrl) return false;
-    setSaving(!saving);
+    const newDepatureDate = departureDate.map((item) => item.format('YYYY-MM-DD'))
+    // console.log(departureDate, 'date', newDepatureDate)
+    // return
+    if (Object.values(values).some((o) => o === "") && !logoUrl && !departureDate.length) return false;
+    setSaving(true);
     // setTimeout(() => {
-      addBus({ ...values, status: true, busImage: logoUrl, transporter: id })
-        .then(async () => {
-          toast.success("Bus added successfully");
-          await callBack();
-          
-          setLogoUrl(null);
-          onHide()
-        })
-        .catch(() => toast.error("Oops! something went wrong"));
+    addBus({ ...values, busImage: logoUrl, companyId: id, departureDate: newDepatureDate, status: values.status ==='true' ? true : false, hasAC: values.hasAC ==='true' ? true : false })
+      .then(async () => {
+        toast.success("Bus added successfully");
+        await callBack();
+
+        setLogoUrl(null);
+        onHide();
+      })
+      .catch(() => toast.error("Oops! something went wrong"))
+      .finally(() => setSaving(false))
     // }, 2000);
-    setSaving(!saving);
+    
   };
 
   return (
@@ -65,26 +143,218 @@ export const AddBusModal = ({ show, onHide, callBack, id, name }) => {
           <div className="mb-4">
             <label
               className="block mb-2 text-sm font-bold text-gray-700"
-              htmlFor="vehicle"
+              htmlFor="type"
             >
-              Vehicle Number
+              Bus type
+            </label>
+            <select
+              className="block w-full px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline"
+              value={values.type || "true"}
+              onChange={handleInputChange}
+              name="type"
+            >
+              <option value="">select type</option>
+              {busType.map((type) => (
+                <option value={type.value}>{type.text}</option>
+              ))}
+            </select>
+          </div>
+          <div className="mb-4">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="class"
+            >
+              Bus class
+            </label>
+            <select
+              className="block w-full px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline"
+              value={values.clas}
+              onChange={handleInputChange}
+              name="clas"
+            >
+              <option value="">select class</option>
+              {busClass.map((type) => (
+                <option value={type.value}>{type.text}</option>
+              ))}
+            </select>
+          </div>
+          <div className="mb-4">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="route"
+            >
+              Route
+            </label>
+            <select
+              className="block w-full px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline"
+              value={values.route || "true"}
+              onChange={handleInputChange}
+              name="route"
+            >
+              <option value="">select a route</option>
+          {routes?.map((item) => (
+            <option key={item._id} value={item._id}>{item.name}</option>
+              ))}
+            </select>
+          </div>
+          <div className="mb-4">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="time"
+            >
+              Depature Time
             </label>
             <input
               className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-              id="vehicle"
-              type="text"
-              placeholder="ENU-190"
-              value={values.vehicleNo}
+              id="time"
+              type="time"
+              value={values.departureTime}
               onChange={handleInputChange}
-              name="vehicleNo"
+              name="departureTime"
+            />
+          </div>
+          <div className="mb-4 w">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="date"
+            >
+              Depature Date
+            </label>
+            
+            <DatePicker containerClassName=' w-full' inputClass='w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline' multiple value={departureDate} onChange={setDepartureDates} />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="estimated-time"
+            >
+              expected Arrival Time
+            </label>
+            <input
+              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              id="estimated-time"
+              type="text"
+              value={values.expectedArrival}
+              onChange={handleInputChange}
+              name="expectedArrival"
             />
           </div>
           <div className="mb-4">
             <label
               className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="numberofseats"
+            >
+              number Of Seats
+            </label>
+            <input
+              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              id="numberofseats"
+              type="number"
+              value={values.numberOfSeats}
+              onChange={handleInputChange}
+              name="numberOfSeats"
+            />
+          </div>
+          {/* <div className="mb-4">
+            <label
+              className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
+              htmlFor="availableseat"
+            >
+              Available Seat
+            </label>
+
+            <select
+              className="block w-full px-4 py-3 pr-8 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
+              id="availableseat"
+              value=""
+              name="availableSeats"
+              onChange={(e) => {
+                handleSelectSeat(e, "available");
+                // handlePrice(e.target.value)
+              }}
+            >
+              <option value="" disabled={true} hidden={true}>
+                {" "}
+                select Avalable seats
+              </option>
+              {!values.numberOfSeats || !values.numberOfSeats.length ? (
+                <option value={""} disabled={true}>
+                  No Seat Available
+                </option>
+              ) : (
+                // renderSeats([...Array(Number(values.numberOfSeats)).keys()])
+                [...Array(Number(values.numberOfSeats)).keys()].map((_, i) => (
+                  <option key={i} value={i + 1}>
+                    {i + 1}
+                  </option>
+                ))
+              )}
+            </select>
+            {values.availableSeats.length
+              ? values.availableSeats.map((item, i) => (
+                  <span
+                    onClick={() => deleteSeat(i)}
+                    className="px-2 mr-1 text-sm text-white bg-blue-500 rounded-md cursor-pointer"
+                    key={i}
+                  >
+                    {item}
+                  </span>
+                ))
+              : ""}
+          </div> */}
+          <div className="mb-4">
+            <label
+              className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
+              htmlFor="occupiedseat"
+            >
+              occupied Seat
+            </label>
+
+            <select
+              className="block w-full px-4 py-3 pr-8 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
+              id="occupiedseat"
+              value=""
+              name="occupiedSeat"
+              onChange={(e) => {
+                handleSelectSeat(e, "occupied");
+                // handlePrice(e.target.value)
+              }}
+            >
+              <option value="" disabled={true} hidden={true}>
+                {" "}
+                select occupied seats
+              </option>
+              {!values.numberOfSeats || !values.numberOfSeats.length ? (
+                <option value={""} disabled={true}>
+                  No Seat Occupied
+                </option>
+              ) : (
+                [...Array(Number(values.numberOfSeats)).keys()].map((_, i) => (
+                  <option key={i} value={i + 1}>
+                    {i + 1}
+                  </option>
+                ))
+              )}
+            </select>
+            {values.occupiedSeat.length
+              ? values.occupiedSeat.map((item, i) => (
+                  <span
+                    onClick={() => deleteSeat(i)}
+                    className="px-2 mr-1 text-sm text-white bg-blue-500 rounded-md cursor-pointer"
+                    key={i}
+                  >
+                    {item}
+                  </span>
+                ))
+              : ""}
+          </div>
+
+          <div className="mb-4">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
               htmlFor="logo"
             >
-               Vehicle Image
+              Bus Image
             </label>
             <input
               className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
@@ -98,53 +368,99 @@ export const AddBusModal = ({ show, onHide, callBack, id, name }) => {
           <div className="mb-4">
             <label
               className="block mb-2 text-sm font-bold text-gray-700"
-              htmlFor="model"
+              htmlFor="price"
             >
-             Vehicle Model
+              Price
             </label>
             <input
               className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-              id="model"
+              id="price"
               type="text"
-              placeholder="01934EC"
-              value={values.vehicleModel}
+              placeholder="20000"
+              value={values.price}
               onChange={handleInputChange}
-              name="vehicleModel"
+              name="price"
             />
           </div>
           <div className="mb-4">
             <label
-              className="block mb-2 text-sm font-bold text-gray-700"
-              htmlFor="vehicleBrand"
+              className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
+              htmlFor="arrivalTerminal"
             >
-              Vehicle Brand
+              Select Arrival Terminals
             </label>
-            <input
-              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-              id="vehicleBrand"
-              type="text"
-              placeholder="Toyota"
-              value={values.vehicleBrand}
+
+            <select
+              className="block w-full px-4 py-2 pr-8 mb-1 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline"
+              value={values.arrivalTerminal}
+              name="arrivalTerminal"
               onChange={handleInputChange}
-              name="vehicleBrand"
-            />
+            >
+              <option value="" disabled={true} hidden={true}>
+                {" "}
+                select terminal
+              </option>
+              {!terminals || !terminals.length ? (
+                <option value={""} disabled={true}>
+                  No Terminal Available
+                </option>
+              ) : (
+                terminals?.map((terminal, i) => (
+                  <option key={i} value={terminal?._id}>
+                    {terminal?.city} {terminal?.locationCode}
+                  </option>
+                ))
+              )}
+            </select>
           </div>
           <div className="mb-4">
             <label
-              className="block mb-2 text-sm font-bold text-gray-700"
-              htmlFor="numberOfSeats"
+              className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
+              htmlFor="departureTerminal"
             >
-             Number of Seat
+              Select Depature Terminals
             </label>
-            <input
-              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-              id="numberOfSeats"
-              type="number"
-              placeholder="numberOfSeats"
-              value={values.numberOfSeats}
+
+            <select
+              className="block w-full px-4 py-2 pr-8 mb-1 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline"
+              value={values.departureTerminal}
+              name="departureTerminal"
               onChange={handleInputChange}
-              name="numberOfSeats"
-            />
+            >
+              <option value="" disabled={true} hidden={true}>
+                {" "}
+                select terminal
+              </option>
+              {!terminals || !terminals.length ? (
+                <option value={""} disabled={true}>
+                  No Terminal Available
+                </option>
+              ) : (
+                terminals?.map((terminal, i) => (
+                  <option key={i} value={terminal?._id}>
+                    {terminal?.city} {terminal?.locationCode}
+                  </option>
+                ))
+              )}
+            </select>
+          </div>
+
+          <div className="mb-4">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="hasac"
+            >
+              Has AC
+            </label>
+            <select
+              className="block w-full px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline"
+              value={values.hasAC}
+              onChange={handleInputChange}
+              name="hasAC"
+            >
+              <option value={true}>true</option>
+              <option value={false}>false</option>
+            </select>
           </div>
 
           <div className="mb-4">
@@ -156,12 +472,12 @@ export const AddBusModal = ({ show, onHide, callBack, id, name }) => {
             </label>
             <select
               className="block w-full px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline"
-              value={values.status || "true"}
+              value={values.status}
               onChange={handleInputChange}
               name="status"
             >
-              <option value="true">true</option>
-              <option value="false">false</option>
+               <option value={true}>true</option>
+              <option value={false}>false</option>
             </select>
           </div>
         </div>

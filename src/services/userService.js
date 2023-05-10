@@ -1,7 +1,8 @@
 import { gql } from "@apollo/client";
 import client from "../apollo-client";
 
-export const getAllUsers = async (page = 1, size = 10) => {
+export const getAllUsers = async (event) => {
+  const { page, size } = event;
   const { data, errors } = await client.query({
     query: gql`
       query users($page: Int, $size: Int) {
@@ -21,8 +22,18 @@ export const getAllUsers = async (page = 1, size = 10) => {
             _id
             bookings {
               _id
-              from
-              to
+              from {
+                _id
+                city
+                locationName
+                address
+              }
+              to {
+                _id
+                locationName
+                address
+                city
+              }
               user {
                 _id
                 lastName
@@ -72,8 +83,18 @@ export const getSingleUsers = async (userId) => {
             seatNumbers
             bookingDate
             departureDate
-            to
-            from
+            from {
+              _id
+              city
+              locationName
+              address
+            }
+            to {
+              _id
+              locationName
+              address
+              city
+            }
           }
         }
       }

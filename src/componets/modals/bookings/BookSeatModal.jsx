@@ -7,6 +7,7 @@ import Select from "react-select";
 
 
 export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
+  console.log(location, 'location');
     const userData = JSON.parse(localStorage.getItem("userData"));
     const userId = userData?.authenticate?.user?._id;
     const date = new Date();
@@ -43,6 +44,16 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    // if(name === 'from'){
+    //   if(value === values.to) {
+    //     return
+    //   }
+    // }
+    // if(name === 'to'){
+    //   if(value === values.from) {
+    //     return
+    //   }
+    // }
     setValues({
       ...values,
       [name]: value,
@@ -122,31 +133,34 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
             gender: "",
           },
         ])
-        await fetchAllBookings()
+        await callBack()
       })
-      .catch(() => toast.error("Oops! something went wrong"));
+      .catch(() => toast.error("Oops! something went wrong"))
+      .finally(() => onHide())
   };
-  const getTrips = async () => {
+  
+  const getTrips = async (filters) => {
     setIsRouting(true)
     // moment(values.departureDate).format(" MMM Do, YYYY | h:mm a")
-    const {data} = await getAllTrips({page: 1, size: 10000, filters: {to: values.to, from: values.from, date: "12 may 2020 8am"}})
-    console.log(data.getTrips.nodes, 'trips');
+    const {data} = await getAllTrips({page: 1, size: 10000, filters: {...filters}})
+    console.log(data.getTrips?.nodes, 'trips');
     setRoutes(data.getTrips.nodes)
     const busesArray = []
-    data.getTrips.nodes.forEach((item) => {
-      if(item.buses || item.buses?.length){
-        item.buses.forEach((el) => {
+    data.getTrips?.nodes?.forEach((el) => {
+      // if(item.buses || item.buses?.length){
+        // item.forEach((el) => {
           busesArray.push({
             _id: el._id,
-            brand: el.vehicleBrand,
-            number: el.vehicleNo,
-            transporter: el.transporter.name,
-            price: item.price,
-            availableSeats: el.availableSeats,
-            transporterId: el.transporter._id
+            type: el.type,
+            class: el.class,
+            transporter: el.companyId.name,
+            price: el.price || '10000',
+            availableSeats: el.availableSeats?.map((item) => Number(item)),
+            transporterId: el?.companyId?._id,
+            depatureTime: el.departureTime
           })
-        })
-      }
+        // })
+      // }
     })
     setBuses(busesArray)
     setIsRouting(false)
@@ -168,14 +182,17 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
 
   useEffect(() => {
    if(values.from && values.to && values.departureDate ){
-    getTrips()
+    if(values.from === values.to){
+      return
+    }
+    getTrips({to: values?.to, from: values?.from, date: values.departureDate})
    }
     
   }, [values.from, values.to, values.departureDate]);
 
   useEffect(() => {
     const bus = buses?.find((item) => item._id === values.busId)
-    setSeats([1,2,3,4])
+    setSeats(bus?.availableSeats)
     // setSeats(bus?.availableSeats)
     setValues({
       ...values,
@@ -315,7 +332,7 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
                 >
                   <option value="" disabled={true} hidden={true}>
                     {" "}
-                    select route
+                    select Bus
                   </option>
                   {isRouting? (
                     <option value={""} disabled={true}>
@@ -323,13 +340,13 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
                     </option>
                   ) : !isRouting && (!buses || !buses.length) ? (
                     <option value={""} disabled={true}>
-                   No Route for the locations and date choosen
+                   No Bus for the locations and date choosen
                    </option>
                   ):
                   (
-                    buses?.map((route, i) => (
-                      <option key={route._id} value={route._id}>
-                      { route.number } { route.brand } By { route.transporter }
+                    buses?.map((bus, i) => (
+                      <option key={bus._id} value={bus._id}>
+                      { bus.type } { bus.class } By { bus.transporter } leaving {bus.depatureTime}
                     </option>
                     ))
                   )}

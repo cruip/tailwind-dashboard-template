@@ -10,8 +10,18 @@ export const getAllBookings = async (event) => {
           nodes {
             _id
             seatNumbers
-            to
-            from
+            from {
+              _id
+              city
+              locationName
+              address
+            }
+            to {
+              _id
+              locationName
+              address
+              city
+            }
             amount
             phone
             email
@@ -161,39 +171,42 @@ export const getAllTrips = async (event) => {
     query: gql`
       query trips($page: Int, $size: Int, $filters: TripFilter!) {
         getTrips(page: $page, size: $size, filters: $filters) {
-          pageInfo {
-            totalItems
-          }
-
           nodes {
             _id
-            name
-            price
-            departureTime
-            from {
+            class
+            type
+            route {
               _id
-              locationName
-              city
-            }
-            to {
-              _id
-              locationName
-              city
-            }
-            buses {
-              _id
-              vehicleNo
-              busImage
-              vehicleModel
-              vehicleBrand
-              numberOfSeats
-              availableSeats
-              transporter {
+              name
+              distance
+              expectedTime
+              from {
                 _id
-                name
+                city
+                locationName
                 address
-                logo
               }
+              to {
+                _id
+                locationName
+                address
+                city
+              }
+            }
+            departureDate
+            departureTime
+            price
+            busImage
+            numberOfSeats
+            availableSeats
+            occupiedSeat
+            departureTerminal
+            arrivalTerminal
+            status
+            hasAC
+            companyId {
+              _id
+              name
             }
           }
         }
