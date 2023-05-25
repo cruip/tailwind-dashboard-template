@@ -8,3 +8,12 @@ export const busClassEnum = {
   premium: "premium",
   normal: "normal",
 };
+
+export const BusCompany = {
+  GUO: "guo",
+  GOG: "gog",
+  EKESON: "ekeson",
+  LIBRA: "libra",
+  THE_YOUNG: "young",
+  PEACE_MASS_TRANSPORT: "peace",
+};

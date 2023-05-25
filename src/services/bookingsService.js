@@ -220,3 +220,26 @@ export const getAllTrips = async (event) => {
   });
   return { data, loading, errors };
 };
+
+export const getBookingStat = async (_ = "") => {
+  const { data, errors, loading } = await client.query({
+    query: gql`
+      query bookStat($_: String) {
+        getBookingStatistics(_: $_) {
+          _id
+          todayTotal
+          weekTotal
+          monthTotal
+          totalAmountToday
+          totalAmountWeekly
+          totalAmountYearly
+          totalAmountMonthly
+        }
+      }
+    `,
+    variables: {
+      _,
+    },
+  });
+  return { data, loading, errors };
+};

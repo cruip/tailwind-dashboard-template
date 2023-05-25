@@ -9,7 +9,8 @@ export const CreateRouteModal = ({show, onHide, terminals}) => {
         to: '',
         from: '',
         estimateArrival: '',
-        name: ''
+        name: '',
+        country: ''
     })
     const [saving, setSaving] = useState(false);
 
@@ -71,6 +72,31 @@ export const CreateRouteModal = ({show, onHide, terminals}) => {
             onChange={handleInputChange}
             name="distance"
           />
+        </div>
+        <div className="mb-4">
+          <label
+            className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
+            htmlFor="country"
+          >
+            Country
+          </label>
+
+          <select
+            className="block w-full px-4 py-2 pr-8 mb-1 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline"
+            value={values.country}
+            name="country"
+            onChange={handleInputChange}
+          >
+            <option value="" disabled={true} hidden={true}>
+              {" "}
+              select Country
+            </option>
+            <option value="Nigeria">
+              {" "}
+              Nigeria
+            </option>
+            
+          </select>
         </div>
         <div className="mb-4">
           <label
