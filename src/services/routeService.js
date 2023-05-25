@@ -106,7 +106,7 @@ export const addRoute = async (event) => {
 };
 
 export const createRoute = async (event) => {
-  const { name, from, to, dstance, expectedTime } = event;
+  const { name, from, to, dstance, expectedTime, country } = event;
   const { data, errors } = await client.mutate({
     mutation: gql`
       mutation createRoute(
@@ -115,6 +115,7 @@ export const createRoute = async (event) => {
         $to: String
         $distance: String
         $expectedTime: String
+        $country: String
       ) {
         addRoute(
           name: $name
@@ -122,6 +123,7 @@ export const createRoute = async (event) => {
           to: $to
           distance: $distance
           expectedTime: $expectedTime
+          country: $country
         ) {
           _id
           name
@@ -135,6 +137,7 @@ export const createRoute = async (event) => {
       to,
       dstance,
       expectedTime,
+      country,
     },
   });
   return { data, errors };

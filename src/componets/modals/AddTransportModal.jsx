@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Modal from "../../partials/modal/Modal";
 import { ToastContainer, toast } from "react-toastify";
 import { addTransport } from "../../services/transporterService";
+import { enumToArray } from "../../utils/helper";
+import { BusCompany } from "../../utils/enum";
 
 export const AddTransportModal = ({ show, onHide, callBack, terminals }) => {
   const [saving, setSaving] = useState(false);
@@ -16,7 +18,10 @@ export const AddTransportModal = ({ show, onHide, callBack, terminals }) => {
     status: "true",
     // transporterId: 'guo',
     terminals: [],
+    transporterCode: ''
   });
+
+  const busCode = enumToArray(BusCompany);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -72,7 +77,6 @@ export const AddTransportModal = ({ show, onHide, callBack, terminals }) => {
       ...values,
       status: "true",
       logo: logoUrl,
-      transporterCode: "guo",
     })
       .then(async () => {
         toast.success("Transport added successfully");
@@ -85,6 +89,8 @@ export const AddTransportModal = ({ show, onHide, callBack, terminals }) => {
           contactPhoneNumber: "",
           logo: "",
           status: "true",
+          transporterCode: '',
+          terminals: []
         });
         setLogoUrl(null);
         onHide();
@@ -179,6 +185,26 @@ export const AddTransportModal = ({ show, onHide, callBack, terminals }) => {
                   </span>
                 ))
               : ""}
+          </div>
+
+          <div className="mb-4">
+            <label
+              className="block mb-2 text-sm font-bold text-gray-700"
+              htmlFor="transporterCode"
+            >
+              Transporter Code
+            </label>
+            <select
+              className="block w-full px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline"
+              value={values.transporterCode}
+              onChange={handleInputChange}
+              name="transporterCode"
+            >
+              <option value="">select transporter code</option>
+              {busCode.map((type) => (
+                <option value={type.text}>{type.value}</option>
+              ))}
+            </select>
           </div>
 
           {/* <div className="mb-4">

@@ -263,3 +263,24 @@ export const ActivateDeactivateTransport = async (event) => {
   });
   return { data, errors };
 };
+
+export const getPopularTransporter = async (_ = "") => {
+  const { data, errors, loading } = await client.query({
+    query: gql`
+      query getPopularCompany($_: String) {
+        getPopularCompany(_: $_) {
+          _id
+          dryvAfricaEarning
+          totalCompanyEarning
+          companyName
+          soldTicketCount
+          companyCode
+        }
+      }
+    `,
+    variables: {
+      _,
+    },
+  });
+  return { data, loading, errors };
+};
