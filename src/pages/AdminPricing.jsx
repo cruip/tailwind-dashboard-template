@@ -9,31 +9,31 @@ import { SVGIcon } from "../partials/icons/SvgIcon";
 const Datas = [
   {
     id: 1,
-    location: 'Jibowu park Lagos',
-    destination: 'Old park Enugu',
-    Company_Name: 'Ifesinachi',
-    price: '15,000',
+    location: "Jibowu park Lagos",
+    destination: "Old park Enugu",
+    Company_Name: "Ifesinachi",
+    price: "15,000",
   },
   {
     id: 2,
-    location: 'Jibowu park Lagos',
-    destination: 'Old park Enugu',
-    Company_Name: 'Ifesinachi',
-    price: '15,000',
+    location: "Jibowu park Lagos",
+    destination: "Old park Enugu",
+    Company_Name: "Ifesinachi",
+    price: "15,000",
   },
   {
     id: 3,
-    location: 'Jibowu park Lagos',
-    destination: 'Old park Enugu',
-    Company_Name: 'Ifesinachi',
-    price: '15,000',
+    location: "Jibowu park Lagos",
+    destination: "Old park Enugu",
+    Company_Name: "Ifesinachi",
+    price: "15,000",
   },
   {
     id: 4,
-    location: 'Jibowu park Lagos',
-    destination: 'Old park Enugu',
-    Company_Name: 'Ifesinachi',
-    price: '15,000',
+    location: "Jibowu park Lagos",
+    destination: "Old park Enugu",
+    Company_Name: "Ifesinachi",
+    price: "15,000",
   },
 ];
 
@@ -54,12 +54,12 @@ const AdminPricing = () => {
     setCurrentPage((prevState) => prevState + 1);
   };
   const toggleChangePriceModal = () => {
-    setChangePriceModal(!changePriceModal)
+    setChangePriceModal(!changePriceModal);
   };
 
   const toggleTempPriceModal = () => {
-   setTempPriceModal(!tempPriceModal)
-  }
+    setTempPriceModal(!tempPriceModal);
+  };
   const tableHeader = [
     "Location",
     "Destination",
@@ -79,12 +79,11 @@ const AdminPricing = () => {
         <td>
           <DropDown
             links={[
-              
               {
                 name: "Change Price",
                 isLink: false,
                 onclick: () => {
-                    toggleChangePriceModal();
+                  toggleChangePriceModal();
                 },
                 link: "",
               },
@@ -106,17 +105,18 @@ const AdminPricing = () => {
   return (
     <Page>
       <section>
-        
-        <div className="gap-8 columns-2">
-          <Card
-            name={"Active Transport Companies"}
-            description="Total Number of Active Transport Companies"
-          >
-            <h3 className="mt-5 text-right">
-              <span className="text-xl font-semibold text-sky-800">1000</span>{" "}
-              Companies
-            </h3>
-          </Card>
+        <div className="gap-8 columns-1 md:columns-2">
+          <div className="mb-6">
+            <Card
+              name={"Active Transport Companies"}
+              description="Total Number of Active Transport Companies"
+            >
+              <h3 className="mt-5 text-right">
+                <span className="text-xl font-semibold text-sky-800">1000</span>{" "}
+                Companies
+              </h3>
+            </Card>
+          </div>
           <Card
             name={"Inactive Transport Companies"}
             description="Total Number of Inactive Transport Companies"
@@ -149,7 +149,7 @@ const AdminPricing = () => {
                   <input
                     type="text"
                     id="search"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="ml-1 md:ml-0 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full md:pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Search company name"
                     required
                   />
@@ -162,7 +162,7 @@ const AdminPricing = () => {
                 </div>
               </div>
             </div>
-            <div className="mt-10 ">
+            <div className="overflow-x-auto mt-10 ">
               <Table
                 data={data}
                 onNext={onNextPage}
