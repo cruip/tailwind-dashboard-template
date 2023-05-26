@@ -222,7 +222,7 @@ const TransportCompanies = () => {
             Add Company
           </button>
         </div>
-        <div className="gap-8 columns-1 md:columns-2">
+        <div className="gap-8">
           <div className="mb-6">
             <Card
               name={"Active Transport Companies"}
@@ -291,7 +291,7 @@ const TransportCompanies = () => {
                 </div>
               </div>
             </div>
-            <div className="overflow-x-auto mt-10 ">
+            <div className="mt-10 ">
               <Table
                 data={datas}
                 onNext={onNextPage}

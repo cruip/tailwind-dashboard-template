@@ -5,7 +5,11 @@ import { Table } from "../partials/table";
 import DropDown from "../partials/DropDown";
 import { SVGIcon } from "../partials/icons/SvgIcon";
 import { getAllUsers } from "../services/userService";
-import { ActivateCustomerModal, DeActivateCustomerModal, DeleteCustomerModal } from "../componets/modals";
+import {
+  ActivateCustomerModal,
+  DeActivateCustomerModal,
+  DeleteCustomerModal,
+} from "../componets/modals";
 
 const Customers = () => {
   const [limit, setLimit] = useState(10);
@@ -13,47 +17,50 @@ const Customers = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [tableLoad, setTableLoad] = useState(true);
   const [data, setData] = useState(null);
-  const [activeUser, setActiveUser] = useState(0)
-  const [totalUsers, setTotalUsers] = useState(0)
+  const [activeUser, setActiveUser] = useState(0);
+  const [totalUsers, setTotalUsers] = useState(0);
   const [deactivateModal, setDeactivateModal] = useState(false);
   const [activateModal, setActivateModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [userId, setUserId] = useState("");
 
-  const fetchAllUser = async(size=10, page) => {
-    const {data, loading} = await getAllUsers({size, page})
-    setTableLoad(false)
-    setData(data?.getUsers?.nodes)
-    setCurrentPage(data?.getUsers?.pageInfo?.currentPage)
-    setTotalPages(Math.ceil(Number(data?.getUsers?.pageInfo?.totalItems)/limit))
-  }
+  const fetchAllUser = async (size = 10, page) => {
+    const { data, loading } = await getAllUsers({ size, page });
+    setTableLoad(false);
+    setData(data?.getUsers?.nodes);
+    setCurrentPage(data?.getUsers?.pageInfo?.currentPage);
+    setTotalPages(
+      Math.ceil(Number(data?.getUsers?.pageInfo?.totalItems) / limit)
+    );
+  };
 
   const fetchUnpaginatedUser = async () => {
-    const { data} = await getAllUsers(1, 100000);
-    const activeUsers = data?.getUsers?.nodes?.filter((item) => item.isEmailVerified)
-    setActiveUser(activeUsers?.length)
-    setTotalUsers(data?.getUsers?.nodes?.length)
+    const { data } = await getAllUsers(1, 100000);
+    const activeUsers = data?.getUsers?.nodes?.filter(
+      (item) => item.isEmailVerified
+    );
+    setActiveUser(activeUsers?.length);
+    setTotalUsers(data?.getUsers?.nodes?.length);
   };
 
   const onFilter = () => {
-    if(!searchQuery) fetchAllUser();
-    if (searchQuery ) {
-      const arrayData = data?.filter((item) => { 
+    if (!searchQuery) fetchAllUser();
+    if (searchQuery) {
+      const arrayData = data?.filter((item) => {
         if (
           item.firstName
             .toLowerCase()
             .trim()
-            .includes(searchQuery.toLowerCase().trim() )
-            || item.lastName
+            .includes(searchQuery.toLowerCase().trim()) ||
+          item.lastName
             .toLowerCase()
             .trim()
-            .includes(searchQuery.toLowerCase().trim() )
+            .includes(searchQuery.toLowerCase().trim())
         ) {
-          
-          return item
+          return item;
         }
-        return false
+        return false;
       });
       setData(arrayData);
     }
@@ -71,8 +78,8 @@ const Customers = () => {
   };
 
   const toggleDeleteModal = () => {
-    setDeleteModal(!deleteModal)
-  }
+    setDeleteModal(!deleteModal);
+  };
 
   const toggleActivateModal = () => {
     setActivateModal(!activateModal);
@@ -80,16 +87,16 @@ const Customers = () => {
 
   // useEffect(() => {
   // }, [])
-  
-  useEffect(() => {
-    fetchAllUser(10, currentPage)
-    fetchUnpaginatedUser()
-  }, [currentPage])
 
   useEffect(() => {
-    onFilter()
-  }, [searchQuery])
-  
+    fetchAllUser(10, currentPage);
+    fetchUnpaginatedUser();
+  }, [currentPage]);
+
+  useEffect(() => {
+    onFilter();
+  }, [searchQuery]);
+
   const tableHeader = [
     "Customer Name",
     "Booking Stat",
@@ -101,9 +108,11 @@ const Customers = () => {
   const tableRow = (data) => {
     return (
       <tr key={data?._id} className="border-b-2 border-slate-200">
-        <td>{data?.firstName || ''} {data?.lastName || ''}</td>
-        <td>{data?.booking?.length ? 'has bookings' : 'has no booking'}</td>
-        <td >{data?.phoneNo}</td>
+        <td>
+          {data?.firstName || ""} {data?.lastName || ""}
+        </td>
+        <td>{data?.booking?.length ? "has bookings" : "has no booking"}</td>
+        <td>{data?.phoneNo}</td>
         <td>{data?.email}</td>
 
         <td>
@@ -120,7 +129,7 @@ const Customers = () => {
                 isLink: false,
                 onclick: () => {
                   toggleDeleteModal();
-                  setUserId(data?._id)
+                  setUserId(data?._id);
                 },
                 link: "",
               },
@@ -150,23 +159,28 @@ const Customers = () => {
   return (
     <Page>
       <section>
-       
-        <div className="gap-8 columns-2">
-          <Card
-            name={"Active Customers"}
-            description="Total Number of Customers with Verified email"
-          >
-            <h3 className="mt-5 text-right">
-              <span className="text-xl font-semibold text-sky-800">{activeUser || 0}</span>{" "}
-              Customers
-            </h3>
-          </Card>
+        <div className="gap-8">
+          <div className="mb-6">
+            <Card
+              name={"Active Customers"}
+              description="Total Number of Customers with Verified email"
+            >
+              <h3 className="mt-5 text-right">
+                <span className="text-xl font-semibold text-sky-800">
+                  {activeUser || 0}
+                </span>{" "}
+                Customers
+              </h3>
+            </Card>
+          </div>
           <Card
             name={"Total Customers"}
             description="Total Number of Customers"
           >
             <h3 className="mt-5 text-right ">
-              <span className="text-xl font-semibold text-sky-800">{totalUsers || 0}</span>{" "}
+              <span className="text-xl font-semibold text-sky-800">
+                {totalUsers || 0}
+              </span>{" "}
               Customers
             </h3>
           </Card>
@@ -177,7 +191,6 @@ const Customers = () => {
         <div className="col-12">
           <Card description={"Manage Customer"} width="w-full">
             <div className="flex items-center justify-end w-full ">
-              
               <div className="flex items-center">
                 <label html="search" className="sr-only">
                   Search customer name
@@ -220,9 +233,13 @@ const Customers = () => {
         </div>
       </section>
       {/* <DeActivateCustomerModal  show={deactivateModal} onHide={toggleDeactivateModal} id={userId} callBack={fetchAllUser}/> */}
-      <DeleteCustomerModal  show={deleteModal} onHide={toggleDeleteModal} id={userId} callBack={fetchAllUser}/>
+      <DeleteCustomerModal
+        show={deleteModal}
+        onHide={toggleDeleteModal}
+        id={userId}
+        callBack={fetchAllUser}
+      />
       {/* <ActivateCustomerModal  show={activateModal} onHide={toggleActivateModal} id={userId} callBack={fetchAllUser}/> */}
-      
     </Page>
   );
 };

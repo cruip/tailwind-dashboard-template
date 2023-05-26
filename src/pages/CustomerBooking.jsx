@@ -66,7 +66,6 @@ const CustomerBooking = () => {
   };
   const fetchLocations = async () => {
     const { data } = await getTerminals();
-    console.log(data, "terminals");
     setLocation(data?.getTerminals?.nodes);
   };
 
@@ -143,9 +142,11 @@ const CustomerBooking = () => {
         {/* <td>{getRoute(data?.route)}</td> */}
         <td>N{data?.amount}</td>
         <td className="multiple-span">
-          {data?.seatNumbers?.map((item) => (
-            <span key={item}>{item}</span>
-          ))}
+          <p className="w-14 md:w-20">
+            {data?.seatNumbers?.map((item) => (
+              <span key={item}>{item}</span>
+            ))}
+          </p>
         </td>
         <td>{data?.status ? data?.status : "Unknown"}</td>
 
@@ -237,7 +238,7 @@ const CustomerBooking = () => {
       <section className="mt-10 ">
         <div className="col-12">
           <Card description={"Manage Booking"} width="w-full">
-            <div className="flex items-center justify-end w-full ">
+            <div className="flex items-center justify-start md:justify-end w-full ">
               <div className="flex items-center">
                 <label html="search" className="sr-only">
                   Search
@@ -259,7 +260,7 @@ const CustomerBooking = () => {
                 </div>
               </div>
             </div>
-            <div className="mt-10 overflow-x-auto">
+            <div className="mt-10">
               <Table
                 data={data}
                 onNext={onNextPage}

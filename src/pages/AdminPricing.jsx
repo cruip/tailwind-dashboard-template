@@ -162,7 +162,7 @@ const AdminPricing = () => {
                 </div>
               </div>
             </div>
-            <div className="overflow-x-auto mt-10 ">
+            <div className="mt-10 ">
               <Table
                 data={data}
                 onNext={onNextPage}
