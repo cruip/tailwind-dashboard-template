@@ -185,7 +185,6 @@ const CustomerBooking = () => {
                     name: "View Invoice",
                     isLink: false,
                     onclick: () => {
-                      console.log("lol");
                       // toggleConfirmModal();
                     },
                   },
@@ -209,20 +208,18 @@ const CustomerBooking = () => {
             Book Seat
           </button>
         </div>
-        <div className="gap-8 columns-1 md:columns-2">
-          <div className="mb-6">
-            <Card
-              name={"Total Seat Booked"}
-              description="Total Number of booked seats"
-            >
-              <h3 className="mt-5 text-right">
-                <span className="text-xl font-semibold text-sky-800">
-                  {data?.length}
-                </span>{" "}
-                Seats
-              </h3>
-            </Card>
-          </div>
+        <div className=" grid grid-cols-1 md:grid-cols-2 gap-4 ">
+          <Card
+            name={"Total Seat Booked"}
+            description="Total Number of booked seats"
+          >
+            <h3 className="mt-5 text-right">
+              <span className="text-xl font-semibold text-sky-800">
+                {data?.length}
+              </span>{" "}
+              Seats
+            </h3>
+          </Card>
           <Card
             name={"Total Unbooked Seat"}
             description="Total Number of Unbooked seats"
@@ -238,7 +235,7 @@ const CustomerBooking = () => {
       <section className="mt-10 ">
         <div className="col-12">
           <Card description={"Manage Booking"} width="w-full">
-            <div className="flex items-center justify-start md:justify-end w-full ">
+            <div className="flex items-center justify-start md:justify-end w-full mt-2 ">
               <div className="flex items-center">
                 <label html="search" className="sr-only">
                   Search

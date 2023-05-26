@@ -5,9 +5,9 @@ export const Card = ({ name, description, children, width }) => {
     <div
       className={`${
         width ? width : "max-w-5xl"
-      } transition ease-in-out px-10 overflow-auto rounded-md shadow-lg hover:shadow-xl cursor-pointer bg-slate-50 columns-1 md:columns-2 py-7`}
+      } transition ease-in-out px-10 overflow-auto rounded-md shadow-lg hover:shadow-xl cursor-pointer bg-slate-50 columns-1 py-7`}
     >
-      <div className="w-full ">
+      <div className="w-full">
         {name && (
           <h4 className="mb-4 text-2xl font-bold text-blue-800">{name}</h4>
         )}

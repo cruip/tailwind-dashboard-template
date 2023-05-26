@@ -159,20 +159,18 @@ const Customers = () => {
   return (
     <Page>
       <section>
-        <div className="gap-8">
-          <div className="mb-6">
-            <Card
-              name={"Active Customers"}
-              description="Total Number of Customers with Verified email"
-            >
-              <h3 className="mt-5 text-right">
-                <span className="text-xl font-semibold text-sky-800">
-                  {activeUser || 0}
-                </span>{" "}
-                Customers
-              </h3>
-            </Card>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Card
+            name={"Active Customers"}
+            description="Total Number of Customers with Verified email"
+          >
+            <h3 className="mt-auto text-right">
+              <span className="text-xl font-semibold text-sky-800">
+                {activeUser || 0}
+              </span>{" "}
+              Customers
+            </h3>
+          </Card>
           <Card
             name={"Total Customers"}
             description="Total Number of Customers"
@@ -190,7 +188,7 @@ const Customers = () => {
       <section className="mt-10 ">
         <div className="col-12">
           <Card description={"Manage Customer"} width="w-full">
-            <div className="flex items-center justify-end w-full ">
+            <div className="flex items-center justify-end w-full mt-2 ">
               <div className="flex items-center">
                 <label html="search" className="sr-only">
                   Search customer name

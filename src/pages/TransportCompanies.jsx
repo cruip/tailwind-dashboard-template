@@ -222,20 +222,18 @@ const TransportCompanies = () => {
             Add Company
           </button>
         </div>
-        <div className="gap-8">
-          <div className="mb-6">
-            <Card
-              name={"Active Transport Companies"}
-              description="Total Number of Active Transport Companies"
-            >
-              <h3 className="mt-5 text-right">
-                <span className="text-xl font-semibold text-sky-800">
-                  {activeCompany || 0}
-                </span>{" "}
-                Companies
-              </h3>
-            </Card>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Card
+            name={"Active Transport Companies"}
+            description="Total Number of Active Transport Companies"
+          >
+            <h3 className="mt-5 text-right">
+              <span className="text-xl font-semibold text-sky-800">
+                {activeCompany || 0}
+              </span>{" "}
+              Companies
+            </h3>
+          </Card>
           <Card
             name={"Inactive Transport Companies"}
             description="Total Number of Inactive Transport Companies"
@@ -253,9 +251,9 @@ const TransportCompanies = () => {
       <section className="mt-10 ">
         <div className="col-12">
           <Card description={"Manage transport Company"} width="w-full">
-            <div className="flex items-center justify-between w-full mt-4">
-              <div className="flex items-center w-1/2">
-                <p className="mr-3 ">Filter By company Name:</p>
+            <div className="md:flex md:items-center md:justify-between w-full mt-4">
+              <div className="flex items-center w-100">
+                <p className="mr-3">Filter By company Name:</p>
                 <select
                   className="block w-1/2 px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline"
                   value={filterValue}
@@ -273,7 +271,7 @@ const TransportCompanies = () => {
                 <label html="search" className="sr-only">
                   Search company name
                 </label>
-                <div className="relative w-full">
+                <div className="relative w-full mt-2 md:mt-0">
                   <input
                     type="text"
                     id="search"
@@ -291,7 +289,7 @@ const TransportCompanies = () => {
                 </div>
               </div>
             </div>
-            <div className="mt-10 ">
+            <div className="mt-10">
               <Table
                 data={datas}
                 onNext={onNextPage}
