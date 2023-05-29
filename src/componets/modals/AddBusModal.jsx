@@ -24,7 +24,7 @@ export const AddBusModal = ({
     departureTime: "",
     // departureDate: [],
     expectedArrival: "",
-    numberOfSeats: "",
+    numberOfSeats: 0,
     availableSeats: [],
     occupiedSeat: [],
     // companyId: "",
@@ -44,7 +44,8 @@ export const AddBusModal = ({
     const { name, value } = e.target;
     let newAvailableSeat = values.availableSeats
     if(name === 'numberOfSeats'){
-       newAvailableSeat = [...Array(Number(values.numberOfSeats)).keys()].map((_, i) => ((i + 1).toString()))
+      //  newAvailableSeat = [...Array(Number(values.numberOfSeats)).keys()].map((_, i) => ((i + 1).toString()))
+      newAvailableSeat = [...Array(Math.max(0, values.numberOfSeats)).keys()].map((_, i) => (i + 1).toString())
 
     }
     setValues({
@@ -52,6 +53,7 @@ export const AddBusModal = ({
       [name]: value,
       availableSeats: newAvailableSeat
     });
+    console.log(values, 'values');
   };
 
 
@@ -91,10 +93,11 @@ export const AddBusModal = ({
 
   const deleteSeat = (ix) => {
     // values.seatNumbers.splice(ix, 1)
-    const seatno = values.availableSeats.filter((_, i) => i !== ix);
+    const seatno = values.occupiedSeat.filter((el) => el !== ix);
     setValues({
       ...values,
-      availableSeats: [...seatno],
+      occupiedSeat: [...seatno],
+      availableSeats: [...values.availableSeats, ix]
     });
   };
 
@@ -118,7 +121,12 @@ export const AddBusModal = ({
     // console.log(departureDate, 'date', newDepatureDate)
     // return
     if (Object.values(values).some((o) => o === "") && !logoUrl && !departureDate.length) return false;
+    if(values.departureTerminal === values.arrivalTerminal) {
+      toast.warn('you selected same terminal for depature and arrival, kindly change')
+      return;
+    }
     setSaving(true);
+    // console.log(values, 'see values');
     // setTimeout(() => {
     addBus({ ...values, busImage: logoUrl, companyId: id, departureDate: newDepatureDate, status: values.status ==='true' ? true : false, hasAC: values.hasAC ==='true' ? true : false })
       .then(async () => {
@@ -253,6 +261,7 @@ export const AddBusModal = ({
               value={values.numberOfSeats}
               onChange={handleInputChange}
               name="numberOfSeats"
+              min={0}
             />
           </div>
           {/* <div className="mb-4">
@@ -302,6 +311,9 @@ export const AddBusModal = ({
                 ))
               : ""}
           </div> */}
+
+          {/* occupied seats  */}
+          
           <div className="mb-4">
             <label
               className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
@@ -324,22 +336,22 @@ export const AddBusModal = ({
                 {" "}
                 select occupied seats
               </option>
-              {!values.numberOfSeats || !values.numberOfSeats.length ? (
+              {!values?.numberOfSeats || !values?.numberOfSeats.length ? (
                 <option value={""} disabled={true}>
                   No Seat Occupied
                 </option>
               ) : (
-                [...Array(Number(values.numberOfSeats)).keys()].map((_, i) => (
+                [...Array(Number(values?.numberOfSeats)).keys()].map((_, i) => (
                   <option key={i} value={i + 1}>
                     {i + 1}
                   </option>
                 ))
               )}
             </select>
-            {values.occupiedSeat.length
+            {values?.occupiedSeat.length
               ? values.occupiedSeat.map((item, i) => (
                   <span
-                    onClick={() => deleteSeat(i)}
+                    onClick={() => deleteSeat(item)}
                     className="px-2 mr-1 text-sm text-white bg-blue-500 rounded-md cursor-pointer"
                     key={i}
                   >
