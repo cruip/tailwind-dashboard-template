@@ -99,65 +99,65 @@ function DashboardCard01({ data }) {
           Sales
         </div>
 
-          <div className="py-2 bg-green-50">
-            <h2 className="mb-2 text-lg font-semibold text-slate-800">
-              Completed Booking
-            </h2>
+        <div className="py-2 bg-green-50">
+          <h2 className="mb-2 text-lg font-semibold text-slate-800">
+            Completed Booking
+          </h2>
 
-            <h2 className="font-semibold text-md text-slate-800">
-              Total: {data?.completed?.todayTotal}
-            </h2>
-            <div className="flex items-center">
-              <span>Amount:</span>
-              <div className="ml-2 mr-2 text-xl font-bold text-slate-800">
-                ${data?.completed?.totalAmountToday}
-              </div>
-              {/* <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
+          <h2 className="font-semibold text-md text-slate-800">
+            Total: {data?.completed?.todayTotal}
+          </h2>
+          <div className="flex items-center">
+            <span>Amount:</span>
+            <div className="ml-2 mr-2 text-xl font-bold text-slate-800">
+              #{data?.completed?.totalAmountToday}
+            </div>
+            {/* <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
                 +49%
               </div> */}
-            </div>
           </div>
-          <div className="py-2 mt-2 bg-yellow-50">
-            <h2 className="mb-2 text-lg font-semibold text-slate-800">
-              Pending Booking
-            </h2>
+        </div>
+        <div className="py-2 mt-2 bg-yellow-50">
+          <h2 className="mb-2 text-lg font-semibold text-slate-800">
+            Pending Booking
+          </h2>
 
-            <h2 className="font-semibold text-md text-slate-800">
-              Total: {data?.pending?.todayTotal}
-            </h2>
-            <div className="flex items-center">
-              <span>Amount:</span>
-              <div className="ml-2 mr-2 text-xl font-bold text-slate-800">
-                ${data?.pending?.totalAmountToday}
-              </div>
-              {/* <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
+          <h2 className="font-semibold text-md text-slate-800">
+            Total: {data?.pending?.todayTotal}
+          </h2>
+          <div className="flex items-center">
+            <span>Amount:</span>
+            <div className="ml-2 mr-2 text-xl font-bold text-slate-800">
+              #{data?.pending?.totalAmountToday}
+            </div>
+            {/* <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
                 +49%
               </div> */}
-            </div>
           </div>
-          <div className="py-2 mt-2 bg-red-50">
-            <h2 className="mb-2 text-lg font-semibold text-slate-800">
-              Cancelled Booking
-            </h2>
+        </div>
+        <div className="py-2 mt-2 bg-red-50">
+          <h2 className="mb-2 text-lg font-semibold text-slate-800">
+            Cancelled Booking
+          </h2>
 
-            <h2 className="font-semibold text-md text-slate-800">
-              Total: {data?.canceled?.todayTotal}
-            </h2>
-            <div className="flex items-center">
-              <span>Amount:</span>
-              <div className="ml-2 mr-2 text-xl font-bold text-slate-800">
-                ${data?.canceled?.totalAmountToday}
-              </div>
-              {/* <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
+          <h2 className="font-semibold text-md text-slate-800">
+            Total: {data?.canceled?.todayTotal}
+          </h2>
+          <div className="flex items-center">
+            <span>Amount:</span>
+            <div className="ml-2 mr-2 text-xl font-bold text-slate-800">
+              #{data?.canceled?.totalAmountToday}
+            </div>
+            {/* <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
                 +49%
               </div> */}
-            </div>
           </div>
+        </div>
       </div>
       {/* Chart built with Chart.js 3 */}
       {/* <div className="grow"> */}
-        {/* Change the height attribute to adjust the chart height */}
-        {/* <LineChart data={chartData} width={389} height={128} /> */}
+      {/* Change the height attribute to adjust the chart height */}
+      {/* <LineChart data={chartData} width={389} height={128} /> */}
       {/* </div> */}
     </div>
   );

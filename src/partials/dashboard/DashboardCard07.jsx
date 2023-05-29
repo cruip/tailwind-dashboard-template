@@ -23,44 +23,54 @@ function DashboardCard07({ data }) {
                     <div className="font-semibold text-center">DryvEarning</div>
                   </th>
                   <th className="p-2">
-                    <div className="font-semibold text-center">Company Earning</div>
+                    <div className="font-semibold text-center">
+                      Company Earning
+                    </div>
                   </th>
                   <th className="p-2">
-                    <div className="font-semibold text-center">Ticket Count</div>
+                    <div className="font-semibold text-center">
+                      Ticket Count
+                    </div>
                   </th>
                   <th className="p-2">
-                    <div className="font-semibold text-center">Company Code</div>
+                    <div className="font-semibold text-center">
+                      Company Code
+                    </div>
                   </th>
                 </tr>
               </thead>
               {/* Table body */}
               <tbody className="text-sm font-medium divide-y divide-slate-100">
                 {/* Row */}
-              
-                {
-                  data.map((item) => (
-                    <tr>
+
+                {data.map((item) => (
+                  <tr>
                     <td className="p-2">
                       <div className="flex items-center">
                         <div className="text-slate-800">{item.companyName}</div>
                       </div>
                     </td>
                     <td className="p-2">
-                      <div className="text-center">${item.dryvAfricaEarning}</div>
+                      <div className="text-center">
+                        #{item.dryvAfricaEarning}
+                      </div>
                     </td>
                     <td className="p-2">
-                      <div className="text-center text-green-500">${item.totalCompanyEarning}</div>
+                      <div className="text-center text-green-500">
+                        #{item.totalCompanyEarning}
+                      </div>
                     </td>
                     <td className="p-2">
                       <div className="text-center">{item.soldTicketCount}</div>
                     </td>
                     <td className="p-2">
-                      <div className="text-center text-sky-500">{item.companyCode}</div>
+                      <div className="text-center text-sky-500">
+                        {item.companyCode}
+                      </div>
                     </td>
                   </tr>
-                  ))
-                }
-               
+                ))}
+
                 {/* Row */}
                 {/* <tr>
                   <td className="p-2">
@@ -84,7 +94,7 @@ function DashboardCard07({ data }) {
                     <div className="text-center">1.7K</div>
                   </td>
                   <td className="p-2">
-                    <div className="text-center text-green-500">$2,034</div>
+                    <div className="text-center text-green-500">#2,034</div>
                   </td>
                   <td className="p-2">
                     <div className="text-center">204</div>
