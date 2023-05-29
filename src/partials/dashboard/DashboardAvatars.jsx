@@ -13,10 +13,12 @@ function DashboardAvatars({companies}) {
     navigate("/transport_companies");
   }
   return (
-    <ul className="flex flex-wrap justify-center mb-8 -ml-px -space-x-3 sm:justify-start sm:mb-0">
+   <>
+    <div>
+    <ul className="flex flex-wrap justify-center -ml-px -space-x-3 sm:justify-start sm:mb-0">
       {
         companies?.length && (
-          companies.map((el) => (
+          companies.slice(0,3).map((el) => (
             <li key={el?._id}>
             <Link className="block" to="#0">
               <img className="rounded-full w-9 h-9" src={el?.logo} width="36" height="36" alt="User 01" />
@@ -35,6 +37,9 @@ function DashboardAvatars({companies}) {
         </button>
       </li>
     </ul>
+    <span className='text-sm text-blue-500 '>Transport companies</span>
+    </div>
+   </>
   );
 }
 

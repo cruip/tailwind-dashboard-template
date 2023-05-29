@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Modal from "../../partials/modal/Modal";
 import { ToastContainer, toast } from "react-toastify";
 import { addTransport } from "../../services/transporterService";
@@ -10,10 +10,10 @@ export const AddTransportModal = ({ show, onHide, callBack, terminals }) => {
   const [loadingLogo, setLoadingLogo] = useState(false);
   const [logoUrl, setLogoUrl] = useState(null);
   const [values, setValues] = useState({
-    // email: "",
+    email: "",
     name: "",
     address: "",
-    // website: "",
+    website: "",
     contactPhoneNumber: "",
     status: "true",
     // transporterId: 'guo',
@@ -62,7 +62,7 @@ export const AddTransportModal = ({ show, onHide, callBack, terminals }) => {
 
   const deleteTerminal = (ix) => {
     // values.seatNumbers.splice(ix, 1)
-    const newTerminal = values.terminals.filter((_, i) => i !== ix);
+    const newTerminal = values.terminals.filter((term) => term !== ix);
     setValues({
       ...values,
       terminals: [...newTerminal],
@@ -100,11 +100,22 @@ export const AddTransportModal = ({ show, onHide, callBack, terminals }) => {
     // }, 2000);
   };
 
+  const showTerminalName = useCallback((terminalId) => {
+   const term = terminals.find((el,i) => el._id === terminalId)
+   return(
+    <span
+    onClick={() => deleteTerminal(terminalId)}
+    className="px-4 py-1 mr-1 text-sm text-black bg-gray-200 rounded-md cursor-pointer"
+    key={terminalId}
+    >{term?.city} {term?.locationCode}</span>
+   )
+  }, [values.terminals]);
+
   return (
     <>
       <ToastContainer />
       <Modal show={show} size="md" onHide={onHide}>
-        <p>Edit this Company</p>
+        <p>Add Company</p>
         <div className="px-8 pt-6 pb-8 mb-4 bg-white rounded shadow-md">
           <div className="mb-4">
             <label
@@ -176,13 +187,14 @@ export const AddTransportModal = ({ show, onHide, callBack, terminals }) => {
             </select>
             {values.terminals.length
               ? values.terminals.map((item, i) => (
-                  <span
-                    onClick={() => deleteTerminal(i)}
-                    className="px-4 py-1 mr-1 text-sm text-black bg-gray-200 rounded-md cursor-pointer"
-                    key={i}
-                  >
-                    {item}
-                  </span>
+                showTerminalName(item)
+                  // <span
+                  //   onClick={() => deleteTerminal(i)}
+                  //   className="px-4 py-1 mr-1 text-sm text-black bg-gray-200 rounded-md cursor-pointer"
+                  //   key={i}
+                  // >
+                  //   {item}
+                  // </span>
                 ))
               : ""}
           </div>
@@ -207,7 +219,7 @@ export const AddTransportModal = ({ show, onHide, callBack, terminals }) => {
             </select>
           </div>
 
-          {/* <div className="mb-4">
+          <div className="mb-4">
             <label
               className="block mb-2 text-sm font-bold text-gray-700"
               htmlFor="website"
@@ -223,7 +235,7 @@ export const AddTransportModal = ({ show, onHide, callBack, terminals }) => {
               onChange={handleInputChange}
               name="website"
             />
-          </div> */}
+          </div>
           <div className="mb-4">
             <label
               className="block mb-2 text-sm font-bold text-gray-700"
@@ -241,7 +253,7 @@ export const AddTransportModal = ({ show, onHide, callBack, terminals }) => {
               name="address"
             />
           </div>
-          {/* <div className="mb-4">
+          <div className="mb-4">
             <label
               className="block mb-2 text-sm font-bold text-gray-700"
               htmlFor="email"
@@ -257,7 +269,7 @@ export const AddTransportModal = ({ show, onHide, callBack, terminals }) => {
               onChange={handleInputChange}
               name="email"
             />
-          </div> */}
+          </div>
           <div className="mb-4">
             <label
               className="block mb-2 text-sm font-bold text-gray-700"
@@ -276,7 +288,7 @@ export const AddTransportModal = ({ show, onHide, callBack, terminals }) => {
             />
           </div>
 
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <label
               className="block mb-2 text-sm font-bold text-gray-700"
               htmlFor="status"
@@ -292,7 +304,7 @@ export const AddTransportModal = ({ show, onHide, callBack, terminals }) => {
               <option value="true">true</option>
               <option value="false">false</option>
             </select>
-          </div>
+          </div> */}
         </div>
         <div className="flex justify-between px-4 py-5 bg-gray-50 sm:px-6 sm:flex-row-reverse">
           <button

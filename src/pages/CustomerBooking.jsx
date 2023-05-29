@@ -29,7 +29,6 @@ const CustomerBooking = () => {
   const [bookModal, setBookModal] = useState(false);
 
   const date = new Date("2023-05-10");
-  console.log(date.getDate(), "date");
 
   let today = Date.parse(date);
 
@@ -208,7 +207,7 @@ const CustomerBooking = () => {
             Book Seat
           </button>
         </div>
-        <div className=" grid grid-cols-1 md:grid-cols-2 gap-4 ">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <Card
             name={"Total Seat Booked"}
             description="Total Number of booked seats"
@@ -235,7 +234,7 @@ const CustomerBooking = () => {
       <section className="mt-10 ">
         <div className="col-12">
           <Card description={"Manage Booking"} width="w-full">
-            <div className="flex items-center justify-start md:justify-end w-full mt-2 ">
+            <div className="flex items-center justify-start w-full mt-2 md:justify-end ">
               <div className="flex items-center">
                 <label html="search" className="sr-only">
                   Search

@@ -221,7 +221,7 @@ export const AddBusModal = ({
               Depature Date
             </label>
             
-            <DatePicker containerClassName=' w-full' inputClass='w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline' multiple value={departureDate} onChange={setDepartureDates} />
+            <DatePicker minDate={new DateObject().subtract(0, "days")} containerClassName=' w-full' inputClass='w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline' multiple value={departureDate} onChange={setDepartureDates} />
           </div>
           <div className="mb-4">
             <label

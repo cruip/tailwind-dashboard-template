@@ -4,7 +4,6 @@ import { ToastContainer, toast } from "react-toastify";
 import { cancelConfirmBooking } from "../../../services/bookingsService";
 
 export const ToggleStatusModal = ({ show, onHide, id, callBack, status }) => {
-    console.log(status, 'status');
   const [saving,  setSaving] = useState(false)
   const handlBookingStatus = (id, status) => {
     setSaving(!saving)
