@@ -9,31 +9,31 @@ import { SVGIcon } from "../partials/icons/SvgIcon";
 const Datas = [
   {
     id: 1,
-    location: 'Jibowu park Lagos',
-    destination: 'Old park Enugu',
-    Company_Name: 'Ifesinachi',
-    price: '15,000',
+    location: "Jibowu park Lagos",
+    destination: "Old park Enugu",
+    Company_Name: "Ifesinachi",
+    price: "15,000",
   },
   {
     id: 2,
-    location: 'Jibowu park Lagos',
-    destination: 'Old park Enugu',
-    Company_Name: 'Ifesinachi',
-    price: '15,000',
+    location: "Jibowu park Lagos",
+    destination: "Old park Enugu",
+    Company_Name: "Ifesinachi",
+    price: "15,000",
   },
   {
     id: 3,
-    location: 'Jibowu park Lagos',
-    destination: 'Old park Enugu',
-    Company_Name: 'Ifesinachi',
-    price: '15,000',
+    location: "Jibowu park Lagos",
+    destination: "Old park Enugu",
+    Company_Name: "Ifesinachi",
+    price: "15,000",
   },
   {
     id: 4,
-    location: 'Jibowu park Lagos',
-    destination: 'Old park Enugu',
-    Company_Name: 'Ifesinachi',
-    price: '15,000',
+    location: "Jibowu park Lagos",
+    destination: "Old park Enugu",
+    Company_Name: "Ifesinachi",
+    price: "15,000",
   },
 ];
 
@@ -54,12 +54,12 @@ const AdminPricing = () => {
     setCurrentPage((prevState) => prevState + 1);
   };
   const toggleChangePriceModal = () => {
-    setChangePriceModal(!changePriceModal)
+    setChangePriceModal(!changePriceModal);
   };
 
   const toggleTempPriceModal = () => {
-   setTempPriceModal(!tempPriceModal)
-  }
+    setTempPriceModal(!tempPriceModal);
+  };
   const tableHeader = [
     "Location",
     "Destination",
@@ -79,12 +79,11 @@ const AdminPricing = () => {
         <td>
           <DropDown
             links={[
-              
               {
                 name: "Change Price",
                 isLink: false,
                 onclick: () => {
-                    toggleChangePriceModal();
+                  toggleChangePriceModal();
                 },
                 link: "",
               },
@@ -106,8 +105,7 @@ const AdminPricing = () => {
   return (
     <Page>
       <section>
-        
-        <div className="gap-8 columns-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Card
             name={"Active Transport Companies"}
             description="Total Number of Active Transport Companies"
@@ -132,8 +130,8 @@ const AdminPricing = () => {
       <section className="mt-10 ">
         <div className="col-12">
           <Card description={"Manage transport Pricing"} width="w-full">
-            <div className="flex items-center justify-between w-full mt-4">
-              <div className="flex items-center w-1/2">
+            <div className="md:flex items-center justify-between w-full mt-4">
+              <div className="flex md:justify-between mb-2 items-center w-100 md:w-1/2">
                 <p className="mr-3 ">Filter By Price:</p>
                 <select className="block w-1/2 px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline">
                   <option>All</option>
@@ -149,7 +147,7 @@ const AdminPricing = () => {
                   <input
                     type="text"
                     id="search"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="md:ml-0 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full md:pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Search company name"
                     required
                   />

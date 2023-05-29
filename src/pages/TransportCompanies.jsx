@@ -5,10 +5,12 @@ import Page from "../partials/page";
 import { Table } from "../partials/table";
 import DropDown from "../partials/DropDown";
 import { SVGIcon } from "../partials/icons/SvgIcon";
-import { EditTransportModal, AddTransportModal, DeleteTransportModal } from "../componets/modals";
 import {
-  getAllTransporter,
-} from "../services/transporterService";
+  EditTransportModal,
+  AddTransportModal,
+  DeleteTransportModal,
+} from "../componets/modals";
+import { getAllTransporter } from "../services/transporterService";
 import { getAllLocations, getTerminals } from "../services/locationService";
 
 const TransportCompanies = () => {
@@ -27,13 +29,13 @@ const TransportCompanies = () => {
   const [activateModal, setActivateModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [addTransportModal, setAddTransportModal] = useState(false);
-  
-  const [terminals, setTerminals] = useState([])
+
+  const [terminals, setTerminals] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterValue, setFilterValue] = useState("all");
 
-  const fetchAllTransport = async (size=10, page) => {
-    const { data, loading } = await getAllTransporter({size, page});
+  const fetchAllTransport = async (size = 10, page) => {
+    const { data, loading } = await getAllTransporter({ size, page });
     setTableLoad(false);
     setData(data?.getTransporters?.nodes);
     setCurrentPage(Number(data?.getTransporters?.pageInfo?.currentPage));
@@ -50,10 +52,10 @@ const TransportCompanies = () => {
   const fetchUnpaginatedTransport = async () => {
     const { data } = await getAllTransporter(1, 100000);
     const activeCompany = data?.getTransporters?.nodes?.filter(
-      (item) => item.status == 'true'
+      (item) => item.status == "true"
     );
     const inActiveCompany = data?.getTransporters?.nodes?.filter(
-      (item) => item.status != 'true'
+      (item) => item.status != "true"
     );
     setActiveCompany(activeCompany?.length);
     setInActiveCompany(inActiveCompany?.length);
@@ -65,22 +67,21 @@ const TransportCompanies = () => {
   // //  setLocations(data?.getLocations?.nodes)
   // };
 
-   const fetchTerminals = async () => {
+  const fetchTerminals = async () => {
     const { data } = await getTerminals();
-  //  console.log(data, 'loca');
-   setTerminals(data?.getTerminals?.nodes)
+    //  console.log(data, 'loca');
+    setTerminals(data?.getTerminals?.nodes);
   };
 
-
   const SingleData = (id) => {
-    const data = datas.find((item)=> item._id === id)
-    setSingleData(data)
-  }
+    const data = datas.find((item) => item._id === id);
+    setSingleData(data);
+  };
 
   useEffect(() => {
     fetchAllTransport(10, currentPage);
     fetchUnpaginatedTransport();
-    fetchTerminals()
+    fetchTerminals();
   }, [currentPage]);
 
   useEffect(() => {
@@ -155,7 +156,7 @@ const TransportCompanies = () => {
       setData(arrayData);
     }
   };
- 
+
   const tableHeader = [
     "Company Name",
     "Company Address",
@@ -171,8 +172,8 @@ const TransportCompanies = () => {
         <td>{datas?.name}</td>
         <td>{datas?.address}</td>
         <td>{datas?.contactPhoneNumber}</td>
-        <td>{datas?.website || 'No Website'}</td>
-         {/* <td>{datas?.status == 'true' ? 'Active' : 'Inactive'}</td> */}
+        <td>{datas?.website || "No Website"}</td>
+        {/* <td>{datas?.status == 'true' ? 'Active' : 'Inactive'}</td> */}
         <td>
           <DropDown
             links={[
@@ -201,7 +202,7 @@ const TransportCompanies = () => {
                   setId(datas?._id);
                 },
                 link: "",
-              }
+              },
             ]}
           />
         </td>
@@ -221,7 +222,7 @@ const TransportCompanies = () => {
             Add Company
           </button>
         </div>
-        <div className="gap-8 columns-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Card
             name={"Active Transport Companies"}
             description="Total Number of Active Transport Companies"
@@ -250,9 +251,9 @@ const TransportCompanies = () => {
       <section className="mt-10 ">
         <div className="col-12">
           <Card description={"Manage transport Company"} width="w-full">
-            <div className="flex items-center justify-between w-full mt-4">
-              <div className="flex items-center w-1/2">
-                <p className="mr-3 ">Filter By company Name:</p>
+            <div className="md:flex md:items-center md:justify-between w-full mt-4">
+              <div className="flex items-center w-100">
+                <p className="mr-3">Filter By company Name:</p>
                 <select
                   className="block w-1/2 px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline"
                   value={filterValue}
@@ -270,11 +271,11 @@ const TransportCompanies = () => {
                 <label html="search" className="sr-only">
                   Search company name
                 </label>
-                <div className="relative w-full">
+                <div className="relative w-full mt-2 md:mt-0">
                   <input
                     type="text"
                     id="search"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="ml-1 md:ml-0 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full md:pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Search company name"
                     required
                     onChange={(e) => setSearchQuery(e.target.value)}
@@ -288,7 +289,7 @@ const TransportCompanies = () => {
                 </div>
               </div>
             </div>
-            <div className="mt-10 ">
+            <div className="mt-10">
               <Table
                 data={datas}
                 onNext={onNextPage}
@@ -306,10 +307,27 @@ const TransportCompanies = () => {
           </Card>
         </div>
       </section>
-      
-      <DeleteTransportModal show={deactivateModal} onHide={toggleDeactivateModal} id={id} callBack={fetchAllTransport} />
-      <EditTransportModal show={editModal} onHide={toggleEditModal} id={id} callBack={fetchAllTransport} datas={Singledatas} terminals={terminals}/>
-      <AddTransportModal show={addTransportModal} onHide={toggleAddTransporModal} callBack={fetchAllTransport} terminals={terminals}/>
+
+      <DeleteTransportModal
+        show={deactivateModal}
+        onHide={toggleDeactivateModal}
+        id={id}
+        callBack={fetchAllTransport}
+      />
+      <EditTransportModal
+        show={editModal}
+        onHide={toggleEditModal}
+        id={id}
+        callBack={fetchAllTransport}
+        datas={Singledatas}
+        terminals={terminals}
+      />
+      <AddTransportModal
+        show={addTransportModal}
+        onHide={toggleAddTransporModal}
+        callBack={fetchAllTransport}
+        terminals={terminals}
+      />
     </Page>
   );
 };

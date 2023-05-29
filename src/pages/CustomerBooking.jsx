@@ -11,7 +11,7 @@ import {
   cancelConfirmBooking,
 } from "../services/bookingsService";
 import { getAllRoutes } from "../services/routeService";
-import { getAllLocations,getTerminals } from "../services/locationService";
+import { getAllLocations, getTerminals } from "../services/locationService";
 import { BookSeatModal, ToggleStatusModal } from "../componets/modals";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -21,16 +21,15 @@ const CustomerBooking = () => {
   const [totalPages, setTotalPages] = useState(3);
   const [tableLoad, setTableLoad] = useState(true);
   const [id, setId] = useState("");
-  const [status, setStatus] = useState('')
+  const [status, setStatus] = useState("");
   const [data, setData] = useState(null);
   const [location, setLocation] = useState([]);
   const [cancelModal, setCancelModal] = useState(false);
   const [confirmModal, setConfirmModal] = useState(false);
   const [bookModal, setBookModal] = useState(false);
 
-
-  const date = new Date('2023-05-10');
-  console.log(date.getDate(), 'date');
+  const date = new Date("2023-05-10");
+  console.log(date.getDate(), "date");
 
   let today = Date.parse(date);
 
@@ -56,8 +55,8 @@ const CustomerBooking = () => {
     setBookModal(!bookModal);
   };
 
-  const fetchAllBookings = async (size=10, page) => {
-    const { data, loading } = await getAllBookings({size, page});
+  const fetchAllBookings = async (size = 10, page) => {
+    const { data, loading } = await getAllBookings({ size, page });
     // console.log(data?.getBookings, "bookings");
     setTableLoad(false);
     setData(data?.getBookings?.nodes);
@@ -67,7 +66,6 @@ const CustomerBooking = () => {
   };
   const fetchLocations = async () => {
     const { data } = await getTerminals();
-    console.log(data, 'terminals');
     setLocation(data?.getTerminals?.nodes);
   };
 
@@ -82,8 +80,6 @@ const CustomerBooking = () => {
 
   //   // setLocationCities(Object.values(location));
   // };
-
-  
 
   // const handlBookingStatus = (id, status) => {
   //   cancelConfirmBooking({
@@ -116,7 +112,6 @@ const CustomerBooking = () => {
 
   useEffect(() => {
     fetchAllBookings(10, currentPage);
-
   }, [currentPage]);
 
   // const getRoute = (id) => {
@@ -147,11 +142,13 @@ const CustomerBooking = () => {
         {/* <td>{getRoute(data?.route)}</td> */}
         <td>N{data?.amount}</td>
         <td className="multiple-span">
-          {data?.seatNumbers?.map((item) => (
-            <span key={item}>{item}</span>
-          ))}
+          <p className="w-14 md:w-20">
+            {data?.seatNumbers?.map((item) => (
+              <span key={item}>{item}</span>
+            ))}
+          </p>
         </td>
-        <td>{data?.status ?  data?.status : "Unknown"}</td>
+        <td>{data?.status ? data?.status : "Unknown"}</td>
 
         <td>
           <DropDown
@@ -162,7 +159,7 @@ const CustomerBooking = () => {
                     isLink: false,
                     onclick: () => {
                       setId(data?._id);
-                      setStatus('false')
+                      setStatus("false");
                       toggleConfirmModal();
                     },
                   }
@@ -171,7 +168,7 @@ const CustomerBooking = () => {
                     isLink: false,
                     onclick: () => {
                       setId(data?._id);
-                      setStatus('true')
+                      setStatus("true");
                       toggleConfirmModal();
                     },
                   },
@@ -188,7 +185,6 @@ const CustomerBooking = () => {
                     name: "View Invoice",
                     isLink: false,
                     onclick: () => {
-                      console.log('lol');
                       // toggleConfirmModal();
                     },
                   },
@@ -212,7 +208,7 @@ const CustomerBooking = () => {
             Book Seat
           </button>
         </div>
-        <div className="gap-8 columns-2">
+        <div className=" grid grid-cols-1 md:grid-cols-2 gap-4 ">
           <Card
             name={"Total Seat Booked"}
             description="Total Number of booked seats"
@@ -239,7 +235,7 @@ const CustomerBooking = () => {
       <section className="mt-10 ">
         <div className="col-12">
           <Card description={"Manage Booking"} width="w-full">
-            <div className="flex items-center justify-end w-full ">
+            <div className="flex items-center justify-start md:justify-end w-full mt-2 ">
               <div className="flex items-center">
                 <label html="search" className="sr-only">
                   Search
@@ -261,7 +257,7 @@ const CustomerBooking = () => {
                 </div>
               </div>
             </div>
-            <div className="mt-10 ">
+            <div className="mt-10">
               <Table
                 data={data}
                 onNext={onNextPage}
@@ -297,7 +293,13 @@ const CustomerBooking = () => {
       >
         <p>Confirm this bookig</p>
       </Modal> */}
-      <ToggleStatusModal  show={confirmModal} status={status} onHide={toggleConfirmModal} id={id} callBack={fetchAllBookings}/>
+      <ToggleStatusModal
+        show={confirmModal}
+        status={status}
+        onHide={toggleConfirmModal}
+        id={id}
+        callBack={fetchAllBookings}
+      />
       <BookSeatModal
         show={bookModal}
         onHide={toggleBookModal}

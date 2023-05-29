@@ -1,5 +1,5 @@
 import React from "react";
-import { Empty} from "./empty";
+import { Empty } from "./empty";
 import { SVGIcon } from "../icons/SvgIcon";
 import Loader from "../Loader";
 
@@ -20,8 +20,8 @@ export const Table = ({
   limit,
   searchTerm,
 }) => {
-  console.log(data, totalPages, currentPage, paginated, 'table');
-  
+  console.log(data, totalPages, currentPage, paginated, "table");
+
   return (
     <>
       <div className="flex justify-between w-full overflow-x-auto">
@@ -40,13 +40,17 @@ export const Table = ({
       ) : (
         <>
           {data?.length ? (
-            <>
-              <table className="w-full bg-white shadow-lg table-auto">
+            <div className="overflow-x-auto">
+              <table className="w-full bg-white shadow-lg">
                 <thead>
                   <tr className="text-left bg-slate-200">
                     {headers?.length
                       ? headers.map((h, i) => {
-                          return <th className="py-3" key={i}>{h}</th>;
+                          return (
+                            <th className="py-3" key={i}>
+                              {h}
+                            </th>
+                          );
                         })
                       : null}
                   </tr>
@@ -57,8 +61,10 @@ export const Table = ({
                   })}
                 </tbody>
               </table>
-            </>
-          ) : <Empty message={emptyMessage} />}
+            </div>
+          ) : (
+            <Empty message={emptyMessage} />
+          )}
 
           {/* {!data?.length ? <Empty message={emptyMessage} /> : null} */}
           {paginated ? (
@@ -91,18 +97,27 @@ export const Pagination = ({
         <ul className="pagination rounded-separated pagination-danger">
           <li>
             {currentPage && currentPage > 1 && (
-              <span className="flex items-center text-teal-700 cursor-pointer" onClick={() => onPrev && onPrev()}>
-                 <SVGIcon name="arrow-left" />
+              <span
+                className="flex items-center text-teal-700 cursor-pointer"
+                onClick={() => onPrev && onPrev()}
+              >
+                <SVGIcon name="arrow-left" />
                 &nbsp; Prev
               </span>
             )}
           </li>
           <li className="text-teal-700 page-item">{currentPage}</li>
-          <li className="text-teal-700 page-item"> &nbsp;of&nbsp;{totalPages}&nbsp;</li>
+          <li className="text-teal-700 page-item">
+            {" "}
+            &nbsp;of&nbsp;{totalPages}&nbsp;
+          </li>
           <li>
             {currentPage !== totalPages && (
               <>
-                <span className="flex items-center text-teal-700 cursor-pointer" onClick={() => onNext && onNext()}>
+                <span
+                  className="flex items-center text-teal-700 cursor-pointer"
+                  onClick={() => onNext && onNext()}
+                >
                   Next&nbsp;
                   <SVGIcon name="arrow-right" />
                 </span>
