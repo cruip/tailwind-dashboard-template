@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Modal from "../../partials/modal/Modal";
 import { ToastContainer, toast } from "react-toastify";
 import { updateTransport } from "../../services/transporterService";
@@ -31,7 +31,7 @@ const [saving,  setSaving] = useState(false)
 
   const deleteTerminal = (ix) => {
     // values.seatNumbers.splice(ix, 1)
-    const newTerminal = values.terminals.filter((_, i) => i !== ix)
+    const newTerminal = values.terminals.filter((item) => item !== ix)
     setValues({
       ...values,
       terminals: [...newTerminal]
@@ -89,6 +89,17 @@ const [saving,  setSaving] = useState(false)
       .finally(() =>  setSaving(false))
      
   };
+
+  const showTerminalName = useCallback((terminalId) => {
+    const term = terminals.find((el,i) => el._id === terminalId)
+    return(
+     <span
+     onClick={() => deleteTerminal(terminalId)}
+     className="px-4 py-1 mr-1 text-sm text-black bg-gray-200 rounded-md cursor-pointer"
+     key={terminalId}
+     >{term?.city} {term?.locationCode}</span>
+    )
+   }, [values.terminals]);
 
   return (
     <>
@@ -184,13 +195,7 @@ const [saving,  setSaving] = useState(false)
             </select>
             {values.terminals?.length
               ? values.terminals.map((item, i) => (
-                  <span
-                    onClick={() => deleteTerminal(i)}
-                    className="px-4 py-1 mr-1 text-sm text-black bg-gray-200 rounded-md cursor-pointer"
-                    key={i}
-                  >
-                    {item}
-                  </span>
+                showTerminalName(item)
                 ))
               : ""}
           </div>
@@ -230,7 +235,7 @@ const [saving,  setSaving] = useState(false)
             />
           </div>
 
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <label
               className="block mb-2 text-sm font-bold text-gray-700"
               htmlFor="status"
@@ -246,7 +251,7 @@ const [saving,  setSaving] = useState(false)
               <option value="true">true</option>
               <option value="false">false</option>
             </select>
-          </div>
+          </div> */}
         </div>
         <div className="flex justify-between px-4 py-5 bg-gray-50 sm:px-6 sm:flex-row-reverse">
           <button

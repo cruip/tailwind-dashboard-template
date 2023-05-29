@@ -72,7 +72,6 @@ function Dashboard() {
 
   const fetchTransports = async (size=10, page=1) => {
     const {data} = await getAllTransporter(size, page)
-    console.log(data?.getTransporters?.nodes, 'trans');
     setCompanies(data?.getTransporters?.nodes);
   }
 
