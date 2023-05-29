@@ -95,8 +95,9 @@ function DashboardCard03({ data }) {
         <h2 className="mb-2 text-lg font-semibold text-slate-800">
           Monthly Sales
         </h2>
+        <h3 className="mb-3">Amount: #{data?.completed?.totalAmountToday}</h3>
         <div className="mb-1 text-xs font-semibold uppercase text-slate-400">
-          Sales
+          Statistics
         </div>
 
         <div className="py-2 bg-green-50">
