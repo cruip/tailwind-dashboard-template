@@ -11,6 +11,8 @@ export const getOneTransport = async (transporterId) => {
           _id
           name
           address
+          website
+          email
           logo
           contactPhoneNumber
           terminals {
@@ -69,6 +71,8 @@ export const getAllTransporter = async (event) => {
           nodes {
             _id
             address
+            website
+            email
             name
             terminals {
               _id
@@ -121,6 +125,8 @@ export const addTransport = async (event) => {
   const {
     name,
     address,
+    email,
+    website,
     logo,
     transporterCode,
     status,
@@ -131,6 +137,8 @@ export const addTransport = async (event) => {
     mutation: gql`
       mutation addTrans(
         $name: String!
+        $email: String!
+        $website: String!
         $address: String!
         $logo: String!
         $transporterCode: String!
@@ -140,6 +148,8 @@ export const addTransport = async (event) => {
       ) {
         addTransporter(
           name: $name
+          email: $email
+          website: $website
           address: $address
           logo: $logo
           transporterCode: $transporterCode
@@ -150,6 +160,8 @@ export const addTransport = async (event) => {
           _id
           name
           address
+          website
+          email
           logo
           terminals {
             latitude
@@ -165,8 +177,8 @@ export const addTransport = async (event) => {
       transporterCode,
       status,
       contactPhoneNumber,
-      // email,
-      // website,
+      email,
+      website,
       terminals,
       // transporterId,
     },

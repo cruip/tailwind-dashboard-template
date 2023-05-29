@@ -100,9 +100,9 @@ function DashboardCard03({data}) {
                 ${data?.completed?.totalAmountMonthly
 }
               </div>
-              <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
+              {/* <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
                 +49%
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="py-2 mt-2 bg-yellow-50">
@@ -120,9 +120,9 @@ function DashboardCard03({data}) {
                 ${data?.pending?.totalAmountMonthly
 }
               </div>
-              <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
+              {/* <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
                 +49%
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="py-2 mt-2 bg-red-50">
@@ -140,9 +140,9 @@ function DashboardCard03({data}) {
                 ${data?.canceled?.totalAmountMonthly
 }
               </div>
-              <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
+              {/* <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
                 +49%
-              </div>
+              </div> */}
             </div>
           </div>
       </div>

@@ -20,8 +20,6 @@ export const Table = ({
   limit,
   searchTerm,
 }) => {
-  console.log(data, totalPages, currentPage, paginated, "table");
-
   return (
     <>
       <div className="flex justify-between w-full overflow-x-auto">

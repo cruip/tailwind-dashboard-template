@@ -140,14 +140,14 @@ const TransportCompany = () => {
               //   onclick: () => {},
               //   link: `/route/${routes?._id}`,
               // },
-              {
-                name: "Assign Bus",
-                isLink: false,
-                onclick: () => {
-                  toggleAddBusRouteModal(routes?._id)
-                },
-                link: '',
-              },
+              // {
+              //   name: "Assign Bus",
+              //   isLink: false,
+              //   onclick: () => {
+              //     toggleAddBusRouteModal(routes?._id)
+              //   },
+              //   link: '',
+              // },
               // {
               //   name: "Edit",
               //   isLink: false,
@@ -253,7 +253,7 @@ const TransportCompany = () => {
               className="py-3 mb-3 text-white bg-blue-500 rounded-lg shadow-md mr-7 w-52 focus:border-0 focus:outline-none hover:bg-blue-600"
               onClick={() => toggleAddBusModal()}
             >
-             Add Bus
+             Add Trip
             </button>
           </div>
         </Card>
@@ -280,7 +280,7 @@ const TransportCompany = () => {
       {/* //modals */}
       {/* <DeactivateTransport show={deactivateModal}  onHide={toggleDeactivateModal} id={id} callBack={fecthTransport}/> */}
       <AddRouteModal show={addRouteModal}  onHide={toggleAddRouteModal} id={id} name={datas?.name} callBack={fecthTransport} routes={routes}/>
-      <AddBusRouteModal show={addBusRouteModal}  onHide={toggleAddBusRouteModal} id={routeId} name={datas?.name} buses={buses}/>
+      {/* <AddBusRouteModal show={addBusRouteModal}  onHide={toggleAddBusRouteModal} id={routeId} name={datas?.name} buses={buses}/> */}
       <AddBusModal show={addBusModal}  onHide={toggleAddBusModal} id={id} name={datas?.name} callBack={fecthTransport} terminals={terminals} routes={routes}/>
       {/* <ActivateTransportModal show={activateModal}  onHide={toggleActivateModal} id={id} callBack={fecthTransport}/> */}
       <EditTransportModal show={editModal} onHide={toggleEditModal} id={id} callBack={fecthTransport} datas={datas} terminals={terminals}/>

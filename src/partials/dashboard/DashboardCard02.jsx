@@ -60,7 +60,7 @@ function DashboardCard02({data}) {
   };
 
   return (
-    <div className="pb-3 flex flex-col bg-white border rounded-sm shadow-lg col-span-full sm:col-span-6 xl:col-span-4 border-slate-200">
+    <div className="flex flex-col pb-3 bg-white border rounded-sm shadow-lg col-span-full sm:col-span-6 xl:col-span-4 border-slate-200">
       <div className="px-5 pt-5">
         <header className="flex items-start justify-between mb-2">
           {/* Icon */}
@@ -98,9 +98,9 @@ function DashboardCard02({data}) {
               <div className="ml-2 mr-2 text-xl font-bold text-slate-800">
                 ${data?.completed?.totalAmountWeekly}
               </div>
-              <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
+              {/* <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
                 +49%
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="py-2 mt-2 bg-yellow-50">
@@ -116,9 +116,9 @@ function DashboardCard02({data}) {
               <div className="ml-2 mr-2 text-xl font-bold text-slate-800">
                 ${data?.pending?.totalAmountWeekly}
               </div>
-              <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
+              {/* <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
                 +49%
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="py-2 mt-2 bg-red-50">
@@ -134,9 +134,9 @@ function DashboardCard02({data}) {
               <div className="ml-2 mr-2 text-xl font-bold text-slate-800">
                 ${data?.canceled?.totalAmountWeekly}
               </div>
-              <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
+              {/* <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
                 +49%
-              </div>
+              </div> */}
             </div>
           </div>
       </div>

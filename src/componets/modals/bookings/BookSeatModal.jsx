@@ -5,18 +5,18 @@ import { createBooking, getAllTrips } from "../../../services/bookingsService";
 import moment from "moment";
 import Select from "react-select";
 
-
 export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
-  console.log(location, 'location');
-    const userData = JSON.parse(localStorage.getItem("userData"));
-    const userId = userData?.authenticate?.user?._id;
-    const date = new Date();
+  const userData = JSON.parse(localStorage.getItem("userData"));
+  const userId = userData?.authenticate?.user?._id;
+  const date = new Date();
+  // const today = new Date().toISOString().split('T')[0];
+  const today = date.toISOString().split('T')[0]
 
   const [saving, setSaving] = useState(false);
   const [isRouting, setIsRouting] = useState(false);
-  const [buses, setBuses] = useState(null)
-  const [seats, setSeats] = useState(null)
-  const [routes, setRoutes] = useState(null)
+  const [buses, setBuses] = useState(null);
+  const [seats, setSeats] = useState(null);
+  const [routes, setRoutes] = useState(null);
   const [values, setValues] = useState({
     from: "",
     to: "",
@@ -31,7 +31,6 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
     passengerType: "adult",
     amount: 1,
     status: "true",
-   
   });
   const [passengerss, setPassengerss] = useState([
     {
@@ -40,7 +39,7 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
       gender: "",
     },
   ]);
-  const [totalPrice, setTotalPrice] = useState('')
+  const [totalPrice, setTotalPrice] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -60,7 +59,6 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
     });
   };
 
-
   const addPassenger = () => {
     setPassengerss([
       ...passengerss,
@@ -73,24 +71,24 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
   };
 
   const handleSelectSeat = (e) => {
-    const item = values.seatNumbers.find((el) => el === e.target.value)
-   if(item) {
-    return
-   }
-   setValues({
-    ...values,
-    seatNumbers: [...values.seatNumbers, Number( e.target.value)]
-  })
+    const item = values.seatNumbers.find((el) => el === e.target.value);
+    if (item) {
+      return;
+    }
+    setValues({
+      ...values,
+      seatNumbers: [...values.seatNumbers, Number(e.target.value)],
+    });
   };
 
   const deleteSeat = (ix) => {
     // values.seatNumbers.splice(ix, 1)
-    const seatno = values.seatNumbers.filter((_, i) => i !== ix)
+    const seatno = values.seatNumbers.filter((_, i) => i !== ix);
     setValues({
       ...values,
-      seatNumbers: [...seatno]
-    })
-  }
+      seatNumbers: [...seatno],
+    });
+  };
 
   const handlePassengerInput = (index, event) => {
     const { name, value } = event.target;
@@ -108,7 +106,7 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
       bookingDate: date,
       user: userId,
     })
-      .then(async() => {
+      .then(async () => {
         toast.success("seat booked successfully");
         setValues({
           from: "",
@@ -132,38 +130,42 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
             age: "",
             gender: "",
           },
-        ])
-        await callBack()
+        ]);
+        await callBack();
       })
       .catch(() => toast.error("Oops! something went wrong"))
-      .finally(() => onHide())
+      .finally(() => onHide());
   };
-  
+
   const getTrips = async (filters) => {
-    setIsRouting(true)
+    setIsRouting(true);
     // moment(values.departureDate).format(" MMM Do, YYYY | h:mm a")
-    const {data} = await getAllTrips({page: 1, size: 10000, filters: {...filters}})
-    console.log(data.getTrips?.nodes, 'trips');
-    setRoutes(data.getTrips.nodes)
-    const busesArray = []
+    const { data } = await getAllTrips({
+      page: 1,
+      size: 10000,
+      filters: { ...filters },
+    });
+    console.log(data.getTrips?.nodes, "trips");
+    setRoutes(data.getTrips.nodes);
+    const busesArray = [];
     data.getTrips?.nodes?.forEach((el) => {
       // if(item.buses || item.buses?.length){
-        // item.forEach((el) => {
-          busesArray.push({
-            _id: el._id,
-            type: el.type,
-            class: el.class,
-            transporter: el.companyId.name,
-            price: el.price || '10000',
-            availableSeats: el.availableSeats?.map((item) => Number(item)),
-            transporterId: el?.companyId?._id,
-            depatureTime: el.departureTime
-          })
-        // })
+      // item.forEach((el) => {
+      busesArray.push({
+        _id: el._id,
+        type: el.type,
+        class: el.class,
+        transporter: el.companyId.name,
+        price: el.price || "10000",
+        availableSeats: el.availableSeats?.map((item) => Number(item)),
+        transporterId: el?.companyId?._id,
+        depatureTime: el.departureTime,
+      });
+      // })
       // }
-    })
-    setBuses(busesArray)
-    setIsRouting(false)
+    });
+    setBuses(busesArray);
+    setIsRouting(false);
   };
   // const handlePrice = useCallback((id) => {
   //   const bus = buses?.find((item) => item._id === id)
@@ -176,38 +178,41 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
   //   //  setValues(
   //   //     {...values, amount: values.amount * 100}
   //   //  )
-    
+
   //   [values.seatNumbers, values.route]
   // );
 
   useEffect(() => {
-   if(values.from && values.to && values.departureDate ){
-    if(values.from === values.to){
-      return
+    if (values.from && values.to && values.departureDate) {
+      if (values.from === values.to) {
+        return;
+      }
+      getTrips({
+        to: values?.to,
+        from: values?.from,
+        date: values.departureDate,
+      });
     }
-    getTrips({to: values?.to, from: values?.from, date: values.departureDate})
-   }
-    
   }, [values.from, values.to, values.departureDate]);
 
   useEffect(() => {
-    const bus = buses?.find((item) => item._id === values.busId)
-    setSeats(bus?.availableSeats)
+    const bus = buses?.find((item) => item._id === values.busId);
+    setSeats(bus?.availableSeats);
     // setSeats(bus?.availableSeats)
     setValues({
       ...values,
       transporter: bus?.transporterId,
-      amount: ( Number(bus?.price || 0) * (values.seatNumbers.length ? values.seatNumbers.length : 1)).toString(),
-    })
-   
-  }, [values.busId, values.seatNumbers])
-  
-  
+      amount: (
+        Number(bus?.price || 0) *
+        (values.seatNumbers.length ? values.seatNumbers.length : 1)
+      ).toString(),
+    });
+  }, [values.busId, values.seatNumbers]);
 
   return (
     <>
       <ToastContainer />
-      <Modal show={show} size="md" onHide={onHide} width='60%'>
+      <Modal show={show} size="md" onHide={onHide} width="60%">
         <p className="text-lg font-medium text-sky-800">Book a Seat</p>
         <div className="px-8 pt-6 pb-8 mb-4 overflow-y-auto bg-white rounded shadow-md">
           <form className="w-full max-w-2xl">
@@ -291,6 +296,7 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
                   id="grid-depature-date"
                   type="date"
                   value={values.departureDate}
+                  min={today}
                   name="departureDate"
                   onChange={(e) => handleInputChange(e)}
                 />
@@ -307,6 +313,7 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
                   id="grid-return-date"
                   type="date"
                   value={values.returningDate}
+                  min={today}
                   name="returningDate"
                   onChange={(e) => handleInputChange(e)}
                 />
@@ -326,7 +333,7 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
                   value={values.busId}
                   name="busId"
                   onChange={(e) => {
-                    handleInputChange(e)
+                    handleInputChange(e);
                     // handlePrice(e.target.value)
                   }}
                 >
@@ -334,20 +341,20 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
                     {" "}
                     select Bus
                   </option>
-                  {isRouting? (
+                  {isRouting ? (
                     <option value={""} disabled={true}>
-                     Loading...
+                      Loading...
                     </option>
                   ) : !isRouting && (!buses || !buses.length) ? (
                     <option value={""} disabled={true}>
-                   No Bus for the locations and date choosen
-                   </option>
-                  ):
-                  (
+                      No Bus for the locations and date choosen
+                    </option>
+                  ) : (
                     buses?.map((bus, i) => (
                       <option key={bus._id} value={bus._id}>
-                      { bus.type } { bus.class } By { bus.transporter } leaving {bus.depatureTime}
-                    </option>
+                        {bus.type} {bus.class} By {bus.transporter} leaving{" "}
+                        {bus.depatureTime}
+                      </option>
                     ))
                   )}
                 </select>
@@ -378,14 +385,14 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
                 >
                   Seat No
                 </label>
-               
+
                 <select
                   className="block w-full px-4 py-3 pr-8 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
                   id="grid-route"
-                  value=''
+                  value=""
                   name="seats"
                   onChange={(e) => {
-                    handleSelectSeat(e)
+                    handleSelectSeat(e);
                     // handlePrice(e.target.value)
                   }}
                 >
@@ -395,20 +402,27 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
                   </option>
                   {!seats || !seats.length ? (
                     <option value={""} disabled={true}>
-                   No Seat Available
-                   </option>
-                  ):
-                  (
+                      No Seat Available
+                    </option>
+                  ) : (
                     seats?.map((seat, i) => (
                       <option key={i} value={seat}>
-                    {seat}
-                    </option>
+                        {seat}
+                      </option>
                     ))
                   )}
                 </select>
-                 {
-                  values.seatNumbers.length ? (values.seatNumbers.map((item, i) => (<span onClick={() => deleteSeat(i)} className="px-2 mr-1 text-sm text-white bg-blue-500 rounded-md cursor-pointer" key={i}>{item}</span>))) : ''
-                }
+                {values.seatNumbers.length
+                  ? values.seatNumbers.map((item, i) => (
+                      <span
+                        onClick={() => deleteSeat(i)}
+                        className="px-2 mr-1 text-sm text-white bg-blue-500 rounded-md cursor-pointer"
+                        key={i}
+                      >
+                        {item}
+                      </span>
+                    ))
+                  : ""}
               </div>
             </div>
 
