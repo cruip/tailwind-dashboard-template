@@ -17,7 +17,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-flatpickr": "^3.10.7",
-    "react-multi-date-picker": "^4.0.0",
+    "react-multi-date-picker": "^3.3.4",
     "react-router-dom": "^6.2.1",
     "react-select": "^5.4.0",
     "react-toastify": "^9.0.7",
