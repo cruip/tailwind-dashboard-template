@@ -48,7 +48,7 @@ function DashboardCard09() {
       </header>
       <div className="px-5 py-3">
         <div className="flex items-start">
-          <div className="text-3xl font-bold text-slate-800 mr-2">+$6,796</div>
+          <div className="text-3xl font-bold text-slate-800 mr-2">+#6,796</div>
           <div className="text-sm font-semibold text-white px-1.5 bg-yellow-500 rounded-full">-34%</div>
         </div>
       </div>
