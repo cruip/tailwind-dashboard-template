@@ -1,20 +1,14 @@
 // Import Chart.js
 import { Chart, Tooltip } from 'chart.js';
 // Import Tailwind config
-import { tailwindConfig } from '../utils/Utils';
+import { tailwindConfig, hexToRGB } from '../utils/Utils';
 
 Chart.register(Tooltip);
 
 // Define Chart.js default settings
 Chart.defaults.font.family = '"Inter", sans-serif';
 Chart.defaults.font.weight = '500';
-Chart.defaults.color = tailwindConfig().theme.colors.slate[400];
-Chart.defaults.scale.grid.color = tailwindConfig().theme.colors.slate[100];
-Chart.defaults.plugins.tooltip.titleColor = tailwindConfig().theme.colors.slate[800];
-Chart.defaults.plugins.tooltip.bodyColor = tailwindConfig().theme.colors.slate[800];
-Chart.defaults.plugins.tooltip.backgroundColor = tailwindConfig().theme.colors.white;
 Chart.defaults.plugins.tooltip.borderWidth = 1;
-Chart.defaults.plugins.tooltip.borderColor = tailwindConfig().theme.colors.slate[200];
 Chart.defaults.plugins.tooltip.displayColors = false;
 Chart.defaults.plugins.tooltip.mode = 'nearest';
 Chart.defaults.plugins.tooltip.intersect = false;
@@ -40,3 +34,38 @@ Chart.register({
     }
   },
 });
+
+export const chartColors = {
+  textColor: {
+    light: tailwindConfig().theme.colors.slate[400],
+    dark: tailwindConfig().theme.colors.slate[500],
+  },
+  gridColor: {
+    light: tailwindConfig().theme.colors.slate[100],
+    dark: tailwindConfig().theme.colors.slate[700],
+  },
+  backdropColor: {
+    light: tailwindConfig().theme.colors.white,
+    dark: tailwindConfig().theme.colors.slate[800],
+  },
+  tooltipTitleColor: {
+    light: tailwindConfig().theme.colors.slate[800],
+    dark: tailwindConfig().theme.colors.slate[100],
+  },
+  tooltipBodyColor: {
+    light: tailwindConfig().theme.colors.slate[800],
+    dark: tailwindConfig().theme.colors.slate[100],
+  },
+  tooltipBgColor: {
+    light: tailwindConfig().theme.colors.white,
+    dark: tailwindConfig().theme.colors.slate[700],
+  },
+  tooltipBorderColor: {
+    light: tailwindConfig().theme.colors.slate[200],
+    dark: tailwindConfig().theme.colors.slate[600],
+  },
+  chartAreaBg: {
+    light: tailwindConfig().theme.colors.slate[50],
+    dark: `rgba(${hexToRGB(tailwindConfig().theme.colors.slate[900])}, 0.24)`,
+  },
+};

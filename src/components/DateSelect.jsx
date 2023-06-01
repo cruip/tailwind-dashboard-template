@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import Transition from '../../utils/Transition';
+import Transition from '../utils/Transition';
 
 function DateSelect() {
 
@@ -35,6 +35,7 @@ function DateSelect() {
   // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }) => {
+      if (!dropdown.current) return;
       if (!dropdownOpen || dropdown.current.contains(target) || trigger.current.contains(target)) return;
       setDropdownOpen(false);
     };
@@ -56,14 +57,14 @@ function DateSelect() {
     <div className="relative">
       <button
         ref={trigger}
-        className="btn justify-between min-w-44 bg-white border-slate-200 hover:border-slate-300 text-slate-500 hover:text-slate-600"
+        className="btn justify-between min-w-44 bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-500 hover:text-slate-600 dark:text-slate-300 dark:hover:text-slate-200"
         aria-label="Select date range"
         aria-haspopup="true"
         onClick={() => setDropdownOpen(!dropdownOpen)}
         aria-expanded={dropdownOpen}
       >
         <span className="flex items-center">
-          <svg className="w-4 h-4 fill-current text-slate-500 shrink-0 mr-2" viewBox="0 0 16 16">
+          <svg className="w-4 h-4 fill-current text-slate-500 dark:text-slate-400 shrink-0 mr-2" viewBox="0 0 16 16">
             <path d="M15 2h-2V0h-2v2H9V0H7v2H5V0H3v2H1a1 1 0 00-1 1v12a1 1 0 001 1h14a1 1 0 001-1V3a1 1 0 00-1-1zm-1 12H2V6h12v8z" />
           </svg>
           <span>{options[selected].period}</span>
@@ -75,7 +76,7 @@ function DateSelect() {
       <Transition
         show={dropdownOpen}
         tag="div"
-        className="z-10 absolute top-full right-0 w-full bg-white border border-slate-200 py-1.5 rounded shadow-lg overflow-hidden mt-1"
+        className="z-10 absolute top-full right-0 w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 py-1.5 rounded shadow-lg overflow-hidden mt-1"
         enter="transition ease-out duration-100 transform"
         enterStart="opacity-0 -translate-y-2"
         enterEnd="opacity-100 translate-y-0"
@@ -83,9 +84,9 @@ function DateSelect() {
         leaveStart="opacity-100"
         leaveEnd="opacity-0"
       >
-        <ul
+        <div
           ref={dropdown}
-          className="font-medium text-sm text-slate-600"
+          className="font-medium text-sm text-slate-600 dark:text-slate-300"
           onFocus={() => setDropdownOpen(true)}
           onBlur={() => setDropdownOpen(false)}
         >
@@ -95,7 +96,7 @@ function DateSelect() {
                 <button
                   key={option.id}
                   tabIndex="0"
-                  className={`flex items-center w-full hover:bg-slate-50 py-1 px-3 cursor-pointer ${option.id === selected && 'text-indigo-500'}`}
+                  className={`flex items-center w-full hover:bg-slate-50 hover:dark:bg-slate-700/20 py-1 px-3 cursor-pointer ${option.id === selected && 'text-indigo-500'}`}
                   onClick={() => { setSelected(option.id); setDropdownOpen(false); }}
                 >
                   <svg className={`shrink-0 mr-2 fill-current text-indigo-500 ${option.id !== selected && 'invisible'}`} width="12" height="9" viewBox="0 0 12 9">
@@ -106,7 +107,7 @@ function DateSelect() {
               )
             })
           }
-        </ul>
+        </div>
       </Transition>
     </div>
   );

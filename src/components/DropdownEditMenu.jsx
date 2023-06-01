@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Transition from '../utils/Transition';
 
-function EditMenu({
+function DropdownEditMenu({
   children,
+  align,
   ...rest
 }) {
 
@@ -14,6 +15,7 @@ function EditMenu({
   // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }) => {
+      if (!dropdown.current) return;
       if (!dropdownOpen || dropdown.current.contains(target) || trigger.current.contains(target)) return;
       setDropdownOpen(false);
     };
@@ -35,7 +37,11 @@ function EditMenu({
     <div {...rest}>
       <button
         ref={trigger}
-        className={`text-slate-400 hover:text-slate-500 rounded-full ${dropdownOpen && 'bg-slate-100 text-slate-500'}`}
+        className={`rounded-full ${
+          dropdownOpen
+            ? 'bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400'
+            : 'text-slate-400 hover:text-slate-500 dark:text-slate-500 dark:hover:text-slate-400'
+        }`}
         aria-haspopup="true"
         onClick={() => setDropdownOpen(!dropdownOpen)}
         aria-expanded={dropdownOpen}
@@ -50,7 +56,9 @@ function EditMenu({
       <Transition
         show={dropdownOpen}
         tag="div"
-        className="origin-top-right z-10 absolute top-full right-0 min-w-36 bg-white border border-slate-200 py-1.5 rounded shadow-lg overflow-hidden mt-1"
+        className={`origin-top-right z-10 absolute top-full min-w-36 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 py-1.5 rounded shadow-lg overflow-hidden mt-1 ${
+          align === 'right' ? 'right-0' : 'left-0'
+        }`}
         enter="transition ease-out duration-200 transform"
         enterStart="opacity-0 -translate-y-2"
         enterEnd="opacity-100 translate-y-0"
@@ -58,11 +66,7 @@ function EditMenu({
         leaveStart="opacity-100"
         leaveEnd="opacity-0"
       >
-        <ul
-          ref={dropdown}
-          onFocus={() => setDropdownOpen(true)}
-          onBlur={() => setDropdownOpen(false)}
-        >
+        <ul ref={dropdown} onFocus={() => setDropdownOpen(true)} onBlur={() => setDropdownOpen(false)}>
           {children}
         </ul>
       </Transition>
@@ -70,4 +74,4 @@ function EditMenu({
   );
 }
 
-export default EditMenu;
+export default DropdownEditMenu;

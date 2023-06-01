@@ -5,9 +5,6 @@
 
 /* Additional styles */
 @import 'additional-styles/utility-patterns.css';
-@import 'additional-styles/range-slider.css';
-@import 'additional-styles/toggle-switch.css';
 @import 'additional-styles/flatpickr.css';
-@import 'additional-styles/theme.css';
 
 @import 'tailwindcss/utilities';

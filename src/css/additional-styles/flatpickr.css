@@ -20,7 +20,7 @@
 
 .flatpickr-calendar {
     border: inherit;
-    @apply rounded shadow-lg border border-slate-200 left-1/2;
+    @apply bg-white dark:bg-slate-800 rounded shadow-lg border border-slate-200 dark:border-slate-700 left-1/2;
     margin-left: calc(calc(var(--daysWidth) + calc(var(--calendarPadding)*2))*0.5*-1);
     padding: var(--calendarPadding);
     width: calc(var(--daysWidth) + calc(var(--calendarPadding)*2));
@@ -62,7 +62,7 @@
 }
 
 .flatpickr-day {
-    @apply bg-slate-50 text-sm font-medium text-slate-600;
+    @apply bg-slate-50 dark:bg-slate-700/20 text-sm font-medium text-slate-600 dark:text-slate-100;
     max-width: var(--daySize);
     height: var(--daySize);
     line-height: var(--daySize);
@@ -72,6 +72,16 @@
 .flatpickr-day.prevMonthDay,
 .flatpickr-day.nextMonthDay {
     border: none;
+}
+
+.flatpickr-day.flatpickr-disabled,
+.flatpickr-day.flatpickr-disabled:hover,
+.flatpickr-day.prevMonthDay,
+.flatpickr-day.nextMonthDay,
+.flatpickr-day.notAllowed,
+.flatpickr-day.notAllowed.prevMonthDay,
+.flatpickr-day.notAllowed.nextMonthDay {
+    @apply bg-transparent;
 }
 
 .flatpickr-day, 
@@ -96,7 +106,7 @@
 .flatpickr-day.notAllowed,
 .flatpickr-day.notAllowed.prevMonthDay,
 .flatpickr-day.notAllowed.nextMonthDay {
-    @apply text-slate-400;
+    @apply text-slate-400 dark:text-slate-500;
 }
 
 .rangeMode .flatpickr-day {
@@ -158,7 +168,7 @@
 .flatpickr-months .flatpickr-next-month {
     position: static;
     height: auto;
-    @apply text-slate-600;    
+    @apply text-slate-600 hover:text-slate-900 dark:text-slate-500 dark:hover:text-slate-300;    
 }
 
 .flatpickr-months .flatpickr-prev-month svg,
@@ -167,12 +177,9 @@
     height: 11px;
 }
 
-.flatpickr-months .flatpickr-prev-month:hover,
-.flatpickr-months .flatpickr-next-month:hover,
 .flatpickr-months .flatpickr-prev-month:hover svg,
 .flatpickr-months .flatpickr-next-month:hover svg {
-    fill: inherit;
-    @apply text-slate-400;
+    @apply fill-current;
 }
 
 .flatpickr-months .flatpickr-prev-month {
@@ -184,7 +191,7 @@
 }
 
 .flatpickr-months .flatpickr-month {
-    @apply text-slate-800;
+    @apply text-slate-800 dark:text-slate-100;
     height: auto;
     line-height: inherit;
 }
@@ -220,7 +227,7 @@
 }
 
 span.flatpickr-weekday {
-    @apply text-slate-400 font-medium text-xs;
+    @apply text-slate-400 dark:text-slate-500 font-medium text-xs;
 }
 
 .flatpickr-calendar.arrowTop::before,

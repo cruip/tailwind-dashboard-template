@@ -1,5 +1,7 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
+import { useThemeProvider } from '../utils/ThemeContext';
 
+import { chartColors } from './ChartjsConfig';
 import {
   Chart, LineController, LineElement, Filler, PointElement, LinearScale, TimeScale, Tooltip,
 } from 'chart.js';
@@ -16,13 +18,17 @@ function LineChart02({
   height
 }) {
 
+  const [chart, setChart] = useState(null)
   const canvas = useRef(null);
   const legend = useRef(null);
+  const { currentTheme } = useThemeProvider();
+  const darkMode = currentTheme === 'dark';
+  const { textColor, gridColor, tooltipBodyColor, tooltipBgColor, tooltipBorderColor } = chartColors;  
 
   useEffect(() => {
     const ctx = canvas.current;
     // eslint-disable-next-line no-unused-vars
-    const chart = new Chart(ctx, {
+    const newChart = new Chart(ctx, {
       type: 'line',
       data: data,
       options: {
@@ -34,12 +40,14 @@ function LineChart02({
             border: {
               display: false,
             },
-            grid: {
-              beginAtZero: true,
-            },
+            beginAtZero: true,
             ticks: {
               maxTicksLimit: 5,
               callback: (value) => formatValue(value),
+              color: darkMode ? textColor.dark : textColor.light,
+            },
+            grid: {
+              color: darkMode ? gridColor.dark : gridColor.light,
             },
           },
           x: {
@@ -60,6 +68,7 @@ function LineChart02({
             ticks: {
               autoSkipPadding: 48,
               maxRotation: 0,
+              color: darkMode ? textColor.dark : textColor.light,
             },
           },
         },
@@ -72,6 +81,9 @@ function LineChart02({
               title: () => false, // Disable tooltip title
               label: (context) => formatValue(context.parsed.y),
             },
+            bodyColor: darkMode ? tooltipBodyColor.dark : tooltipBodyColor.light,
+            backgroundColor: darkMode ? tooltipBgColor.dark : tooltipBgColor.light,
+            borderColor: darkMode ? tooltipBorderColor.dark : tooltipBorderColor.light,
           },
         },
         interaction: {
@@ -117,7 +129,7 @@ function LineChart02({
               box.style.pointerEvents = 'none';
               // Label
               const label = document.createElement('span');
-              label.style.color = tailwindConfig().theme.colors.slate[500];
+              label.classList.add('text-slate-500', 'dark:text-slate-400');
               label.style.fontSize = tailwindConfig().theme.fontSize.sm[0];
               label.style.lineHeight = tailwindConfig().theme.fontSize.sm[1].lineHeight;
               const labelText = document.createTextNode(item.text);
@@ -131,17 +143,39 @@ function LineChart02({
         },
       ],
     });
-    return () => chart.destroy();
+    setChart(newChart);
+    return () => newChart.destroy();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (!chart) return;
+
+    if (darkMode) {
+      chart.options.scales.x.ticks.color = textColor.dark;
+      chart.options.scales.y.ticks.color = textColor.dark;
+      chart.options.scales.y.grid.color = gridColor.dark;
+      chart.options.plugins.tooltip.bodyColor = tooltipBodyColor.dark;
+      chart.options.plugins.tooltip.backgroundColor = tooltipBgColor.dark;
+      chart.options.plugins.tooltip.borderColor = tooltipBorderColor.dark;
+    } else {
+      chart.options.scales.x.ticks.color = textColor.light;
+      chart.options.scales.y.ticks.color = textColor.light;
+      chart.options.scales.y.grid.color = gridColor.light;
+      chart.options.plugins.tooltip.bodyColor = tooltipBodyColor.light;
+      chart.options.plugins.tooltip.backgroundColor = tooltipBgColor.light;
+      chart.options.plugins.tooltip.borderColor = tooltipBorderColor.light;
+    }
+    chart.update('none');
+  }, [currentTheme]);
 
   return (
     <React.Fragment>
       <div className="px-5 py-3">
         <div className="flex flex-wrap justify-between items-end">
           <div className="flex items-start">
-            <div className="text-3xl font-bold text-slate-800 mr-2">$1,482</div>
-            <div className="text-sm font-semibold text-white px-1.5 bg-yellow-500 rounded-full">-22%</div>
+            <div className="text-3xl font-bold text-slate-800 dark:text-slate-100 mr-2">$1,482</div>
+            <div className="text-sm font-semibold text-white px-1.5 bg-amber-500 rounded-full">-22%</div>
           </div>
           <div className="grow ml-2 mb-1">
             <ul ref={legend} className="flex flex-wrap justify-end"></ul>
