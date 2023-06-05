@@ -1,6 +1,6 @@
 # Free Tailwind dashboard template
 
-![Mosaic TailwindCSS template preview](https://user-images.githubusercontent.com/2683512/115404502-ad322d80-a1ed-11eb-91c0-1aa79b0949f0.png)
+![Mosaic TailwindCSS template preview](https://github.com/cruip/tailwind-dashboard-template/assets/2683512/d252e308-8869-4b70-bce8-bb44071f8b2e)
 
 **Mosaic Lite** is a responsive dashboard template built on top of TailwindCSS and fully coded in React. It comes with several pre-coded charts (built with Chart.js 3) and widgets, and it's a great starting for anyone who wants to create a user interface for SaaS products, administrator dashboards, modern web apps, and more.
 
