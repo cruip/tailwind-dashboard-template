@@ -10,6 +10,7 @@ export const getAllBookings = async (event) => {
           nodes {
             _id
             seatNumbers
+            bookingNo
             from {
               _id
               city
@@ -32,7 +33,8 @@ export const getAllBookings = async (event) => {
             paymentStatus
             status
             passengers {
-              name
+              firstName
+              lastName
               gender
               age
             }
@@ -68,7 +70,6 @@ export const createBooking = async (event) => {
     phone,
     email,
     bookingDate,
-    billingId,
     passengerType,
     tripType,
     passengers,
@@ -89,7 +90,6 @@ export const createBooking = async (event) => {
         $phone: String
         $email: String
         $bookingDate: String
-        $billingId: String
         $passengerType: String
         $tripType: String
         $passengers: [Passengers]
@@ -108,7 +108,6 @@ export const createBooking = async (event) => {
           phone: $phone
           email: $email
           bookingDate: $bookingDate
-          billingId: $billingId
           tripType: $tripType
           passengers: $passengers
           passengerType: $passengerType
@@ -138,7 +137,6 @@ export const createBooking = async (event) => {
       phone,
       email,
       bookingDate,
-      billingId,
       passengerType,
       tripType,
       passengers,
@@ -163,6 +161,52 @@ export const cancelConfirmBooking = async (event) => {
     },
   });
   return { data, errors };
+};
+
+export const getBooking = async (bookingId) => {
+  const { data, errors, loading } = await client.query({
+    query: gql`
+      query getBooking($bookingId: String!) {
+        getBooking(bookingId: $bookingId) {
+          _id
+          amount
+          status
+          email
+          phone
+          datePaid
+          dateCancelled
+          bookingNo
+          referenceId
+          seatNumbers
+          busId
+          from {
+            locationName
+            address
+            city
+          }
+          to {
+            locationName
+            address
+            city
+          }
+          passengers {
+            firstName
+            lastName
+            gender
+            age
+          }
+          user {
+            firstName
+            lastName
+          }
+        }
+      }
+    `,
+    variables: {
+      bookingId,
+    },
+  });
+  return { data, errors, loading };
 };
 
 export const getAllTrips = async (event) => {

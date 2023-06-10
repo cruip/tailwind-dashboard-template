@@ -17,3 +17,9 @@ export const BusCompany = {
   THE_YOUNG: "young",
   PEACE_MASS_TRANSPORT: "peace",
 };
+
+export const statusEnum = {
+  Pending: "pending",
+  Cancelled: "cancelled",
+  Completed: "completed",
+};

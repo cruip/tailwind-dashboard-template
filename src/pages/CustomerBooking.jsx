@@ -68,6 +68,24 @@ const CustomerBooking = () => {
     setLocation(data?.getTerminals?.nodes);
   };
 
+  const onFilter = () => {
+    if (!searchQuery) fetchAllTransport();
+    if (searchQuery) {
+      const arrayData = data?.filter((item) => {
+        if (
+          item.name
+            .toLowerCase()
+            .trim()
+            .includes(searchQuery.toLowerCase().trim())
+        ) {
+          return item;
+        }
+        return false;
+      });
+      setData(arrayData);
+    }
+  };
+
   // const fetchAllRoutes = async () => {
   //   const { data } = await getAllRoutes(1, 10000);
   //   // console.log(data, "routes");
@@ -123,7 +141,7 @@ const CustomerBooking = () => {
 
   const tableHeader = [
     "Passengers Name",
-    // "Route",
+    "Booking No",
     "Amount Paid",
     "Seat No",
     "staus",
@@ -135,10 +153,10 @@ const CustomerBooking = () => {
       <tr key={data?._id} className="border-b-2 border-slate-200">
         <td className="multiple-span">
           {data?.passengers?.map((item, i) => (
-            <span key={i}>{item.name}</span>
+            <span key={i}>{item.firstName}</span>
           ))}
         </td>
-        {/* <td>{getRoute(data?.route)}</td> */}
+        <td>{data?.bookingNo}</td>
         <td>N{data?.amount}</td>
         <td className="multiple-span">
           <p className="w-14 md:w-20">
@@ -152,6 +170,12 @@ const CustomerBooking = () => {
         <td>
           <DropDown
             links={[
+              {
+                name: "View Booking",
+                isLink: true,
+                onclick: () => {},
+                link: `${data?._id}`,
+              },
               data?.status !== "pending"
                 ? {
                     name: "cancel Booking",
@@ -303,6 +327,7 @@ const CustomerBooking = () => {
         show={bookModal}
         onHide={toggleBookModal}
         location={location}
+        callBack={fetchAllBookings}
       />
     </Page>
   );

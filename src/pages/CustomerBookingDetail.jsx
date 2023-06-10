@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card } from "../partials/card/Card";
 import { Tab, Tabs, TabPane } from "../partials/Tabs";
 import Page from "../partials/page";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { getBooking } from "../services/bookingsService";
 import Modal from "../partials/modal/Modal";
+import Loader from "../partials/Loader";
 
 const CustomerBookingDetail = () => {
   const [cancelModal, setCancelModal] = React.useState(false);
@@ -11,6 +13,9 @@ const CustomerBookingDetail = () => {
   const [reschedulemModal, setRescheduleModal] = React.useState(false);
   const [changeStatusModal, setChangeStatusModal] = React.useState(false);
   const [invoiceModal, setInvoiceModal] = React.useState(false);
+  const [datas, setData] = useState(null);
+
+  const { id } = useParams();
 
   const toggleCancelModal = () => {
     setCancelModal(!cancelModal);
@@ -32,6 +37,26 @@ const CustomerBookingDetail = () => {
     setChangeStatusModal(!changeStatusModal);
   };
 
+  const fecthBooking = async (id) => {
+    const { data, loading, errors } = await getBooking(id);
+    if (data) {
+      setData(data?.getBooking);
+      setFetched(true);
+    }
+  };
+
+  useEffect(() => {
+    fecthBooking(id);
+  }, []);
+
+  if (!datas) {
+    return (
+      <div className="flex items-center justify-center w-full h-screen ">
+        <Loader />
+      </div>
+    );
+  }
+
   return (
     <Page>
       <div>
@@ -42,11 +67,81 @@ const CustomerBookingDetail = () => {
         </Link>
       </div>
       <h2 className="text-xl font-semibold text-sky-800">
-        Welcome to Victors Booking Page
+        Welcome to {datas?.user?.firstName} {datas?.user?.lastName} Booking
+        Detail
       </h2>
-      <div className="w-full mx-auto mt-8 xl:w-4/5">
+      <div className="w-full mx-auto mt-8">
         <Card width="w-full">
-          <Tabs defaultTab={0}>
+          <div className="grid grid-cols-2 gap-6">
+            <p className="flex flex-col items-start justify-center ">
+              <span className="text-base font-semibold text-center text-gray-600 ">
+                From
+              </span>
+              <span className="text-base text-gray-700">
+                {datas?.from?.address} {datas?.from?.city}
+              </span>
+            </p>
+            <p className="flex flex-col items-start justify-center ">
+              <span className="text-base font-semibold text-left text-gray-600 ">
+                To
+              </span>
+              <span className="text-base text-gray-700">
+                {datas?.to?.address} {datas?.to?.city}
+              </span>
+            </p>
+            <p className="flex flex-col items-start justify-center ">
+              <span className="text-base font-semibold text-center text-gray-600 ">
+                Amount paid
+              </span>
+              <span className="text-base text-gray-700">N{datas?.amount}</span>
+            </p>
+            <p className="flex flex-col items-start justify-center ">
+              <span className="text-base font-semibold text-center text-gray-600 ">
+                Email
+              </span>
+              <span className="text-base text-gray-700">N{datas?.email}</span>
+            </p>
+            <p className="flex flex-col items-start justify-center ">
+              <span className="text-base font-semibold text-center text-gray-600 ">
+                Seat No(s)
+              </span>
+              <span className="text-base text-gray-700">
+                {datas?.seatNumbers.map((seat) => (
+                  <span key={seat} className="mr-1">{seat}</span>
+                ))}
+              </span>
+            </p>
+            <p className="flex flex-col items-start justify-center ">
+              <span className="text-base font-semibold text-center text-gray-600 ">Status</span>
+              <span className="text-base text-gray-700">{datas?.status}</span>
+            </p>
+            <p className="flex flex-col items-start justify-center ">
+              <span className="text-base font-semibold text-center text-gray-600 ">Book Number</span>
+              <span className="text-base text-gray-700">{datas?.bookingNo}</span>
+            </p>
+          </div>
+           <p className="mt-6 font-medium text-left text-blue-900">Passengers</p>
+          
+          {
+            datas?.passengers?.map((item, i) => (
+              <div key={i} className="grid grid-cols-2 gap-6 pb-1 mt-2 border-b-2">
+              <p className="flex flex-col items-start justify-center ">
+              <span className="text-base font-semibold text-center text-gray-600 ">name</span>
+              <span className="text-base text-gray-700">{item?.firstName} {item?.lastName}</span>
+            </p>
+            <p className="flex flex-col items-start justify-center ">
+              <span className="text-base font-semibold text-center text-gray-600 ">Gender</span>
+              <span className="text-base text-gray-700">{item?.gender}</span>
+            </p>
+            <p className="flex flex-col items-start justify-center ">
+              <span className="text-base font-semibold text-center text-gray-600 ">age</span>
+              <span className="text-base text-gray-700">{item?.age}</span>
+            </p>
+            </div>
+            ))
+          }
+          
+          {/* <Tabs defaultTab={0}>
             <Tab label="Profile" tabIndex={0} />
             <Tab label="Travel history" tabIndex={1} />
             <div className="mt-4 ">
@@ -106,7 +201,7 @@ const CustomerBookingDetail = () => {
                 </div>
               </TabPane>
             </div>
-          </Tabs>
+          </Tabs> */}
         </Card>
       </div>
 
@@ -171,9 +266,7 @@ const CustomerBookingDetail = () => {
         <div className="px-8 pt-6 pb-8 mb-4 bg-white rounded shadow-md">
           <div className="relative inline-block w-full">
             <select className="block w-full px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline">
-              <option>
-                cancelled
-              </option>
+              <option>cancelled</option>
               <option>Option 2</option>
               <option>Option 3</option>
             </select>

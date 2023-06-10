@@ -19,12 +19,14 @@ export const CreateRouteModal = ({show, onHide, terminals}) => {
         setValues({
           ...values,
           [name]: value,
-          availableSeats: newAvailableSeat
         });
       };
       const handleCreateRoute = () => {
-       
-        if (Object.values(values).some((o) => o === "") ) return false;
+       console.log(values, 'see values');
+        if (Object.values(values).some((o) => o === "") ) {
+          toast.warn("kindly make sure all fields are filled");
+          return false;
+        }
         setSaving(true);
         // setTimeout(() => {
         createRoute({ ...values})
@@ -109,9 +111,9 @@ export const CreateRouteModal = ({show, onHide, terminals}) => {
             className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
             id="estimated-time"
             type="text"
-            value={values.expectedArrival}
+            value={values.estimateArrival}
             onChange={handleInputChange}
-            name="expectedArrival"
+            name="estimateArrival"
           />
         </div>
         <div className="mb-4">
