@@ -2,11 +2,11 @@ import { gql } from "@apollo/client";
 import client from "../apollo-client";
 
 export const getAllBookings = async (event) => {
-  const { page, size } = event;
+  const { page, size, filters } = event;
   const { data, errors, loading } = await client.query({
     query: gql`
-      query bookings($page: Int, $size: Int) {
-        getBookings(page: $page, size: $size) {
+      query bookings($page: Int, $size: Int, $filters: BookingFilter!) {
+        getBookings(page: $page, size: $size, filters: $filters) {
           nodes {
             _id
             seatNumbers
@@ -50,6 +50,7 @@ export const getAllBookings = async (event) => {
     variables: {
       page,
       size,
+      filters,
     },
   });
   return { data, loading, errors };

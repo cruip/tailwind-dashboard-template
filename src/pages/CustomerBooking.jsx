@@ -27,6 +27,19 @@ const CustomerBooking = () => {
   const [cancelModal, setCancelModal] = useState(false);
   const [confirmModal, setConfirmModal] = useState(false);
   const [bookModal, setBookModal] = useState(false);
+  const [searchFilters, setSearchFilters] = useState(
+    {
+      name: "",
+      bookingNo: "",
+      email: "",
+    }
+  )
+  const [stat, setStat] = useState(
+    {
+      pending: 0,
+      completed: 0,
+    }
+  )
 
   const date = new Date("2023-05-10");
 
@@ -34,7 +47,13 @@ const CustomerBooking = () => {
 
   // const userData = JSON.parse(localStorage.getItem("userData"));
   // const userId = userData?.authenticate?.user?._id;
-
+  const handleSearchChange = (e) => {
+    const { name, value } = e.target;
+    setSearchFilters({
+      ...searchFilters,
+      [name]: value,
+    });
+  };
   const onPrevPage = () => {
     setCurrentPage((prevState) => prevState - 1);
   };
@@ -54,11 +73,23 @@ const CustomerBooking = () => {
     setBookModal(!bookModal);
   };
 
-  const fetchAllBookings = async (size = 10, page) => {
-    const { data, loading } = await getAllBookings({ size, page });
+  const fetchAllBookings = async (size = 10, page, filters) => {
+    setTableLoad(true);
+    const { data, loading } = await getAllBookings({
+      size,
+      page,
+      filters: { ...filters },
+    });
     // console.log(data?.getBookings, "bookings");
     setTableLoad(false);
     setData(data?.getBookings?.nodes);
+    const pending = data?.getBookings?.nodes.filter((item) => item.status === 'pending')
+    const completed = data?.getBookings?.nodes.filter((item) => item.status === 'completed')
+    setStat({
+      ...stat,
+      pending: pending.length,
+      completed: completed.length
+    })
     setTotalPages(
       Math.ceil(Number(data?.getBookings?.pageInfo?.totalItems) / limit)
     );
@@ -68,6 +99,16 @@ const CustomerBooking = () => {
     setLocation(data?.getTerminals?.nodes);
   };
 
+  const searchBookingNo = async () => {
+    if(searchFilters.bookingNo){
+      setTableLoad(true);
+      await fetchAllBookings(10, currentPage, {
+        name: "",
+        bookingNo: searchFilters.bookingNo,
+        email: "",
+      });
+    }
+  }
   const onFilter = () => {
     if (!searchQuery) fetchAllTransport();
     if (searchQuery) {
@@ -118,17 +159,28 @@ const CustomerBooking = () => {
   // };
 
   useEffect(() => {
-    // fetchAllBookings();
-    // fetchAllRoutes()
-    fetchLocations();
+    if (searchFilters.email) {
+      const getData = setTimeout(() => {
+        fetchAllBookings(10, currentPage, {
+          name: "",
+          bookingNo: '',
+          email: searchFilters.email,
+        });
+        
 
-    return () => {
-      setData(null); // This worked for me
-    };
-  }, []);
+      }, 1000);
+
+      return () => clearTimeout(getData);
+    } else {
+      fetchAllBookings(10, currentPage);
+    }
+  }, [searchFilters]);
 
   useEffect(() => {
     fetchAllBookings(10, currentPage);
+    if(!location.length){
+      fetchLocations();
+    }
   }, [currentPage]);
 
   // const getRoute = (id) => {
@@ -233,22 +285,22 @@ const CustomerBooking = () => {
         </div>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <Card
-            name={"Total Seat Booked"}
-            description="Total Number of booked seats"
+            name={"Total Completed Bookings"}
+            description="Total Number of completed bookings"
           >
             <h3 className="mt-5 text-right">
               <span className="text-xl font-semibold text-sky-800">
-                {data?.length}
+                {stat.completed}
               </span>{" "}
               Seats
             </h3>
           </Card>
           <Card
-            name={"Total Unbooked Seat"}
-            description="Total Number of Unbooked seats"
+            name={"Total Pending Bookings"}
+            description="Total Number of pending bookings"
           >
             <h3 className="mt-5 text-right ">
-              <span className="text-xl font-semibold text-sky-800">0</span>{" "}
+              <span className="text-xl font-semibold text-sky-800">{stat.pending}</span>{" "}
               Seats
             </h3>
           </Card>
@@ -258,18 +310,39 @@ const CustomerBooking = () => {
       <section className="mt-10 ">
         <div className="col-12">
           <Card description={"Manage Booking"} width="w-full">
-            <div className="flex items-center justify-start w-full mt-2 md:justify-end ">
+            <div className="flex items-center justify-between w-full mt-2 ">
+              <div className="flex items-center">
+                <input
+                  className="w-2/3 px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none border-slate-500 focus:outline-none focus:shadow-outline"
+                  id="id"
+                  onChange={handleSearchChange}
+                  value={searchFilters.bookingNo}
+                  type="text"
+                  name="bookingNo"
+                  placeholder="search with booking No"
+                />
+                <button
+                  className="px-2 py-2 ml-1 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline"
+                  type="button"
+                  onClick={searchBookingNo}
+                >
+                  search
+                </button>
+              </div>
               <div className="flex items-center">
                 <label html="search" className="sr-only">
                   Search
                 </label>
                 <div className="relative w-full">
                   <input
-                    type="text"
+                    type="email"
                     id="search"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Search customer"
+                    placeholder="Search customer by email"
                     required
+                    onChange={handleSearchChange}
+                    value={searchFilters.email}
+                    name="email"
                   />
                   <button
                     type="button"
