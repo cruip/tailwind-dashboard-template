@@ -18,6 +18,9 @@ import DashboardCard10 from "../partials/dashboard/DashboardCard10";
 import DashboardCard11 from "../partials/dashboard/DashboardCard11";
 import DashboardCard12 from "../partials/dashboard/DashboardCard12";
 import DashboardCard13 from "../partials/dashboard/DashboardCard13";
+import DashboardCardDaily from "../partials/dashboard/DashboardCardDaily";
+import DashboardCardWeekly from "../partials/dashboard/DashboardCardWeekly";
+import DashboardCardMonthly from "../partials/dashboard/DashboardCardMonthly";
 import Banner from "../partials/Banner";
 import { getTerminals } from "../services/locationService";
 import {
@@ -150,11 +153,16 @@ function Dashboard() {
       {/* Cards */}
       <div className="grid grid-cols-12 gap-6">
         {/* Line chart (daily booking) */}
+        <DashboardCardDaily data={bookstat} />
+        <DashboardCardWeekly data={bookstat} />
+        <DashboardCardMonthly data={bookstat} />
         <DashboardCard01 data={bookstat} />
         {/* Line chart (weekly booking) */}
         <DashboardCard02 data={bookstat} />
         {/* Line chart (monthly booking) */}
         <DashboardCard03 data={bookstat} />
+        
+
         {/* Bar chart (Direct vs Indirect) */}
         {/* <DashboardCard04 /> */}
         {/* Line chart (Real Time Value) */}
