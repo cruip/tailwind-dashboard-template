@@ -7,7 +7,7 @@ import EditMenu from "../EditMenu";
 // Import utilities
 import { tailwindConfig, hexToRGB } from "../../utils/Utils";
 
-function DashboardCardMonthly({ data }) {
+function DashboardCard004({ data }) {
   const chartData = {
     labels: [
       "12-01-2020",
@@ -74,11 +74,11 @@ function DashboardCardMonthly({ data }) {
   };
 
   return (
-    <div className="flex flex-col pb-3 bg-white border rounded-sm shadow-lg col-span-full sm:col-span-4 xl:col-span-3 border-slate-200">
+    <div className="flex flex-col pb-3 bg-white border rounded-sm shadow-lg col-span-full sm:col-span-6 xl:col-span-12 border-slate-200">
       <div className="px-5 pt-5">
         <header className="flex items-start justify-between mb-2">
           {/* Icon */}
-          <img src={Icon} width="32" height="32" alt="Icon 01" />
+          <img src={Icon} width="32" height="32" alt="Icon 004" />
           {/* Menu button */}
           {/* <EditMenu className="relative inline-flex">
             <li>
@@ -92,59 +92,64 @@ function DashboardCardMonthly({ data }) {
             </li>
           </EditMenu> */}
         </header>
-        <h2 className="mb-2 text-lg font-semibold text-slate-800">
-          Monthly Sales
-        </h2>
-        <h3 className="mb-3">Amount: #{data?.completed?.totalAmountMonthly}</h3>
-        {/* <div className="mb-1 text-xs font-semibold uppercase text-slate-400">
+        <div className="mb-1 text-xs font-semibold uppercase text-slate-400">
           Statistics
-        </div> */}
+        </div>
 
-        {/* <div className="py-2 bg-green-50">
+        <div className="py-2 bg-green-50">
           <h2 className="mb-2 text-lg font-semibold text-slate-800">
             Completed Booking
           </h2>
 
           <h2 className="font-semibold text-md text-slate-800">
-            Total: {data?.completed?.monthTotal}
+            Total: {data?.completed?.yearTotal}
           </h2>
           <div className="flex items-center">
             <span>Amount:</span>
             <div className="ml-2 mr-2 text-xl font-bold text-slate-800">
-              #{data?.completed?.totalAmountMonthly}
+              #{data?.completed?.totalAmountYearly}
             </div>
+            {/* <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
+                +49%
+              </div> */}
           </div>
-        </div> */}
-        {/* <div className="py-2 mt-2 bg-yellow-50">
+        </div>
+        <div className="py-2 mt-2 bg-yellow-50">
           <h2 className="mb-2 text-lg font-semibold text-slate-800">
             Pending Booking
           </h2>
 
           <h2 className="font-semibold text-md text-slate-800">
-            Total: {data?.pending?.monthTotal}
+            Total: {data?.pending?.yearTotal}
           </h2>
           <div className="flex items-center">
             <span>Amount:</span>
             <div className="ml-2 mr-2 text-xl font-bold text-slate-800">
-              #{data?.pending?.totalAmountMonthly}
+              #{data?.pending?.totalAmountYearly}
             </div>
+            {/* <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
+                +49%
+              </div> */}
           </div>
-        </div> */}
-        {/* <div className="py-2 mt-2 bg-red-50">
+        </div>
+        <div className="py-2 mt-2 bg-red-50">
           <h2 className="mb-2 text-lg font-semibold text-slate-800">
             Cancelled Booking
           </h2>
 
           <h2 className="font-semibold text-md text-slate-800">
-            Total: {data?.canceled?.monthTotal}
+            Total: {data?.canceled?.yearTotal}
           </h2>
           <div className="flex items-center">
             <span>Amount:</span>
             <div className="ml-2 mr-2 text-xl font-bold text-slate-800">
-              #{data?.canceled?.totalAmountMonthly}
+              #{data?.canceled?.totalAmountYearly}
             </div>
+            {/* <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
+                +49%
+              </div> */}
           </div>
-        </div> */}
+        </div>
       </div>
       {/* Chart built with Chart.js 3 */}
       {/* <div className="grow"> */}
@@ -155,4 +160,4 @@ function DashboardCardMonthly({ data }) {
   );
 }
 
-export default DashboardCardMonthly;
+export default DashboardCard004;

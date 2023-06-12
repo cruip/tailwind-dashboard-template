@@ -7,7 +7,7 @@ import EditMenu from "../EditMenu";
 // Import utilities
 import { tailwindConfig, hexToRGB } from "../../utils/Utils";
 
-function DashboardCardMonthly({ data }) {
+function DashboardCardYearly({ data }) {
   const chartData = {
     labels: [
       "12-01-2020",
@@ -41,8 +41,8 @@ function DashboardCardMonthly({ data }) {
       // Indigo line
       {
         data: [
-          540, 466, 540, 466, 385, 432, 334, 334, 289, 289, 200, 289, 222, 289,
-          289, 403, 554, 304, 289, 270, 134, 270, 829, 344, 388, 364,
+          622, 622, 426, 471, 365, 365, 238, 324, 288, 206, 324, 324, 500, 409,
+          409, 273, 232, 273, 500, 570, 767, 808, 685, 767, 685, 685,
         ],
         fill: true,
         backgroundColor: `rgba(${hexToRGB(
@@ -59,8 +59,8 @@ function DashboardCardMonthly({ data }) {
       // Gray line
       {
         data: [
-          689, 562, 477, 477, 477, 477, 458, 314, 430, 378, 430, 498, 642, 350,
-          145, 145, 354, 260, 188, 188, 300, 300, 282, 364, 660, 554,
+          732, 610, 610, 504, 504, 504, 349, 349, 504, 342, 504, 610, 391, 192,
+          154, 273, 191, 191, 126, 263, 349, 252, 423, 622, 470, 532,
         ],
         borderColor: tailwindConfig().theme.colors.slate[300],
         borderWidth: 2,
@@ -74,11 +74,11 @@ function DashboardCardMonthly({ data }) {
   };
 
   return (
-    <div className="flex flex-col pb-3 bg-white border rounded-sm shadow-lg col-span-full sm:col-span-4 xl:col-span-3 border-slate-200">
+    <div className="flex flex-col pb-3 bg-white border rounded-sm shadow-lg col-span-full sm:col-span-12 xl:col-span-3 border-slate-200">
       <div className="px-5 pt-5">
         <header className="flex items-start justify-between mb-2">
           {/* Icon */}
-          <img src={Icon} width="32" height="32" alt="Icon 01" />
+          <img src={Icon} width="32" height="32" alt="Icon 004" />
           {/* Menu button */}
           {/* <EditMenu className="relative inline-flex">
             <li>
@@ -93,9 +93,9 @@ function DashboardCardMonthly({ data }) {
           </EditMenu> */}
         </header>
         <h2 className="mb-2 text-lg font-semibold text-slate-800">
-          Monthly Sales
+        Yearly Sales
         </h2>
-        <h3 className="mb-3">Amount: #{data?.completed?.totalAmountMonthly}</h3>
+        <h3 className="mb-3">Amount: #{data?.completed?.totalAmountYearly}</h3>
         {/* <div className="mb-1 text-xs font-semibold uppercase text-slate-400">
           Statistics
         </div> */}
@@ -106,12 +106,12 @@ function DashboardCardMonthly({ data }) {
           </h2>
 
           <h2 className="font-semibold text-md text-slate-800">
-            Total: {data?.completed?.monthTotal}
+            Total: {data?.completed?.weekTotal}
           </h2>
           <div className="flex items-center">
             <span>Amount:</span>
             <div className="ml-2 mr-2 text-xl font-bold text-slate-800">
-              #{data?.completed?.totalAmountMonthly}
+              #{data?.completed?.totalAmountWeekly}
             </div>
           </div>
         </div> */}
@@ -121,13 +121,14 @@ function DashboardCardMonthly({ data }) {
           </h2>
 
           <h2 className="font-semibold text-md text-slate-800">
-            Total: {data?.pending?.monthTotal}
+            Total: {data?.pending?.weekTotal}
           </h2>
           <div className="flex items-center">
             <span>Amount:</span>
             <div className="ml-2 mr-2 text-xl font-bold text-slate-800">
-              #{data?.pending?.totalAmountMonthly}
+              #{data?.pending?.totalAmountWeekly}
             </div>
+           
           </div>
         </div> */}
         {/* <div className="py-2 mt-2 bg-red-50">
@@ -136,13 +137,14 @@ function DashboardCardMonthly({ data }) {
           </h2>
 
           <h2 className="font-semibold text-md text-slate-800">
-            Total: {data?.canceled?.monthTotal}
+            Total: {data?.canceled?.weekTotal}
           </h2>
           <div className="flex items-center">
             <span>Amount:</span>
             <div className="ml-2 mr-2 text-xl font-bold text-slate-800">
-              #{data?.canceled?.totalAmountMonthly}
+              #{data?.canceled?.totalAmountWeekly}
             </div>
+           
           </div>
         </div> */}
       </div>
@@ -155,4 +157,4 @@ function DashboardCardMonthly({ data }) {
   );
 }
 
-export default DashboardCardMonthly;
+export default DashboardCardYearly;

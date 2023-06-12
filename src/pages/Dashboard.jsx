@@ -8,6 +8,7 @@ import Datepicker from "../partials/actions/Datepicker";
 import DashboardCard01 from "../partials/dashboard/DashboardCard01";
 import DashboardCard02 from "../partials/dashboard/DashboardCard02";
 import DashboardCard03 from "../partials/dashboard/DashboardCard03";
+import DashboardCard004 from "../partials/dashboard/DasboardCard004";
 import DashboardCard04 from "../partials/dashboard/DashboardCard04";
 import DashboardCard05 from "../partials/dashboard/DashboardCard05";
 import DashboardCard06 from "../partials/dashboard/DashboardCard06";
@@ -21,6 +22,7 @@ import DashboardCard13 from "../partials/dashboard/DashboardCard13";
 import DashboardCardDaily from "../partials/dashboard/DashboardCardDaily";
 import DashboardCardWeekly from "../partials/dashboard/DashboardCardWeekly";
 import DashboardCardMonthly from "../partials/dashboard/DashboardCardMonthly";
+import DashboardCardYearly from "../partials/dashboard/DashboardCardYearly";
 import Banner from "../partials/Banner";
 import { getTerminals } from "../services/locationService";
 import {
@@ -156,13 +158,14 @@ function Dashboard() {
         <DashboardCardDaily data={bookstat} />
         <DashboardCardWeekly data={bookstat} />
         <DashboardCardMonthly data={bookstat} />
+        <DashboardCardYearly data={bookstat} />
         <DashboardCard01 data={bookstat} />
         {/* Line chart (weekly booking) */}
         <DashboardCard02 data={bookstat} />
         {/* Line chart (monthly booking) */}
         <DashboardCard03 data={bookstat} />
+        <DashboardCard004 data={bookstat} />
         
-
         {/* Bar chart (Direct vs Indirect) */}
         {/* <DashboardCard04 /> */}
         {/* Line chart (Real Time Value) */}
