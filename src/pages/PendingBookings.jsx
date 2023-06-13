@@ -15,7 +15,7 @@ import { getAllLocations, getTerminals } from "../services/locationService";
 import { BookSeatModal, ToggleStatusModal } from "../componets/modals";
 import { ToastContainer, toast } from "react-toastify";
 
-const CustomerBooking = () => {
+const PendingBooking = () => {
   const [limit, setLimit] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(3);
@@ -41,8 +41,8 @@ const CustomerBooking = () => {
 
   let today = Date.parse(date);
 
-  // const userData = JSON.parse(localStorage.getItem("userData"));
-  // const userId = userData?.authenticate?.user?._id;
+  var OneDay = new Date().getTime() + (1 * 24 * 60 * 60 * 1000)
+  
   const handleSearchChange = (e) => {
     const { name, value } = e.target;
     setSearchFilters({
@@ -78,18 +78,9 @@ const CustomerBooking = () => {
     });
     // console.log(data?.getBookings, "bookings");
     setTableLoad(false);
-    setData(data?.getBookings?.nodes);
-    const pending = data?.getBookings?.nodes.filter(
-      (item) => item.status === "pending"
-    );
-    const completed = data?.getBookings?.nodes.filter(
-      (item) => item.status === "completed"
-    );
-    setStat({
-      ...stat,
-      pending: pending.length,
-      completed: completed.length,
-    });
+    const newData = data?.getBookings?.nodes.filter((items) => new Date(items.bookingDate).getTime() < OneDay && items.status === 'pending')
+    setData(newData);
+    
     setTotalPages(
       Math.ceil(Number(data?.getBookings?.pageInfo?.totalItems) / limit)
     );
@@ -118,71 +109,8 @@ const CustomerBooking = () => {
       });
     }
   };
-  const onFilter = () => {
-    if (!searchQuery) fetchAllTransport();
-    if (searchQuery) {
-      const arrayData = data?.filter((item) => {
-        if (
-          item.name
-            .toLowerCase()
-            .trim()
-            .includes(searchQuery.toLowerCase().trim())
-        ) {
-          return item;
-        }
-        return false;
-      });
-      setData(arrayData);
-    }
-  };
 
-  // const fetchAllRoutes = async () => {
-  //   const { data } = await getAllRoutes(1, 10000);
-  //   // console.log(data, "routes");
-  //   setRoutes(data?.getRoutes?.nodes);
-  //   // const location = {};
-  //   // data?.getRoutes?.nodes?.map((item) => {
-  //   //   location[item.from.city] = item.from;
-  //   // });
-
-  //   // setLocationCities(Object.values(location));
-  // };
-
-  // const handlBookingStatus = (id, status) => {
-  //   cancelConfirmBooking({
-  //     bookingId: id,
-  //     status: status,
-  //   })
-  //     .then(async (r) => {
-  //       toast.success(
-  //         `${
-  //           status == "false"
-  //             ? "Booking cancelled succesfully"
-  //             : "Booking Confirmed"
-  //         }`
-  //       );
-  //       await fetchAllBookings();
-  //       setId("");
-  //     })
-  //     .catch(() => toast.error("Oops! something went wrong"));
-  // };
-
-  // useEffect(() => {
-  //   if (searchFilters.email) {
-  //     const getData = setTimeout(() => {
-  //       fetchAllBookings(10, currentPage, {
-  //         name: "",
-  //         bookingNo: '',
-  //         email: searchFilters.email,
-  //       });
-
-  //     }, 1000);
-
-  //     return () => clearTimeout(getData);
-  //   } else {
-  //     fetchAllBookings(10, currentPage);
-  //   }
-  // }, [searchFilters.email]);
+  
 
   useEffect(() => {
     fetchAllBookings(10, currentPage);
@@ -191,14 +119,7 @@ const CustomerBooking = () => {
     }
   }, [currentPage]);
 
-  // const getRoute = (id) => {
-  //   console.log(id, 'route');
-  //   const route = routes?.find((item) => {
-  //     return item._id === id;
-  //   });
-  //   return route?.name;
-  // };
-
+ 
   const tableHeader = [
     "Passengers Name",
     "Booking No",
@@ -234,7 +155,7 @@ const CustomerBooking = () => {
                 name: "View Booking",
                 isLink: true,
                 onclick: () => {},
-                link: `${data?._id}`,
+                link: `/booking${data?._id}`,
               },
               data?.status !== "completed" && {
                 name: "Confirm Booking",
@@ -281,41 +202,6 @@ const CustomerBooking = () => {
   return (
     <Page>
       <ToastContainer />
-      <section>
-        <div className="flex items-center justify-between mb-6">
-          <p>Book a seat</p>
-          <button
-            className="px-4 py-2 text-white transition-shadow duration-150 rounded-md shadow-md w-52 bg-sky-800 hover:shadow-lg"
-            onClick={toggleBookModal}
-          >
-            Book Seat
-          </button>
-        </div>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          <Card
-            name={"Total Completed Bookings"}
-            description="Total Number of completed bookings"
-          >
-            <h3 className="mt-5 text-right">
-              <span className="text-xl font-semibold text-sky-800">
-                {stat.completed}
-              </span>{" "}
-              Seats
-            </h3>
-          </Card>
-          <Card
-            name={"Total Pending Bookings"}
-            description="Total Number of pending bookings"
-          >
-            <h3 className="mt-5 text-right ">
-              <span className="text-xl font-semibold text-sky-800">
-                {stat.pending}
-              </span>{" "}
-              Seats
-            </h3>
-          </Card>
-        </div>
-      </section>
 
       <section className="mt-10 ">
         <div className="col-12">
@@ -357,29 +243,7 @@ const CustomerBooking = () => {
                   search
                 </button>
               </div>
-              {/* <div className="flex items-center">
-                <label html="search" className="sr-only">
-                  Search
-                </label>
-                <div className="relative w-full">
-                  <input
-                    type="email"
-                    id="search"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Search customer by email"
-                    required
-                    onChange={handleSearchChange}
-                    value={searchFilters.email}
-                    name="email"
-                  />
-                  <button
-                    type="button"
-                    className="absolute inset-y-0 right-0 flex items-center pr-3"
-                  >
-                    <SVGIcon name="search" />
-                  </button>
-                </div>
-              </div> */}
+            
             </div>
             <div className="mt-10">
               <Table
@@ -434,4 +298,4 @@ const CustomerBooking = () => {
   );
 };
 
-export default CustomerBooking;
+export default PendingBooking;

@@ -20,6 +20,7 @@ import DashboardCard12 from "../partials/dashboard/DashboardCard12";
 import DashboardCard13 from "../partials/dashboard/DashboardCard13";
 import Banner from "../partials/Banner";
 import { getTerminals } from "../services/locationService";
+import { useNavigate } from "react-router-dom";
 import {
   getAllTransporter,
   getPopularTransporter,
@@ -38,6 +39,11 @@ function Dashboard() {
   });
   const [addRouteModal, setAddRouteModal] = useState(false);
   const [addTerminalModal, setAddTerminalModal] = useState(false);
+  const navigate = useNavigate();
+
+  function handleClick() {
+    navigate("/booking/pending");
+  }
 
   const fetchBookStat = async () => {
     const { data } = await getBookingStat();
@@ -104,7 +110,7 @@ function Dashboard() {
         <DashboardAvatars companies={companies} />
 
         {/* Right: Actions */}
-        {/* <div className="grid justify-start grid-flow-col gap-2 sm:auto-cols-max sm:justify-end"> */}
+        <div className="grid justify-start grid-flow-col gap-2 sm:auto-cols-max sm:justify-end">
         {/* Filter button */}
         {/* <FilterButton /> */}
         {/* Datepicker built with flatpickr */}
@@ -116,7 +122,14 @@ function Dashboard() {
                     </svg>
                     <span className="hidden ml-2 xs:block">Add view</span>
                 </button>                 */}
-        {/* </div> */}
+
+                 <button className="text-white bg-indigo-500 btn hover:bg-indigo-600" onClick={handleClick}>
+                    <svg className="w-4 h-4 opacity-50 fill-current shrink-0" viewBox="0 0 16 16">
+                        <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
+                    </svg>
+                    <span className="hidden ml-2 xs:block">View Latest pending</span>
+                </button>  
+        </div>
       </div>
 
       {/* add buttons actions  */}

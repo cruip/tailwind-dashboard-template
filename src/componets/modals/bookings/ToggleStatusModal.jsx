@@ -6,7 +6,7 @@ import { cancelConfirmBooking } from "../../../services/bookingsService";
 export const ToggleStatusModal = ({ show, onHide, id, callBack, status }) => {
   const [saving,  setSaving] = useState(false)
   const handlBookingStatus = (id, status) => {
-    setSaving(!saving)
+    setSaving(true)
     cancelConfirmBooking({
       bookingId: id,
       status: status,
@@ -14,17 +14,17 @@ export const ToggleStatusModal = ({ show, onHide, id, callBack, status }) => {
       .then(async (r) => {
         toast.success(
           `${
-            status == "false"
+            status == "cancelled"
               ? "Booking cancelled succesfully"
               : "Booking Confirmed"
           }`
         );
+        // setId("");
         await callBack();
         onHide()
-        setId("");
       })
-      .catch(() => toast.error("Oops! something went wrong"));
-      setSaving(!saving)
+      .catch(() => toast.error("Oops! something went wrong"))
+     .finally(() =>  setSaving(false))
   };
 
 
@@ -32,7 +32,7 @@ export const ToggleStatusModal = ({ show, onHide, id, callBack, status }) => {
     <>
       <ToastContainer />
       <Modal show={show} size="md" onHide={onHide} width="30%">
-        <p> Do you want to cancel this booking?</p>
+        <p> Do you want to {status === 'cancelled' ? 'Cancel' : 'Confirm'} this booking?</p>
         <div className="flex justify-between px-4 py-5 bg-gray-50 sm:px-6 sm:flex-row-reverse">
           <button
             type="button"
