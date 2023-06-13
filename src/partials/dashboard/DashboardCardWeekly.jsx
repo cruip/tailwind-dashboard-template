@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import LineChart from "../../charts/LineChart01";
-import Icon from "../../images/icon-01.svg";
+import Icon from "../../images/icon-02.svg";
 import EditMenu from "../EditMenu";
 
 // Import utilities
 import { tailwindConfig, hexToRGB } from "../../utils/Utils";
 
-function DashboardCard01({ data }) {
+function DashboardCardWeekly({ data }) {
   const chartData = {
     labels: [
       "12-01-2020",
@@ -41,8 +41,8 @@ function DashboardCard01({ data }) {
       // Indigo line
       {
         data: [
-          732, 610, 610, 504, 504, 504, 349, 349, 504, 342, 504, 610, 391, 192,
-          154, 273, 191, 191, 126, 263, 349, 252, 423, 622, 470, 532,
+          622, 622, 426, 471, 365, 365, 238, 324, 288, 206, 324, 324, 500, 409,
+          409, 273, 232, 273, 500, 570, 767, 808, 685, 767, 685, 685,
         ],
         fill: true,
         backgroundColor: `rgba(${hexToRGB(
@@ -59,8 +59,8 @@ function DashboardCard01({ data }) {
       // Gray line
       {
         data: [
-          532, 532, 532, 404, 404, 314, 314, 314, 314, 314, 234, 314, 234, 234,
-          314, 314, 314, 388, 314, 202, 202, 202, 202, 314, 720, 642,
+          732, 610, 610, 504, 504, 504, 349, 349, 504, 342, 504, 610, 391, 192,
+          154, 273, 191, 191, 126, 263, 349, 252, 423, 622, 470, 532,
         ],
         borderColor: tailwindConfig().theme.colors.slate[300],
         borderWidth: 2,
@@ -74,7 +74,7 @@ function DashboardCard01({ data }) {
   };
 
   return (
-    <div className="flex flex-col pb-3 bg-white border rounded-sm shadow-lg col-span-full sm:col-span-6 xl:col-span-4 border-slate-200">
+    <div className="flex flex-col pb-3 bg-white border rounded-sm shadow-lg col-span-full sm:col-span-4 xl:col-span-3 border-slate-200">
       <div className="px-5 pt-5">
         <header className="flex items-start justify-between mb-2">
           {/* Icon */}
@@ -92,64 +92,61 @@ function DashboardCard01({ data }) {
             </li>
           </EditMenu> */}
         </header>
-        <div className="mb-1 text-xs font-semibold uppercase text-slate-400">
+        <h2 className="mb-2 text-lg font-semibold text-slate-800">
+          Weekly Sales
+        </h2>
+        <h3 className="mb-3">Amount: #{data?.completed?.totalAmountWeekly}</h3>
+        {/* <div className="mb-1 text-xs font-semibold uppercase text-slate-400">
           Statistics
-        </div>
+        </div> */}
 
-        <div className="py-2 bg-green-50">
+        {/* <div className="py-2 bg-green-50">
           <h2 className="mb-2 text-lg font-semibold text-slate-800">
             Completed Booking
           </h2>
 
           <h2 className="font-semibold text-md text-slate-800">
-            Total: {data?.completed?.todayTotal}
+            Total: {data?.completed?.weekTotal}
           </h2>
           <div className="flex items-center">
             <span>Amount:</span>
             <div className="ml-2 mr-2 text-xl font-bold text-slate-800">
-              #{data?.completed?.totalAmountToday}
+              #{data?.completed?.totalAmountWeekly}
             </div>
-            {/* <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
-                +49%
-              </div> */}
           </div>
-        </div>
-        <div className="py-2 mt-2 bg-yellow-50">
+        </div> */}
+        {/* <div className="py-2 mt-2 bg-yellow-50">
           <h2 className="mb-2 text-lg font-semibold text-slate-800">
             Pending Booking
           </h2>
 
           <h2 className="font-semibold text-md text-slate-800">
-            Total: {data?.pending?.todayTotal}
+            Total: {data?.pending?.weekTotal}
           </h2>
           <div className="flex items-center">
             <span>Amount:</span>
             <div className="ml-2 mr-2 text-xl font-bold text-slate-800">
-              #{data?.pending?.totalAmountToday}
+              #{data?.pending?.totalAmountWeekly}
             </div>
-            {/* <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
-                +49%
-              </div> */}
+           
           </div>
-        </div>
-        <div className="py-2 mt-2 bg-red-50">
+        </div> */}
+        {/* <div className="py-2 mt-2 bg-red-50">
           <h2 className="mb-2 text-lg font-semibold text-slate-800">
             Cancelled Booking
           </h2>
 
           <h2 className="font-semibold text-md text-slate-800">
-            Total: {data?.canceled?.todayTotal}
+            Total: {data?.canceled?.weekTotal}
           </h2>
           <div className="flex items-center">
             <span>Amount:</span>
             <div className="ml-2 mr-2 text-xl font-bold text-slate-800">
-              #{data?.canceled?.totalAmountToday}
+              #{data?.canceled?.totalAmountWeekly}
             </div>
-            {/* <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
-                +49%
-              </div> */}
+           
           </div>
-        </div>
+        </div> */}
       </div>
       {/* Chart built with Chart.js 3 */}
       {/* <div className="grow"> */}
@@ -160,4 +157,4 @@ function DashboardCard01({ data }) {
   );
 }
 
-export default DashboardCard01;
+export default DashboardCardWeekly;

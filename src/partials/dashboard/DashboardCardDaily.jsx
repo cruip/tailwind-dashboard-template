@@ -7,7 +7,7 @@ import EditMenu from "../EditMenu";
 // Import utilities
 import { tailwindConfig, hexToRGB } from "../../utils/Utils";
 
-function DashboardCard01({ data }) {
+function DashboardCardDaily({ data }) {
   const chartData = {
     labels: [
       "12-01-2020",
@@ -74,7 +74,7 @@ function DashboardCard01({ data }) {
   };
 
   return (
-    <div className="flex flex-col pb-3 bg-white border rounded-sm shadow-lg col-span-full sm:col-span-6 xl:col-span-4 border-slate-200">
+    <div className="flex flex-col pb-3 bg-white border rounded-sm shadow-lg col-span-full sm:col-span-4 xl:col-span-3 border-slate-200">
       <div className="px-5 pt-5">
         <header className="flex items-start justify-between mb-2">
           {/* Icon */}
@@ -92,11 +92,15 @@ function DashboardCard01({ data }) {
             </li>
           </EditMenu> */}
         </header>
-        <div className="mb-1 text-xs font-semibold uppercase text-slate-400">
+        <h2 className="mb-2 text-lg font-semibold text-slate-800">
+          Daily Sales
+        </h2>
+        <h3 className="mb-3">Amount: #{data?.completed?.totalAmountToday}</h3>
+        {/* <div className="mb-1 text-xs font-semibold uppercase text-slate-400">
           Statistics
-        </div>
+        </div> */}
 
-        <div className="py-2 bg-green-50">
+        {/* <div className="py-2 bg-green-50">
           <h2 className="mb-2 text-lg font-semibold text-slate-800">
             Completed Booking
           </h2>
@@ -109,12 +113,9 @@ function DashboardCard01({ data }) {
             <div className="ml-2 mr-2 text-xl font-bold text-slate-800">
               #{data?.completed?.totalAmountToday}
             </div>
-            {/* <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
-                +49%
-              </div> */}
           </div>
-        </div>
-        <div className="py-2 mt-2 bg-yellow-50">
+        </div> */}
+        {/* <div className="py-2 mt-2 bg-yellow-50">
           <h2 className="mb-2 text-lg font-semibold text-slate-800">
             Pending Booking
           </h2>
@@ -127,12 +128,9 @@ function DashboardCard01({ data }) {
             <div className="ml-2 mr-2 text-xl font-bold text-slate-800">
               #{data?.pending?.totalAmountToday}
             </div>
-            {/* <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
-                +49%
-              </div> */}
           </div>
-        </div>
-        <div className="py-2 mt-2 bg-red-50">
+        </div> */}
+        {/* <div className="py-2 mt-2 bg-red-50">
           <h2 className="mb-2 text-lg font-semibold text-slate-800">
             Cancelled Booking
           </h2>
@@ -145,11 +143,8 @@ function DashboardCard01({ data }) {
             <div className="ml-2 mr-2 text-xl font-bold text-slate-800">
               #{data?.canceled?.totalAmountToday}
             </div>
-            {/* <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
-                +49%
-              </div> */}
           </div>
-        </div>
+        </div> */}
       </div>
       {/* Chart built with Chart.js 3 */}
       {/* <div className="grow"> */}
@@ -160,4 +155,4 @@ function DashboardCard01({ data }) {
   );
 }
 
-export default DashboardCard01;
+export default DashboardCardDaily;
