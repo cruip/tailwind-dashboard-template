@@ -155,7 +155,7 @@ const PendingBooking = () => {
                 name: "View Booking",
                 isLink: true,
                 onclick: () => {},
-                link: `/booking${data?._id}`,
+                link: `/booking/${data?._id}`,
               },
               data?.status !== "completed" && {
                 name: "Confirm Booking",
