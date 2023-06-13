@@ -127,7 +127,6 @@ export const createRoute = async (event) => {
         ) {
           _id
           name
-          address
         }
       }
     `,

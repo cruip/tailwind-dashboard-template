@@ -2,6 +2,9 @@ import React, { useState, useEffect, useCallback } from "react";
 import Modal from "../../../partials/modal/Modal";
 import { ToastContainer, toast } from "react-toastify";
 import { createBooking, getAllTrips } from "../../../services/bookingsService";
+import { statusEnum } from "../../../utils/enum";
+import { enumToArray } from "../../../utils/helper";
+
 import moment from "moment";
 import Select from "react-select";
 
@@ -9,11 +12,11 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
   const userData = JSON.parse(localStorage.getItem("userData"));
   const userId = userData?.authenticate?.user?._id;
   const date = new Date();
-  // const today = new Date().toISOString().split('T')[0];
-  const today = date.toISOString().split('T')[0]
+  const today = date.toISOString().split("T")[0];
 
   const [saving, setSaving] = useState(false);
   const [isRouting, setIsRouting] = useState(false);
+  // const [roundTrip, setRoundTrip] = useState(false);
   const [buses, setBuses] = useState(null);
   const [seats, setSeats] = useState(null);
   const [routes, setRoutes] = useState(null);
@@ -27,19 +30,23 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
     phone: "",
     email: "",
     seatNumbers: [],
-    tripType: "Round Trip",
+    tripType: "One Way",
     passengerType: "adult",
     amount: 1,
-    status: "true",
+    status: "pending",
   });
   const [passengerss, setPassengerss] = useState([
     {
-      name: "",
+      lastName: "",
+      firstName: "",
       age: "",
       gender: "",
     },
   ]);
   const [totalPrice, setTotalPrice] = useState("");
+  const Bookstat = enumToArray(statusEnum);
+
+  // const toggleRound = () => setRoundTrip((value) => !value);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -63,11 +70,17 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
     setPassengerss([
       ...passengerss,
       {
-        name: "",
+        lastName: "",
+        firstName: "",
         age: "",
         gender: "",
       },
     ]);
+  };
+
+  const removePassenger = (index) => {
+    const newPassengers = passengerss.filter((_, i) => i !== index);
+    setPassengerss(newPassengers);
   };
 
   const handleSelectSeat = (e) => {
@@ -98,8 +111,15 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
   };
 
   const handleBooking = () => {
-    if (Object.values(values).some((o) => o === "") && !passengerss)
+    if (Object.values(values).some((o) => o === "") && !passengerss) {
+      toast.warn("kindly fill all fields");
       return false;
+    }
+
+    if (values.seatNumbers.length !== passengerss.length) {
+      toast.warn("seat selected is not same as number of passengers");
+      return;
+    }
     createBooking({
       ...values,
       passengers: [...passengerss],
@@ -126,7 +146,8 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
         });
         setPassengerss([
           {
-            name: "",
+            lastName: "",
+            firstName: "",
             age: "",
             gender: "",
           },
@@ -216,6 +237,20 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
         <p className="text-lg font-medium text-sky-800">Book a Seat</p>
         <div className="px-8 pt-6 pb-8 mb-4 overflow-y-auto bg-white rounded shadow-md">
           <form className="w-full max-w-2xl">
+            {/* <div className="flex items-center w-full px-3 mb-6">
+              <label
+                className="block mr-3 text-xs font-bold tracking-wide text-gray-700 uppercase"
+                htmlFor="isround"
+              >
+                Round Trip
+              </label>
+              <input
+                id="isround"
+                type="checkbox"
+                checked={roundTrip}
+                onChange={toggleRound}
+              />
+            </div> */}
             <div className="flex flex-wrap mb-6 -mx-3">
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label
@@ -283,8 +318,8 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
               </div>
             </div>
 
-            <div className="flex flex-wrap mb-6 -mx-3">
-              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+            <div className="flex flex-wrap mb-0 -mx-3">
+              <div className={`className="w-full px-3 mb-6 md:w-1/2 md:mb-0"`}>
                 <label
                   className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
                   htmlFor="grid-depature-date"
@@ -303,6 +338,27 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
               </div>
               <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label
+                  className="block mb-2 text-sm font-bold text-gray-700"
+                  htmlFor="bookstat"
+                >
+                  Booking status
+                </label>
+                <select
+                  className="block w-full px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline"
+                  value={values.status}
+                  onChange={handleInputChange}
+                  name="status"
+                >
+                  <option value="">select booking stat code</option>
+                  {Bookstat.map((type) => (
+                    <option value={type.text}>{type.value}</option>
+                  ))}
+                </select>
+              </div>
+              {/* {
+                roundTrip && (
+                  <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+                <label
                   className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
                   htmlFor="grid-return-date"
                 >
@@ -318,6 +374,8 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
                   onChange={(e) => handleInputChange(e)}
                 />
               </div>
+                )
+              } */}
             </div>
             <div className="flex flex-wrap mb-6 -mx-3">
               <div className="w-full px-3 mb-6 md:mb-0">
@@ -482,7 +540,7 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
                   <option value="infants">infants</option>
                 </select>
               </div>
-              <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+              {/* <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                 <label
                   className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
                   htmlFor="grid-trip-type"
@@ -499,27 +557,54 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
                   <option value={"Round Trip"}>Round Trip</option>
                   <option value={"One Way"}>One Way</option>
                 </select>
-              </div>
+              </div> */}
             </div>
             {passengerss.map((item, i) => (
               <div
                 className="flex flex-wrap pt-4 mb-6 -mx-3 border-t-2 border-slate-300"
                 key={i}
               >
+                {i > 0 && (
+                  <div className="flex justify-end w-full">
+                    <span
+                      className="px-1 text-red-500 bg-red-200 rounded cursor-pointer"
+                      onClick={() => removePassenger(i)}
+                    >
+                      remove
+                    </span>
+                  </div>
+                )}
+                <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
+                  <label
+                    className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
+                    htmlFor="grid-passenger-fname"
+                  >
+                    Passenger First Name
+                  </label>
+                  <input
+                    className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white"
+                    id="grid-passenger-fname"
+                    type="text"
+                    placeholder="firstName"
+                    value={item.firstName}
+                    name="firstName"
+                    onChange={(e) => handlePassengerInput(i, e)}
+                  />
+                </div>
                 <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
                   <label
                     className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
                     htmlFor="grid-passenger-name"
                   >
-                    Passenger Name
+                    Passenger Last Name
                   </label>
                   <input
                     className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white"
                     id="grid-passenger-name"
                     type="text"
-                    placeholder="name"
-                    value={item.name}
-                    name="name"
+                    placeholder="lastName"
+                    value={item.lastName}
+                    name="lastName"
                     onChange={(e) => handlePassengerInput(i, e)}
                   />
                 </div>
