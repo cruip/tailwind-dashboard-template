@@ -2,7 +2,7 @@ import React from "react";
 
 function DashboardCard07({ data }) {
   return (
-    <div className="bg-white border rounded-sm shadow-lg col-span-full xl:col-span-8 border-slate-200">
+    <div className="bg-white border rounded-sm shadow-lg col-span-full xl:col-span-12 border-slate-200">
       <header className="px-5 py-4 border-b border-slate-100">
         <h2 className="font-semibold text-slate-800">
           Popular Transport Company

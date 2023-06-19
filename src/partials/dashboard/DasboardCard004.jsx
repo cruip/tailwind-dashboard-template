@@ -74,7 +74,7 @@ function DashboardCard004({ data }) {
   };
 
   return (
-    <div className="flex flex-col pb-3 bg-white border rounded-sm shadow-lg col-span-full sm:col-span-6 xl:col-span-12 border-slate-200">
+    <div className="flex flex-col pb-3 bg-white border rounded-sm shadow-lg col-span-full sm:col-span-6 xl:col-span-4 border-slate-200">
       <div className="px-5 pt-5">
         <header className="flex items-start justify-between mb-2">
           {/* Icon */}
@@ -93,7 +93,7 @@ function DashboardCard004({ data }) {
           </EditMenu> */}
         </header>
         <div className="mb-1 text-xs font-semibold uppercase text-slate-400">
-          Yearly Statistics
+          Yearly
         </div>
 
         <div className="py-2 bg-green-50">
@@ -102,12 +102,12 @@ function DashboardCard004({ data }) {
           </h2>
 
           <h2 className="font-semibold text-md text-slate-800">
-            Total: {data?.completed?.yearTotal}
+            Total: {data?.completed?.yearTotal || 0}
           </h2>
           <div className="flex items-center">
             <span>Amount:</span>
             <div className="ml-2 mr-2 text-xl font-bold text-slate-800">
-              #{data?.completed?.totalAmountYearly}
+              #{data?.completed?.totalAmountYearly || 0}
             </div>
             {/* <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
                 +49%
@@ -120,12 +120,12 @@ function DashboardCard004({ data }) {
           </h2>
 
           <h2 className="font-semibold text-md text-slate-800">
-            Total: {data?.pending?.yearTotal}
+            Total: {data?.pending?.yearTotal || 0}
           </h2>
           <div className="flex items-center">
             <span>Amount:</span>
             <div className="ml-2 mr-2 text-xl font-bold text-slate-800">
-              #{data?.pending?.totalAmountYearly}
+              #{data?.pending?.totalAmountYearly || 0}
             </div>
             {/* <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
                 +49%
@@ -138,17 +138,17 @@ function DashboardCard004({ data }) {
           </h2>
 
           <h2 className="font-semibold text-md text-slate-800">
-            Total: {data?.canceled?.yearTotal}
+            Total: {data?.canceled?.yearTotal || 0}
           </h2>
-          {/* <div className="flex items-center">
+          <div className="flex items-center">
             <span>Amount:</span>
             <div className="ml-2 mr-2 text-xl font-bold text-slate-800">
-              #{data?.canceled?.totalAmountYearly}
+              #{data?.canceled?.totalAmountYearly || 0}
             </div>
-            <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
+            {/* <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
                 +49%
-              </div>
-          </div> */}
+              </div> */}
+          </div>
         </div>
       </div>
       {/* Chart built with Chart.js 3 */}
