@@ -93,7 +93,7 @@ function DashboardCard004({ data }) {
           </EditMenu> */}
         </header>
         <div className="mb-1 text-xs font-semibold uppercase text-slate-400">
-          Statistics
+          Yearly Statistics
         </div>
 
         <div className="py-2 bg-green-50">
@@ -140,15 +140,15 @@ function DashboardCard004({ data }) {
           <h2 className="font-semibold text-md text-slate-800">
             Total: {data?.canceled?.yearTotal}
           </h2>
-          <div className="flex items-center">
+          {/* <div className="flex items-center">
             <span>Amount:</span>
             <div className="ml-2 mr-2 text-xl font-bold text-slate-800">
               #{data?.canceled?.totalAmountYearly}
             </div>
-            {/* <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
+            <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
                 +49%
-              </div> */}
-          </div>
+              </div>
+          </div> */}
         </div>
       </div>
       {/* Chart built with Chart.js 3 */}
