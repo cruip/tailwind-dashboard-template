@@ -23,10 +23,10 @@ export const CreateTerminalModal = ({ show, onHide }) => {
     setValues({
       ...values,
       [name]: value,
-      availableSeats: newAvailableSeat,
     });
   };
   const handleCreateTerminal = () => {
+    console.log(values, 'values');
     if (Object.values(values).some((o) => o === "")) return false;
     setSaving(true);
     // setTimeout(() => {
@@ -35,7 +35,10 @@ export const CreateTerminalModal = ({ show, onHide }) => {
         toast.success("terminal created successfully");
         onHide();
       })
-      .catch(() => toast.error("Oops! something went wrong"))
+      .catch((error) => {
+        console.log(error);
+        toast.error("Oops! something went wrong")
+      })
       .finally(() => setSaving(false));
     // }, 2000);
   };
