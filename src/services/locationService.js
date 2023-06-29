@@ -69,16 +69,16 @@ export const createTerminal = async (event) => {
   } = event;
   const { data, errors } = await client.mutate({
     mutation: gql`
-      mutation createTerminal(
-        locationName: String!
-locationCode: String
-address: String
-city: String!
-streetAddress: String
-cityCode: String
-stateCode: String
-longitude: String
-latitude: String
+      mutation addTerminal(
+        $locationCode: String
+        $locationName: String!
+        $address: String
+        $city: String!
+        $streetAddress: String
+        $cityCode: String
+        $stateCode: String
+        $longitude: String
+        $latitude: String
       ) {
         addTerminal(
           locationName: $locationName
@@ -92,8 +92,6 @@ latitude: String
           latitude: $latitude
         ) {
           _id
-          name
-          address
         }
       }
     `,
