@@ -165,9 +165,10 @@ export const cancelConfirmBooking = async (event) => {
 };
 
 export const getBooking = async (bookingId) => {
+  console.log(bookingId, "id");
   const { data, errors, loading } = await client.query({
     query: gql`
-      query getBooking($bookingId: String!) {
+      query getBooking($bookingId: String) {
         getBooking(bookingId: $bookingId) {
           _id
           amount
@@ -195,10 +196,6 @@ export const getBooking = async (bookingId) => {
             lastName
             gender
             age
-          }
-          user {
-            firstName
-            lastName
           }
         }
       }
