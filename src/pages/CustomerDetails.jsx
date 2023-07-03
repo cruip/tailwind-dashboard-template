@@ -26,20 +26,10 @@ const Customer = () => {
 
   const fetchUser = async (id) => {
     const { data, errors } = await getSingleUsers(id);
+    setTableLoad(false);
     setData(data.getUser);
   };
 
-  const fetchAllBookings = async () => {
-    const { data, loading } = await getAllBookings(1, 1000);
-    setTableLoad(false);
-    const filterBookings = data?.getBookings?.nodes?.filter((item) => {
-      if (item.user?._id == id) {
-        return item;
-      }
-      return false;
-    });
-    setBookings(filterBookings);
-  };
 
   const fetchAllRoutes = async () => {
     const { data } = await getAllRoutes(1, 10000);
@@ -68,7 +58,6 @@ const Customer = () => {
 
   useEffect(() => {
     fetchUser(id);
-    fetchAllBookings();
     fetchAllRoutes();
   }, []);
 
@@ -148,7 +137,7 @@ const Customer = () => {
           </h2>
           <div className="mt-5 ">
                       <Table
-                        data={bookings}
+                        data={data.bookings}
                         onNext={onNextPage}
                         onPrev={onPrevPage}
                         currentPage={currentPage}

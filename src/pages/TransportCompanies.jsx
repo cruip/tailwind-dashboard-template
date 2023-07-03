@@ -19,7 +19,7 @@ const TransportCompanies = () => {
   const [tableLoad, setTableLoad] = useState(true);
   const [datas, setData] = useState(null);
   // const [locations, setLocations] = useState(null)
-  const [activeCompany, setActiveCompany] = useState(0);
+  const [totalCompany, setTotalCompany] = useState(0);
   const [inActiveCompany, setInActiveCompany] = useState(0);
   const [Singledatas, setSingleData] = useState(null);
   const [companyNames, setCompanyNames] = useState(null);
@@ -51,14 +51,14 @@ const TransportCompanies = () => {
 
   const fetchUnpaginatedTransport = async () => {
     const { data } = await getAllTransporter(1, 100000);
-    const activeCompany = data?.getTransporters?.nodes?.filter(
-      (item) => item.status == "true"
-    );
-    const inActiveCompany = data?.getTransporters?.nodes?.filter(
-      (item) => item.status != "true"
-    );
-    setActiveCompany(activeCompany?.length);
-    setInActiveCompany(inActiveCompany?.length);
+    // const activeCompany = data?.getTransporters?.nodes?.filter(
+    //   (item) => item.status == "true"
+    // );
+    // const inActiveCompany = data?.getTransporters?.nodes?.filter(
+    //   (item) => item.status != "true"
+    // );
+    setTotalCompany(data?.getTransporters?.nodes?.length);
+    // setInActiveCompany(inActiveCompany?.length);
   };
 
   // const fetchLocations = async () => {
@@ -222,19 +222,19 @@ const TransportCompanies = () => {
             Add Company
           </button>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <Card
-            name={"Active Transport Companies"}
+            name={"Total Transport Companies"}
             description="Total Number of Active Transport Companies"
           >
             <h3 className="mt-5 text-right">
               <span className="text-xl font-semibold text-sky-800">
-                {activeCompany || 0}
+                {totalCompany || 0}
               </span>{" "}
               Companies
             </h3>
           </Card>
-          <Card
+          {/* <Card
             name={"Inactive Transport Companies"}
             description="Total Number of Inactive Transport Companies"
           >
@@ -244,14 +244,14 @@ const TransportCompanies = () => {
               </span>{" "}
               Companies
             </h3>
-          </Card>
+          </Card> */}
         </div>
       </section>
 
       <section className="mt-10 ">
         <div className="col-12">
           <Card description={"Manage transport Company"} width="w-full">
-            <div className="md:flex md:items-center md:justify-between w-full mt-4">
+            <div className="w-full mt-4 md:flex md:items-center md:justify-between">
               <div className="flex items-center w-100">
                 <p className="mr-3">Filter By company Name:</p>
                 <select

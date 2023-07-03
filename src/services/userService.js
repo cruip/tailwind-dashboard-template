@@ -76,24 +76,31 @@ export const getSingleUsers = async (userId) => {
           imageUrl
           bookings {
             _id
-            email
-            billingId
-            phone
             amount
+            status
+            email
+            phone
+            datePaid
+            dateCancelled
+            bookingNo
+            referenceId
             seatNumbers
-            bookingDate
-            departureDate
+            busId
             from {
-              _id
-              city
               locationName
               address
+              city
             }
             to {
-              _id
               locationName
               address
               city
+            }
+            passengers {
+              firstName
+              lastName
+              gender
+              age
             }
           }
         }
