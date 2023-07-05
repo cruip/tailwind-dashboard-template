@@ -74,7 +74,7 @@ function DashboardCardYearly({ data }) {
   };
 
   return (
-    <div className="flex flex-col pb-3 bg-white border rounded-sm shadow-lg col-span-full sm:col-span-12 xl:col-span-3 border-slate-200">
+    <div className="flex flex-col pb-3 bg-white border rounded-sm shadow-lg col-span-full sm:col-span-4 xl:col-span-3 border-slate-200">
       <div className="px-5 pt-5">
         <header className="flex items-start justify-between mb-2">
           {/* Icon */}
@@ -95,7 +95,7 @@ function DashboardCardYearly({ data }) {
         <h2 className="mb-2 text-lg font-semibold text-slate-800">
         Yearly Sales
         </h2>
-        <h3 className="mb-3">Amount: #{data?.completed?.totalAmountYearly}</h3>
+        <h3 className="mb-3">Amount: #{data?.completed?.totalAmountYearly || 0}</h3>
         {/* <div className="mb-1 text-xs font-semibold uppercase text-slate-400">
           Statistics
         </div> */}

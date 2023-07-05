@@ -93,7 +93,7 @@ function DashboardCard02({ data }) {
           </EditMenu> */}
         </header>
         <div className="mb-1 text-xs font-semibold uppercase text-slate-400">
-          Statistics
+          Weekly
         </div>
 
         <div className="py-2 bg-green-50">
@@ -102,12 +102,12 @@ function DashboardCard02({ data }) {
           </h2>
 
           <h2 className="font-semibold text-md text-slate-800">
-            Total: {data?.completed?.weekTotal}
+            Total: {data?.completed?.weekTotal || 0}
           </h2>
           <div className="flex items-center">
             <span>Amount:</span>
             <div className="ml-2 mr-2 text-xl font-bold text-slate-800">
-              #{data?.completed?.totalAmountWeekly}
+              #{data?.completed?.totalAmountWeekly || 0}
             </div>
             {/* <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
                 +49%
@@ -120,12 +120,12 @@ function DashboardCard02({ data }) {
           </h2>
 
           <h2 className="font-semibold text-md text-slate-800">
-            Total: {data?.pending?.weekTotal}
+            Total: {data?.pending?.weekTotal || 0}
           </h2>
           <div className="flex items-center">
             <span>Amount:</span>
             <div className="ml-2 mr-2 text-xl font-bold text-slate-800">
-              #{data?.pending?.totalAmountWeekly}
+              #{data?.pending?.totalAmountWeekly || 0}
             </div>
             {/* <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
                 +49%
@@ -138,12 +138,12 @@ function DashboardCard02({ data }) {
           </h2>
 
           <h2 className="font-semibold text-md text-slate-800">
-            Total: {data?.canceled?.weekTotal}
+            Total: {data?.canceled?.weekTotal || 0}
           </h2>
           <div className="flex items-center">
             <span>Amount:</span>
             <div className="ml-2 mr-2 text-xl font-bold text-slate-800">
-              #{data?.canceled?.totalAmountWeekly}
+              #{data?.canceled?.totalAmountWeekly || 0}
             </div>
             {/* <div className="text-sm font-semibold text-white px-1.5 bg-green-500 rounded-full">
                 +49%

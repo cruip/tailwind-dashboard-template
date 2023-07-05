@@ -166,18 +166,26 @@ function Dashboard() {
       </div>
 
       {/* Cards */}
-      <div className="grid grid-cols-12 gap-6">
-        {/* Line chart (daily booking) */}
-        <DashboardCardDaily data={bookstat} />
+      <div className="grid grid-cols-12 gap-6 mb-14">
+      <DashboardCardDaily data={bookstat} />
         <DashboardCardWeekly data={bookstat} />
         <DashboardCardMonthly data={bookstat} />
         <DashboardCardYearly data={bookstat} />
+      </div>
+      <div className="mb-4 text-xl font-bold uppercase text-indigo-500">
+          booking Statistics
+        </div>
+      <div className="grid grid-cols-12 gap-6 mb-14">
         <DashboardCard01 data={bookstat} />
         {/* Line chart (weekly booking) */}
         <DashboardCard02 data={bookstat} />
         {/* Line chart (monthly booking) */}
         <DashboardCard03 data={bookstat} />
         <DashboardCard004 data={bookstat} />
+        </div>
+      <div className="grid grid-cols-12 gap-6">
+        {/* Line chart (daily booking) */}
+      
         
         {/* Bar chart (Direct vs Indirect) */}
         {/* <DashboardCard04 /> */}

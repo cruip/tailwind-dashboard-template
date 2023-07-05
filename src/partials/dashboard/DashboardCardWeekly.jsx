@@ -95,7 +95,7 @@ function DashboardCardWeekly({ data }) {
         <h2 className="mb-2 text-lg font-semibold text-slate-800">
           Weekly Sales
         </h2>
-        <h3 className="mb-3">Amount: #{data?.completed?.totalAmountWeekly}</h3>
+        <h3 className="mb-3">Amount: #{data?.completed?.totalAmountWeekly || 0}</h3>
         {/* <div className="mb-1 text-xs font-semibold uppercase text-slate-400">
           Statistics
         </div> */}
