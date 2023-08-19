@@ -103,6 +103,13 @@ const CustomerBookingDetail = () => {
             </p>
             <p className="flex flex-col items-start justify-center ">
               <span className="text-base font-semibold text-center text-gray-600 ">
+              Departure Date
+              </span>
+              <span className="text-base text-gray-700">{datas?.departureDate}</span>
+            </p>
+  
+            <p className="flex flex-col items-start justify-center ">
+              <span className="text-base font-semibold text-center text-gray-600 ">
                 Seat No(s)
               </span>
               <span className="text-base text-gray-700">

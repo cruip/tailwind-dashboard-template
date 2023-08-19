@@ -178,6 +178,7 @@ export const getBooking = async (bookingId) => {
           datePaid
           dateCancelled
           bookingNo
+          departureDate
           referenceId
           seatNumbers
           busId

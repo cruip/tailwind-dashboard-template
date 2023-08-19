@@ -202,9 +202,10 @@ const CustomerBooking = () => {
   const tableHeader = [
     "Passengers Name",
     "Booking No",
+    "Email",
     "Amount Paid",
     "Seat No",
-    "staus",
+    "Status",
     "Action",
   ];
 
@@ -217,6 +218,7 @@ const CustomerBooking = () => {
           ))}
         </td>
         <td>{data?.bookingNo}</td>
+        <td>{data?.email}</td>
         <td>N{data?.amount}</td>
         <td className="multiple-span">
           <p className="w-14 md:w-20">
