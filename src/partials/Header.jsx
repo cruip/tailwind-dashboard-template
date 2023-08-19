@@ -12,7 +12,7 @@ function Header({
   const [searchModalOpen, setSearchModalOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 bg-white border-b border-slate-200 z-30">
+    <header className="sticky top-0 z-10 bg-white border-b border-slate-200">
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 -mb-px">
 
@@ -51,10 +51,10 @@ function Header({
               </svg>
             </button>
             <SearchModal id="search-modal" searchId="search" modalOpen={searchModalOpen} setModalOpen={setSearchModalOpen} />
-            <Notifications />
+            {/* <Notifications /> */}
             <Help />
             {/*  Divider */}
-            <hr className="w-px h-6 bg-slate-200 mx-3" />
+            <hr className="w-px h-6 mx-3 bg-slate-200" />
             <UserMenu />
 
           </div>

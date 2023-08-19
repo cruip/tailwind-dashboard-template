@@ -1,11 +1,13 @@
 import React from 'react';
 
 function WelcomeBanner() {
+  const userData = JSON.parse(localStorage.getItem('userData'));
+  const user = userData?.authenticate?.user
   return (
-    <div className="relative bg-indigo-200 p-4 sm:p-6 rounded-sm overflow-hidden mb-8">
+    <div className="relative p-4 mb-8 overflow-hidden bg-indigo-200 rounded-sm sm:p-6">
 
       {/* Background illustration */}
-      <div className="absolute right-0 top-0 -mt-4 mr-16 pointer-events-none hidden xl:block" aria-hidden="true">
+      <div className="absolute top-0 right-0 hidden mr-16 -mt-4 pointer-events-none xl:block" aria-hidden="true">
         <svg width="319" height="198" xmlnsXlink="http://www.w3.org/1999/xlink">
           <defs>
             <path id="welcome-a" d="M64 0l64 128-64-20-64 20z" />
@@ -48,8 +50,8 @@ function WelcomeBanner() {
 
       {/* Content */}
       <div className="relative">
-        <h1 className="text-2xl md:text-3xl text-slate-800 font-bold mb-1">Good afternoon, Acme Inc. 👋</h1>
-        <p>Here is what’s happening with your projects today:</p>
+        <h1 className="mb-1 text-2xl font-bold md:text-3xl text-slate-800">Hello {user?.firstName || ''} {user?.lastName || ''} 👋</h1>
+        <p>Here is what’s happening with your Company today:</p>
       </div>
 
     </div>
