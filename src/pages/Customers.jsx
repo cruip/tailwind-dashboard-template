@@ -125,7 +125,7 @@ const Customers = () => {
                 link: `${data?._id}`,
               },
               {
-                name: "Deete User",
+                name: "Delete User",
                 isLink: false,
                 onclick: () => {
                   toggleDeleteModal();
