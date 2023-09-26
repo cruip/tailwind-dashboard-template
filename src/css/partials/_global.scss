@@ -46,3 +46,11 @@ th:first-child {
     }
   }
 }
+
+::placeholder {
+  color: rgb(202, 195, 195) !important;
+}
+
+label {
+  text-transform: capitalize;
+}

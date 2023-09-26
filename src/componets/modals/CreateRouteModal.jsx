@@ -5,10 +5,10 @@ import { createRoute } from "../../services/routeService";
 
 export const CreateRouteModal = ({show, onHide, terminals}) => {
     const [values, setValues] = useState({
-        distance: '',
+        distance: 'nill',
         to: '',
         from: '',
-        estimateArrival: '',
+        estimateArrival: 'nill',
         name: '',
         country: ''
     })
@@ -59,7 +59,7 @@ export const CreateRouteModal = ({show, onHide, terminals}) => {
             name="name"
           />
         </div>
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <label
             className="block mb-2 text-sm font-bold text-gray-700"
             htmlFor="distance"
@@ -74,7 +74,7 @@ export const CreateRouteModal = ({show, onHide, terminals}) => {
             onChange={handleInputChange}
             name="distance"
           />
-        </div>
+        </div> */}
         <div className="mb-4">
           <label
             className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
@@ -100,7 +100,7 @@ export const CreateRouteModal = ({show, onHide, terminals}) => {
             
           </select>
         </div>
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <label
             className="block mb-2 text-sm font-bold text-gray-700"
             htmlFor="estimated-time"
@@ -115,7 +115,7 @@ export const CreateRouteModal = ({show, onHide, terminals}) => {
             onChange={handleInputChange}
             name="estimateArrival"
           />
-        </div>
+        </div> */}
         <div className="mb-4">
           <label
             className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
