@@ -216,6 +216,7 @@ function Dashboard() {
       <CreateTerminalModal
         show={addTerminalModal}
         onHide={toggleAddTerminalModal}
+        callBack={fetchTerminals}
       />
       {/* <CreateRouteModal shhow={addRouteModal}  onHide={toggleAddRouteModal}  terminals={terminals}/> */}
     </Page>

@@ -13,7 +13,7 @@ export const AddBusModal = ({
   id,
   name,
   terminals,
-  routes
+  routes,
 }) => {
   const [saving, setSaving] = useState(false);
   const [logoUrl, setLogoUrl] = useState(null);
@@ -41,21 +41,17 @@ export const AddBusModal = ({
   const busClass = enumToArray(busClassEnum);
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    let newAvailableSeat = values.availableSeats
-    if(name === 'numberOfSeats'){
-      //  newAvailableSeat = [...Array(Number(values.numberOfSeats)).keys()].map((_, i) => ((i + 1).toString()))
-      newAvailableSeat = [...Array(Math.max(0, values.numberOfSeats)).keys()].map((_, i) => (i + 1).toString())
-
+    const { name, value, type } = e.target;
+    let newAvailableSeat = values.availableSeats;
+    if (name === "numberOfSeats") {
+      newAvailableSeat = Array.from({ length: parseInt(value) }, (_, i) => (i + 1).toString());
     }
     setValues({
       ...values,
-      [name]: value,
-      availableSeats: newAvailableSeat
+      [name]: type === "checkbox" ? e.target.checked : value,
+      availableSeats: newAvailableSeat,
     });
-    console.log(values, 'values');
   };
-
 
   const handleSelectSeat = useCallback(
     (e, type) => {
@@ -97,7 +93,7 @@ export const AddBusModal = ({
     setValues({
       ...values,
       occupiedSeat: [...seatno],
-      availableSeats: [...values.availableSeats, ix]
+      availableSeats: [...values.availableSeats, ix],
     });
   };
 
@@ -117,18 +113,30 @@ export const AddBusModal = ({
   };
 
   const handleCreateTranport = () => {
-    const newDepatureDate = departureDate.map((item) => item.format('YYYY-MM-DD'))
-    // console.log(departureDate, 'date', newDepatureDate)
-    // return
-    if (Object.values(values).some((o) => o === "") && !logoUrl && !departureDate.length) return false;
-    if(values.departureTerminal === values.arrivalTerminal) {
-      toast.warn('you selected same terminal for depature and arrival, kindly change')
+    const newDepatureDate = departureDate.map((item) =>
+      item.format("YYYY-MM-DD")
+    );
+   
+    if (
+      Object.values(values).some((o) => o === "") &&
+      !logoUrl &&
+      !departureDate.length
+    )
+      return false;
+    if (values.departureTerminal === values.arrivalTerminal) {
+      toast.warn(
+        "you selected same terminal for depature and arrival, kindly change"
+      );
       return;
     }
     setSaving(true);
-    // console.log(values, 'see values');
-    // setTimeout(() => {
-    addBus({ ...values, busImage: logoUrl, companyId: id, departureDate: newDepatureDate, status: values.status ==='true' ? true : false, hasAC: values.hasAC ==='true' ? true : false })
+    
+    addBus({
+      ...values,
+      busImage: logoUrl,
+      companyId: id,
+      departureDate: newDepatureDate,
+    })
       .then(async () => {
         toast.success("Bus added successfully");
         await callBack();
@@ -137,9 +145,7 @@ export const AddBusModal = ({
         onHide();
       })
       .catch(() => toast.error("Oops! something went wrong"))
-      .finally(() => setSaving(false))
-    // }, 2000);
-    
+      .finally(() => setSaving(false));
   };
 
   return (
@@ -163,7 +169,7 @@ export const AddBusModal = ({
             >
               <option value="">select type</option>
               {busType.map((type) => (
-                <option value={type.value}>{type.text}</option>
+                <option key={type.value} value={type.value}>{type.text}</option>
               ))}
             </select>
           </div>
@@ -182,7 +188,7 @@ export const AddBusModal = ({
             >
               <option value="">select class</option>
               {busClass.map((type) => (
-                <option value={type.value}>{type.text}</option>
+                <option key={type.value} value={type.value}>{type.text}</option>
               ))}
             </select>
           </div>
@@ -200,8 +206,10 @@ export const AddBusModal = ({
               name="route"
             >
               <option value="">select a route</option>
-          {routes?.map((item) => (
-            <option key={item._id} value={item._id}>{item.name}</option>
+              {routes?.map((item) => (
+                <option key={item._id} value={item._id}>
+                  {item.name}
+                </option>
               ))}
             </select>
           </div>
@@ -228,8 +236,15 @@ export const AddBusModal = ({
             >
               Depature Date
             </label>
-            
-            <DatePicker minDate={new DateObject().subtract(0, "days")} containerClassName=' w-full' inputClass='w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline' multiple value={departureDate} onChange={setDepartureDates} />
+
+            <DatePicker
+              minDate={new DateObject().subtract(0, "days")}
+              containerClassName=" w-full"
+              inputClass="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              multiple
+              value={departureDate}
+              onChange={setDepartureDates}
+            />
           </div>
           <div className="mb-4">
             <label
@@ -241,7 +256,7 @@ export const AddBusModal = ({
             <input
               className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
               id="estimated-time"
-              type="text"
+              type="time"
               value={values.expectedArrival}
               onChange={handleInputChange}
               name="expectedArrival"
@@ -264,56 +279,8 @@ export const AddBusModal = ({
               min={0}
             />
           </div>
-          {/* <div className="mb-4">
-            <label
-              className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
-              htmlFor="availableseat"
-            >
-              Available Seat
-            </label>
-
-            <select
-              className="block w-full px-4 py-3 pr-8 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-              id="availableseat"
-              value=""
-              name="availableSeats"
-              onChange={(e) => {
-                handleSelectSeat(e, "available");
-                // handlePrice(e.target.value)
-              }}
-            >
-              <option value="" disabled={true} hidden={true}>
-                {" "}
-                select Avalable seats
-              </option>
-              {!values.numberOfSeats || !values.numberOfSeats.length ? (
-                <option value={""} disabled={true}>
-                  No Seat Available
-                </option>
-              ) : (
-                // renderSeats([...Array(Number(values.numberOfSeats)).keys()])
-                [...Array(Number(values.numberOfSeats)).keys()].map((_, i) => (
-                  <option key={i} value={i + 1}>
-                    {i + 1}
-                  </option>
-                ))
-              )}
-            </select>
-            {values.availableSeats.length
-              ? values.availableSeats.map((item, i) => (
-                  <span
-                    onClick={() => deleteSeat(i)}
-                    className="px-2 mr-1 text-sm text-white bg-blue-500 rounded-md cursor-pointer"
-                    key={i}
-                  >
-                    {item}
-                  </span>
-                ))
-              : ""}
-          </div> */}
-
           {/* occupied seats  */}
-          
+
           <div className="mb-4">
             <label
               className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
@@ -394,7 +361,7 @@ export const AddBusModal = ({
               name="price"
             />
           </div>
-        
+
           <div className="mb-4">
             <label
               className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
@@ -462,35 +429,16 @@ export const AddBusModal = ({
               className="block mb-2 text-sm font-bold text-gray-700"
               htmlFor="hasac"
             >
-              Has AC
+              Does Bus Have AC?
             </label>
-            <select
-              className="block w-full px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline"
-              value={values.hasAC}
+            <input
+              type="checkbox"
+              className="w-5 h-5 text-indigo-600 transition duration-150 ease-in-out form-checkbox"
+              checked={values.hasAC}
               onChange={handleInputChange}
               name="hasAC"
-            >
-              <option value={true}>true</option>
-              <option value={false}>false</option>
-            </select>
-          </div>
-
-          <div className="mb-4">
-            <label
-              className="block mb-2 text-sm font-bold text-gray-700"
-              htmlFor="status"
-            >
-              company status
-            </label>
-            <select
-              className="block w-full px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline"
-              value={values.status}
-              onChange={handleInputChange}
-              name="status"
-            >
-               <option value={true}>true</option>
-              <option value={false}>false</option>
-            </select>
+              id="hasAC"
+            />
           </div>
         </div>
         <div className="flex justify-between px-4 py-5 bg-gray-50 sm:px-6 sm:flex-row-reverse">
