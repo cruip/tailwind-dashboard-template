@@ -19,7 +19,8 @@ const logout = () => {
 
 const httpLink = createHttpLink({
   // uri: "https://dryvafrica-gateway.herokuapp.com/graphql",
-  uri: "https://dev-api.dryvafrica.com/graphql",
+
+  uri: "https://api.dryvafrica.com/graphql",
 });
 
 // const authLink = setContext((_, {headers}) => {
