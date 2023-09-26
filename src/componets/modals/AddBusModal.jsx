@@ -136,8 +136,6 @@ export const AddBusModal = ({
       busImage: logoUrl,
       companyId: id,
       departureDate: newDepatureDate,
-      status: values.status === "true" ? true : false,
-      hasAC: values.hasAC === "true" ? true : false,
     })
       .then(async () => {
         toast.success("Bus added successfully");
