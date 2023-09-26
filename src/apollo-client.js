@@ -19,6 +19,7 @@ const logout = () => {
 
 const httpLink = createHttpLink({
   // uri: "https://dryvafrica-gateway.herokuapp.com/graphql",
+
   uri: "https://api.dryvafrica.com/graphql",
 });
 

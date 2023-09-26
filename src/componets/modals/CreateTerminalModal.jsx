@@ -4,13 +4,12 @@ import { ToastContainer, toast } from "react-toastify";
 // import { createRoute } from "../../services/routeService";
 import { createTerminal } from "../../services/locationService";
 
-export const CreateTerminalModal = ({ show, onHide }) => {
+export const CreateTerminalModal = ({ show, onHide, callBack }) => {
   const [values, setValues] = useState({
     locationName: "",
     locationCode: "",
     address: "",
     city: "",
-    streetAddress: "",
     cityCode: "",
     stateCode: "",
     longitude: "1",
@@ -26,13 +25,12 @@ export const CreateTerminalModal = ({ show, onHide }) => {
     });
   };
   const handleCreateTerminal = () => {
-    console.log(values, 'values');
     if (Object.values(values).some((o) => o === "")) return false;
     setSaving(true);
-    // setTimeout(() => {
-        createTerminal({ ...values })
+        createTerminal({ ...values, streetAddress: values.address })
       .then(async () => {
         toast.success("terminal created successfully");
+       await callBack()
         onHide();
       })
       .catch((error) => {
@@ -40,7 +38,6 @@ export const CreateTerminalModal = ({ show, onHide }) => {
         toast.error("Oops! something went wrong")
       })
       .finally(() => setSaving(false));
-    // }, 2000);
   };
   return (
     <>
@@ -110,7 +107,7 @@ export const CreateTerminalModal = ({ show, onHide }) => {
             name="city"
           />
         </div>
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <label
             className="block mb-2 text-sm font-bold text-gray-700"
             htmlFor="streetAddress"
@@ -125,7 +122,7 @@ export const CreateTerminalModal = ({ show, onHide }) => {
             onChange={handleInputChange}
             name="streetAddress"
           />
-        </div>
+        </div> */}
         <div className="mb-4">
           <label
             className="block mb-2 text-sm font-bold text-gray-700"

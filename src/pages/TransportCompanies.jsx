@@ -5,6 +5,7 @@ import Page from "../partials/page";
 import { Table } from "../partials/table";
 import DropDown from "../partials/DropDown";
 import { SVGIcon } from "../partials/icons/SvgIcon";
+import { useNavigate } from "react-router-dom";
 import {
   EditTransportModal,
   AddTransportModal,
@@ -33,6 +34,13 @@ const TransportCompanies = () => {
   const [terminals, setTerminals] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterValue, setFilterValue] = useState("all");
+
+  const navigate = useNavigate();
+
+  function handleClick() {
+    navigate("/booking/pending");
+  }
+
 
   const fetchAllTransport = async (size = 10, page) => {
     const { data, loading } = await getAllTransporter({ size, page });
@@ -157,6 +165,10 @@ const TransportCompanies = () => {
     }
   };
 
+  function handleClick(id) {
+    navigate(`${id}`);
+  }
+
   const tableHeader = [
     "Company Name",
     "Company Address",
@@ -168,9 +180,9 @@ const TransportCompanies = () => {
 
   const tableRow = (datas) => {
     return (
-      <tr key={datas?._id} className="border-b-2 border-slate-200">
-        <td>{datas?.name}</td>
-        <td>{datas?.address}</td>
+      <tr key={datas?._id} className="border-b-2 border-slate-200" >
+        <td onClick={() =>  handleClick(datas._id)}>{datas?.name}</td>
+        <td onClick={() =>  handleClick(datas._id)}>{datas?.address}</td>
         <td>{datas?.contactPhoneNumber}</td>
         <td>{datas?.website || "No Website"}</td>
         {/* <td>{datas?.status == 'true' ? 'Active' : 'Inactive'}</td> */}
