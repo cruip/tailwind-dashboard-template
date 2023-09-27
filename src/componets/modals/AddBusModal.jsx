@@ -108,7 +108,7 @@ export const AddBusModal = ({
     })
       .then((resp) => resp.json())
       .then((data) => {
-        setLogoUrl(data.url);
+        setLogoUrl(data.secure_url);
       });
   };
 

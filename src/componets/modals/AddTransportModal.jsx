@@ -43,7 +43,7 @@ export const AddTransportModal = ({ show, onHide, callBack, terminals }) => {
     })
       .then((resp) => resp.json())
       .then((data) => {
-        setLogoUrl(data.url);
+        setLogoUrl(data.secure_url);
       })
       .catch((error) => console.log(error))
       .finally(() => setLoadingLogo(false));
