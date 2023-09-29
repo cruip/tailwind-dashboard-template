@@ -54,3 +54,25 @@ th:first-child {
 label {
   text-transform: capitalize;
 }
+
+/* For webkit (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 5px; /* Adjust the width to make it thin */
+  height: 4px;
+}
+
+/* For webkit scrollbar track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Track color */
+}
+
+/* For webkit scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  background: #689fd3; /* Thumb color (blue in this example) */
+  border-radius: 10px; /* Rounded corners for the thumb */
+}
+
+/* For webkit scrollbar thumb on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #0056b3; /* Thumb color on hover */
+}
