@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## [2.0.1] - 2023-10-04
+
+- Dependencies update
+
 ## [2.0.0] - 2023-06-01
 
 - Dark version added
