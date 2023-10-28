@@ -142,6 +142,46 @@ export const createRoute = async (event) => {
   return { data, errors };
 };
 
+export const editRoute = async (event) => {
+  const { name, from, to, dstance, expectedTime, country, routeId } = event;
+  const { data, errors } = await client.mutate({
+    mutation: gql`
+      mutation updateRoute(
+        $routeId: String!
+        $name: String
+        $from: String
+        $to: String
+        $distance: String
+        $expectedTime: String
+        $country: String
+      ) {
+        updateRoute(
+          routeId: $routeId
+          name: $name
+          from: $from
+          to: $to
+          distance: $distance
+          expectedTime: $expectedTime
+          country: $country
+        ) {
+          _id
+          name
+        }
+      }
+    `,
+    variables: {
+      name,
+      from,
+      to,
+      dstance,
+      expectedTime,
+      country,
+      routeId,
+    },
+  });
+  return { data, errors };
+};
+
 export const deleteRoute = async (routeId) => {
   const { data, errors } = await client.mutate({
     mutation: gql`
@@ -151,6 +191,21 @@ export const deleteRoute = async (routeId) => {
     `,
     variables: {
       routeId,
+    },
+  });
+  return { data, errors };
+};
+
+export const removeCompanyRoute = async (routeId, companyId) => {
+  const { data, errors } = await client.mutate({
+    mutation: gql`
+      mutation deleteRouteFromCompany($routeId: String!, $companyId: String!) {
+        deleteRouteFromCompany(routeId: $routeId, companyId: $companyId)
+      }
+    `,
+    variables: {
+      routeId,
+      companyId,
     },
   });
   return { data, errors };

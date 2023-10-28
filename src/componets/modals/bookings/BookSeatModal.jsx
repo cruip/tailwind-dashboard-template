@@ -159,6 +159,7 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
   };
 
   const getTrips = async (filters) => {
+   try {
     setIsRouting(true);
     // moment(values.departureDate).format(" MMM Do, YYYY | h:mm a")
     const { data } = await getAllTrips({
@@ -186,7 +187,12 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
       // }
     });
     setBuses(busesArray);
+  } catch (error) {
+    console.log(error);
+  }finally {
+    
     setIsRouting(false);
+   }
   };
   // const handlePrice = useCallback((id) => {
   //   const bus = buses?.find((item) => item._id === id)

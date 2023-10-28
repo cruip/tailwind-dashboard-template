@@ -6,7 +6,6 @@ import { addRoute } from "../../services/routeService";
 export const AddRouteModal = ({ show, onHide, id, callBack, name, routes }) => {
   const [saving, setSaving] = useState(false);
   const [routeId, setRouteId] = useState("");
-
   const addRouteToCompany = (id) => {
     setSaving(true);
     addRoute({

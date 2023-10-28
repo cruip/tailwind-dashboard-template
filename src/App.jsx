@@ -18,6 +18,7 @@ import TransportCompany from "./pages/TransportCompanyDetails";
 import AdminPricing from "./pages/AdminPricing";
 import PendingBooking from "./pages/PendingBookings";
 import SingleRoute from "./pages/Route";
+import RoutesPage from "./pages/Routes";
 
 function App() {
   const location = useLocation();
@@ -97,10 +98,10 @@ function App() {
           }
         />
          <Route
-          path="/route/:id"
+          path="/routes"
           element={
             <ProtectedRoute>
-              <SingleRoute />
+              <RoutesPage />
             </ProtectedRoute>
           }
         />
