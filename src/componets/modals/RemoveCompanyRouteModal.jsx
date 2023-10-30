@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 import Modal from "../../partials/modal/Modal";
 import { ToastContainer, toast } from "react-toastify";
-import { deleteRoute } from "../../services/routeService";
+import { removeCompanyRoute } from "../../services/routeService";
 
-export const DeleteRouteModal = ({ show, onHide, id, callBack }) => {
+export const RemoveCompanyRouteModal = ({ show, onHide, id, companyId, callBack }) => {
   const [saving,  setSaving] = useState(false)
 
   const handleDelete = async (id) => {
     setSaving(!saving);
-    deleteRoute(id)
+    removeCompanyRoute(id, companyId)
       .then(async() => {
-        toast.success("Route deleted successfully");
+        toast.success("Route removed successfully");
           await callBack();
           onHide()
       })
-      .catch(() => toast.error("could not delete Route"));
+      .catch(() => toast.error("could not remove Route"));
       setSaving(!saving);
   };
 
@@ -22,14 +22,14 @@ export const DeleteRouteModal = ({ show, onHide, id, callBack }) => {
    <>
     <ToastContainer />
     <Modal show={show} size="md" onHide={onHide} width='30%'>
-    <p>Do you want to Delete this Route? this is a dangerous operation as most transport companies already have this route. </p>
+    <p className="text-center ">Remove route from company </p>
       <div className="flex justify-between px-4 py-5 bg-gray-50 sm:px-6 sm:flex-row-reverse">
         <button
           type="button"
           className="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-blue-500 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
           onClick={() => handleDelete(id)}
         >
-          {saving ? 'Submiting...' : 'Delete'} 
+          {saving ? 'Submiting...' : 'Remove'} 
         </button>
         <button
           type="button"

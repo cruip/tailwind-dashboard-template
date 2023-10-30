@@ -1,28 +1,29 @@
 import React, { useState } from "react";
 import Modal from "../../partials/modal/Modal";
 import { ToastContainer, toast } from "react-toastify";
-import { deleteRoute } from "../../services/routeService";
+import { deleteCommission } from "../../services/commissionService";
 
-export const DeleteRouteModal = ({ show, onHide, id, callBack }) => {
+export const DeleteCommissionModal = ({ show, onHide, id, callBack }) => {
   const [saving,  setSaving] = useState(false)
 
   const handleDelete = async (id) => {
     setSaving(!saving);
-    deleteRoute(id)
+    deleteCommission(id)
       .then(async() => {
-        toast.success("Route deleted successfully");
+        toast.success("Commission deleted successfully");
           await callBack();
           onHide()
       })
-      .catch(() => toast.error("could not delete Route"));
-      setSaving(!saving);
+      .catch((error) => toast.error(error.message))
+      .finally(() => setSaving(!saving));
+      
   };
 
   return (
    <>
     <ToastContainer />
     <Modal show={show} size="md" onHide={onHide} width='30%'>
-    <p>Do you want to Delete this Route? this is a dangerous operation as most transport companies already have this route. </p>
+    <p className="mt-4 text-center ">Do you want to Delete this Commission? </p>
       <div className="flex justify-between px-4 py-5 bg-gray-50 sm:px-6 sm:flex-row-reverse">
         <button
           type="button"
