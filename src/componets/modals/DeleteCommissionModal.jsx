@@ -10,11 +10,11 @@ export const DeleteCommissionModal = ({ show, onHide, id, callBack }) => {
     setSaving(!saving);
     deleteCommission(id)
       .then(async() => {
-        toast.success("Route deleted successfully");
+        toast.success("Commission deleted successfully");
           await callBack();
           onHide()
       })
-      .catch(() => toast.error("could not delete Route"))
+      .catch((error) => toast.error(error.message))
       .finally(() => setSaving(!saving));
       
   };
