@@ -11,7 +11,7 @@ import {
 import { getAllBuses } from "../services/busService";
 import { getAllRoutes } from "../services/routeService";
 import { getTerminals } from "../services/locationService";
-import {DeactivateTransport, ActivateTransportModal, EditTransportModal, AddRouteModal, AddBusModal, AddBusRouteModal, DeleteRouteModal} from "../componets/modals";
+import {DeactivateTransport, ActivateTransportModal, EditTransportModal, AddRouteModal, AddBusModal, AddBusRouteModal, RemoveCompanyRouteModal} from "../componets/modals";
 import Loader from "../partials/Loader";
 
 const TransportCompany = () => {
@@ -117,8 +117,6 @@ const TransportCompany = () => {
   const tableHeader = [
     "Location",
     "Destination",
-    "Distance",
-    "Expected Time",
     "Route Name",
     "Action",
   ];
@@ -128,8 +126,6 @@ const TransportCompany = () => {
       <tr key={routes?._id} className="border-b-2 border-slate-200">
         <td>{routes?.from?.city}</td>
         <td>{routes?.to?.city}</td>
-        <td>{routes?.distance}</td>
-        <td>{routes?.expectedTime}</td>
         <td>{routes?.name}</td>
         <td>
           <DropDown
@@ -160,7 +156,7 @@ const TransportCompany = () => {
               //   icon: "edit",
               // },
               {
-                name: "Delete Route",
+                name: "Remove Route",
                 isLink: false,
                 onclick: () => {
                   toggleDeleteRouteModal();
@@ -284,7 +280,7 @@ const TransportCompany = () => {
       <AddBusModal show={addBusModal}  onHide={toggleAddBusModal} id={id} name={datas?.name} callBack={fecthTransport} terminals={terminals} routes={routes}/>
       {/* <ActivateTransportModal show={activateModal}  onHide={toggleActivateModal} id={id} callBack={fecthTransport}/> */}
       <EditTransportModal show={editModal} onHide={toggleEditModal} id={id} callBack={fecthTransport} datas={datas} terminals={terminals}/>
-      <DeleteRouteModal show={deleteRouteModal} onHide={toggleDeleteRouteModal} id={routeId} callBack={fecthRoutes} />
+      <RemoveCompanyRouteModal show={deleteRouteModal} onHide={toggleDeleteRouteModal} id={routeId} companyId={id} callBack={fecthRoutes} />
     </Page>
   );
 };

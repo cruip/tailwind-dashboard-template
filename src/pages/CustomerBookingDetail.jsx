@@ -99,7 +99,7 @@ const CustomerBookingDetail = () => {
               <span className="text-base font-semibold text-center text-gray-600 ">
                 Email
               </span>
-              <span className="text-base text-gray-700">N{datas?.email}</span>
+              <span className="text-base text-gray-700">{datas?.email}</span>
             </p>
             <p className="flex flex-col items-start justify-center ">
               <span className="text-base font-semibold text-center text-gray-600 ">
