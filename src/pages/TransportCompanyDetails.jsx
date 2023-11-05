@@ -4,7 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Page from "../partials/page";
 import { Table } from "../partials/table";
 import DropDown from "../partials/DropDown";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import {
   getOneTransport,
 } from "../services/transporterService";
@@ -65,6 +65,13 @@ const TransportCompany = () => {
   const onPrevPage = () => {};
 
   const onNextPage = () => {};
+  const navigate = useNavigate();
+
+  function handlenavClick() {
+    navigate("trips");
+  }
+
+
 
   const fecthTransport = async () => {
     const { data, loading, errors } = await getOneTransport(id);
@@ -89,16 +96,10 @@ const TransportCompany = () => {
   };
 
   const fecthRoutes = async () => {
-    const { data, loading, errors } = await getAllRoutes();
+    const { data, loading, errors } = await getAllRoutes(1, 100000);
     // console.log(data, 'routes');
     if (data) {
-     
-      // const filterRoutes = data?.getRoutes?.nodes?.filter((item) => {
-      //   if (item.bus?.transporter?._id == id) {
-      //     return item;
-      //   }
-      //   return false;
-      // });
+    
       setRoutes(data?.getRoutes?.nodes);
      setTimeout(() => {
       setTableLoad(false);
@@ -130,31 +131,6 @@ const TransportCompany = () => {
         <td>
           <DropDown
             links={[
-              // {
-              //   name: "View Route",
-              //   isLink: true,
-              //   onclick: () => {},
-              //   link: `/route/${routes?._id}`,
-              // },
-              // {
-              //   name: "Assign Bus",
-              //   isLink: false,
-              //   onclick: () => {
-              //     toggleAddBusRouteModal(routes?._id)
-              //   },
-              //   link: '',
-              // },
-              // {
-              //   name: "Edit",
-              //   isLink: false,
-              //   // onclick: () => {
-              //   //   toggleEditModal();
-              //   //   setId(datas?._id);
-              //   //   SingleData(datas?._id);
-              //   // },
-              //   link: "",
-              //   icon: "edit",
-              // },
               {
                 name: "Remove Route",
                 isLink: false,
@@ -218,21 +194,7 @@ const TransportCompany = () => {
             </div>
           </div>
           <div className="flex flex-wrap items-center mt-6">
-            {/* {datas?.status == "true" ? (
-              <button
-                className="py-3 mb-3 text-white bg-blue-500 rounded-lg shadow-md mr-7 w-52 focus:border-0 focus:outline-none hover:bg-blue-600"
-                onClick={toggleDeactivateModal}
-              >
-                Deactivate Account
-              </button>
-            ) : (
-              <button
-                className="py-3 mb-3 text-white bg-blue-500 rounded-lg shadow-md mr-7 w-52 focus:border-0 focus:outline-none hover:bg-blue-600"
-                onClick={() => toggleActivateModal()}
-              >
-                Re Activate Account
-              </button>
-            )} */}
+           
             <button
               className="py-3 mb-3 text-white bg-blue-500 rounded-lg shadow-md mr-7 w-52 focus:border-0 focus:outline-none hover:bg-blue-600"
               onClick={() => toggleEditModal()}
@@ -250,6 +212,12 @@ const TransportCompany = () => {
               onClick={() => toggleAddBusModal()}
             >
              Add Trip
+            </button>
+            <button
+              className="py-3 mb-3 text-white bg-blue-500 rounded-lg shadow-md mr-7 w-52 focus:border-0 focus:outline-none hover:bg-blue-600"
+              onClick={() => handlenavClick()}
+            >
+            View All Trips
             </button>
           </div>
         </Card>
