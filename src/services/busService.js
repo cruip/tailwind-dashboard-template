@@ -1,11 +1,12 @@
 import { gql } from "@apollo/client";
 import client from "../apollo-client";
 
-export const getAllBuses = async (page = 1, size = 10) => {
+export const getAllBuses = async (event) => {
+  const { filters, page = 1, size = 10 } = event;
   const { data, errors, loading } = await client.query({
     query: gql`
-      query buses($page: Int, $size: Int) {
-        getBuses(page: $page, size: $size) {
+      query buses($page: Int, $size: Int, $filters: BusFilter) {
+        getBuses(page: $page, size: $size, filters: $filters) {
           pageInfo {
             totalItems
             currentPage
@@ -32,6 +33,10 @@ export const getAllBuses = async (page = 1, size = 10) => {
                 city
               }
             }
+            companyId {
+              _id
+              name
+            }
             departureDate
             departureTime
             price
@@ -49,6 +54,7 @@ export const getAllBuses = async (page = 1, size = 10) => {
     variables: {
       page,
       size,
+      filters,
     },
   });
   return { data, loading, errors };
@@ -151,6 +157,107 @@ export const addBusToRoute = async (event) => {
     variables: {
       busId,
       routeId,
+    },
+  });
+  return { data, errors };
+};
+
+export const deleteTrip = async (busId) => {
+  const { data, errors } = await client.mutate({
+    mutation: gql`
+      mutation deleteBus($busId: String!) {
+        deleteBus(busId: $busId)
+      }
+    `,
+    variables: {
+      busId,
+    },
+  });
+  return { data, errors };
+};
+
+export const editBus = async (event) => {
+  const {
+    busId,
+    type,
+    route,
+    clas,
+    departureTime,
+    departureDate,
+    expectedArrival,
+    numberOfSeats,
+    availableSeats,
+    occupiedSeat,
+    companyId,
+    busImage,
+    price,
+    departureTerminal,
+    arrivalTerminal,
+    hasAC,
+    status,
+  } = event;
+  const { data, errors } = await client.mutate({
+    mutation: gql`
+      mutation updateBus(
+        $busId: String!
+        $clas: String
+        $type: String
+        $route: String
+        $departureTime: String
+        $departureDate: String
+        $expectedArrival: String
+        $numberOfSeats: String
+        $availableSeats: [String]
+        $occupiedSeat: [String]
+        $companyId: String!
+        $busImage: String
+        $price: String
+        $departureTerminal: String
+        $arrivalTerminal: String
+        $hasAC: Boolean
+        $status: Boolean
+      ) {
+        updateBus(
+          busId: $busId
+          class: $clas
+          type: $type
+          route: $route
+          departureTime: $departureTime
+          departureDate: $departureDate
+          expectedArrival: $expectedArrival
+          numberOfSeats: $numberOfSeats
+          availableSeats: $availableSeats
+          occupiedSeat: $occupiedSeat
+          companyId: $companyId
+          price: $price
+          departureTerminal: $departureTerminal
+          arrivalTerminal: $arrivalTerminal
+          hasAC: $hasAC
+          busImage: $busImage
+          status: $status
+        ) {
+          _id
+        }
+      }
+    `,
+    variables: {
+      busId,
+      type,
+      route,
+      clas,
+      departureTime,
+      departureDate,
+      expectedArrival,
+      numberOfSeats,
+      availableSeats,
+      occupiedSeat,
+      companyId,
+      busImage,
+      price,
+      departureTerminal,
+      arrivalTerminal,
+      hasAC,
+      status,
     },
   });
   return { data, errors };

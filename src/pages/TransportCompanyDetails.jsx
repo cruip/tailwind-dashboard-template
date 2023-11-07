@@ -8,7 +8,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import {
   getOneTransport,
 } from "../services/transporterService";
-import { getAllBuses } from "../services/busService";
+// import { getAllBuses } from "../services/busService";
 import { getAllRoutes } from "../services/routeService";
 import { getTerminals } from "../services/locationService";
 import {DeactivateTransport, ActivateTransportModal, EditTransportModal, AddRouteModal, AddBusModal, AddBusRouteModal, RemoveCompanyRouteModal} from "../componets/modals";
@@ -28,7 +28,7 @@ const TransportCompany = () => {
   const [datas, setData] = useState(null);
   const [routes, setRoutes] = useState([]);
   const [terminals, setTerminals] = useState([]);
-  const [buses, setBuses] = useState([]);
+  // const [buses, setBuses] = useState([]);
   const [fetched, setFetched] = useState(false);
   const [routeId, setRouteId] = useState('');
 
@@ -81,13 +81,13 @@ const TransportCompany = () => {
     }
   };
 
-  const fecthBuses = async () => {
-    const { data, loading, errors } = await getAllBuses();
-    if (data) {
-      setBuses(data?.getBuses.nodes);
-      // setFetched(true);
-    }
-  };
+  // const fecthBuses = async () => {
+  //   const { data, loading, errors } = await getAllBuses();
+  //   if (data) {
+  //     setBuses(data?.getBuses.nodes);
+  //     // setFetched(true);
+  //   }
+  // };
 
   const fetchTerminals = async () => {
     const { data } = await getTerminals();
@@ -111,7 +111,7 @@ const TransportCompany = () => {
   useEffect(() => {
     fecthTransport();
     fecthRoutes();
-    fecthBuses()
+    // fecthBuses()
     fetchTerminals()
   }, []);
 
