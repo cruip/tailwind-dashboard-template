@@ -19,6 +19,7 @@ import AdminPricing from "./pages/AdminPricing";
 import PendingBooking from "./pages/PendingBookings";
 import SingleRoute from "./pages/Route";
 import RoutesPage from "./pages/Routes";
+import Trips from "./pages/Trips";
 
 function App() {
   const location = useLocation();
@@ -94,6 +95,14 @@ function App() {
           element={
             <ProtectedRoute>
               <TransportCompany />
+            </ProtectedRoute>
+          }
+        />
+         <Route
+          path="/transport_companies/:id/trips"
+          element={
+            <ProtectedRoute>
+              <Trips />
             </ProtectedRoute>
           }
         />
