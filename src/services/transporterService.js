@@ -43,6 +43,40 @@ export const getOneTransport = async (transporterId) => {
               city
             }
           }
+          trips {
+            _id
+            class
+            type
+            route {
+              _id
+              name
+              distance
+              expectedTime
+              from {
+                _id
+                city
+                locationName
+                address
+              }
+              to {
+                _id
+                locationName
+                address
+                city
+              }
+            }
+            departureDate
+            departureTime
+            price
+            busImage
+            numberOfSeats
+            availableSeats
+            occupiedSeat
+            departureTerminal
+            arrivalTerminal
+            status
+            hasAC
+          }
         }
       }
     `,
