@@ -18,6 +18,8 @@ const Routes = () => {
   const [limit, setLimit] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [tableLoad, setTableLoad] = useState(true);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalRoutes, setTotalRoutes] = useState(0);
   const [deleteRouteModal, setDeleteRouteModal] = useState(false);
   const [addRouteModal, setAddRouteModal] = useState(false);
   const [updateRouteModal, setUpdateRouteModal] = useState(false);
@@ -29,8 +31,8 @@ const Routes = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterValue, setFilterValue] = useState("all");
 
-  const fecthRoutes = async () => {
-    const { data, loading, errors } = await getAllRoutes();
+  const fecthRoutes = async (no, page) => {
+    const { data, loading, errors } = await getAllRoutes(no, page);
     // console.log(data, 'routes');
     if (data) {
       setRoutes(data?.getRoutes?.nodes);
@@ -38,6 +40,10 @@ const Routes = () => {
         setTableLoad(false);
       }, 300);
       setLimit(data?.getRoutes?.nodes?.length);
+      setTotalRoutes(Number(data?.getRoutes?.pageInfo?.totalItems))
+      setTotalPages(
+        Math.ceil(Number(data?.getRoutes?.pageInfo?.totalItems) / limit)
+      );
     }
   };
 
@@ -47,7 +53,7 @@ const Routes = () => {
   };
 
   useEffect(() => {
-    fecthRoutes();
+    fecthRoutes(currentPage, limit);
     fetchTerminals();
   }, [currentPage]);
 
@@ -181,7 +187,7 @@ const Routes = () => {
           >
             <h3 className="mt-5 text-right">
               <span className="text-xl font-semibold text-sky-800">
-                {routes.length || 0}
+                {totalRoutes || 0}
               </span>{" "}
               Routes
             </h3>
@@ -236,13 +242,13 @@ const Routes = () => {
                 onNext={onNextPage}
                 onPrev={onPrevPage}
                 currentPage={currentPage}
-                totalPages={1}
+                totalPages={totalPages}
                 emptyMessage="No route"
                 loadingText="Loading routes..."
                 loading={tableLoad}
                 rowFormat={tableRow}
                 headers={tableHeader}
-                paginated={false}
+                paginated={routes.length > 1}
               />
             </div>
           </Card>

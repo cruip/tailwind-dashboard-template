@@ -21,3 +21,5 @@ export * from "./customers/DeActivateCustomerModal";
 export * from "./customers/DeleteCustomerModal";
 export * from "./bookings/BookSeatModal";
 export * from "./bookings/ToggleStatusModal";
+export * from "./UpdateTerminalModal";
+export * from "./DeleteTerminal";
