@@ -20,6 +20,7 @@ import PendingBooking from "./pages/PendingBookings";
 import SingleRoute from "./pages/Route";
 import RoutesPage from "./pages/Routes";
 import Trips from "./pages/Trips";
+import Terminals from "./pages/Terminals";
 
 function App() {
   const location = useLocation();
@@ -111,6 +112,14 @@ function App() {
           element={
             <ProtectedRoute>
               <RoutesPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/terminals"
+          element={
+            <ProtectedRoute>
+              <Terminals />
             </ProtectedRoute>
           }
         />
