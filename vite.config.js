@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite'
-import postcss from './postcss.config.js'
+import postcss from './postcss.config.cjs'
 import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/

@@ -1,5 +1,10 @@
 # CHANGELOG.md
 
+## [2.1.0] - 2023-12-08
+
+- Update Vite to 5
+- Update other dependencies
+
 ## [2.0.1] - 2023-10-04
 
 - Dependencies update
