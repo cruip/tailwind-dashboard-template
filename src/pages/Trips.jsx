@@ -1,31 +1,42 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Card } from "../partials/card/Card";
 import { Table } from "../partials/table";
 import DropDown from "../partials/DropDown";
 import Page from "../partials/page";
+// import { Tab, Tabs, TabPane } from "../partials/Tabs";
+import { Tab } from "@headlessui/react";
 import { getAllRoutes } from "../services/routeService";
 import { getTerminals } from "../services/locationService";
-import { AddBusModal, DeleteTripModal, EditTripModal } from "../componets/modals";
+import {
+  AddBusModal,
+  DeleteTripModal,
+  EditTripModal,
+} from "../componets/modals";
 import { getOneTransport } from "../services/transporterService";
-import { getAllBuses } from "../services/busService";
+import { getAllBuses, getAllExpiredBuses } from "../services/busService";
 import Loader from "../partials/Loader";
 
 const Trips = () => {
   const navigate = useNavigate();
-  const [limit, setLimit] = useState(100);
+  const [limit, setLimit] = useState(20);
   const [currentPage, setCurrentPage] = useState(1);
+  const [currentPageExpired, setCurrentPageExpired] = useState(1);
   const [tableLoad, setTableLoad] = useState(true);
   const [totalPages, setTotalPages] = useState(1);
+  const [tableLoadExpired, setTableLoadExpired] = useState(true);
+  const [totalPagesExpired, setTotalPagesExpired] = useState(1);
   const [addBusModal, setAddBusModal] = useState(false);
   const [routes, setRoutes] = useState([]);
   const [buses, setBuses] = useState([]);
+  const [busesExpired, setBusesExpired] = useState([]);
   const [terminals, setTerminals] = useState([]);
-  const [tripId, setTripId] = useState('')
-  const [deleteModal, setDeleteModal] = useState(false)
-  const [editModal, setEditModal] = useState(false)
+  const [tripId, setTripId] = useState("");
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [editModal, setEditModal] = useState(false);
   const [singleTrip, setSingleTrips] = useState(null);
   const [fetched, setFetched] = useState(false);
+  const [fetchedExpired, setFetchedExpired] = useState(false);
 
   const handleGoBack = () => {
     navigate(-1);
@@ -50,24 +61,37 @@ const Trips = () => {
     setCurrentPage((prevState) => prevState + 1);
   };
 
+  const onPrevPageExpired = () => {
+    setCurrentPageExpired((prevState) => prevState - 1);
+  };
+
+  const onNextPageExpired = () => {
+    setCurrentPageExpired((prevState) => prevState + 1);
+  };
+
   const SingleData = (id) => {
     const data = buses.find((item) => item._id === id);
     setSingleTrips(data);
   };
 
+  const SingleExpiredData = (id) => {
+    const data = busesExpired.find((item) => item._id === id);
+    setSingleTrips(data);
+  };
+
   const toggleEditModal = () => {
-    setEditModal(!editModal)
-  }
+    setEditModal(!editModal);
+  };
 
   const toggleDeletModal = () => {
-    setDeleteModal(!deleteModal)
-  }
+    setDeleteModal(!deleteModal);
+  };
 
   const fecthRoutes = async () => {
     const { data, loading, errors } = await getAllRoutes(1, 100000);
     if (data) {
       setRoutes(data?.getRoutes?.nodes);
-      setLimit(data?.getRoutes?.nodes?.length);
+      // setLimit(data?.getRoutes?.nodes?.length);
     }
   };
 
@@ -80,7 +104,7 @@ const Trips = () => {
   //   }
   // };
 
-    const fecthBuses = async (size, page) => {
+  const fecthBuses = async (size, page) => {
     const { data, loading, errors } = await getAllBuses({
       size,
       page,
@@ -98,13 +122,35 @@ const Trips = () => {
     }
   };
 
+  const fecthExpiredBuses = async (size, page) => {
+    const { data, loading, errors } = await getAllExpiredBuses({
+      size,
+      page,
+      filters: { companyId: id },
+    });
+    if (data) {
+      if (data) {
+        setTotalPagesExpired(
+          Math.ceil(Number(data?.getExpiredTrips?.pageInfo?.totalItems) / limit)
+        );
+        setBusesExpired(data?.getExpiredTrips.nodes);
+        setTableLoadExpired(false);
+        setFetchedExpired(true);
+      }
+    }
+  };
 
   useEffect(() => {
     // fecthTransport();
-    fecthBuses(limit, currentPage)
+    fecthBuses(limit, currentPage);
     fecthRoutes();
     fetchTerminals();
   }, [currentPage]);
+
+  useEffect(() => {
+    fecthExpiredBuses(limit, currentPage)
+  }, [currentPageExpired])
+  
   const tableHeader = [
     "routeRoute Name",
     "Location",
@@ -128,8 +174,8 @@ const Trips = () => {
                 name: "Delete Trip",
                 isLink: false,
                 onclick: () => {
-                  setTripId(data?._id)
-                  toggleDeletModal()
+                  setTripId(data?._id);
+                  toggleDeletModal();
                 },
                 link: "",
               },
@@ -137,9 +183,9 @@ const Trips = () => {
                 name: "Edit Trip",
                 isLink: false,
                 onclick: () => {
-                  setTripId(data?._id)
-                  SingleData(data?._id)
-                  toggleEditModal()
+                  setTripId(data?._id);
+                  SingleData(data?._id);
+                  toggleEditModal();
                 },
                 link: "",
               },
@@ -149,16 +195,53 @@ const Trips = () => {
       </tr>
     );
   };
-  if (!buses) {
+
+  const tableRowExpired = (data) => {
     return (
-      <div className="flex items-center justify-center w-full h-screen ">
-        <Loader />
-      </div>
+      <tr key={data?._id} className="border-b-2 border-slate-200">
+        <td>{data?.route?.name}</td>
+        <td>{data?.route?.from?.city}</td>
+        <td>{data?.route?.to?.city}</td>
+        <td>{data?.departureDate}</td>
+        <td>{data?.price}</td>
+        <td>
+          <DropDown
+            links={[
+              {
+                name: "Delete Trip",
+                isLink: false,
+                onclick: () => {
+                  setTripId(data?._id);
+                  toggleDeletModal();
+                },
+                link: "",
+              },
+              {
+                name: "Edit Trip",
+                isLink: false,
+                onclick: () => {
+                  setTripId(data?._id);
+                  SingleExpiredData(data?._id);
+                  toggleEditModal();
+                },
+                link: "",
+              },
+            ]}
+          />
+        </td>
+      </tr>
     );
-  }
-  if (fetched && !buses) {
-    return <div>Something went wrong</div>;
-  }
+  };
+  // if (!buses) {
+  //   return (
+  //     <div className="flex items-center justify-center w-full h-screen ">
+  //       <Loader />
+  //     </div>
+  //   );
+  // }
+  // if (fetched && !buses) {
+  //   return <div>Something went wrong</div>;
+  // }
   return (
     <Page>
       <div>
@@ -180,23 +263,90 @@ const Trips = () => {
           Add Trip
         </button>
       </div>
-      <Card description={"view company trips"} width="w-full">
-        <div className="mt-10 ">
-          <Table
-            data={buses}
-            onNext={onNextPage}
-            onPrev={onPrevPage}
-            currentPage={currentPage}
-            totalPages={totalPages}
-            emptyMessage="No trips"
-            loadingText="Loading trips..."
-            loading={tableLoad}
-            rowFormat={tableRow}
-            headers={tableHeader}
-            paginated={buses?.length > 0}
-          />
-        </div>
-      </Card>
+
+      <Tab.Group>
+        <Tab.List>
+          <Tab className="w-auto mr-10 border-0 outline-none">
+            {({ selected }) => (
+              <span
+                className={`flex items-center pb-1 hover:text-blue-300 ${
+                  selected ? "border-b-[3px] border-blue-600" : ""
+                }`}
+              >
+                Active Trips
+              </span>
+            )}
+          </Tab>
+          <Tab className="w-auto mr-10 border-0 outline-none">
+            {({ selected }) => (
+              <span
+                className={`flex items-center pb-1 hover:text-blue-300 ${
+                  selected ? "border-b-[3px] border-blue-600" : ""
+                }`}
+              >
+                Expired Trips
+              </span>
+            )}
+          </Tab>
+        </Tab.List>
+        <Tab.Panels>
+          <Tab.Panel>
+            {!fetched && !buses ? (
+              <div className="flex items-center justify-center w-full h-screen ">
+                <Loader />
+              </div>
+            ) : fetched && !buses ? (
+              <div>Something went wrong</div>
+            ) : (
+              <Card description={"view company trips"} width="w-full">
+                <div className="mt-10 ">
+                  <Table
+                    data={buses}
+                    onNext={onNextPage}
+                    onPrev={onPrevPage}
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    emptyMessage="No trips"
+                    loadingText="Loading trips..."
+                    loading={tableLoad}
+                    rowFormat={tableRow}
+                    headers={tableHeader}
+                    paginated={buses?.length > 0}
+                  />
+                </div>
+              </Card>
+            )}
+          </Tab.Panel>
+          <Tab.Panel>
+            {!fetchedExpired && !busesExpired ? (
+              <div className="flex items-center justify-center w-full h-screen ">
+                <Loader />
+              </div>
+            ) : fetchedExpired && !busesExpired ? (
+              <div>Something went wrong</div>
+            ) : (
+              <Card description={"view company trips"} width="w-full">
+                <div className="mt-10 ">
+                  <Table
+                    data={busesExpired}
+                    onNext={onNextPageExpired}
+                    onPrev={onPrevPageExpired}
+                    currentPage={currentPageExpired}
+                    totalPages={totalPagesExpired}
+                    emptyMessage="No trips"
+                    loadingText="Loading trips..."
+                    loading={tableLoad}
+                    rowFormat={tableRowExpired}
+                    headers={tableHeader}
+                    paginated={busesExpired?.length > 0}
+                  />
+                </div>
+              </Card>
+            )}
+          </Tab.Panel>
+        </Tab.Panels>
+      </Tab.Group>
+
       <AddBusModal
         show={addBusModal}
         onHide={toggleAddBusModal}
