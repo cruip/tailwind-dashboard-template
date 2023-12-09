@@ -60,6 +60,65 @@ export const getAllBuses = async (event) => {
   return { data, loading, errors };
 };
 
+export const getAllExpiredBuses = async (event) => {
+  const { filters, page = 1, size = 10 } = event;
+  const { data, errors, loading } = await client.query({
+    query: gql`
+      query buses($page: Int, $size: Int, $filters: BusFilter) {
+        getExpiredTrips(page: $page, size: $size, filters: $filters) {
+          pageInfo {
+            totalItems
+            currentPage
+          }
+          nodes {
+            _id
+            class
+            type
+            route {
+              _id
+              name
+              distance
+              expectedTime
+              from {
+                _id
+                city
+                locationName
+                address
+              }
+              to {
+                _id
+                locationName
+                address
+                city
+              }
+            }
+            companyId {
+              _id
+              name
+            }
+            departureDate
+            departureTime
+            price
+            busImage
+            numberOfSeats
+            availableSeats
+            occupiedSeat
+            departureTerminal
+            arrivalTerminal
+            status
+          }
+        }
+      }
+    `,
+    variables: {
+      page,
+      size,
+      filters,
+    },
+  });
+  return { data, loading, errors };
+};
+
 export const addBus = async (event) => {
   const {
     type,
