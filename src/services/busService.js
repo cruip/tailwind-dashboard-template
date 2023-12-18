@@ -221,6 +221,36 @@ export const addBusToRoute = async (event) => {
   return { data, errors };
 };
 
+export const bulkPriceUpdate = async (event) => {
+  const { type, route, departureDate, price } = event;
+  const { data, errors } = await client.mutate({
+    mutation: gql`
+      mutation updateBusByPrice(
+        $type: String!
+        $route: String!
+        $departureDate: [Date]!
+        $price: String!
+      ) {
+        updateBusByPrice(
+          type: $type
+          route: $route
+          departureDate: $departureDate
+          price: $price
+        ) {
+          _id
+        }
+      }
+    `,
+    variables: {
+      type,
+      route,
+      departureDate,
+      price,
+    },
+  });
+  return { data, errors };
+};
+
 export const deleteTrip = async (busId) => {
   const { data, errors } = await client.mutate({
     mutation: gql`
