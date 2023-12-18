@@ -12,6 +12,7 @@ import {
   AddBusModal,
   DeleteTripModal,
   EditTripModal,
+  TripUpdatePriceModal
 } from "../componets/modals";
 import { getOneTransport } from "../services/transporterService";
 import { getAllBuses, getAllExpiredBuses } from "../services/busService";
@@ -34,6 +35,7 @@ const Trips = () => {
   const [tripId, setTripId] = useState("");
   const [deleteModal, setDeleteModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
+  const [editPriceModal, setEditPriceModal] = useState(false);
   const [singleTrip, setSingleTrips] = useState(null);
   const [fetched, setFetched] = useState(false);
   const [fetchedExpired, setFetchedExpired] = useState(false);
@@ -81,6 +83,10 @@ const Trips = () => {
 
   const toggleEditModal = () => {
     setEditModal(!editModal);
+  };
+
+  const toggleEditPriceModal = () => {
+    setEditPriceModal(!editPriceModal);
   };
 
   const toggleDeletModal = () => {
@@ -155,6 +161,7 @@ const Trips = () => {
     "routeRoute Name",
     "Location",
     "Destination",
+    "Bus Type",
     "Depature Date",
     "price",
     "Action",
@@ -165,6 +172,7 @@ const Trips = () => {
         <td>{data?.route?.name}</td>
         <td>{data?.route?.from?.city}</td>
         <td>{data?.route?.to?.city}</td>
+        <td>{data?.type}</td>
         <td>{data?.departureDate}</td>
         <td>{data?.price}</td>
         <td>
@@ -202,6 +210,7 @@ const Trips = () => {
         <td>{data?.route?.name}</td>
         <td>{data?.route?.from?.city}</td>
         <td>{data?.route?.to?.city}</td>
+        <td>{data?.type}</td>
         <td>{data?.departureDate}</td>
         <td>{data?.price}</td>
         <td>
@@ -256,12 +265,20 @@ const Trips = () => {
         <h4 className="text-lg font-semibold text-slate-700">
           View and manage {buses[0]?.companyId?.name || "Company"} trips
         </h4>
+        <div className="flex items-center gap-5 ">
+        <button
+          className="py-3 mb-3 text-white bg-blue-500 rounded-lg shadow-md mr-7 w-52 focus:border-0 focus:outline-none hover:bg-blue-600"
+          onClick={() => toggleEditPriceModal()}
+        >
+          Update Price
+        </button>
         <button
           className="py-3 mb-3 text-white bg-blue-500 rounded-lg shadow-md mr-7 w-52 focus:border-0 focus:outline-none hover:bg-blue-600"
           onClick={() => toggleAddBusModal()}
         >
           Add Trip
         </button>
+        </div>
       </div>
 
       <Tab.Group>
@@ -354,6 +371,12 @@ const Trips = () => {
         name={buses[0]?.companyId?.name}
         callBack={fecthBuses}
         terminals={terminals}
+        routes={routes}
+      />
+       <TripUpdatePriceModal
+        show={editPriceModal}
+        onHide={toggleEditPriceModal}
+        callBack={fecthBuses}
         routes={routes}
       />
       <DeleteTripModal
