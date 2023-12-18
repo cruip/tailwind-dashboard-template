@@ -23,3 +23,4 @@ export * from "./bookings/BookSeatModal";
 export * from "./bookings/ToggleStatusModal";
 export * from "./UpdateTerminalModal";
 export * from "./DeleteTerminal";
+export * from "./TripPriceUpdateModal";
