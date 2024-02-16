@@ -1,112 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { Card } from "../partials/card/Card";
-import Page from "../partials/page";
-import { Table } from "../partials/table";
-import DropDown from "../partials/DropDown";
-import { SVGIcon } from "../partials/icons/SvgIcon";
-import { Commissions } from "../services/commissionService";
-import { getAllTransporter } from "../services/transporterService";
-import { UpdateCommissionModal, DeleteCommissionModal, AddCommissionModal } from "../componets/modals";
+import React from "react";
 
-
-
-const AdminPricing = () => {
-  const [limit, setLimit] = useState(10);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [tableLoad, setTableLoad] = useState(true);
-  const [data, setData] = useState([]);
-  const [companies, setCompanies] = useState([]);
-  const [Singledatas, setSingleData] = useState(null);
-  const [commissionId, setCommisionId] = useState('')
-  const [companyId, setCompanyId] = useState('')
-  const [deleteCommissionModal, setDeleteCommissionModal] = useState(false);
-  const [updateCommissionModal, setUpdateCommissionModal] = useState(false);
-  const [addCommissionModal, setAddCommissionModal] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-
-
-  const fecthCommissions = async (size=100, page) => {
-    try {
-      
-      const { data, loading, errors } = await Commissions({size, page});
-      setLimit(data?.getCommissions?.nodes?.length);
-      setData(data?.getCommissions?.nodes)
-    } catch (error) {
-      console.log(error);
-    }finally {
-      setTableLoad(false);
-    }
-   
-  };
-
-  const fetchTransport = async () => {
-   try {
-    const { data } = await getAllTransporter(1, 100000);
-    setCompanies(data?.getTransporters?.nodes);
-   } catch (error) {
-    console.log(error);
-   }
-    
-  };
-
-  const onFilter = () => {
-    if (!searchQuery)  fecthCommissions(10, currentPage);;
-    if (searchQuery) {
-      const arrayData = data?.filter((item) => {
-        if (
-          item.company.name
-            .toLowerCase()
-            .trim()
-            .includes(searchQuery.toLowerCase().trim())
-        ) {
-          return item;
-        }
-        return false;
-      });
-      setData(arrayData);
-    }
-  };
-
-  const onPrevPage = () => {
-    setCurrentPage((prevState) => prevState - 1);
-  };
-
-  const onNextPage = () => {
-    setCurrentPage((prevState) => prevState + 1);
-  };
-  const toggleDeleteCommissionModal = () => {
-    setDeleteCommissionModal(!deleteCommissionModal);
-  };
-
-  const toggleAddCommissionModal = () => {
-    setAddCommissionModal(!addCommissionModal);
-  };
-
-  const toggleUpdateCommissionModal = () => {
-    setUpdateCommissionModal(!updateCommissionModal);
-  };
-
-  const SingleData = (id) => {
-    const datas = data.find((item) => item._id === id);
-    setSingleData(datas);
-  };
+export const Payment = () => {
   const tableHeader = [
-    "Company Name",
-    "Commission Amount",
-    "Commission percent",
+    "Amount",
+    "Method",
+    "Booking Number",
+    "Transaction ID",
+    "Status",
     "Action",
   ];
-
-  useEffect(() => {
-    fecthCommissions(10, currentPage);
-    fetchTransport()
-  }, [currentPage]);
-
-  useEffect(() => {
-    onFilter();
-  }, [searchQuery]);
-
   const tableRow = (data) => {
     return (
       <tr key={data?.id} className="border-b-2 border-slate-200">
@@ -121,7 +23,7 @@ const AdminPricing = () => {
                 isLink: false,
                 onclick: () => {
                   setCommisionId(data?._id);
-                  setCompanyId(data?.company?._id)
+                  setCompanyId(data?.company?._id);
                   SingleData(data?._id);
                   toggleUpdateCommissionModal();
                 },
@@ -143,13 +45,12 @@ const AdminPricing = () => {
       </tr>
     );
   };
-
   return (
     <Page>
       <section>
         {/* <div className="grid grid-cols-1 gap-4 md:grid-cols-2"> */}
-          
-          <div className="flex items-center justify-between mb-6">
+
+        <div className="flex items-center justify-between mb-6">
           <h4>Commission page</h4>
           <button
             className="px-4 py-2 text-white transition-shadow rounded-md shadow-md hover:shadow-lg w-52 bg-sky-800"
@@ -158,14 +59,13 @@ const AdminPricing = () => {
             Add Commission
           </button>
         </div>
-          
       </section>
 
       <section className="mt-10 ">
         <div className="col-12">
-          <Card description={"Manage transport Pricing"} width="w-full">
-            <div className="items-center justify-between w-full mt-4 md:flex">
-               <div className="flex items-center">
+          <Card description={"Payment History"} width="w-full">
+            {/* <div className="items-center justify-between w-full mt-4 md:flex">
+              <div className="flex items-center">
                 <label html="search" className="sr-only">
                   Search company name
                 </label>
@@ -186,7 +86,7 @@ const AdminPricing = () => {
                   </button>
                 </div>
               </div>
-            </div>
+            </div> */}
             <div className="mt-10 ">
               <Table
                 data={data}
@@ -213,26 +113,21 @@ const AdminPricing = () => {
         commissionId={commissionId}
         companyId={companyId}
         callBack={fecthCommissions}
-      >
-      </UpdateCommissionModal>
+      ></UpdateCommissionModal>
       <DeleteCommissionModal
         show={deleteCommissionModal}
         size="md"
         onHide={toggleDeleteCommissionModal}
         id={commissionId}
         callBack={fecthCommissions}
-      >
-      </DeleteCommissionModal>
+      ></DeleteCommissionModal>
       <AddCommissionModal
         show={addCommissionModal}
         size="md"
         onHide={toggleAddCommissionModal}
         companies={companies}
         callBack={fecthCommissions}
-      >
-      </AddCommissionModal>
+      ></AddCommissionModal>
     </Page>
   );
 };
-
-export default AdminPricing;

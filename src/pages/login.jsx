@@ -29,7 +29,7 @@ const Login = () => {
     Auth({ ...values })
       .then((r) => {
         setIsLoading(true);
-        context.login(r.data);
+        // context.login(r.data);
         localStorage.setItem("token", r?.data?.authenticate.token.accessToken);
         localStorage.setItem("userData", JSON.stringify(r?.data));
         setTimeout(() => {
