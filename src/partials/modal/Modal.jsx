@@ -59,13 +59,13 @@ export default function Modal({
           >
             <div className="relative inline-block overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
               <span
-                className="absolute flex items-center justify-center w-8 h-8 bg-red-300 rounded-full cursor-pointer top-2 right-7"
+                className="absolute flex items-center justify-center w-8 h-8 bg-red-500 rounded-full cursor-pointer top-2 right-7"
                 onClick={() => onHide()}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
+                  width="20"
+                  height="20"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"

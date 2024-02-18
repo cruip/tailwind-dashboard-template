@@ -3,10 +3,45 @@ import { NavLink, useLocation } from "react-router-dom";
 import { SVGIcon } from "./icons/SvgIcon";
 
 import SidebarLinkGroup from "./SidebarLinkGroup";
+import { getDashboardRoutes } from "../utils/enum";
 
 function Sidebar({ sidebarOpen, setSidebarOpen }) {
   const location = useLocation();
   const { pathname } = location;
+  const dashboardRoutes = getDashboardRoutes();
+
+  const sideBarLink = [
+    {
+      label: "Dashboard",
+      to: dashboardRoutes.DASHBOARD,
+      iconName: "dashboard",
+    },
+    {
+      label: "Customer Booking",
+      to: dashboardRoutes.CUSTOMER_BOOKING,
+      iconName: "book",
+    },
+    {
+      label: "Customer",
+      to: dashboardRoutes.CUSTOMER,
+      iconName: "users",
+    },
+    {
+      label: "Transport Companies",
+      to: dashboardRoutes.TRANSPORT_COMPANY,
+      iconName: "bus",
+    },
+    {
+      label: "Admin Pricing",
+      to: dashboardRoutes.ADMIN_PRICING,
+      iconName: "pricing",
+    },
+    {
+      label: "Payment",
+      to: dashboardRoutes.PAYMENT,
+      iconName: "payment",
+    },
+  ];
 
   const trigger = useRef(null);
   const sidebar = useRef(null);
@@ -146,115 +181,35 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
               </span>
             </h3>
             <ul className="mt-3">
-              {/* Dashboard */}
-              <li
-                className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${
-                  pathname === "/" && "bg-slate-900"
-                }`}
-              >
-                <NavLink
-                  end
-                  to="/"
-                  className={`block text-slate-200 hover:text-white truncate transition duration-150 ${
-                    pathname === "/" && "hover:text-slate-200"
-                  }`}
-                >
-                  <div className="flex items-center">
-                    <SVGIcon name="dashboard" />
-                    <span
-                      className={`ml-3 text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100`}
+              {/* links */}
+              {React.Children.toArray(
+                sideBarLink.map(({ label, to, iconName }) => {
+                  return (
+                    <li
+                      className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${
+                        pathname === to && "bg-slate-900"
+                      }`}
                     >
-                      Dashboard
-                    </span>
-                  </div>
-                </NavLink>
-              </li>
-              {/* Bookings */}
-              <li
-                className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${
-                  pathname.includes("booking") && "bg-slate-900"
-                }`}
-              >
-                <NavLink
-                  end
-                  to="/booking"
-                  className={`block text-slate-200 hover:text-white truncate transition duration-150 ${
-                    pathname.includes("booking") && "hover:text-slate-200"
-                  }`}
-                >
-                  <div className="flex items-center">
-                    <SVGIcon name="book" />
-                    <span className="ml-3 text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
-                      Customer Booking
-                    </span>
-                  </div>
-                </NavLink>
-              </li>
-              {/* Customers */}
-              <li
-                className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${
-                  pathname.includes("customers") && "bg-slate-900"
-                }`}
-              >
-                <NavLink
-                  end
-                  to="/customers"
-                  className={`block text-slate-200 hover:text-white truncate transition duration-150 ${
-                    pathname.includes("customers") && "hover:text-slate-200"
-                  }`}
-                >
-                  <div className="flex items-center">
-                    <SVGIcon name="users" />
-                    <span className="ml-3 text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
-                      Customers
-                    </span>
-                  </div>
-                </NavLink>
-              </li>
-              {/* Transport Companies */}
-              <li
-                className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${
-                  pathname.includes("transport_companies") && "bg-slate-900"
-                }`}
-              >
-                <NavLink
-                  end
-                  to="/transport_companies"
-                  className={`block text-slate-200 hover:text-white truncate transition duration-150 ${
-                    pathname.includes("transport_companies") &&
-                    "hover:text-slate-200"
-                  }`}
-                >
-                  <div className="flex items-center">
-                    <SVGIcon name="bus" />
-                    <span className="ml-3 text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
-                      Transport Companies
-                    </span>
-                  </div>
-                </NavLink>
-              </li>
-
-              {/* Admin pricing */}
-              <li
-                className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${
-                  pathname.includes("admin_pricing") && "bg-slate-900"
-                }`}
-              >
-                <NavLink
-                  end
-                  to="/admin_pricing"
-                  className={`block text-slate-200 hover:text-white truncate transition duration-150 ${
-                    pathname.includes("admin_pricing") && "hover:text-slate-200"
-                  }`}
-                >
-                  <div className="flex items-center">
-                    <SVGIcon name="pricing" />
-                    <span className="ml-3 text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100">
-                      Admin Pricing
-                    </span>
-                  </div>
-                </NavLink>
-              </li>
+                      <NavLink
+                        end
+                        to={to}
+                        className={`block text-slate-200 hover:text-white truncate transition duration-150 ${
+                          pathname === to && "hover:text-slate-200"
+                        }`}
+                      >
+                        <div className="flex items-center">
+                          <SVGIcon name={iconName} />
+                          <span
+                            className={`ml-3 text-sm font-medium duration-200 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100`}
+                          >
+                            {label}
+                          </span>
+                        </div>
+                      </NavLink>
+                    </li>
+                  );
+                })
+              )}
             </ul>
           </div>
         </div>

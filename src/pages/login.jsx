@@ -2,16 +2,16 @@ import React, { useContext, useEffect, useState } from "react";
 import { Auth } from "../services/authService";
 import { AuthContext } from "../context/authContext";
 import { useNavigate, useLocation } from "react-router-dom";
-import { toast, ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from "react-toastify";
 import { getToken } from "../utils/Utils";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const [values, setValues] = useState({
     email: "",
     password: "",
   });
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   const context = useContext(AuthContext);
   let navigate = useNavigate();
   const { state } = useLocation();
@@ -26,29 +26,28 @@ const Login = () => {
   };
 
   const handleSubmit = () => {
-    Auth({...values})
-    .then((r) => {
-      setIsLoading(true)
-      context.login(r.data)
-      localStorage.setItem('token', r?.data?.authenticate.token.accessToken)
-      localStorage.setItem('userData', JSON.stringify(r?.data))
-      setTimeout(() => {
-        navigate(state?.path || "/", { replace: true });
-      }, 300)
-    })
-    .catch((error) => {
-      setIsLoading(false)
-      toast.error('oops something went wrong')
-    })
-   
+    Auth({ ...values })
+      .then((r) => {
+        setIsLoading(true);
+        // context.login(r.data);
+        localStorage.setItem("token", r?.data?.authenticate.token.accessToken);
+        localStorage.setItem("userData", JSON.stringify(r?.data));
+        setTimeout(() => {
+          navigate(state?.path || "/", { replace: true });
+        }, 300);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        toast.error("oops something went wrong");
+      });
   };
 
   useEffect(() => {
-   if(getToken()){
-    console.log(getToken(), 'sup');
-    navigate( "/", { replace: true });
-   }
-  }, [])
+    if (getToken()) {
+      console.log(getToken(), "sup");
+      navigate("/", { replace: true });
+    }
+  }, []);
 
   return (
     <main className="flex items-center justify-center h-screen">
@@ -96,9 +95,7 @@ const Login = () => {
               type="button"
               onClick={() => handleSubmit()}
             >
-             {
-              isLoading ? 'Loading...' : ' Sign In'
-             }
+              {isLoading ? "Loading..." : " Sign In"}
             </button>
             <a
               className="inline-block text-sm font-bold text-blue-500 align-baseline hover:text-blue-800"
@@ -109,7 +106,7 @@ const Login = () => {
           </div>
         </form>
         <p className="text-xs text-center text-gray-500">
-          &copy;2022 DryvAfrica. All rights reserved.
+          &copy;{new Date().getFullYear()} DryvAfrica. All rights reserved.
         </p>
       </div>
     </main>

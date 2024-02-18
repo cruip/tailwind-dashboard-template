@@ -26,7 +26,7 @@ const AdminPricing = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
 
-  const fecthCommissions = async (size=100, page) => {
+  const fetchCommissions = async (size=100, page) => {
     try {
       
       const { data, loading, errors } = await Commissions({size, page});
@@ -51,7 +51,7 @@ const AdminPricing = () => {
   };
 
   const onFilter = () => {
-    if (!searchQuery)  fecthCommissions(10, currentPage);;
+    if (!searchQuery)  fetchCommissions(10, currentPage);;
     if (searchQuery) {
       const arrayData = data?.filter((item) => {
         if (
@@ -94,12 +94,12 @@ const AdminPricing = () => {
   const tableHeader = [
     "Company Name",
     "Commission Amount",
-    "Commision percent",
+    "Commission percent",
     "Action",
   ];
 
   useEffect(() => {
-    fecthCommissions(10, currentPage);
+    fetchCommissions(10, currentPage);
     fetchTransport()
   }, [currentPage]);
 
@@ -212,7 +212,7 @@ const AdminPricing = () => {
         data={Singledatas}
         commissionId={commissionId}
         companyId={companyId}
-        callBack={fecthCommissions}
+        callBack={fetchCommissions}
       >
       </UpdateCommissionModal>
       <DeleteCommissionModal
@@ -220,7 +220,7 @@ const AdminPricing = () => {
         size="md"
         onHide={toggleDeleteCommissionModal}
         id={commissionId}
-        callBack={fecthCommissions}
+        callBack={fetchCommissions}
       >
       </DeleteCommissionModal>
       <AddCommissionModal
@@ -228,7 +228,7 @@ const AdminPricing = () => {
         size="md"
         onHide={toggleAddCommissionModal}
         companies={companies}
-        callBack={fecthCommissions}
+        callBack={fetchCommissions}
       >
       </AddCommissionModal>
     </Page>
