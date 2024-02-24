@@ -28,9 +28,8 @@ export const ApprovePaymentModal = ({
       .finally(() => setSaving(false));
   };
   const paymentStatusEnum = [
-    "pending",
-    "canceled",
     "completed",
+    "canceled",
     "error",
     "refunded",
   ];
