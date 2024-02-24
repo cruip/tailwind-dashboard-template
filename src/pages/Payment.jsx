@@ -35,7 +35,6 @@ export const Payment = () => {
   const getPaymentHistory = async (page, size) => {
     try {
       const { data, loading, errors } = await getPaymentsHistory(page, size);
-      console.log(data);
       setLimit(data?.getPayments?.nodes?.length);
       setPaymentRecords(data?.getPayments?.nodes);
     } catch (error) {
