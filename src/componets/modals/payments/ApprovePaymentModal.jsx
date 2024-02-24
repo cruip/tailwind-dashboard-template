@@ -11,16 +11,19 @@ export const ApprovePaymentModal = ({
   callBack,
 }) => {
   const [paymentStatus, setPaymentStatus] = useState("");
+  const [reason, setReason] = useState("");
   const [saving, setSaving] = useState(false);
   const handlePaymentApproval = () => {
     setSaving(true);
     approveManualPayment({
       paymentId: paymentId,
       status: paymentStatus,
+      ...(reason & { cancelationReason: reason })
     })
       .then(async (r) => {
         toast.success("Payment Confirmed");
         setPaymentStatus("");
+        setReason("");
         await callBack();
         onHide();
       })
@@ -33,12 +36,13 @@ export const ApprovePaymentModal = ({
     "error",
     "refunded",
   ];
+  const isPaymentCanceled = paymentStatus === "canceled";
   return (
     <Fragment>
       <ToastContainer />
       <Modal show={show} size="md" onHide={onHide} width="30%">
         <div className="mt-8">
-          <p className="mb-8">select payment status</p>
+          <p className="mb-8"> select payment status</p>
           <select
             className="block w-full px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline"
             value={paymentStatus}
@@ -52,11 +56,17 @@ export const ApprovePaymentModal = ({
               </option>
             ))}
           </select>
+          {isPaymentCanceled && <div className="mt-8">
+            <textarea value={reason} onChange={(e) => setReason(e.target.value)} rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300" placeholder="Enter reason for cancellation...">
+
+            </textarea>
+          </div>}
           <div className="flex justify-between  py-5  sm:flex-row-reverse">
             <button
               type="button"
-              className="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-blue-700 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+              className={`inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-blue-700 border border-transparent rounded-md shadow-sm sm:ml-3 sm:w-auto sm:text-sm ${isPaymentCanceled && !reason ? "cursor-not-allowed" : ""}`}
               onClick={() => handlePaymentApproval()}
+              disabled={isPaymentCanceled && !reason}
             >
               {saving ? "Confirming" : "Confirm"}
             </button>
