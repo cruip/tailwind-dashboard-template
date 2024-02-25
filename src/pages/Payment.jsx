@@ -100,6 +100,8 @@ export const Payment = () => {
     );
   };
   return (
+    <>
+
     <Page>
       <section>
         {/* <div className="grid grid-cols-1 gap-4 md:grid-cols-2"> */}
@@ -166,15 +168,9 @@ export const Payment = () => {
         paymentId={paymentId}
         callBack={getPaymentHistory}
       />
-      {/* <UpdateCommissionModal
-        show={updateCommissionModal}
-        size="md"
-        onHide={toggleUpdateCommissionModal}
-        data={Singledatas}
-        commissionId={commissionId}
-        companyId={companyId}
-        callBack={fecthCommissions}
-      ></UpdateCommissionModal> */}
+
     </Page>
+    
+    </>
   );
 };

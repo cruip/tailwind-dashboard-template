@@ -23,6 +23,7 @@ import Trips from "./pages/Trips";
 import Terminals from "./pages/Terminals";
 import { Payment } from "./pages/Payment";
 import { getDashboardRoutes } from "./utils/enum";
+import { PaymentMethods } from "./pages/PaymentMethods";
 
 function App() {
   const location = useLocation();
@@ -138,6 +139,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Payment />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={dashboardRoutes.PAYMENT_METHODS}
+          element={
+            <ProtectedRoute>
+              <PaymentMethods />
             </ProtectedRoute>
           }
         />
