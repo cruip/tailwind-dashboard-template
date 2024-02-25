@@ -87,8 +87,8 @@ export const approveManualPayment = async (event) => {
   const { paymentId, status, cancelationReason } = event;
   const { data, errors } = await client.mutate({
     mutation: gql`
-      mutation approvePayment($paymentId: String!, $status: String!, cancelationReason: String!) {
-        approvePayment(status: $status, paymentId: $paymentId, cancelationReason :$cancelationReason) {
+      mutation approvePayment($paymentId: String!, $status: String!,$cancelationReason: String) {
+        approvePayment(status: $status, paymentId: $paymentId, cancelationReason: $cancelationReason) {
           _id
         }
       }

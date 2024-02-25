@@ -6,12 +6,12 @@ import { addPaymentMethod } from "../../../services/Payment";
 export const PaymentMethodModal = ({ show, onHide, callBack }) => {
   const [values, setValues] = useState({
     name: "",
-    canRefund: false,
-    isEnabled: false,
+    canRefund: "",
+    isEnabled: "",
   });
   const actionStatus = [
-    { label: "Yes", value: true },
-    { label: "No", value: false },
+    { label: "Yes", value: Boolean(true) },
+    { label: "No", value: Boolean(false) },
   ];
   const [saving, setSaving] = useState(false);
 
@@ -24,19 +24,19 @@ export const PaymentMethodModal = ({ show, onHide, callBack }) => {
   };
   //   const OptionSelected = Object.values(values).some(Boolean);
   const { name, isEnabled, canRefund } = values;
-  const OptionSelected = !name && !isEnabled && !canRefund;
-  
-    const handleAddPaymentMethod = () => {
-      setSaving(true);
-      addPaymentMethod({ ...values })
-        .then(async () => {
-          toast.success("Payment Method added successfully");
-          callBack();
-          onHide();
-        })
-        .catch((error) => toast.error(error.message))
-        .finally(() => setSaving(false));
-    };
+  const OptionSelected = !name || !isEnabled || !canRefund;
+
+  const handleAddPaymentMethod = () => {
+    setSaving(true);
+    addPaymentMethod({ ...values })
+      .then(async () => {
+        toast.success("Payment Method added successfully");
+        callBack();
+        onHide();
+      })
+      .catch((error) => toast.error(error.message))
+      .finally(() => setSaving(false));
+  };
   return (
     <Fragment>
       <ToastContainer />
@@ -71,7 +71,10 @@ export const PaymentMethodModal = ({ show, onHide, callBack }) => {
             onChange={handleInputChange}
             name="canRefund"
           >
-            {/* <option value="">select status</option> */}
+             <option disabled value="">
+              {" "}
+              -- select an option --{" "}
+            </option>
             {actionStatus?.map((item, index) => (
               <option key={index} value={item?.value}>
                 {item?.label}
@@ -92,7 +95,10 @@ export const PaymentMethodModal = ({ show, onHide, callBack }) => {
             onChange={handleInputChange}
             name="isEnabled"
           >
-            {/* <option value="">select status</option> */}
+            <option disabled value="">
+              {" "}
+              -- select an option --{" "}
+            </option>
             {actionStatus?.map((item, index) => (
               <option key={index} value={item?.value}>
                 {item?.label}
@@ -107,7 +113,7 @@ export const PaymentMethodModal = ({ show, onHide, callBack }) => {
               OptionSelected ? "cursor-not-allowed" : ""
             }`}
             onClick={() => handleAddPaymentMethod()}
-            disabled={OptionSelected}
+            disabled={OptionSelected || saving}
           >
             {saving ? "Confirming" : "Confirm"}
           </button>
