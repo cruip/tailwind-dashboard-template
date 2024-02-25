@@ -43,8 +43,8 @@ function DashboardCard07({ data }) {
               <tbody className="text-sm font-medium divide-y divide-slate-100">
                 {/* Row */}
 
-                {data.map((item) => (
-                  <tr>
+                {data.map((item,index) => (
+                  <tr key={index}>
                     <td className="p-2">
                       <div className="flex items-center">
                         <div className="text-slate-800">{item.companyName}</div>

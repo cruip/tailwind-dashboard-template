@@ -52,5 +52,6 @@ export const getDashboardRoutes = () => {
     TERMINAL: "/terminals",
     ADMIN_PRICING: "/admin_pricing",
     PAYMENT: "/payment",
+    PAYMENT_METHODS: "/payment_methods",
   });
 };
