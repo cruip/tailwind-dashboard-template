@@ -8,6 +8,7 @@ import {
 import { setContext } from "@apollo/client/link/context";
 import { toast } from "react-toastify";
 import { Logout } from "./utils/Utils";
+import { IS_DEV } from "./utils/enum";
 
 const logout = () => {
   Logout();
@@ -17,10 +18,16 @@ const logout = () => {
   }, 1000);
 };
 
-const httpLink = createHttpLink({
-  // uri: "https://api.dryvafrica.com/graphql",
+const production_url = import.meta.env.VITE_PRODUCTION_GRAPHQL_URI;
 
-  uri: "https://dev-api.dryvafrica.com/graphql",
+
+const dev_url = import.meta.env.VITE_DEV_GRAPHQL_URI;
+
+const baseUrl = IS_DEV ? dev_url : production_url;
+
+const httpLink = createHttpLink({
+  uri: baseUrl,
+
 });
 
 // const authLink = setContext((_, {headers}) => {
