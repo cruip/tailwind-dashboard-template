@@ -26,6 +26,7 @@ const dev_url = import.meta.env.VITE_DEV_GRAPHQL_URI;
 const baseUrl = IS_DEV ? dev_url : production_url;
 
 const httpLink = createHttpLink({
+
   uri: baseUrl,
 
 });
