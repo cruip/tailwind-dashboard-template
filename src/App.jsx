@@ -21,9 +21,13 @@ import SingleRoute from "./pages/Route";
 import RoutesPage from "./pages/Routes";
 import Trips from "./pages/Trips";
 import Terminals from "./pages/Terminals";
+import { Payment } from "./pages/Payment";
+import { getDashboardRoutes } from "./utils/enum";
+import { PaymentMethods } from "./pages/PaymentMethods";
 
 function App() {
   const location = useLocation();
+  const dashboardRoutes = getDashboardRoutes();
 
   useEffect(() => {
     document.querySelector("html").style.scrollBehavior = "auto";
@@ -31,12 +35,11 @@ function App() {
     document.querySelector("html").style.scrollBehavior = "";
   }, [location.pathname]); // triggered on route change
 
- 
   return (
     <>
       <Routes>
         <Route
-          path="/"
+          path={dashboardRoutes.DASHBOARD}
           element={
             <ProtectedRoute>
               <Dashboard />
@@ -44,47 +47,47 @@ function App() {
           }
         />
         <Route
-          path="/booking"
+          path={dashboardRoutes.CUSTOMER_BOOKING}
           element={
             <ProtectedRoute>
               <CustomerBooking />
             </ProtectedRoute>
           }
         />
-         <Route
-          path="/booking/pending"
+        <Route
+          path={dashboardRoutes.PENDING_CUSTOMER_BOOKING}
           element={
             <ProtectedRoute>
               <PendingBooking />
             </ProtectedRoute>
           }
         />
-         <Route
-          path="/booking/:id"
+        <Route
+          path={dashboardRoutes.CUSTOMER_BOOKING_DETAILS}
           element={
             <ProtectedRoute>
               <CustomerBookingDetail />
             </ProtectedRoute>
           }
         />
-         <Route
-          path="/customers"
+        <Route
+          path={dashboardRoutes.CUSTOMER}
           element={
             <ProtectedRoute>
               <Customers />
             </ProtectedRoute>
           }
         />
-         <Route
-          path="/customers/:id"
+        <Route
+          path={dashboardRoutes.CUSTOMER_DETAILS}
           element={
             <ProtectedRoute>
               <Customer />
             </ProtectedRoute>
           }
         />
-         <Route
-          path="/transport_companies"
+        <Route
+          path={dashboardRoutes.TRANSPORT_COMPANY}
           element={
             <ProtectedRoute>
               <TransportCompanies />
@@ -92,23 +95,23 @@ function App() {
           }
         />
         <Route
-          path="/transport_companies/:id"
+          path={dashboardRoutes.TRANSPORT_COMPANY_DETAILS}
           element={
             <ProtectedRoute>
               <TransportCompany />
             </ProtectedRoute>
           }
         />
-         <Route
-          path="/transport_companies/:id/trips"
+        <Route
+          path={dashboardRoutes.TRANSPORT_COMPANY_DETAILS_TRIP}
           element={
             <ProtectedRoute>
               <Trips />
             </ProtectedRoute>
           }
         />
-         <Route
-          path="/routes"
+        <Route
+          path={dashboardRoutes.ROUTES}
           element={
             <ProtectedRoute>
               <RoutesPage />
@@ -116,22 +119,38 @@ function App() {
           }
         />
         <Route
-          path="/terminals"
+          path={dashboardRoutes.TERMINAL}
           element={
             <ProtectedRoute>
               <Terminals />
             </ProtectedRoute>
           }
         />
-         <Route
-          path="/admin_pricing"
+        <Route
+          path={dashboardRoutes.ADMIN_PRICING}
           element={
             <ProtectedRoute>
               <AdminPricing />
             </ProtectedRoute>
           }
         />
-        <Route path="/login" element={<Login />} />
+        <Route
+          path={dashboardRoutes.PAYMENT}
+          element={
+            <ProtectedRoute>
+              <Payment />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={dashboardRoutes.PAYMENT_METHODS}
+          element={
+            <ProtectedRoute>
+              <PaymentMethods />
+            </ProtectedRoute>
+          }
+        />
+        <Route path={dashboardRoutes.LOGIN} element={<Login />} />
       </Routes>
     </>
   );

@@ -36,3 +36,22 @@ export const statusEnum = {
   Cancelled: "cancelled",
   Completed: "completed",
 };
+export const getDashboardRoutes = () => {
+  return Object.freeze({
+    LOGIN: "/login",
+    DASHBOARD: "/",
+    CUSTOMER_BOOKING: "/booking",
+    PENDING_CUSTOMER_BOOKING: "/booking/pending",
+    CUSTOMER_BOOKING_DETAILS: "/booking/:id",
+    CUSTOMER: "/customers",
+    CUSTOMER_DETAILS: "/customers/:id",
+    TRANSPORT_COMPANY: "/transport_companies",
+    TRANSPORT_COMPANY_DETAILS: "/transport_companies/:id",
+    TRANSPORT_COMPANY_DETAILS_TRIP: "/transport_companies/:id/trips",
+    ROUTES: "/routes",
+    TERMINAL: "/terminals",
+    ADMIN_PRICING: "/admin_pricing",
+    PAYMENT: "/payment",
+    PAYMENT_METHODS: "/payment_methods",
+  });
+};
