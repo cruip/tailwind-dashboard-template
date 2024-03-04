@@ -10,8 +10,8 @@ export const PaymentMethodModal = ({ show, onHide, callBack }) => {
     isEnabled: "",
   });
   const actionStatus = [
-    { label: "Yes", value: Boolean(true) },
-    { label: "No", value: Boolean(false) },
+    { label: "Yes", value: true },
+    { label: "No", value: false },
   ];
   const [saving, setSaving] = useState(false);
 
@@ -19,12 +19,12 @@ export const PaymentMethodModal = ({ show, onHide, callBack }) => {
     const { name, value } = e.target;
     setValues({
       ...values,
-      [name]: value,
+      [name]: name === "canRefund" || name === "isEnabled" ? value === "true" : value,
     });
   };
   //   const OptionSelected = Object.values(values).some(Boolean);
   const { name, isEnabled, canRefund } = values;
-  const OptionSelected = !name || !isEnabled || !canRefund;
+  const OptionSelected = !name || isEnabled === "" || canRefund === "";
 
   const handleAddPaymentMethod = () => {
     setSaving(true);
