@@ -154,7 +154,7 @@ const Trips = () => {
   }, [currentPage]);
 
   useEffect(() => {
-    fecthExpiredBuses(limit, currentPage)
+    fecthExpiredBuses(limit, currentPageExpired)
   }, [currentPageExpired])
   
   const tableHeader = [
