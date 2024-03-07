@@ -5,6 +5,7 @@ import { Card } from "../partials/card/Card";
 import DropDown from "../partials/DropDown";
 import { getPaymentMethods } from "../services/Payment";
 import { PaymentMethodModal } from "../componets/modals/payments/PaymentMethodModal";
+import { DeletePaymentMethodModal } from "../componets/modals/payments/DeletePaymentMethodModal";
 
 export const PaymentMethods = () => {
   const tableHeader = [
@@ -21,6 +22,8 @@ export const PaymentMethods = () => {
   const [tableLoad, setTableLoad] = useState(true);
   const [paymentMethods, setPaymentMethods] = useState([]);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [showDeletePaymentModal, setShowDeletePaymentModal] = useState(false);
+  const [paymentMethodId, setPaymentMethodId] = useState("");
   //   function
 
   const handleGetPaymentMethods = async (page, size) => {
@@ -61,8 +64,7 @@ export const PaymentMethods = () => {
                 name: "Edit Payment Method",
                 isLink: false,
                 // onclick: () => {
-                //     setApprovePaymentModal(!approvePaymentModal);
-                //     setPaymentId(data?._id);
+                 
                 // },
                 link: "",
                 icon: "edit",
@@ -70,10 +72,10 @@ export const PaymentMethods = () => {
               {
                 name: "Delete Payment Method",
                 isLink: false,
-                // onclick: () => {
-                //   toggleDeleteRouteModal();
-                //   setRouteId(routes?._id);
-                // },
+                onclick: () => {
+                  setShowDeletePaymentModal(true);
+                  setPaymentMethodId(data?._id);
+                },
                 link: "",
               },
             ]}
@@ -147,6 +149,12 @@ export const PaymentMethods = () => {
         size="md"
         onHide={() => setShowPaymentModal(!showPaymentModal)}
         callBack={handleGetPaymentMethods}
+      />
+      <DeletePaymentMethodModal
+        show={showDeletePaymentModal}
+        onHide={() => setShowDeletePaymentModal(false)}
+        callBack={handleGetPaymentMethods}
+        paymentMethodId={paymentMethodId}
       />
     </Page>
   );
