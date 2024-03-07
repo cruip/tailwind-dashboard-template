@@ -7,7 +7,12 @@ import { getPaymentMethods } from "../services/Payment";
 import { PaymentMethodModal } from "../componets/modals/payments/PaymentMethodModal";
 
 export const PaymentMethods = () => {
-  const tableHeader = ["Payment Method", "Is it enabled", "Can refund"];
+  const tableHeader = [
+    "Payment Method",
+    "Is it enabled",
+    "Can refund",
+    "Action",
+  ];
   // states
   const size = 10;
   const [limit, setLimit] = useState(10);
@@ -49,22 +54,31 @@ export const PaymentMethods = () => {
         <td>{data?.name?.toUpperCase()}</td>
         <td>{data?.isEnabled ? "Yes" : "No"}</td>
         <td>{data?.canRefund ? "Yes" : "No"}</td>
-        {/* <td>
-                    <DropDown
-                        links={[
-                            {
-                                name: "Update payment status",
-                                isLink: false,
-                                // onclick: () => {
-                                //     setApprovePaymentModal(!approvePaymentModal);
-                                //     setPaymentId(data?._id);
-                                // },
-                                link: "",
-                                icon: "edit",
-                            },
-                        ]}
-                    />
-                </td> */}
+        <td>
+          <DropDown
+            links={[
+              {
+                name: "Edit Payment Method",
+                isLink: false,
+                // onclick: () => {
+                //     setApprovePaymentModal(!approvePaymentModal);
+                //     setPaymentId(data?._id);
+                // },
+                link: "",
+                icon: "edit",
+              },
+              {
+                name: "Delete Payment Method",
+                isLink: false,
+                // onclick: () => {
+                //   toggleDeleteRouteModal();
+                //   setRouteId(routes?._id);
+                // },
+                link: "",
+              },
+            ]}
+          />
+        </td>
       </tr>
     );
   };
