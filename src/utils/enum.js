@@ -55,4 +55,4 @@ export const getDashboardRoutes = () => {
     PAYMENT_METHODS: "/payment_methods",
   });
 };
-export const IS_DEV = true;
+export const IS_DEV = false;
