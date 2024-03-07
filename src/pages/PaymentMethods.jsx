@@ -6,6 +6,7 @@ import DropDown from "../partials/DropDown";
 import { getPaymentMethods } from "../services/Payment";
 import { PaymentMethodModal } from "../componets/modals/payments/PaymentMethodModal";
 import { DeletePaymentMethodModal } from "../componets/modals/payments/DeletePaymentMethodModal";
+import { UpdatePaymentMethodModal } from "../componets/modals/payments/UpdatePaymentMethodModal";
 
 export const PaymentMethods = () => {
   const tableHeader = [
@@ -23,7 +24,13 @@ export const PaymentMethods = () => {
   const [paymentMethods, setPaymentMethods] = useState([]);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [showDeletePaymentModal, setShowDeletePaymentModal] = useState(false);
+  const [showUpdatePaymentModal, setShowUpdatePaymentModal] = useState(false);
   const [paymentMethodId, setPaymentMethodId] = useState("");
+  const [editForm, setEditForm] = useState({
+    name: "",
+    canRefund: "",
+    isEnabled: "",
+  });
   //   function
 
   const handleGetPaymentMethods = async (page, size) => {
@@ -51,6 +58,10 @@ export const PaymentMethods = () => {
     handleGetPaymentMethods(currentPage, size);
   }, [currentPage]);
 
+  function captureEdit(clickedItem) {
+    // console.log(clickedItem);
+    setEditForm(clickedItem);
+  }
   const tableRow = (data) => {
     return (
       <tr key={data?._id} className="border-b-2 border-slate-200">
@@ -63,9 +74,10 @@ export const PaymentMethods = () => {
               {
                 name: "Edit Payment Method",
                 isLink: false,
-                // onclick: () => {
-                 
-                // },
+                onclick: () => {
+                  setShowUpdatePaymentModal(true);
+                  captureEdit(data);
+                },
                 link: "",
                 icon: "edit",
               },
@@ -155,6 +167,15 @@ export const PaymentMethods = () => {
         onHide={() => setShowDeletePaymentModal(false)}
         callBack={handleGetPaymentMethods}
         paymentMethodId={paymentMethodId}
+      />
+      <UpdatePaymentMethodModal
+        show={showUpdatePaymentModal}
+        onHide={() => {
+          setShowUpdatePaymentModal(false);
+          setEditForm({});
+        }}
+        callBack={handleGetPaymentMethods}
+        data={editForm}
       />
     </Page>
   );

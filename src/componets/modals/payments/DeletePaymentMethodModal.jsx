@@ -19,8 +19,8 @@ export const DeletePaymentMethodModal = ({
         await callBack();
         onHide();
       })
-      .catch(() => toast.error("could not delete payment method"));
-    setLoading(false);
+      .catch(() => toast.error("could not delete payment method"))
+      .finally(() => setLoading(false));
   };
   return (
     <DeleteModal
