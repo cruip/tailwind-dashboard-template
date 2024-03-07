@@ -167,9 +167,7 @@ export const deletePaymentMethod = async (event) => {
       ) {
         deletePaymentMethod(
           paymentMethodId: $paymentMethodId
-        ) {
-          _id
-        }
+        ) 
       }
     `,
     variables: {
