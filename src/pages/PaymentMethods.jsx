@@ -5,9 +5,16 @@ import { Card } from "../partials/card/Card";
 import DropDown from "../partials/DropDown";
 import { getPaymentMethods } from "../services/Payment";
 import { PaymentMethodModal } from "../componets/modals/payments/PaymentMethodModal";
+import { DeletePaymentMethodModal } from "../componets/modals/payments/DeletePaymentMethodModal";
+import { UpdatePaymentMethodModal } from "../componets/modals/payments/UpdatePaymentMethodModal";
 
 export const PaymentMethods = () => {
-  const tableHeader = ["Payment Method", "Is it enabled", "Can refund"];
+  const tableHeader = [
+    "Payment Method",
+    "Is it enabled",
+    "Can refund",
+    "Action",
+  ];
   // states
   const size = 10;
   const [limit, setLimit] = useState(10);
@@ -16,6 +23,14 @@ export const PaymentMethods = () => {
   const [tableLoad, setTableLoad] = useState(true);
   const [paymentMethods, setPaymentMethods] = useState([]);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [showDeletePaymentModal, setShowDeletePaymentModal] = useState(false);
+  const [showUpdatePaymentModal, setShowUpdatePaymentModal] = useState(false);
+  const [paymentMethodId, setPaymentMethodId] = useState("");
+  const [editForm, setEditForm] = useState({
+    name: "",
+    canRefund: "",
+    isEnabled: "",
+  });
   //   function
 
   const handleGetPaymentMethods = async (page, size) => {
@@ -43,28 +58,41 @@ export const PaymentMethods = () => {
     handleGetPaymentMethods(currentPage, size);
   }, [currentPage]);
 
+  function captureEdit(clickedItem) {
+    // console.log(clickedItem);
+    setEditForm(clickedItem);
+  }
   const tableRow = (data) => {
     return (
       <tr key={data?._id} className="border-b-2 border-slate-200">
         <td>{data?.name?.toUpperCase()}</td>
         <td>{data?.isEnabled ? "Yes" : "No"}</td>
         <td>{data?.canRefund ? "Yes" : "No"}</td>
-        {/* <td>
-                    <DropDown
-                        links={[
-                            {
-                                name: "Update payment status",
-                                isLink: false,
-                                // onclick: () => {
-                                //     setApprovePaymentModal(!approvePaymentModal);
-                                //     setPaymentId(data?._id);
-                                // },
-                                link: "",
-                                icon: "edit",
-                            },
-                        ]}
-                    />
-                </td> */}
+        <td>
+          <DropDown
+            links={[
+              {
+                name: "Edit Payment Method",
+                isLink: false,
+                onclick: () => {
+                  setShowUpdatePaymentModal(true);
+                  captureEdit(data);
+                },
+                link: "",
+                icon: "edit",
+              },
+              {
+                name: "Delete Payment Method",
+                isLink: false,
+                onclick: () => {
+                  setShowDeletePaymentModal(true);
+                  setPaymentMethodId(data?._id);
+                },
+                link: "",
+              },
+            ]}
+          />
+        </td>
       </tr>
     );
   };
@@ -133,6 +161,21 @@ export const PaymentMethods = () => {
         size="md"
         onHide={() => setShowPaymentModal(!showPaymentModal)}
         callBack={handleGetPaymentMethods}
+      />
+      <DeletePaymentMethodModal
+        show={showDeletePaymentModal}
+        onHide={() => setShowDeletePaymentModal(false)}
+        callBack={handleGetPaymentMethods}
+        paymentMethodId={paymentMethodId}
+      />
+      <UpdatePaymentMethodModal
+        show={showUpdatePaymentModal}
+        onHide={() => {
+          setShowUpdatePaymentModal(false);
+          setEditForm({});
+        }}
+        callBack={handleGetPaymentMethods}
+        data={editForm}
       />
     </Page>
   );

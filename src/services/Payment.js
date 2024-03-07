@@ -158,3 +158,52 @@ export const getPaymentMethods = async (page, size) => {
   });
   return { data, loading, errors };
 };
+export const deletePaymentMethod = async (event) => {
+  const { paymentMethodId } = event;
+  const { data, errors } = await client.mutate({
+    mutation: gql`
+      mutation deletePaymentMethod(
+        $paymentMethodId: String!
+      ) {
+        deletePaymentMethod(
+          paymentMethodId: $paymentMethodId
+        ) {
+          _id
+        }
+      }
+    `,
+    variables: {
+      paymentMethodId,
+    },
+  });
+  return { data, errors };
+};
+export const updatePaymentMethod = async (event) => {
+  const { paymentMethodId, canRefund, name, isEnabled } = event;
+  const { data, errors } = await client.mutate({
+    mutation: gql`
+      mutation updatePaymentMethod(
+        $paymentMethodId: String!
+        $canRefund: Boolean
+        $name: String!
+        $isEnabled: Boolean
+      ) {
+        updatePaymentMethod(
+          paymentMethodId: $paymentMethodId
+          canRefund: $canRefund
+          name: $name
+          isEnabled: $isEnabled
+        ) {
+          _id
+        }
+      }
+    `,
+    variables: {
+      paymentMethodId,
+      canRefund,
+      name,
+      isEnabled,
+    },
+  });
+  return { data, errors };
+};

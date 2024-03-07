@@ -43,7 +43,7 @@ export const UpdateCommissionModal = ({
     // }, 2000);
   };
   useEffect(() => {
-    console.log(data, "data");
+    // console.log(data, "data");
     setValues({
       amount: data?.amount || "",
       description: data?.description || "",
