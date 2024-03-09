@@ -285,19 +285,19 @@ export const getBookingStat = async (_ = "") => {
   });
   return { data, loading, errors };
 };
-export const ToggleBookingStatus = async (event) => {
+export const toggleBookingStatus = async (event) => {
   const { bookingId, status, cancellationReason } = event;
   const { data, errors } = await client.mutate({
     mutation: gql`
       mutation toggleBookingStatus(
         $bookingId: String!
         $status: String!
-        $toggleBookingStatus: String
+        $cancellationReason: String
       ) {
         toggleBookingStatus(
           status: $status
           bookingId: $bookingId
-          toggleBookingStatus: $toggleBookingStatus
+          cancellationReason: $cancellationReason
         ) {
           _id
         }
