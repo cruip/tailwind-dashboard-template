@@ -159,40 +159,39 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
   };
 
   const getTrips = async (filters) => {
-   try {
-    setIsRouting(true);
-    // moment(values.departureDate).format(" MMM Do, YYYY | h:mm a")
-    const { data } = await getAllTrips({
-      page: 1,
-      size: 10000,
-      filters: { ...filters },
-    });
-    console.log(data.getTrips?.nodes, "trips");
-    setRoutes(data.getTrips.nodes);
-    const busesArray = [];
-    data.getTrips?.nodes?.forEach((el) => {
-      // if(item.buses || item.buses?.length){
-      // item.forEach((el) => {
-      busesArray.push({
-        _id: el._id,
-        type: el.type,
-        class: el.class,
-        transporter: el.companyId.name,
-        price: el.price || "10000",
-        availableSeats: el.availableSeats?.map((item) => Number(item)),
-        transporterId: el?.companyId?._id,
-        depatureTime: el.departureTime,
+    try {
+      setIsRouting(true);
+      // moment(values.departureDate).format(" MMM Do, YYYY | h:mm a")
+      const { data } = await getAllTrips({
+        page: 1,
+        size: 10000,
+        filters: { ...filters },
       });
-      // })
-      // }
-    });
-    setBuses(busesArray);
-  } catch (error) {
-    console.log(error);
-  }finally {
-    
-    setIsRouting(false);
-   }
+      console.log(data.getTrips?.nodes, "trips");
+      setRoutes(data.getTrips.nodes);
+      const busesArray = [];
+      data.getTrips?.nodes?.forEach((el) => {
+        // if(item.buses || item.buses?.length){
+        // item.forEach((el) => {
+        busesArray.push({
+          _id: el._id,
+          type: el.type,
+          class: el.class,
+          transporter: el.companyId.name,
+          price: el.price || "10000",
+          availableSeats: el.availableSeats?.map((item) => Number(item)),
+          transporterId: el?.companyId?._id,
+          depatureTime: el.departureTime,
+        });
+        // })
+        // }
+      });
+      setBuses(busesArray);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsRouting(false);
+    }
   };
   // const handlePrice = useCallback((id) => {
   //   const bus = buses?.find((item) => item._id === id)
@@ -314,11 +313,11 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
                       No City Found
                     </option>
                   ) : (
-                    location?.map((cities, i) => (
-                      <option key={i} value={cities._id}>
-                        {cities.city}
-                      </option>
-                    ))
+                    React.Children.toArray(
+                      location?.map((cities, i) => (
+                        <option value={cities._id}>{cities.city}</option>
+                      ))
+                    )
                   )}
                 </select>
               </div>
@@ -357,7 +356,7 @@ export const BookSeatModal = ({ show, onHide, id, callBack, location }) => {
                 >
                   <option value="">select booking stat code</option>
                   {Bookstat.map((type) => (
-                    <option value={type.text}>{type.value}</option>
+                    <option key={type.text} value={type.text}>{type.value}</option>
                   ))}
                 </select>
               </div>
