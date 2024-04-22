@@ -57,7 +57,6 @@ const CustomerBookingDetail = () => {
       </div>
     );
   }
-  // console.log(datas);
   const St = () => {
     return (
       <>
