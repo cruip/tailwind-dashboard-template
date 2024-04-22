@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Card } from "../partials/card/Card";
 import { Tab, Tabs, TabPane } from "../partials/Tabs";
 import Page from "../partials/page";
@@ -6,6 +6,7 @@ import { Link, useParams } from "react-router-dom";
 import { getBooking } from "../services/bookingsService";
 import Modal from "../partials/modal/Modal";
 import Loader from "../partials/Loader";
+import { DetailsCard } from "../componets/DetailsCard";
 
 const CustomerBookingDetail = () => {
   const [cancelModal, setCancelModal] = React.useState(false);
@@ -41,7 +42,7 @@ const CustomerBookingDetail = () => {
     const { data, loading, errors } = await getBooking(id);
     if (data) {
       setData(data?.getBooking);
-      setFetched(true);
+      // setFetched(true);
     }
   };
 
@@ -56,6 +57,53 @@ const CustomerBookingDetail = () => {
       </div>
     );
   }
+  // console.log(datas);
+  const St = () => {
+    return (
+      <>
+        {datas?.seatNumbers.map((seat) => (
+          <span key={seat} className="mr-1">
+            {seat}
+          </span>
+        ))}
+      </>
+    );
+  };
+  const bookingDetails = [
+    {
+      heading: "From",
+      content: `${datas?.from?.address} ${datas?.from?.city}`,
+    },
+    {
+      heading: "To",
+      content: `${datas?.to?.address} ${datas?.to?.city}`,
+    },
+    {
+      heading: "Amount Paid",
+      content: `N${datas?.amount}`,
+    },
+    {
+      heading: "Email",
+      content: datas?.email,
+    },
+    {
+      heading: "Departure Date",
+      content: datas?.departureDate,
+    },
+    {
+      heading: "Seat No(s)",
+      content: <St />,
+    },
+    {
+      heading: "Status",
+      content: datas?.status,
+    },
+    {
+      heading: "Booking Number",
+      content: datas?.bookingNo,
+      color: "#ff0000",
+    },
+  ];
 
   return (
     <Page>
@@ -72,82 +120,66 @@ const CustomerBookingDetail = () => {
       </h2>
       <div className="w-full mx-auto mt-8">
         <Card width="w-full">
-          <div className="grid grid-cols-2 gap-6">
-            <p className="flex flex-col items-start justify-center ">
-              <span className="text-base font-semibold text-center text-gray-600 ">
-                From
-              </span>
-              <span className="text-base text-gray-700">
-                {datas?.from?.address} {datas?.from?.city}
-              </span>
-            </p>
-            <p className="flex flex-col items-start justify-center ">
-              <span className="text-base font-semibold text-left text-gray-600 ">
-                To
-              </span>
-              <span className="text-base text-gray-700">
-                {datas?.to?.address} {datas?.to?.city}
-              </span>
-            </p>
-            <p className="flex flex-col items-start justify-center ">
-              <span className="text-base font-semibold text-center text-gray-600 ">
-                Amount paid
-              </span>
-              <span className="text-base text-gray-700">N{datas?.amount}</span>
-            </p>
-            <p className="flex flex-col items-start justify-center ">
-              <span className="text-base font-semibold text-center text-gray-600 ">
-                Email
-              </span>
-              <span className="text-base text-gray-700">{datas?.email}</span>
-            </p>
-            <p className="flex flex-col items-start justify-center ">
-              <span className="text-base font-semibold text-center text-gray-600 ">
-              Departure Date
-              </span>
-              <span className="text-base text-gray-700">{datas?.departureDate}</span>
-            </p>
-  
-            <p className="flex flex-col items-start justify-center ">
-              <span className="text-base font-semibold text-center text-gray-600 ">
-                Seat No(s)
-              </span>
-              <span className="text-base text-gray-700">
-                {datas?.seatNumbers.map((seat) => (
-                  <span key={seat} className="mr-1">{seat}</span>
-                ))}
-              </span>
-            </p>
-            <p className="flex flex-col items-start justify-center ">
-              <span className="text-base font-semibold text-center text-gray-600 ">Status</span>
-              <span className="text-base text-gray-700">{datas?.status}</span>
-            </p>
-            <p className="flex flex-col items-start justify-center ">
-              <span className="text-base font-semibold text-center text-gray-600 ">Book Number</span>
-              <span className="text-base text-gray-700">{datas?.bookingNo}</span>
-            </p>
-          </div>
-           <p className="mt-6 font-medium text-left text-blue-900">Passengers</p>
-          
-          {
-            datas?.passengers?.map((item, i) => (
-              <div key={i} className="grid grid-cols-2 gap-6 pb-1 mt-2 border-b-2">
-              <p className="flex flex-col items-start justify-center ">
-              <span className="text-base font-semibold text-center text-gray-600 ">name</span>
-              <span className="text-base text-gray-700">{item?.firstName} {item?.lastName}</span>
-            </p>
-            <p className="flex flex-col items-start justify-center ">
-              <span className="text-base font-semibold text-center text-gray-600 ">Gender</span>
-              <span className="text-base text-gray-700">{item?.gender}</span>
-            </p>
-            <p className="flex flex-col items-start justify-center ">
-              <span className="text-base font-semibold text-center text-gray-600 ">age</span>
-              <span className="text-base text-gray-700">{item?.age}</span>
-            </p>
-            </div>
-            ))
-          }
-          
+          <DetailsCard info={bookingDetails} />
+
+          <p className="mt-6 font-medium text-left text-blue-900">Passengers</p>
+          {datas?.passengers?.map((item, i) => {
+            return (
+              <div
+                key={i}
+                className="grid grid-cols-2 gap-6 pb-1 mt-2 border-b-2"
+              >
+                <p className="flex flex-col items-start justify-center ">
+                  <span className="text-base font-semibold text-center text-gray-600 ">
+                    Name
+                  </span>
+                  <span className="text-base text-gray-700">
+                    {item?.firstName} {item?.lastName}
+                  </span>
+                </p>
+                <p className="flex flex-col items-start justify-center ">
+                  <span className="text-base font-semibold text-center text-gray-600 ">
+                    Gender
+                  </span>
+                  <span className="text-base text-gray-700">
+                    {item?.gender}
+                  </span>
+                </p>
+                <p className="flex flex-col items-start justify-center ">
+                  <span className="text-base font-semibold text-center text-gray-600 ">
+                    Age
+                  </span>
+                  <span className="text-base text-gray-700">{item?.age}</span>
+                </p>
+                <div className="flex flex-col items-start justify-center ">
+                  <span className="text-base font-semibold text-center text-gray-600 ">
+                    Documents
+                  </span>
+                  <div className="grid grid-cols-2 gap-6">
+                    {React.Children.toArray(
+                      item?.documents?.map((item, index) => {
+                        return Object.entries(item).map(([key, value]) => {
+                          return (
+                            <Fragment key={index + key}>
+                              <p className="flex flex-col items-start justify-center">
+                                <span className="text-base font-semibold text-center text-gray-600">
+                                  {key.toLocaleUpperCase()}
+                                </span>
+                                <span className="text-base text-gray-700">
+                                  {value}
+                                </span>
+                              </p>
+                            </Fragment>
+                          );
+                        });
+                      })
+                    )}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+
           {/* <Tabs defaultTab={0}>
             <Tab label="Profile" tabIndex={0} />
             <Tab label="Travel history" tabIndex={1} />

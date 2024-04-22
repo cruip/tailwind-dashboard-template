@@ -196,6 +196,15 @@ export const getBooking = async (bookingId) => {
             lastName
             gender
             age
+            documents{
+              documentType
+              number
+              issuanceDate
+              expiryDate
+              issuanceCountry
+              dateOfBirth
+              nationality
+            }
           }
         }
       }
