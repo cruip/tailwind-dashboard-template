@@ -53,6 +53,11 @@ export const getDashboardRoutes = () => {
     ADMIN_PRICING: "/admin_pricing",
     PAYMENT: "/payment",
     PAYMENT_METHODS: "/payment_methods",
+    CUSTOMER_ROUTE_REQ: "/customer_route_requests",
   });
 };
-export const IS_DEV = false;
+export const IS_DEV = true;
+export const actionStatus = [
+  { label: "Yes", value: true },
+  { label: "No", value: false },
+];

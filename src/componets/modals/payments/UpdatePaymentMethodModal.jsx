@@ -1,7 +1,8 @@
-import React, { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import Modal from "../../../partials/modal/Modal";
 import { updatePaymentMethod } from "../../../services/Payment";
+import { actionStatus } from "../../../utils/enum";
 
 export const UpdatePaymentMethodModal = ({ show, onHide, data, callBack }) => {
   const [values, setValues] = useState({
@@ -9,10 +10,7 @@ export const UpdatePaymentMethodModal = ({ show, onHide, data, callBack }) => {
     canRefund: "",
     isEnabled: "",
   });
-  const actionStatus = [
-    { label: "Yes", value: true },
-    { label: "No", value: false },
-  ];
+  
   const [saving, setSaving] = useState(false);
 
   const handleInputChange = (e) => {

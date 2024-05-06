@@ -196,7 +196,7 @@ export const getBooking = async (bookingId) => {
             lastName
             gender
             age
-            documents{
+            documents {
               documentType
               number
               issuanceDate
@@ -316,6 +316,96 @@ export const toggleBookingStatus = async (event) => {
       bookingId,
       status,
       cancellationReason,
+    },
+  });
+  return { data, errors };
+};
+export const getCustomerRouteRequest = async (page, size) => {
+  const { data, errors, loading } = await client.query({
+    query: gql`
+      query getRouteRequests($page: Int, $size: Int) {
+        getRouteRequests(page: $page, size: $size) {
+          pageInfo {
+            totalItems
+            currentPage
+            pageSize
+            hasNextPage
+            hasPreviousPage
+            nextPage
+            previousPage
+            lastPage
+          }
+          nodes {
+            _id
+            vendorName
+            customerEmail
+            phoneNumber
+            route
+            attendedTo
+          }
+        }
+      }
+    `,
+    variables: {
+      page,
+      size,
+    },
+  });
+  return { data, loading, errors };
+};
+
+export const updateCustomerRouteRequest = async (event) => {
+  const {
+    requestId,
+    vendorName,
+    customerEmail,
+    phoneNumber,
+    route,
+    attendedTo,
+  } = event;
+  const { data, errors } = await client.mutate({
+    mutation: gql`
+      mutation updateRouteRequest(
+        $requestId: String!
+        $vendorName: String
+        $customerEmail: String
+        $phoneNumber: String
+        $route: String
+        $attendedTo: Boolean
+      ) {
+        updateRouteRequest(
+          requestId: $requestId
+          vendorName: $vendorName
+          customerEmail: $customerEmail
+          phoneNumber: $phoneNumber
+          route: $route
+          attendedTo: $attendedTo
+        ) {
+          _id
+        }
+      }
+    `,
+    variables: {
+      requestId,
+      vendorName,
+      customerEmail,
+      phoneNumber,
+      route,
+      attendedTo,
+    },
+  });
+  return { data, errors };
+};
+export const deleteCustomerRouteRequest = async (event) => {
+  const { requestId } = event;
+  const { data, errors } = await client.mutate({
+    mutation: gql`
+      mutation deleteRouteRequest($requestId: String!) {
+        deleteRouteRequest(requestId: $requestId)
+      }
+    `,
+    variables: {
+      requestId,
     },
   });
   return { data, errors };

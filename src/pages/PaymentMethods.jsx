@@ -59,7 +59,6 @@ export const PaymentMethods = () => {
   }, [currentPage]);
 
   function captureEdit(clickedItem) {
-    // console.log(clickedItem);
     setEditForm(clickedItem);
   }
   const tableRow = (data) => {

@@ -24,6 +24,7 @@ import Terminals from "./pages/Terminals";
 import { Payment } from "./pages/Payment";
 import { getDashboardRoutes } from "./utils/enum";
 import { PaymentMethods } from "./pages/PaymentMethods";
+import { CustomerRouteRequest } from "./pages/CustomerRouteRequest";
 
 function App() {
   const location = useLocation();
@@ -147,6 +148,14 @@ function App() {
           element={
             <ProtectedRoute>
               <PaymentMethods />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={dashboardRoutes.CUSTOMER_ROUTE_REQ}
+          element={
+            <ProtectedRoute>
+              <CustomerRouteRequest />
             </ProtectedRoute>
           }
         />

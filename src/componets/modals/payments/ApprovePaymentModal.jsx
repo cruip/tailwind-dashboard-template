@@ -7,7 +7,6 @@ export const ApprovePaymentModal = ({
   show,
   onHide,
   paymentId,
-  status,
   callBack,
 }) => {
   const [paymentStatus, setPaymentStatus] = useState("");
