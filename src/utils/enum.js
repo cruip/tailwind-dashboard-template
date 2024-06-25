@@ -29,6 +29,9 @@ export const BusCompany = {
   AMINU_SOKOTO_TRANSPORT: "aminu",
   AWARASAKI_TRANSPORT: "awsarisaki",
   GCP_TRANSPORT: "gcp",
+  ABIA_VOYAGE: "abia_voyage",
+  AKUNMILI_MOTORS: "akunmili",
+  AKAMBA_ABASI_TRANSPORT: "akamba_abasi_transport",
 };
 
 export const statusEnum = {
