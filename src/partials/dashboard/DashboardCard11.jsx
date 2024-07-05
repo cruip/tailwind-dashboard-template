@@ -21,7 +21,7 @@ function DashboardCard11() {
         label: 'Missing features I need',
         data: [100],
         backgroundColor: tailwindConfig().theme.colors.violet[700],
-        hoverBackgroundColor: tailwindConfig().theme.colors.violet[600],
+        hoverBackgroundColor: tailwindConfig().theme.colors.violet[800],
         barPercentage: 1,
         categoryPercentage: 1,
       },
