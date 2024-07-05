@@ -40,7 +40,7 @@ function ModalSearch({
     <>
       {/* Modal backdrop */}
       <Transition
-        className="fixed inset-0 bg-slate-900 bg-opacity-30 z-50 transition-opacity"
+        className="fixed inset-0 bg-gray-900 bg-opacity-30 z-50 transition-opacity"
         show={modalOpen}
         enter="transition ease-out duration-200"
         enterStart="opacity-0"
@@ -66,24 +66,26 @@ function ModalSearch({
       >
         <div
           ref={modalContent}
-          className="bg-white dark:bg-slate-800 border border-transparent dark:border-slate-700 overflow-auto max-w-2xl w-full max-h-full rounded shadow-lg"
+          className="bg-white dark:bg-gray-800 border border-transparent dark:border-gray-700/60 overflow-auto max-w-2xl w-full max-h-full rounded-lg shadow-lg"
         >
           {/* Search form */}
-          <form className="border-b border-slate-200 dark:border-slate-700">
+          <form className="border-b border-gray-200 dark:border-gray-700/60">
             <div className="relative">
               <label htmlFor={searchId} className="sr-only">
                 Search
               </label>
               <input
                 id={searchId}
-                className="w-full dark:text-slate-300 bg-white dark:bg-slate-800 border-0 focus:ring-transparent placeholder-slate-400 dark:placeholder-slate-500 appearance-none py-3 pl-10 pr-4"
+                className="w-full dark:text-gray-300 bg-white dark:bg-gray-800 border-0 focus:ring-transparent placeholder-gray-400 dark:placeholder-gray-500 appearance-none py-3 pl-10 pr-4"
                 type="search"
                 placeholder="Search Anything…"
                 ref={searchInput}
               />
               <button className="absolute inset-0 right-auto group" type="submit" aria-label="Search">
                 <svg
-                  className="w-4 h-4 shrink-0 fill-current text-slate-400 dark:text-slate-500 group-hover:text-slate-500 dark:group-hover:text-slate-400 ml-4 mr-2"
+                  className="shrink-0 fill-current text-gray-400 dark:text-gray-500 group-hover:text-gray-500 dark:group-hover:text-gray-400 ml-4 mr-2"
+                  width="16"
+                  height="16"
                   viewBox="0 0 16 16"
                   xmlns="http://www.w3.org/2000/svg"
                 >
@@ -96,17 +98,19 @@ function ModalSearch({
           <div className="py-4 px-2">
             {/* Recent searches */}
             <div className="mb-3 last:mb-0">
-              <div className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase px-2 mb-2">Recent searches</div>
+              <div className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase px-2 mb-2">Recent searches</div>
               <ul className="text-sm">
                 <li>
                   <Link
-                    className="flex items-center p-2 text-slate-800 dark:text-slate-100 hover:text-white hover:bg-indigo-500 rounded group"
+                    className="flex items-center p-2 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700/20 rounded-lg"
                     to="#0"
                     onClick={() => setModalOpen(!modalOpen)}
                   >
                     <svg
-                      className="w-4 h-4 fill-current text-slate-400 dark:text-slate-500 group-hover:text-white group-hover:text-opacity-50 shrink-0 mr-3"
-                      viewBox="0 0 16 16"
+                  className="fill-current text-gray-400 dark:text-gray-500 shrink-0 mr-3"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
                     >
                       <path d="M15.707 14.293v.001a1 1 0 01-1.414 1.414L11.185 12.6A6.935 6.935 0 017 14a7.016 7.016 0 01-5.173-2.308l-1.537 1.3L0 8l4.873 1.12-1.521 1.285a4.971 4.971 0 008.59-2.835l1.979.454a6.971 6.971 0 01-1.321 3.157l3.107 3.112zM14 6L9.127 4.88l1.521-1.28a4.971 4.971 0 00-8.59 2.83L.084 5.976a6.977 6.977 0 0112.089-3.668l1.537-1.3L14 6z" />
                     </svg>
@@ -115,13 +119,15 @@ function ModalSearch({
                 </li>
                 <li>
                   <Link
-                    className="flex items-center p-2 text-slate-800 dark:text-slate-100 hover:text-white hover:bg-indigo-500 rounded group"
+                    className="flex items-center p-2 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700/20 rounded-lg"
                     to="#0"
                     onClick={() => setModalOpen(!modalOpen)}
                   >
                     <svg
-                      className="w-4 h-4 fill-current text-slate-400 dark:text-slate-500 group-hover:text-white group-hover:text-opacity-50 shrink-0 mr-3"
-                      viewBox="0 0 16 16"
+                  className="fill-current text-gray-400 dark:text-gray-500 shrink-0 mr-3"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
                     >
                       <path d="M15.707 14.293v.001a1 1 0 01-1.414 1.414L11.185 12.6A6.935 6.935 0 017 14a7.016 7.016 0 01-5.173-2.308l-1.537 1.3L0 8l4.873 1.12-1.521 1.285a4.971 4.971 0 008.59-2.835l1.979.454a6.971 6.971 0 01-1.321 3.157l3.107 3.112zM14 6L9.127 4.88l1.521-1.28a4.971 4.971 0 00-8.59 2.83L.084 5.976a6.977 6.977 0 0112.089-3.668l1.537-1.3L14 6z" />
                     </svg>
@@ -130,28 +136,32 @@ function ModalSearch({
                 </li>
                 <li>
                   <Link
-                    className="flex items-center p-2 text-slate-800 dark:text-slate-100 hover:text-white hover:bg-indigo-500 rounded group"
+                    className="flex items-center p-2 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700/20 rounded-lg"
                     to="#0"
                     onClick={() => setModalOpen(!modalOpen)}
                   >
                     <svg
-                      className="w-4 h-4 fill-current text-slate-400 dark:text-slate-500 group-hover:text-white group-hover:text-opacity-50 shrink-0 mr-3"
-                      viewBox="0 0 16 16"
+                  className="fill-current text-gray-400 dark:text-gray-500 shrink-0 mr-3"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
                     >
                       <path d="M15.707 14.293v.001a1 1 0 01-1.414 1.414L11.185 12.6A6.935 6.935 0 017 14a7.016 7.016 0 01-5.173-2.308l-1.537 1.3L0 8l4.873 1.12-1.521 1.285a4.971 4.971 0 008.59-2.835l1.979.454a6.971 6.971 0 01-1.321 3.157l3.107 3.112zM14 6L9.127 4.88l1.521-1.28a4.971 4.971 0 00-8.59 2.83L.084 5.976a6.977 6.977 0 0112.089-3.668l1.537-1.3L14 6z" />
                     </svg>
-                    <span>Product Update - Q4 2021</span>
+                    <span>Product Update - Q4 2024</span>
                   </Link>
                 </li>
                 <li>
                   <Link
-                    className="flex items-center p-2 text-slate-800 dark:text-slate-100 hover:text-white hover:bg-indigo-500 rounded group"
+                    className="flex items-center p-2 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700/20 rounded-lg"
                     to="#0"
                     onClick={() => setModalOpen(!modalOpen)}
                   >
                     <svg
-                      className="w-4 h-4 fill-current text-slate-400 dark:text-slate-500 group-hover:text-white group-hover:text-opacity-50 shrink-0 mr-3"
-                      viewBox="0 0 16 16"
+                  className="fill-current text-gray-400 dark:text-gray-500 shrink-0 mr-3"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
                     >
                       <path d="M15.707 14.293v.001a1 1 0 01-1.414 1.414L11.185 12.6A6.935 6.935 0 017 14a7.016 7.016 0 01-5.173-2.308l-1.537 1.3L0 8l4.873 1.12-1.521 1.285a4.971 4.971 0 008.59-2.835l1.979.454a6.971 6.971 0 01-1.321 3.157l3.107 3.112zM14 6L9.127 4.88l1.521-1.28a4.971 4.971 0 00-8.59 2.83L.084 5.976a6.977 6.977 0 0112.089-3.668l1.537-1.3L14 6z" />
                     </svg>
@@ -160,13 +170,15 @@ function ModalSearch({
                 </li>
                 <li>
                   <Link
-                    className="flex items-center p-2 text-slate-800 dark:text-slate-100 hover:text-white hover:bg-indigo-500 rounded group"
+                    className="flex items-center p-2 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700/20 rounded-lg"
                     to="#0"
                     onClick={() => setModalOpen(!modalOpen)}
                   >
                     <svg
-                      className="w-4 h-4 fill-current text-slate-400 dark:text-slate-500 group-hover:text-white group-hover:text-opacity-50 shrink-0 mr-3"
-                      viewBox="0 0 16 16"
+                  className="fill-current text-gray-400 dark:text-gray-500 shrink-0 mr-3"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
                     >
                       <path d="M15.707 14.293v.001a1 1 0 01-1.414 1.414L11.185 12.6A6.935 6.935 0 017 14a7.016 7.016 0 01-5.173-2.308l-1.537 1.3L0 8l4.873 1.12-1.521 1.285a4.971 4.971 0 008.59-2.835l1.979.454a6.971 6.971 0 01-1.321 3.157l3.107 3.112zM14 6L9.127 4.88l1.521-1.28a4.971 4.971 0 00-8.59 2.83L.084 5.976a6.977 6.977 0 0112.089-3.668l1.537-1.3L14 6z" />
                     </svg>
@@ -175,58 +187,64 @@ function ModalSearch({
                 </li>
                 <li>
                   <Link
-                    className="flex items-center p-2 text-slate-800 dark:text-slate-100 hover:text-white hover:bg-indigo-500 rounded group"
+                    className="flex items-center p-2 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700/20 rounded-lg"
                     to="#0"
                     onClick={() => setModalOpen(!modalOpen)}
                   >
                     <svg
-                      className="w-4 h-4 fill-current text-slate-400 dark:text-slate-500 group-hover:text-white group-hover:text-opacity-50 shrink-0 mr-3"
-                      viewBox="0 0 16 16"
+                  className="fill-current text-gray-400 dark:text-gray-500 shrink-0 mr-3"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
                     >
                       <path d="M15.707 14.293v.001a1 1 0 01-1.414 1.414L11.185 12.6A6.935 6.935 0 017 14a7.016 7.016 0 01-5.173-2.308l-1.537 1.3L0 8l4.873 1.12-1.521 1.285a4.971 4.971 0 008.59-2.835l1.979.454a6.971 6.971 0 01-1.321 3.157l3.107 3.112zM14 6L9.127 4.88l1.521-1.28a4.971 4.971 0 00-8.59 2.83L.084 5.976a6.977 6.977 0 0112.089-3.668l1.537-1.3L14 6z" />
                     </svg>
-                    <span>Product Update - Q4 2021</span>
+                    <span>Product Update - Q4 2024</span>
                   </Link>
                 </li>
               </ul>
             </div>
             {/* Recent pages */}
             <div className="mb-3 last:mb-0">
-              <div className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase px-2 mb-2">Recent pages</div>
+              <div className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase px-2 mb-2">Recent pages</div>
               <ul className="text-sm">
                 <li>
                   <Link
-                    className="flex items-center p-2 text-slate-800 dark:text-slate-100 hover:text-white hover:bg-indigo-500 rounded group"
+                    className="flex items-center p-2 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700/20 rounded-lg"
                     to="#0"
                     onClick={() => setModalOpen(!modalOpen)}
                   >
                     <svg
-                      className="w-4 h-4 fill-current text-slate-400 dark:text-slate-500 group-hover:text-white group-hover:text-opacity-50 shrink-0 mr-3"
-                      viewBox="0 0 16 16"
+                  className="fill-current text-gray-400 dark:text-gray-500 shrink-0 mr-3"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
                     >
                       <path d="M14 0H2c-.6 0-1 .4-1 1v14c0 .6.4 1 1 1h8l5-5V1c0-.6-.4-1-1-1zM3 2h10v8H9v4H3V2z" />
                     </svg>
                     <span>
                       <span className="font-medium">Messages</span> -{' '}
-                      <span className="text-slate-600 dark:text-slate-400 group-hover:text-white">Conversation / … / Mike Mills</span>
+                      <span className="text-gray-600 dark:text-gray-400">Conversation / … / Mike Mills</span>
                     </span>
                   </Link>
                 </li>
                 <li>
                   <Link
-                    className="flex items-center p-2 text-slate-800 dark:text-slate-100 hover:text-white hover:bg-indigo-500 rounded group"
+                    className="flex items-center p-2 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700/20 rounded-lg"
                     to="#0"
                     onClick={() => setModalOpen(!modalOpen)}
                   >
                     <svg
-                      className="w-4 h-4 fill-current text-slate-400 dark:text-slate-500 group-hover:text-white group-hover:text-opacity-50 shrink-0 mr-3"
-                      viewBox="0 0 16 16"
+                  className="fill-current text-gray-400 dark:text-gray-500 shrink-0 mr-3"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
                     >
                       <path d="M14 0H2c-.6 0-1 .4-1 1v14c0 .6.4 1 1 1h8l5-5V1c0-.6-.4-1-1-1zM3 2h10v8H9v4H3V2z" />
                     </svg>
                     <span>
                       <span className="font-medium">Messages</span> -{' '}
-                      <span className="text-slate-600 dark:text-slate-400 group-hover:text-white">Conversation / … / Eva Patrick</span>
+                      <span className="text-gray-600 dark:text-gray-400">Conversation / … / Eva Patrick</span>
                     </span>
                   </Link>
                 </li>

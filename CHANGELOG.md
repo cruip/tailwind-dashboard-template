@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## [3.0.0] - 2024-07-05
+
+- Mosaic Redesign
+
 ## [2.1.0] - 2023-12-08
 
 - Update Vite to 5

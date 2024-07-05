@@ -22,7 +22,7 @@ function LineChart01({
   const canvas = useRef(null);
   const { currentTheme } = useThemeProvider();
   const darkMode = currentTheme === 'dark';
-  const { tooltipBodyColor, tooltipBgColor, tooltipBorderColor, chartAreaBg } = chartColors; 
+  const { tooltipBodyColor, tooltipBgColor, tooltipBorderColor } = chartColors; 
 
   useEffect(() => {
     const ctx = canvas.current;
@@ -31,9 +31,6 @@ function LineChart01({
       type: 'line',
       data: data,
       options: {
-        chartArea: {
-          backgroundColor: darkMode ? chartAreaBg.dark : chartAreaBg.light,
-        },
         layout: {
           padding: 20,
         },
@@ -82,12 +79,10 @@ function LineChart01({
     if (!chart) return;
 
     if (darkMode) {
-      chart.options.chartArea.backgroundColor = chartAreaBg.dark;
       chart.options.plugins.tooltip.bodyColor = tooltipBodyColor.dark;
       chart.options.plugins.tooltip.backgroundColor = tooltipBgColor.dark;
       chart.options.plugins.tooltip.borderColor = tooltipBorderColor.dark;
     } else {
-      chart.options.chartArea.backgroundColor = chartAreaBg.light;
       chart.options.plugins.tooltip.bodyColor = tooltipBodyColor.light;
       chart.options.plugins.tooltip.backgroundColor = tooltipBgColor.light;
       chart.options.plugins.tooltip.borderColor = tooltipBorderColor.light;

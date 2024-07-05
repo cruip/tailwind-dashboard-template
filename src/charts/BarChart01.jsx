@@ -112,7 +112,6 @@ function BarChart01({
             const items = c.options.plugins.legend.labels.generateLabels(c);
             items.forEach((item) => {
               const li = document.createElement('li');
-              li.style.marginRight = tailwindConfig().theme.margin[4];
               // Button element
               const button = document.createElement('button');
               button.style.display = 'inline-flex';
@@ -137,14 +136,14 @@ function BarChart01({
               labelContainer.style.display = 'flex';
               labelContainer.style.alignItems = 'center';
               const value = document.createElement('span');
-              value.classList.add('text-slate-800', 'dark:text-slate-100');
+              value.classList.add('text-gray-800', 'dark:text-gray-100');
               value.style.fontSize = tailwindConfig().theme.fontSize['3xl'][0];
               value.style.lineHeight = tailwindConfig().theme.fontSize['3xl'][1].lineHeight;
               value.style.fontWeight = tailwindConfig().theme.fontWeight.bold;
               value.style.marginRight = tailwindConfig().theme.margin[2];
               value.style.pointerEvents = 'none';
               const label = document.createElement('span');
-              label.classList.add('text-slate-500', 'dark:text-slate-400');
+              label.classList.add('text-gray-500', 'dark:text-gray-400');
               label.style.fontSize = tailwindConfig().theme.fontSize.sm[0];
               label.style.lineHeight = tailwindConfig().theme.fontSize.sm[1].lineHeight;
               const theValue = c.data.datasets[item.datasetIndex].data.reduce((a, b) => a + b, 0);
@@ -192,7 +191,7 @@ function BarChart01({
   return (
     <React.Fragment>
       <div className="px-5 py-3">
-        <ul ref={legend} className="flex flex-wrap"></ul>
+        <ul ref={legend} className="flex flex-wrap gap-x-4"></ul>
       </div>
       <div className="grow">
         <canvas ref={canvas} width={width} height={height}></canvas>

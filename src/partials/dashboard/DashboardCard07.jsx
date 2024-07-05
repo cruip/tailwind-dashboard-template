@@ -2,16 +2,16 @@ import React from 'react';
 
 function DashboardCard07() {
   return (
-    <div className="col-span-full xl:col-span-8 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
-      <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700">
-        <h2 className="font-semibold text-slate-800 dark:text-slate-100">Top Channels</h2>
+    <div className="col-span-full xl:col-span-8 bg-white dark:bg-gray-800 shadow-sm rounded-xl">
+      <header className="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60">
+        <h2 className="font-semibold text-gray-800 dark:text-gray-100">Top Channels</h2>
       </header>
       <div className="p-3">
         {/* Table */}
         <div className="overflow-x-auto">
-          <table className="table-auto w-full dark:text-slate-300">
+          <table className="table-auto w-full dark:text-gray-300">
             {/* Table header */}
-            <thead className="text-xs uppercase text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-700 dark:bg-opacity-50 rounded-sm">
+            <thead className="text-xs uppercase text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-gray-700 dark:bg-opacity-50 rounded-sm">
               <tr>
                 <th className="p-2">
                   <div className="font-semibold text-left">Source</div>
@@ -31,7 +31,7 @@ function DashboardCard07() {
               </tr>
             </thead>
             {/* Table body */}
-            <tbody className="text-sm font-medium divide-y divide-slate-100 dark:divide-slate-700">
+            <tbody className="text-sm font-medium divide-y divide-gray-100 dark:divide-gray-700/60">
               {/* Row */}
               <tr>
                 <td className="p-2">
@@ -43,14 +43,14 @@ function DashboardCard07() {
                         fill="#FFF"
                       />
                     </svg>
-                    <div className="text-slate-800 dark:text-slate-100">Github.com</div>
+                    <div className="text-gray-800 dark:text-gray-100">Github.com</div>
                   </div>
                 </td>
                 <td className="p-2">
                   <div className="text-center">2.4K</div>
                 </td>
                 <td className="p-2">
-                  <div className="text-center text-emerald-500">$3,877</div>
+                  <div className="text-center text-green-500">$3,877</div>
                 </td>
                 <td className="p-2">
                   <div className="text-center">267</div>
@@ -64,21 +64,21 @@ function DashboardCard07() {
                 <td className="p-2">
                   <div className="flex items-center">
                     <svg className="shrink-0 mr-2 sm:mr-3" width="36" height="36" viewBox="0 0 36 36">
-                      <circle fill="#1DA1F2" cx="18" cy="18" r="18" />
+                      <circle fill="#1877F2" cx="18" cy="18" r="18" />
                       <path
-                        d="M26 13.5c-.6.3-1.2.4-1.9.5.7-.4 1.2-1 1.4-1.8-.6.4-1.3.6-2.1.8-.6-.6-1.5-1-2.4-1-1.7 0-3.2 1.5-3.2 3.3 0 .3 0 .5.1.7-2.7-.1-5.2-1.4-6.8-3.4-.3.5-.4 1-.4 1.7 0 1.1.6 2.1 1.5 2.7-.5 0-1-.2-1.5-.4 0 1.6 1.1 2.9 2.6 3.2-.3.1-.6.1-.9.1-.2 0-.4 0-.6-.1.4 1.3 1.6 2.3 3.1 2.3-1.1.9-2.5 1.4-4.1 1.4H10c1.5.9 3.2 1.5 5 1.5 6 0 9.3-5 9.3-9.3v-.4c.7-.5 1.3-1.1 1.7-1.8z"
+                        d="M16.023 26 16 19h-3v-3h3v-2c0-2.7 1.672-4 4.08-4 1.153 0 2.144.086 2.433.124v2.821h-1.67c-1.31 0-1.563.623-1.563 1.536V16H23l-1 3h-2.72v7h-3.257Z"
                         fill="#FFF"
                         fillRule="nonzero"
                       />
                     </svg>
-                    <div className="text-slate-800 dark:text-slate-100">Twitter</div>
+                    <div className="text-gray-800 dark:text-gray-100">Facebook</div>
                   </div>
                 </td>
                 <td className="p-2">
                   <div className="text-center">2.2K</div>
                 </td>
                 <td className="p-2">
-                  <div className="text-center text-emerald-500">$3,426</div>
+                  <div className="text-center text-green-500">$3,426</div>
                 </td>
                 <td className="p-2">
                   <div className="text-center">249</div>
@@ -99,14 +99,14 @@ function DashboardCard07() {
                         fillRule="nonzero"
                       />
                     </svg>
-                    <div className="text-slate-800 dark:text-slate-100">Google (organic)</div>
+                    <div className="text-gray-800 dark:text-gray-100">Google (organic)</div>
                   </div>
                 </td>
                 <td className="p-2">
                   <div className="text-center">2.0K</div>
                 </td>
                 <td className="p-2">
-                  <div className="text-center text-emerald-500">$2,444</div>
+                  <div className="text-center text-green-500">$2,444</div>
                 </td>
                 <td className="p-2">
                   <div className="text-center">224</div>
@@ -127,14 +127,14 @@ function DashboardCard07() {
                         fillRule="nonzero"
                       />
                     </svg>
-                    <div className="text-slate-800 dark:text-slate-100">Vimeo.com</div>
+                    <div className="text-gray-800 dark:text-gray-100">Vimeo.com</div>
                   </div>
                 </td>
                 <td className="p-2">
                   <div className="text-center">1.9K</div>
                 </td>
                 <td className="p-2">
-                  <div className="text-center text-emerald-500">$2,236</div>
+                  <div className="text-center text-green-500">$2,236</div>
                 </td>
                 <td className="p-2">
                   <div className="text-center">220</div>
@@ -154,14 +154,14 @@ function DashboardCard07() {
                         fill="#E6ECF4"
                       />
                     </svg>
-                    <div className="text-slate-800 dark:text-slate-100">Indiehackers.com</div>
+                    <div className="text-gray-800 dark:text-gray-100">Indiehackers.com</div>
                   </div>
                 </td>
                 <td className="p-2">
                   <div className="text-center">1.7K</div>
                 </td>
                 <td className="p-2">
-                  <div className="text-center text-emerald-500">$2,034</div>
+                  <div className="text-center text-green-500">$2,034</div>
                 </td>
                 <td className="p-2">
                   <div className="text-center">204</div>

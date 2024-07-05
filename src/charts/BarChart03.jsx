@@ -114,7 +114,7 @@ function BarChart03({
               const value = document.createElement('div');
               value.style.fontWeight = tailwindConfig().theme.fontWeight.medium;
               value.style.marginLeft = tailwindConfig().theme.margin[3];
-              value.style.color = item.text === 'Other' ? tailwindConfig().theme.colors.slate[400] : item.fillStyle;
+              value.style.color = item.text === 'Other' ? tailwindConfig().theme.colors.gray[400] : item.fillStyle;
               const theValue = c.data.datasets[item.datasetIndex].data.reduce((a, b) => a + b, 0);
               const valueText = document.createTextNode(`${parseInt((theValue / max) * 100)}%`);
               const labelText = document.createTextNode(item.text);
@@ -156,8 +156,8 @@ function BarChart03({
         <canvas ref={canvas} width={width} height={height}></canvas>
       </div>
       <div className="px-5 pt-2 pb-2">
-        <ul ref={legend} className="text-sm divide-y divide-slate-100 dark:divide-slate-700"></ul>
-        <ul className="text-sm divide-y divide-slate-100 dark:divide-slate-700"></ul>
+        <ul ref={legend} className="text-sm divide-y divide-gray-100 dark:divide-gray-700/60"></ul>
+        <ul className="text-sm divide-y divide-gray-100 dark:divide-gray-700/60"></ul>
       </div>
     </div>
   );

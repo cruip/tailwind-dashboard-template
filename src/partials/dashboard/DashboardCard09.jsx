@@ -9,8 +9,8 @@ function DashboardCard09() {
 
   const chartData = {
     labels: [
-      '12-01-2020', '01-01-2021', '02-01-2021',
-      '03-01-2021', '04-01-2021', '05-01-2021',
+      '12-01-2022', '01-01-2023', '02-01-2023',
+      '03-01-2023', '04-01-2023', '05-01-2023',
     ],
     datasets: [
       // Light blue bars
@@ -19,10 +19,11 @@ function DashboardCard09() {
         data: [
           6200, 9200, 6600, 8800, 5200, 9200,
         ],
-        backgroundColor: tailwindConfig().theme.colors.indigo[500],
-        hoverBackgroundColor: tailwindConfig().theme.colors.indigo[600],
-        barPercentage: 0.66,
-        categoryPercentage: 0.66,
+        backgroundColor: tailwindConfig().theme.colors.violet[500],
+        hoverBackgroundColor: tailwindConfig().theme.colors.violet[600],
+        barPercentage: 0.7,
+        categoryPercentage: 0.7,
+        borderRadius: 4,
       },
       // Blue bars
       {
@@ -30,26 +31,27 @@ function DashboardCard09() {
         data: [
           -4000, -2600, -5350, -4000, -7500, -2000,
         ],
-        backgroundColor: tailwindConfig().theme.colors.indigo[200],
-        hoverBackgroundColor: tailwindConfig().theme.colors.indigo[300],
-        barPercentage: 0.66,
-        categoryPercentage: 0.66,
+        backgroundColor: tailwindConfig().theme.colors.violet[200],
+        hoverBackgroundColor: tailwindConfig().theme.colors.violet[300],
+        barPercentage: 0.7,
+        categoryPercentage: 0.7,
+        borderRadius: 4,
       },
     ],
   };
 
   return (
-    <div className="flex flex-col col-span-full sm:col-span-6 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
-      <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700 flex items-center">
-        <h2 className="font-semibold text-slate-800 dark:text-slate-100">Sales VS Refunds</h2>
+    <div className="flex flex-col col-span-full sm:col-span-6 bg-white dark:bg-gray-800 shadow-sm rounded-xl">
+      <header className="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60 flex items-center">
+        <h2 className="font-semibold text-gray-800 dark:text-gray-100">Sales VS Refunds</h2>
         <Tooltip className="ml-2" size="lg">
           <div className="text-sm">Sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit.</div>
         </Tooltip>
       </header>
       <div className="px-5 py-3">
         <div className="flex items-start">
-          <div className="text-3xl font-bold text-slate-800 dark:text-slate-100 mr-2">+$6,796</div>
-          <div className="text-sm font-semibold text-white px-1.5 bg-amber-500 rounded-full">-34%</div>
+          <div className="text-3xl font-bold text-gray-800 dark:text-gray-100 mr-2">+$6,796</div>
+          <div className="text-sm font-medium text-red-700 px-1.5 bg-red-500/20 rounded-full">-34%</div>
         </div>
       </div>
       {/* Chart built with Chart.js 3 */}

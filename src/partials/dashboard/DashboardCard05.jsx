@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Tooltip from '../../components/Tooltip';
+import { chartAreaGradient } from '../../charts/ChartjsConfig';
 import RealtimeChart from '../../charts/RealtimeChart';
 
 // Import utilities
@@ -70,25 +71,32 @@ function DashboardCard05() {
       {
         data: slicedData,
         fill: true,
-        backgroundColor: `rgba(${hexToRGB(tailwindConfig().theme.colors.blue[500])}, 0.08)`,
-        borderColor: tailwindConfig().theme.colors.indigo[500],
+        backgroundColor: function(context) {
+          const chart = context.chart;
+          const {ctx, chartArea} = chart;
+          return chartAreaGradient(ctx, chartArea, [
+            { stop: 0, color: `rgba(${hexToRGB(tailwindConfig().theme.colors.violet[500])}, 0)` },
+            { stop: 1, color: `rgba(${hexToRGB(tailwindConfig().theme.colors.violet[500])}, 0.2)` }
+          ]);
+        },       
+        borderColor: tailwindConfig().theme.colors.violet[500],
         borderWidth: 2,
-        tension: 0,
         pointRadius: 0,
         pointHoverRadius: 3,
-          pointBackgroundColor: tailwindConfig().theme.colors.indigo[500],
-          pointHoverBackgroundColor: tailwindConfig().theme.colors.indigo[500],
-          pointBorderWidth: 0,
-          pointHoverBorderWidth: 0,          
-          clip: 20,
+        pointBackgroundColor: tailwindConfig().theme.colors.violet[500],
+        pointHoverBackgroundColor: tailwindConfig().theme.colors.violet[500],
+        pointBorderWidth: 0,
+        pointHoverBorderWidth: 0,          
+        clip: 20,
+        tension: 0.2,
       },
     ],
   };
 
   return (
-    <div className="flex flex-col col-span-full sm:col-span-6 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
-      <header className="px-5 py-4 border-b border-slate-100 dark:border-slate-700 flex items-center">
-        <h2 className="font-semibold text-slate-800 dark:text-slate-100">Real Time Value</h2>
+    <div className="flex flex-col col-span-full sm:col-span-6 bg-white dark:bg-gray-800 shadow-sm rounded-xl">
+      <header className="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60 flex items-center">
+        <h2 className="font-semibold text-gray-800 dark:text-gray-100">Real Time Value</h2>
         <Tooltip className="ml-2">
           <div className="text-xs text-center whitespace-nowrap">Built with <a className="underline" href="https://www.chartjs.org/" target="_blank" rel="noreferrer">Chart.js</a></div>
         </Tooltip>

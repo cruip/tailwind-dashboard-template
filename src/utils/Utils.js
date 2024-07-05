@@ -1,8 +1,8 @@
-import resolveConfig from 'tailwindcss/resolveConfig';
+import resolveConfig from 'tailwindcss/resolveConfig'
+import tailwindConfigFile from '@tailwindConfig'
 
 export const tailwindConfig = () => {
-  // Tailwind config
-  return resolveConfig('./src/css/tailwind.config.js')
+  return resolveConfig(tailwindConfigFile)
 }
 
 export const hexToRGB = (h) => {
@@ -24,6 +24,11 @@ export const hexToRGB = (h) => {
 export const formatValue = (value) => Intl.NumberFormat('en-US', {
   style: 'currency',
   currency: 'USD',
+  maximumSignificantDigits: 3,
+  notation: 'compact',
+}).format(value);
+
+export const formatThousands = (value) => Intl.NumberFormat('en-US', {
   maximumSignificantDigits: 3,
   notation: 'compact',
 }).format(value);
