@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## [3.1.0] - 2024-12-08
+
+- Update dependencies
+
 ## [3.0.0] - 2024-07-05
 
 - Mosaic Redesign

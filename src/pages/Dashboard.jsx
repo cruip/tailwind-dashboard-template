@@ -50,7 +50,7 @@ function Dashboard() {
               <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
                 {/* Filter button */}
                 <FilterButton align="right" />
-                {/* Datepicker built with flatpickr */}
+                {/* Datepicker built with React Day Picker */}
                 <Datepicker align="right" />
                 {/* Add view button */}
                 <button className="btn bg-gray-900 text-gray-100 hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-white">
