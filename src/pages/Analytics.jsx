@@ -19,7 +19,7 @@ import DashboardCard12 from '../partials/dashboard/DashboardCard12';
 import DashboardCard13 from '../partials/dashboard/DashboardCard13';
 import Banner from '../partials/Banner';
 
-function Dashboard() {
+function Analytics() {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -38,12 +38,12 @@ function Dashboard() {
         <main className="grow">
           <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
 
-            {/* Dashboard actions */}
+            {/* Analytics actions */}
             <div className="sm:flex sm:justify-between sm:items-center mb-8">
 
               {/* Left: Title */}
               <div className="mb-4 sm:mb-0">
-                <h1 className="text-2xl md:text-3xl text-gray-800 dark:text-gray-100 font-bold">Overview Dashboard</h1>
+                <h1 className="text-2xl md:text-3xl text-gray-800 dark:text-gray-100 font-bold">Detailed Analytics</h1>
               </div>
 
               {/* Right: Actions */}
@@ -54,7 +54,7 @@ function Dashboard() {
             </div>
 
 
-            {/* Dashboard actions */}
+            {/* Analytics actions */}
             <div className="sm:flex sm:justify-between mb-8">
 
               {/* Left: Cards */}
@@ -104,4 +104,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default Analytics;
