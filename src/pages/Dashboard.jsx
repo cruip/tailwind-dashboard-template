@@ -48,50 +48,59 @@ function Dashboard() {
 
               {/* Right: Actions */}
               <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
-                {/* Filter button */}
-                {/* <FilterButton align="right" /> */}
-                {/* Datepicker built with React Day Picker */}
-                {/* <Datepicker align="right" /> */}             
+                Filter button
+                <FilterButton align="right" />
+                Datepicker built with React Day Picker
+                <Datepicker align="right" />
               </div>
 
             </div>
 
-            {/* Cards */}
-            <div className="grid grid-cols-12 gap-6">
 
-              {/* Line chart (Acme Plus)
-              <DashboardCard01 />
-              {/* Line chart (Acme Advanced) */}
-              {/* <DashboardCard02 /> */}
-              {/* Line chart (Acme Professional) */}
-              {/* <DashboardCard03 /> */}
-              {/* Bar chart (Direct vs Indirect) */}
-              {/* <DashboardCard04 /> */}
-              {/* Line chart (Real Time Value) */}
-              {/* <DashboardCard05 /> */}
-              {/* Doughnut chart (Top Countries) */}
-              {/* <DashboardCard06 /> */}
-              {/* Table (Top Channels) */}
-              {/* <DashboardCard07 /> */}
-              {/* Line chart (Sales Over Time) */}
-              {/* <DashboardCard08 /> */}
-              {/* Stacked bar chart (Sales VS Refunds) */}
-              {/* <DashboardCard09 /> */}
-              {/* Card (Customers) */}
-              {/* <DashboardCard10 /> */}
-              {/* Card (Reasons for Refunds) */}
-              {/* <DashboardCard11 /> */}
-              {/* Card (Recent Activity) */}
-              {/* <DashboardCard12 /> */}
-              {/* Card (Income/Expenses) */}
-              {/* <DashboardCard13 /> */}
-              
-            </div>
+            {/* Dashboard actions */}
+            <div className="sm:flex sm:justify-between mb-8">
 
+              {/* Left: Cards */}
+              <div className="grid grid-cols-12 gap-6 w-2/3">
+
+                {/* Line chart (Acme Plus) */}
+                <DashboardCard01 />
+                {/* Line chart (Acme Advanced) */}
+                {/* <DashboardCard02 /> */}
+                {/* Line chart (Acme Professional)
+                {/* <DashboardCard03 /> */}
+                {/* Bar chart (Direct vs Indirect) */}
+                {/* <DashboardCard04 /> */}
+                {/* Line chart (Real Time Value) */}
+                {/* <DashboardCard05 /> */}
+                {/* Doughnut chart (Top Countries) */}
+                {/* <DashboardCard06 /> */}
+                {/* Table (Top Channels) */}
+                {/* <DashboardCard07 /> */}
+                {/* Line chart (Sales Over Time) */}
+                {/* <DashboardCard08 /> */}
+                {/* Stacked bar chart (Sales VS Refunds) */}
+                {/* <DashboardCard09 /> */}
+                {/* Card (Customers) */}
+                {/* <DashboardCard10 /> */}
+                {/* Card (Reasons for Refunds) */}
+                {/* <DashboardCard11 /> */}
+                {/* Card (Recent Activity) */}
+                {/* <DashboardCard12 /> */}
+                {/* Card (Income/Expenses) */}
+                {/* <DashboardCard13 /> */}
+
+                </div>
+
+                {/* Right: Actions */}
+                <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-start gap-2 w-1/3">
+                  <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-gray-800 shadow-sm rounded-xl items-start p-4 w-[490px]">
+                    <span className="self-start">Predictions</span>
+                  </div>             
+                </div>
+              </div>
           </div>
         </main>
-
-        <Banner />
 
       </div>
     </div>
