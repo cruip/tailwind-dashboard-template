@@ -17,6 +17,7 @@ import DashboardCard10 from '../partials/dashboard/DashboardCard10';
 import DashboardCard11 from '../partials/dashboard/DashboardCard11';
 import DashboardCard12 from '../partials/dashboard/DashboardCard12';
 import DashboardCard13 from '../partials/dashboard/DashboardCard13';
+import DashboardImages from '../partials/dashboard/DashboardImages';
 
 function Dashboard() {
 
@@ -58,18 +59,43 @@ function Dashboard() {
 
               {/* Left: Cards */}
               <div className="grid grid-cols-12 gap-6 w-11/12">
+                {/* Number of urgent conveyor belt repairs */}
                 <DashboardCard03 />
+
+                {/* Weather data */}
                 <DashboardCard01 />
+
+                {/* Maintenance History */}
                 <DashboardCard02 />
+
+                {/* Direct VS indirect Belt Costs (column graph) */}
                 <DashboardCard04 />
+
+                {/* Real time material Flow */}
                 <DashboardCard05 />
+
+                {/* Fault distribution in the last 12 months */}
                 <DashboardCard06 />
+
+                {/* Belt Overview */}
                 <DashboardCard07 />
-                {/* <DashboardCard08 /> */}
-                {/* <DashboardCard09 /> */}
-                {/* <DashboardCard10 /> */}
-                {/* <DashboardCard11 /> */}
+
+                {/* Causes of damage */}
+                <DashboardCard11 />
+
+                {/* Images */}
+                <DashboardImages/>
+
+                {/* Recent Activity */}
                 {/* <DashboardCard12 /> */}
+
+                {/* Line Chart (multiple variables) */}
+                {/* <DashboardCard08 /> */}
+
+                {/* Floating box chart idk what its called (two variable comparision) */}
+                {/* <DashboardCard09 /> */}
+
+                {/* List of single events (no headers) */}
                 {/* <DashboardCard13 /> */}
               </div>
 
