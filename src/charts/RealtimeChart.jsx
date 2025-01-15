@@ -45,7 +45,7 @@ function RealtimeChart({
             suggestedMax: 80,
             ticks: {
               maxTicksLimit: 5,
-              callback: (value) => formatValue(value),
+              callback: (value) => `${value}`,
               color: darkMode ? textColor.dark : textColor.light,
             },
             grid: {
@@ -84,7 +84,7 @@ function RealtimeChart({
               weight: 600,
             },
             callbacks: {
-              label: (context) => formatValue(context.parsed.y),
+              label: (context) => `${context.parsed.y}`,
             },
             titleColor: darkMode ? tooltipTitleColor.dark : tooltipTitleColor.light,
             bodyColor: darkMode ? tooltipBodyColor.dark : tooltipBodyColor.light,
@@ -149,7 +149,7 @@ function RealtimeChart({
     <React.Fragment>
       <div className="px-5 py-3">
         <div className="flex items-start">
-          <div className="text-3xl font-bold text-gray-800 dark:text-gray-100 mr-2 tabular-nums">$<span ref={chartValue}>57.81</span></div>
+          <div className="text-3xl font-bold text-gray-800 dark:text-gray-100 mr-2 tabular-nums"><span ref={chartValue}>57.81</span> kg/s</div>
           <div ref={chartDeviation} className="text-sm font-medium px-1.5 rounded-full"></div>
         </div>
       </div>
