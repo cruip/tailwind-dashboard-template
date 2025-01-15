@@ -64,7 +64,7 @@ function Dashboard() {
                 <DashboardCard04 />
                 <DashboardCard05 />
                 <DashboardCard06 />
-                {/* <DashboardCard07 /> */}
+                <DashboardCard07 />
                 {/* <DashboardCard08 /> */}
                 {/* <DashboardCard09 /> */}
                 {/* <DashboardCard10 /> */}
