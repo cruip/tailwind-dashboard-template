@@ -18,7 +18,7 @@ import DashboardCard11 from '../partials/dashboard/DashboardCard11';
 import DashboardCard12 from '../partials/dashboard/DashboardCard12';
 import DashboardCard13 from '../partials/dashboard/DashboardCard13';
 
-function Dashboard() {
+function Analytics() {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -35,14 +35,14 @@ function Dashboard() {
         <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
         <main className="grow">
-          <div className="px-4 sm:px-6 lg:px-8 py-8 w-full ml-20">
+          <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
 
-            {/* Dashboard actions */}
+            {/* Analytics actions */}
             <div className="sm:flex sm:justify-between sm:items-center mb-8">
 
               {/* Left: Title */}
               <div className="mb-4 sm:mb-0">
-                <h1 className="text-2xl md:text-3xl text-gray-800 dark:text-gray-100 font-bold">Overview Dashboard</h1>
+                <h1 className="text-2xl md:text-3xl text-gray-800 dark:text-gray-100 font-bold">Detailed Analytics</h1>
               </div>
 
               {/* Right: Actions */}
@@ -53,29 +53,45 @@ function Dashboard() {
             </div>
 
 
-            {/* Dashboard actions */}
+            {/* Analytics actions */}
             <div className="sm:flex sm:justify-between mb-8">
 
               {/* Left: Cards */}
               <div className="grid grid-cols-12 gap-6 w-2/3">
+
+                {/* Line chart (Acme Plus) */}
                 <DashboardCard01 />
-                <DashboardCard02 />
-                <DashboardCard04 />
-                <DashboardCard05 />
-                <DashboardCard06 />
+                {/* Line chart (Acme Advanced) */}
+                {/* <DashboardCard02 /> */}
+                {/* Line chart (Acme Professional)
+                {/* <DashboardCard03 /> */}
+                {/* Bar chart (Direct vs Indirect) */}
+                {/* <DashboardCard04 /> */}
+                {/* Line chart (Real Time Value) */}
+                {/* <DashboardCard05 /> */}
+                {/* Doughnut chart (Top Countries) */}
+                {/* <DashboardCard06 /> */}
+                {/* Table (Top Channels) */}
                 {/* <DashboardCard07 /> */}
+                {/* Line chart (Sales Over Time) */}
                 {/* <DashboardCard08 /> */}
+                {/* Stacked bar chart (Sales VS Refunds) */}
                 {/* <DashboardCard09 /> */}
+                {/* Card (Customers) */}
                 {/* <DashboardCard10 /> */}
+                {/* Card (Reasons for Refunds) */}
                 {/* <DashboardCard11 /> */}
+                {/* Card (Recent Activity) */}
                 {/* <DashboardCard12 /> */}
+                {/* Card (Income/Expenses) */}
                 {/* <DashboardCard13 /> */}
-              </div>
+
+                </div>
 
                 {/* Right: Actions */}
-                <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-start gap-2">
-                  <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-gray-800 shadow-sm rounded-xl items-start p-4 w-[400px]">
-                    <span className="self-start text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">Predictions</span> 
+                <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-start gap-2 w-1/3">
+                  <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-gray-800 shadow-sm rounded-xl items-start p-4 w-[490px]">
+                    <span className="self-start">Predictions</span>
                   </div>             
                 </div>
               </div>
@@ -87,4 +103,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default Analytics;

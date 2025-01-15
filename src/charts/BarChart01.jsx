@@ -55,14 +55,7 @@ function BarChart01({
             },
           },
           x: {
-            type: 'time',
-            time: {
-              parser: 'MM-DD-YYYY',
-              unit: 'month',
-              displayFormats: {
-                month: 'MMM YY',
-              },
-            },
+            type: 'category',
             border: {
               display: false,
             },

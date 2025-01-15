@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import {
   Routes,
   Route,
-  useLocation
+  useLocation,
+  Navigate
 } from 'react-router-dom';
 
 import './css/style.css';
@@ -11,6 +12,7 @@ import './charts/ChartjsConfig';
 
 // Import pages
 import Dashboard from './pages/Dashboard';
+import Analytics from './pages/Analytics';
 
 function App() {
 
@@ -25,7 +27,9 @@ function App() {
   return (
     <>
       <Routes>
-        <Route exact path="/" element={<Dashboard />} />
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route exact path="/dashboard" element={<Dashboard />} />
+        <Route exact path="/analytics" element={<Analytics />} />
       </Routes>
     </>
   );
