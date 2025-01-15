@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
-import FilterButton from '../components/DropdownFilter';
-import Datepicker from '../components/Datepicker';
 import DashboardCard01 from '../partials/dashboard/DashboardCard01';
 import DashboardCard02 from '../partials/dashboard/DashboardCard02';
 import DashboardCard03 from '../partials/dashboard/DashboardCard03';
@@ -17,10 +15,19 @@ import DashboardCard10 from '../partials/dashboard/DashboardCard10';
 import DashboardCard11 from '../partials/dashboard/DashboardCard11';
 import DashboardCard12 from '../partials/dashboard/DashboardCard12';
 import DashboardCard13 from '../partials/dashboard/DashboardCard13';
+import AnalyticsFilter from '../components/AnalyticsFilter';
 
 function Analytics() {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const [filters, setFilters] = useState({ belt: '', section: '' });
+
+  const handleFilterChange = (newFilters) => {
+    console.log('Filters changed:', newFilters);
+    setFilters(newFilters);
+    // You can also fetch or filter data based on `newFilters`
+  };
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -40,16 +47,23 @@ function Analytics() {
             {/* Analytics actions */}
             <div className="sm:flex sm:justify-between sm:items-center mb-8">
 
-              {/* Left: Title */}
               <div className="mb-4 sm:mb-0">
                 <h1 className="text-2xl md:text-3xl text-gray-800 dark:text-gray-100 font-bold">Detailed Analytics</h1>
               </div>
+            </div>
 
-              {/* Right: Actions */}
-              <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
-                hi
+            {/* Analytics Filter */}
+            <div>
+              <AnalyticsFilter onFilterChange={handleFilterChange} />
+              {/* Display filtered data here */}
+              <div className="mt-8">
+                <p className="text-lg">
+                  Selected Belt: <span className="font-semibold">{filters.belt || 'None'}</span>
+                </p>
+                <p className="text-lg">
+                  Selected Section: <span className="font-semibold">{filters.section || 'None'}</span>
+                </p>
               </div>
-
             </div>
 
 
@@ -58,35 +72,20 @@ function Analytics() {
 
               {/* Left: Cards */}
               <div className="grid grid-cols-12 gap-6 w-2/3">
-
-                {/* Line chart (Acme Plus) */}
                 <DashboardCard01 />
-                {/* Line chart (Acme Advanced) */}
                 {/* <DashboardCard02 /> */}
-                {/* Line chart (Acme Professional)
                 {/* <DashboardCard03 /> */}
-                {/* Bar chart (Direct vs Indirect) */}
                 {/* <DashboardCard04 /> */}
-                {/* Line chart (Real Time Value) */}
                 {/* <DashboardCard05 /> */}
-                {/* Doughnut chart (Top Countries) */}
                 {/* <DashboardCard06 /> */}
-                {/* Table (Top Channels) */}
                 {/* <DashboardCard07 /> */}
-                {/* Line chart (Sales Over Time) */}
                 {/* <DashboardCard08 /> */}
-                {/* Stacked bar chart (Sales VS Refunds) */}
                 {/* <DashboardCard09 /> */}
-                {/* Card (Customers) */}
                 {/* <DashboardCard10 /> */}
-                {/* Card (Reasons for Refunds) */}
                 {/* <DashboardCard11 /> */}
-                {/* Card (Recent Activity) */}
                 {/* <DashboardCard12 /> */}
-                {/* Card (Income/Expenses) */}
                 {/* <DashboardCard13 /> */}
-
-                </div>
+              </div>
 
                 {/* Right: Actions */}
                 <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-start gap-2 w-1/3">
