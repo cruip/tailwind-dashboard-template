@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useContext, Context } from '../context.js';
 
 function AnalyticsFilter({ onFilterChange }) {
   const belts = ['Ironflow 01', 'RedEarth Conveyor', 'Pilbara Express', 'OreLink 4000', 'DustTrail Belt'];
@@ -6,9 +7,12 @@ function AnalyticsFilter({ onFilterChange }) {
   const [selectedBelt, setSelectedBelt] = useState('');
   const [selectedSection, setSelectedSection] = useState('');
 
+  const { getters, setters } = useContext(Context);
+
   const handleBeltClick = (belt) => {
     setSelectedBelt(belt);
     onFilterChange({ belt, section: selectedSection });
+    setters.setBelt(belt);
   };
 
   const handleSectionChange = (e) => {

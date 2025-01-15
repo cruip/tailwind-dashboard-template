@@ -9,6 +9,7 @@ import {
 import './css/style.css';
 
 import './charts/ChartjsConfig';
+import { Context } from './context.js';
 
 // Import pages
 import Dashboard from './pages/Dashboard';
@@ -18,6 +19,19 @@ function App() {
 
   const location = useLocation();
 
+  const [belt, setBelt] = React.useState('');
+  const [section, setSection] = React.useState('');
+ 
+  const getters = {
+    belt,
+    section
+  }
+ 
+  const setters = {
+    setBelt,
+    setSection
+  }
+
   useEffect(() => {
     document.querySelector('html').style.scrollBehavior = 'auto'
     window.scroll({ top: 0 })
@@ -26,11 +40,13 @@ function App() {
 
   return (
     <>
+    <Context.Provider value = {{ getters, setters }}>
       <Routes>
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
         <Route exact path="/dashboard" element={<Dashboard />} />
         <Route exact path="/analytics" element={<Analytics />} />
       </Routes>
+      </Context.Provider>
     </>
   );
 }
