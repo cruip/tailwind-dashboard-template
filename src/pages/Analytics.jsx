@@ -57,15 +57,6 @@ function Analytics() {
             <div>
               <span className="md:text-2xl text-gray-800 dark:text-gray-100">Select Belt: </span>
               <AnalyticsFilter onFilterChange={handleFilterChange} />
-              {/* Display filtered data here */}
-              <div className="mt-8">
-                <p className="text-lg">
-                  Selected Belt: <span className="font-semibold">{filters.belt || 'None'}</span>
-                </p>
-                <p className="text-lg">
-                  Selected Section: <span className="font-semibold">{filters.section || 'None'}</span>
-                </p>
-              </div>
             </div>
 
             <AnalyticsActions />

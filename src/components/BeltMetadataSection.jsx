@@ -128,7 +128,7 @@ function BeltMetadataSection() {
 
   return (
     <div className="bg-white dark:bg-gray-800 shadow-sm rounded-xl p-4">
-      <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">Belt Metadata</h3>
+      <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">{getters.belt} Metadata</h3>
 
       {metadata ? (
         <div className="max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700">

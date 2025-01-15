@@ -57,7 +57,7 @@ function AnalyticsFilter({ onFilterChange }) {
           </label>
           <select
             id="section"
-            className="px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100 w-30"
+            className="px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100 w-40"
             value={selectedSection}
             onChange={handleSectionChange}
           >
