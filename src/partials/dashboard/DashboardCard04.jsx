@@ -17,24 +17,24 @@ function DashboardCard04() {
     datasets: [
       // Light blue bars
       {
-        label: 'Direct',
+        label: 'Indirect',
         data: [
           800, 1600, 900, 1300, 1950, 1700,
         ],
-        backgroundColor: tailwindConfig().theme.colors.sky[500],
-        hoverBackgroundColor: tailwindConfig().theme.colors.sky[600],
+        backgroundColor: tailwindConfig().theme.colors.gray[500],
+        hoverBackgroundColor: tailwindConfig().theme.colors.gray[600],
         barPercentage: 0.7,
         categoryPercentage: 0.7,
         borderRadius: 4,
       },
       // Blue bars
       {
-        label: 'Indirect',
+        label: 'Direct',
         data: [
           4900, 2600, 5350, 4800, 5200, 4800,
         ],
-        backgroundColor: tailwindConfig().theme.colors.violet[500],
-        hoverBackgroundColor: tailwindConfig().theme.colors.violet[600],
+        backgroundColor: tailwindConfig().theme.colors.yellow[500],
+        hoverBackgroundColor: tailwindConfig().theme.colors.yellow[600],
         barPercentage: 0.7,
         categoryPercentage: 0.7,
         borderRadius: 4,
