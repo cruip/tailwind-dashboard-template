@@ -20,30 +20,15 @@ function DashboardCard06() {
         data: [
           15,10,20,25,30
         ],
-        backgroundColor: [
-          tailwindConfig().theme.colors.violet[500],
-          tailwindConfig().theme.colors.sky[500],
-          tailwindConfig().theme.colors.violet[800],
-        ],
         hoverBackgroundColor: [
-          tailwindConfig().theme.colors.violet[600],
-          tailwindConfig().theme.colors.sky[600],
-          tailwindConfig().theme.colors.violet[900],
+          tailwindConfig().theme.colors.gray[500],
+          tailwindConfig().theme.colors.yellow[800],
+          tailwindConfig().theme.colors.gray[700],
         ],
         backgroundColor: [
-          tailwindConfig().theme.colors.violet[500],
-          tailwindConfig().theme.colors.sky[500],
-          tailwindConfig().theme.colors.violet[800],
-        ],
-        backgroundColor: [
-          tailwindConfig().theme.colors.violet[500],
-          tailwindConfig().theme.colors.sky[500],
-          tailwindConfig().theme.colors.violet[800],
-        ],
-        backgroundColor: [
-          tailwindConfig().theme.colors.violet[500],
-          tailwindConfig().theme.colors.sky[500],
-          tailwindConfig().theme.colors.violet[800],
+          tailwindConfig().theme.colors.gray[300],
+          tailwindConfig().theme.colors.yellow[600],
+          tailwindConfig().theme.colors.gray[600],
         ],
         borderWidth: 0,
       },
@@ -53,7 +38,7 @@ function DashboardCard06() {
   return (
     <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-gray-800 shadow-sm rounded-xl">
       <header className="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60">
-        <h2 className="font-semibold text-gray-800 dark:text-gray-100">Fault Distrubition in Last 12 months</h2>
+        <h2 className="font-semibold text-gray-800 dark:text-gray-100">Fault Distribution in Last 12 months</h2>
       </header>
       {/* Chart built with Chart.js 3 */}
       {/* Change the height attribute to adjust the chart height */}

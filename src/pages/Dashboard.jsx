@@ -57,7 +57,8 @@ function Dashboard() {
             <div className="sm:flex sm:justify-between mb-8">
 
               {/* Left: Cards */}
-              <div className="grid grid-cols-12 gap-6 w-2/3">
+              <div className="grid grid-cols-12 gap-6 w-11/12">
+                <DashboardCard03 />
                 <DashboardCard01 />
                 <DashboardCard02 />
                 <DashboardCard04 />
@@ -73,11 +74,11 @@ function Dashboard() {
               </div>
 
                 {/* Right: Actions */}
-                <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-start gap-2">
+                {/* <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-start gap-2">
                   <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-gray-800 shadow-sm rounded-xl items-start p-4 w-[400px]">
                     <span className="self-start text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">Predictions</span> 
                   </div>             
-                </div>
+                </div> */}
               </div>
           </div>
         </main>
