@@ -36,7 +36,7 @@ function Dashboard() {
         <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
         <main className="grow">
-          <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
+          <div className="px-4 sm:px-6 lg:px-8 py-8 w-full ml-20">
 
             {/* Dashboard actions */}
             <div className="sm:flex sm:justify-between sm:items-center mb-8">
@@ -45,15 +45,6 @@ function Dashboard() {
               <div className="mb-4 sm:mb-0">
                 <h1 className="text-2xl md:text-3xl text-gray-800 dark:text-gray-100 font-bold">Conveyor Belt Analytics Dashboard</h1>
               </div>
-
-              {/* Right: Actions */}
-              <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
-                Filter button
-                <FilterButton align="right" />
-                Datepicker built with React Day Picker
-                <Datepicker align="right" />
-              </div>
-
             </div>
 
 
@@ -93,9 +84,9 @@ function Dashboard() {
                 </div>
 
                 {/* Right: Actions */}
-                <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-start gap-2 w-1/3">
-                  <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-gray-800 shadow-sm rounded-xl items-start p-4 w-[490px]">
-                    <span className="self-start">Predictions</span>
+                <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-start gap-2">
+                  <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-gray-800 shadow-sm rounded-xl items-start p-4 w-[400px]">
+                    <span className="self-start text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">Predictions</span> 
                   </div>             
                 </div>
               </div>
