@@ -54,6 +54,7 @@ function Analytics() {
 
             {/* Analytics Filter */}
             <div>
+              <span className="md:text-2xl text-gray-800 dark:text-gray-100">Select Belt: </span>
               <AnalyticsFilter onFilterChange={handleFilterChange} />
               {/* Display filtered data here */}
               <div className="mt-8">
