@@ -16,6 +16,7 @@ import DashboardCard11 from '../partials/dashboard/DashboardCard11';
 import DashboardCard12 from '../partials/dashboard/DashboardCard12';
 import DashboardCard13 from '../partials/dashboard/DashboardCard13';
 import AnalyticsFilter from '../components/AnalyticsFilter';
+import AnalyticsActions from '../components/AnalyticsActions';
 
 function Analytics() {
 
@@ -67,34 +68,7 @@ function Analytics() {
               </div>
             </div>
 
-
-            {/* Analytics actions */}
-            <div className="sm:flex sm:justify-between mb-8">
-
-              {/* Left: Cards */}
-              <div className="grid grid-cols-12 gap-6 w-2/3">
-                <DashboardCard01 />
-                {/* <DashboardCard02 /> */}
-                {/* <DashboardCard03 /> */}
-                {/* <DashboardCard04 /> */}
-                {/* <DashboardCard05 /> */}
-                {/* <DashboardCard06 /> */}
-                {/* <DashboardCard07 /> */}
-                {/* <DashboardCard08 /> */}
-                {/* <DashboardCard09 /> */}
-                {/* <DashboardCard10 /> */}
-                {/* <DashboardCard11 /> */}
-                {/* <DashboardCard12 /> */}
-                {/* <DashboardCard13 /> */}
-              </div>
-
-                {/* Right: Actions */}
-                <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-start gap-2 w-1/3">
-                  <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-gray-800 shadow-sm rounded-xl items-start p-4 w-[490px]">
-                    <span className="self-start">Predictions</span>
-                  </div>             
-                </div>
-              </div>
+            <AnalyticsActions />
           </div>
         </main>
 
