@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import DashboardCard01 from '..//partials/dashboard/DashboardCard01';
-import BeltMetadataSection from '../components/BeltMetadataSection';
+import DashboardCard01 from '../partials/dashboard/DashboardCard01';
+import BeltMetadataSection from './BeltMetadataSection';
 
 function AnalyticsActions() {
   const [activeTab, setActiveTab] = useState('Model'); // Default to Model tab

@@ -8,12 +8,12 @@ import {
 
 import './css/style.css';
 
-import './charts/ChartjsConfig';
+import './charts/ChartjsConfig.jsx';
 import { Context } from './context.js';
 
 // Import pages
-import Dashboard from './pages/Dashboard';
-import Analytics from './pages/Analytics';
+import Dashboard from './pages/Dashboard.jsx';
+import Analytics from './pages/Analytics.jsx';
 
 function App() {
 
