@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import DashboardCard01 from '../partials/dashboard/DashboardCard01';
 import BeltMetadataSection from './BeltMetadataSection';
+import LRGraph from './LRGraph';
 
 function AnalyticsActions() {
   const [activeTab, setActiveTab] = useState('Model'); // Default to Model tab
@@ -46,11 +47,8 @@ function AnalyticsActions() {
 
           {/* Middle Section: 3/5 */}
           <div className="col-span-3">
-            <div className="grid grid-cols-12 gap-6">
-              <DashboardCard01 />
-              {/* Add more cards as needed */}
-              {/* <DashboardCard02 /> */}
-              {/* <DashboardCard03 /> */}
+            <div className="grid grid-cols-12 gap-6 w-[10000px]">
+              <LRGraph/>
             </div>
           </div>
 
