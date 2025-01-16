@@ -19,7 +19,7 @@ import DashboardCard12 from '../partials/dashboard/DashboardCard12';
 import DashboardCard13 from '../partials/dashboard/DashboardCard13';
 import DashboardImages from '../partials/dashboard/DashboardImages';
 
-import { useContext, Context } from '../context.js';
+import { useContext, Context } from '../context.jsx';
 
 function Dashboard() {
   const { getters, setters } = useContext(Context);
