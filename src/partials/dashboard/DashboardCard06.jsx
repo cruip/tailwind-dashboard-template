@@ -8,27 +8,31 @@ function DashboardCard06() {
 
   const chartData = {
     labels: [
-      'Ironflow 01',
-      'RedEarth Conveyor',
-      'Pilbara Express',
-      'OreLink 4000',
-      'DustTrail Belt',
+      'South Crusher Belt',
+      'North Deposit Belt',
+      'North Transport Belt',
+      'West Transport Belt',
+      'South West Transport Belt',
     ],
     datasets: [
       {
         label: 'Belt Name',
         data: [
-          15,10,20,25,30
+          10,8,4,2,1
         ],
         hoverBackgroundColor: [
-          tailwindConfig().theme.colors.gray[500],
-          tailwindConfig().theme.colors.yellow[800],
+          tailwindConfig().theme.colors.yellow[900],
           tailwindConfig().theme.colors.gray[700],
+          tailwindConfig().theme.colors.yellow[700],
+          tailwindConfig().theme.colors.gray[800],
+          tailwindConfig().theme.colors.yellow[500],
         ],
         backgroundColor: [
-          tailwindConfig().theme.colors.gray[300],
           tailwindConfig().theme.colors.yellow[600],
-          tailwindConfig().theme.colors.gray[600],
+          tailwindConfig().theme.colors.gray[500],
+          tailwindConfig().theme.colors.yellow[400],
+          tailwindConfig().theme.colors.gray[700],
+          tailwindConfig().theme.colors.yellow[100],
         ],
         borderWidth: 0,
       },
