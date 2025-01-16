@@ -17,13 +17,18 @@ import DashboardCard10 from '../partials/dashboard/DashboardCard10';
 import DashboardCard11 from '../partials/dashboard/DashboardCard11';
 import DashboardCard12 from '../partials/dashboard/DashboardCard12';
 import DashboardCard13 from '../partials/dashboard/DashboardCard13';
+import DashboardImages from '../partials/dashboard/DashboardImages';
+
+import { useContext, Context } from '../context.js';
 
 function Dashboard() {
-
+  const { getters, setters } = useContext(Context);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div className="flex h-screen overflow-hidden">
+
+      
 
       {/* Sidebar */}
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
@@ -58,20 +63,55 @@ function Dashboard() {
 
               {/* Left: Cards */}
               <div className="grid grid-cols-12 gap-6 w-11/12">
+                {/* Number of urgent conveyor belt repairs */}
                 <DashboardCard03 />
+
+                {/* Weather data */}
                 <DashboardCard01 />
+
+                {/* Maintenance History */}
                 <DashboardCard02 />
+
+                {/* Direct VS indirect Belt Costs (column graph) */}
                 <DashboardCard04 />
+
+                {/* Real time material Flow */}
                 <DashboardCard05 />
+
+                {/* Fault distribution in the last 12 months */}
                 <DashboardCard06 />
-                {/* <DashboardCard07 /> */}
-                {/* <DashboardCard08 /> */}
-                {/* <DashboardCard09 /> */}
-                {/* <DashboardCard10 /> */}
-                {/* <DashboardCard11 /> */}
+
+                {/* Belt Overview */}
+                <DashboardCard07 />
+
+                {/* Causes of damage */}
+                <DashboardCard11 />
+
+                {/* Images */}
+                <DashboardImages/>
+
+                {/* Recent Activity */}
                 {/* <DashboardCard12 /> */}
+
+                {/* Line Chart (multiple variables) */}
+                {/* <DashboardCard08 /> */}
+
+                {/* Floating box chart idk what its called (two variable comparision) */}
+                {/* <DashboardCard09 /> */}
+
+                {/* List of single events (no headers) */}
                 {/* <DashboardCard13 /> */}
-              </div>
+                <div className='mt-[1000px]'>hihih</div>
+                <button onClick={event => {
+                    event.preventDefault();
+                    setters.setBelt('Pilbara express')
+                  }}>pilbara express</button>
+
+                  <button onClick={event => {
+                    event.preventDefault();
+                    setters.setBelt('Just a belt')
+                  }}>Just a belt</button>
+                </div>
 
                 {/* Right: Actions */}
                 {/* <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-start gap-2">

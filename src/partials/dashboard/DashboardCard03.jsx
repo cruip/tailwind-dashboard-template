@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import LineChart from '../../charts/LineChart01';
+import { useContext, Context } from '../../context.js';
 
 function DashboardCard03() {
+
   const [chartData, setChartData] = useState({
     labels: ['T0'],
     datasets: [

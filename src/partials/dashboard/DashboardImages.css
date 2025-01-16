@@ -1,0 +1,27 @@
+.image-container {
+    position: absolute;
+    width: 43.3%; /* Full width of the parent container */
+    max-width: 100%; /* Prevents overflow */
+    height: 18.3rem; /* Matches Tailwind's h-96 for consistent height */
+    overflow: hidden;
+  }
+  
+  .image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; /* Stretch to fit the container's width */
+    height: 100%; /* Stretch to fit the container's height */
+    object-fit: cover; /* Maintains aspect ratio while filling */
+    transition: opacity 0.5s ease-in-out;
+    opacity: 0; /* Start hidden */
+  }
+  
+  .fade-in {
+    opacity: 1; /* Fully visible */
+  }
+  
+  .fade-out {
+    opacity: 0; /* Fully transparent */
+  }
+  

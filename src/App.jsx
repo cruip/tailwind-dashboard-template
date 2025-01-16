@@ -9,6 +9,7 @@ import {
 import './css/style.css';
 
 import './charts/ChartjsConfig';
+import { Context } from './context.js';
 
 // Import pages
 import Dashboard from './pages/Dashboard';
@@ -16,6 +17,20 @@ import Analytics from './pages/Analytics';
 
 function App() {
 
+  // ------- CONTEXT VARIABLES ---------
+  const [belt, setBelt] = React.useState('');
+  const [section, setSection] = React.useState('');
+
+  const getters = {
+    belt,
+    section
+  }
+
+  const setters = {
+    setBelt,
+    setSection
+  }
+  // ------------------------------------
   const location = useLocation();
 
   useEffect(() => {
@@ -26,11 +41,13 @@ function App() {
 
   return (
     <>
-      <Routes>
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
-        <Route exact path="/dashboard" element={<Dashboard />} />
-        <Route exact path="/analytics" element={<Analytics />} />
-      </Routes>
+      <Context.Provider value = {{ getters, setters }}>
+        <Routes>
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          <Route exact path="/dashboard" element={<Dashboard />} />
+          <Route exact path="/analytics" element={<Analytics />} />
+        </Routes>
+      </Context.Provider>
     </>
   );
 }
