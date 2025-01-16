@@ -19,12 +19,16 @@ import DashboardCard12 from '../partials/dashboard/DashboardCard12';
 import DashboardCard13 from '../partials/dashboard/DashboardCard13';
 import DashboardImages from '../partials/dashboard/DashboardImages';
 
-function Dashboard() {
+import { useContext, Context } from '../context.js';
 
+function Dashboard() {
+  const { getters, setters } = useContext(Context);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div className="flex h-screen overflow-hidden">
+
+      
 
       {/* Sidebar */}
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
@@ -97,7 +101,17 @@ function Dashboard() {
 
                 {/* List of single events (no headers) */}
                 {/* <DashboardCard13 /> */}
-              </div>
+                <div className='mt-[1000px]'>hihih</div>
+                <button onClick={event => {
+                    event.preventDefault();
+                    setters.setBelt('Pilbara express')
+                  }}>pilbara express</button>
+
+                  <button onClick={event => {
+                    event.preventDefault();
+                    setters.setBelt('Just a belt')
+                  }}>Just a belt</button>
+                </div>
 
                 {/* Right: Actions */}
                 {/* <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-start gap-2">
