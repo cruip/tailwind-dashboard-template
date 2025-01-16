@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import { Context } from '../context.js';
+import { useCustomContext, Context } from '../context.jsx';
 
 function BeltMetadataSection() {
-  const { getters } = useContext(Context);
+  const { getters } = useCustomContext(Context);
 
   // Metadata for belts
   const beltMetadata = {

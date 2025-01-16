@@ -1,53 +1,32 @@
 import React, { useEffect } from 'react';
-import {
-  Routes,
-  Route,
-  useLocation,
-  Navigate
-} from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 
 import './css/style.css';
-
 import './charts/ChartjsConfig.jsx';
-import { Context } from './context.js';
+
+import { ContextProvider } from './context'; // Import ContextProvider
 
 // Import pages
 import Dashboard from './pages/Dashboard.jsx';
 import Analytics from './pages/Analytics.jsx';
 
 function App() {
-
   const location = useLocation();
 
-  const [belt, setBelt] = React.useState('');
-  const [section, setSection] = React.useState('');
- 
-  const getters = {
-    belt,
-    section
-  }
- 
-  const setters = {
-    setBelt,
-    setSection
-  }
-
   useEffect(() => {
-    document.querySelector('html').style.scrollBehavior = 'auto'
-    window.scroll({ top: 0 })
-    document.querySelector('html').style.scrollBehavior = ''
-  }, [location.pathname]); // triggered on route change
+    document.querySelector('html').style.scrollBehavior = 'auto';
+    window.scroll({ top: 0 });
+    document.querySelector('html').style.scrollBehavior = '';
+  }, [location.pathname]);
 
   return (
-    <>
-    <Context.Provider value = {{ getters, setters }}>
+    <ContextProvider>
       <Routes>
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
-        <Route exact path="/dashboard" element={<Dashboard />} />
-        <Route exact path="/analytics" element={<Analytics />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/analytics" element={<Analytics />} />
       </Routes>
-      </Context.Provider>
-    </>
+    </ContextProvider>
   );
 }
 

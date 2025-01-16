@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useContext, Context } from '../context.js';
+import { useCustomContext, Context } from '../context.jsx';
 
 function AnalyticsFilter({ onFilterChange }) {
   const belts = ['Ironflow 01', 'RedEarth Conveyor', 'Pilbara Express', 'OreLink 4000', 'DustTrail Belt'];
@@ -7,7 +7,7 @@ function AnalyticsFilter({ onFilterChange }) {
   const [selectedBelt, setSelectedBelt] = useState('');
   const [selectedSection, setSelectedSection] = useState('');
 
-  const { getters, setters } = useContext(Context);
+  const { getters, setters } = useCustomContext(Context);
 
   const handleBeltClick = (belt) => {
     setSelectedBelt(belt);
@@ -15,10 +15,24 @@ function AnalyticsFilter({ onFilterChange }) {
     setters.setBelt(belt);
   };
 
-  const handleSectionChange = (e) => {
+  const handleSectionChange = async (e) => {
     const section = e.target.value;
+    console.log('Selected section:', section);
     setSelectedSection(section);
     onFilterChange({ belt: selectedBelt, section });
+    setters.setSection(section);
+  
+    try {
+      const response = await fetch(`http://localhost:5000/run-script?section_id=${section}`);
+      if (!response.ok) {
+        throw new Error("Failed to process section data.");
+      }
+  
+      const data = await response.json();
+      console.log("Script Output:", data.output);
+    } catch (error) {
+      console.error("Error processing section data:", error.message);
+    }
   };
 
   return (

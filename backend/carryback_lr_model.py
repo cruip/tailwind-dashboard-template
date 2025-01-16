@@ -1,15 +1,20 @@
+import os
 import pandas as pd
 import numpy as np
 import json
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
+import sys
+
 
 # Load the CSV data into a DataFrame
-df = pd.read_csv('sample_data.csv')
+data_file = os.path.join(os.path.dirname(__file__), 'sample_data.csv')
+df = pd.read_csv(data_file)
 
 # Filter data for 'carryback' tag
 carryback_data = df[df['tag_name'] == 'carryback']
+
 
 def process_section_data(section_id, output_file='graph_data.json'):
     # Filter data for the specified section_id
@@ -17,7 +22,7 @@ def process_section_data(section_id, output_file='graph_data.json'):
 
     if section_data.empty:
         print(f"No data found for section_id {section_id}.")
-        return
+        return {'error': f"No data found for section_id {section_id}"}
 
     # Extract the predictor (belt_rotation) and the target (area_sum)
     X = section_data[['belt_rotation']]
@@ -39,9 +44,9 @@ def process_section_data(section_id, output_file='graph_data.json'):
     mse = mean_squared_error(y_test, y_pred)
     r2 = r2_score(y_test, y_pred)
 
-    print(f'Section ID: {section_id}')
-    print(f'Mean Squared Error: {mse:.2f}')
-    print(f'R-squared: {r2:.2f}')
+    print(f"Section ID: {section_id}")
+    print(f"Mean Squared Error: {mse:.2f}")
+    print(f"R-squared: {r2:.2f}")
 
     # Define the threshold value for area_sum
     threshold = 50000  # Example threshold value
@@ -63,10 +68,10 @@ def process_section_data(section_id, output_file='graph_data.json'):
     if len(exceed_threshold_index) > 0:
         exceed_threshold_belt_rotation = extended_belt_rotation_range[exceed_threshold_index[0]][0]
         corresponding_area_sum = predicted_area_sum[exceed_threshold_index[0]]
-        print(f'The belt_rotation value at which area_sum exceeds the threshold of {threshold} is: {exceed_threshold_belt_rotation:.2f}')
-        print(f'The corresponding area_sum at this belt_rotation is: {corresponding_area_sum:.2f}')
+        print(f"The belt_rotation value at which area_sum exceeds the threshold of {threshold} is: {exceed_threshold_belt_rotation:.2f}")
+        print(f"The corresponding area_sum at this belt_rotation is: {corresponding_area_sum:.2f}")
     else:
-        print(f'The predicted area_sum does not exceed the threshold of {threshold} within the extended range.')
+        print(f"The predicted area_sum does not exceed the threshold of {threshold} within the extended range.")
 
     # Round data to 2 significant figures
     graph_data = {
@@ -81,21 +86,23 @@ def process_section_data(section_id, output_file='graph_data.json'):
     }
 
     # Save the processed data to a JSON file
-    with open(output_file, 'w') as json_file:
+    output_path = os.path.join(os.path.dirname(__file__), output_file)
+    with open(output_path, 'w') as json_file:
         json.dump(graph_data, json_file)
 
     print(f"Processed data for section {section_id} saved to {output_file}.")
+    return graph_data
 
-# Prompt user to select a section
-while True:
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: python carryback_lr_model.py <section_id>")
+        sys.exit(1)
+
     try:
-        section_id = int(input("Enter a section ID (1-10) or 0 to exit: "))
-        if section_id == 0:
-            print("Exiting.")
-            break
-        elif section_id not in range(1, 11):
-            print("Invalid section ID. Please enter a value between 1 and 10.")
-        else:
-            process_section_data(section_id)
+        section_id = int(sys.argv[1])
+        result = process_section_data(section_id)
+        if 'error' in result:
+            print(result['error'])
     except ValueError:
-        print("Invalid input. Please enter a numeric value.")
+        print("Invalid section_id. Please provide an integer.")

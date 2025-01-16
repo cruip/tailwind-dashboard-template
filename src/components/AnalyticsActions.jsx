@@ -47,14 +47,14 @@ function AnalyticsActions() {
 
           {/* Middle Section: 3/5 */}
           <div className="col-span-3">
-            <div className="grid grid-cols-12 gap-6 w-[10000px]">
+            <div className="grid grid-cols-12 gap-6 w-[10600px]">
               <LRGraph/>
             </div>
           </div>
 
           {/* Right Section: 1/5 */}
           <div className="col-span-1 bg-white dark:bg-gray-800 shadow-sm rounded-xl p-4">
-            <span className="text-sm font-medium text-gray-800 dark:text-gray-100">Right Section</span>
+            <span className="text-sm font-medium text-gray-800 dark:text-gray-100">Predictive Analysis</span>
           </div>
         </div>
       )}
