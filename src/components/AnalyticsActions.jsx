@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import DashboardCard01 from '../partials/dashboard/DashboardCard01';
 import BeltMetadataSection from './BeltMetadataSection';
 import LRGraph from './LRGraph';
+import PredictiveAnalysis from './PredictiveAnalysis';
 
 function AnalyticsActions() {
   const [activeTab, setActiveTab] = useState('Model'); // Default to Model tab
@@ -40,9 +40,10 @@ function AnalyticsActions() {
       {/* Content Sections */}
       {activeTab === 'Model' && (
         <div className="grid grid-cols-5 gap-6">
-          {/* Left Section: 1/5 */}
-          <div className="col-span-1">
-            <BeltMetadataSection selectedBelt={selectedBelt} />
+
+          <div className="col-span-1 bg-white dark:bg-gray-800 shadow-sm rounded-xl p-4">
+            <span className="text-sm font-medium text-gray-800 dark:text-gray-100">Predictive Analysis</span>
+            <PredictiveAnalysis/>
           </div>
 
           {/* Middle Section: 3/5 */}
@@ -52,9 +53,8 @@ function AnalyticsActions() {
             </div>
           </div>
 
-          {/* Right Section: 1/5 */}
-          <div className="col-span-1 bg-white dark:bg-gray-800 shadow-sm rounded-xl p-4">
-            <span className="text-sm font-medium text-gray-800 dark:text-gray-100">Predictive Analysis</span>
+          <div className="col-span-1">
+            <BeltMetadataSection selectedBelt={selectedBelt} />
           </div>
         </div>
       )}

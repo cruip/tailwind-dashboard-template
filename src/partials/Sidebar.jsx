@@ -151,6 +151,33 @@ function Sidebar({
                   </div>
                 </NavLink>
               </li>
+              {/* Map */}
+              <li className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${pathname.includes("map") && "from-yellow-500/[0.12] dark:from-yellow-500/[0.24] to-yellow-500/[0.04]"}`}>
+                <NavLink
+                  end
+                  to="/map"
+                  className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${
+                    pathname.includes("map") ? "" : "hover:text-gray-900 dark:hover:text-white"
+                  }`}
+                >
+                  <div className="flex items-center">
+                    <svg
+                      className={`shrink-0 fill-current ${
+                        pathname.includes('map') ? 'text-yellow-500' : 'text-gray-400 dark:text-gray-500'
+                      }`}
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                    >
+                      <path d="M8 0C4.134 0 1 3.134 1 7c0 3.313 2.687 6 6 6 1.012 0 2.037-.26 2.926-.776L13.71 14.5l1.17-1.172-4.194-4.194A5.974 5.974 0 0 0 13 7c0-3.866-3.134-7-7-7zm0 1.5C11.086 1.5 13.5 3.914 13.5 7c0 1.125-.367 2.164-1.004 3.004l-3.043-3.043C9.203 6.743 9.5 6.392 9.5 6c0-.691-.5-1.25-1.25-1.25S7 5.309 7 6s.5 1.25 1.25 1.25c.392 0 .743-.297.961-.547L12 10.586A5.47 5.47 0 0 1 8 12C4.914 12 2.5 9.586 2.5 7S4.914 2 8 2z" />
+                    </svg>
+                    <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                      Map
+                    </span>
+                  </div>
+                </NavLink>
+              </li>
             </ul>
           </div>
         </div>

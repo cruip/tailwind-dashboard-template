@@ -9,6 +9,7 @@ import { ContextProvider } from './context'; // Import ContextProvider
 // Import pages
 import Dashboard from './pages/Dashboard.jsx';
 import Analytics from './pages/Analytics.jsx';
+import MapPage from './pages/MapPage.jsx';
 
 function App() {
   const location = useLocation();
@@ -25,6 +26,7 @@ function App() {
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/analytics" element={<Analytics />} />
+        <Route path="/map" element={<MapPage />} />
       </Routes>
     </ContextProvider>
   );

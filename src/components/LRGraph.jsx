@@ -6,65 +6,68 @@ import { useCustomContext } from '../context'; // Import the context hook
 
 ChartJS.register(...registerables, annotationPlugin);
 
-
 function LRGraph() {
   const { getters } = useCustomContext(); // Access the context
   const { section } = getters; // Get the selected section
   const [graphData, setGraphData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false); // Ensure the loading state is reset
   const [error, setError] = useState(null);
-  console.log('Section from context:', section);
 
   useEffect(() => {
-    console.log('useEffect triggered');
-    console.log('Current section:', section);
     const fetchData = async () => {
-      console.log('fetchData function called');
       if (!section) {
-        setGraphData(null); // Clear graph if no section is selected
+        setGraphData(null); // Clear graph data if no section is selected
+        setLoading(false);
+        setError(null);
         return;
       }
-  
+
+      setLoading(true); // Set loading to true before fetching
+      setError(null); // Reset error state
+
       try {
-        console.log('Fetching graph data...');
+        console.log(`Fetching data for section: ${section}`);
+        
+        // Trigger backend script processing
         const response = await fetch(`http://localhost:5000/run-script?section_id=${section}`);
-        console.log('Fetch URL:', `http://localhost:5000/run-script?section_id=${section}`);
-        console.log('Response received:', response);
-  
         if (!response.ok) {
-          throw new Error('Failed to fetch graph data');
+          throw new Error(`Failed to trigger backend script for section: ${section}`);
         }
-  
-        // Log backend script output for debugging
-        const jsonResponse = await response.json();
-        console.log('Script Output:', jsonResponse.output);
-  
-        // Fetch the processed JSON data from the backend
+
+        // Fetch the processed data
         const graphDataResponse = await fetch('/backend/graph_data.json');
         if (!graphDataResponse.ok) {
           throw new Error('Failed to fetch processed graph data');
         }
-  
-        const data = await graphDataResponse.json(); // Define `data` here
-        console.log('Graph data:', data);
-  
-        setGraphData(data); // Set graph data to state
-        setLoading(false);
+
+        const data = await graphDataResponse.json();
+        setGraphData(data); // Update graph data
       } catch (err) {
         console.error('Error fetching graph data:', err);
-        setError(err.message);
-        setLoading(false);
+        setError(err.message); // Set error message
       } finally {
-        console.log('Fetch attempt finished');
+        setLoading(false); // Stop loading
       }
     };
-  
-    fetchData();
-  }, [section]); // Refetch data whenever the section changes
 
-  if (loading) return <div>Loading graph...</div>;
-  if (error) return <div className="text-red-500">Error: {error}</div>;
-  if (!graphData) return <div>No graph data available. Select a section to view the graph.</div>;
+    fetchData();
+  }, [section]); // Refetch data when section changes
+
+  if (loading) {
+    return (
+      <div className="text-center text-gray-500">
+        <p>Loading graph for section {section}...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div className="text-red-500">Error: {error}</div>;
+  }
+
+  if (!graphData) {
+    return <div>No graph data available. Select a section to view the graph.</div>;
+  }
 
   // Chart data
   const chartData = {
@@ -139,20 +142,6 @@ function LRGraph() {
               position: 'end',
               backgroundColor: 'rgba(54, 162, 235, 0.8)',
               color: '#fff',
-            },
-          },
-          intersectionLine: {
-            type: 'line',
-            scaleID: 'y',
-            value: graphData.threshold,
-            borderColor: 'rgba(255, 165, 0, 0.5)', // Orange line
-            borderDash: [5, 5],
-            borderWidth: 1,
-            xMin: graphData.exceed_threshold_belt_rotation,
-            xMax: graphData.exceed_threshold_belt_rotation,
-            label: {
-              content: 'Intersection',
-              enabled: false,
             },
           },
         },

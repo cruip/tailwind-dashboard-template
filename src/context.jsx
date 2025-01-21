@@ -7,10 +7,11 @@ export const Context = createContext();
 export const ContextProvider = ({ children }) => {
   const [belt, setBelt] = useState('');
   const [section, setSection] = useState('');
+  const [graphData, setGraphData] = useState(null);
 
   // Memoize getters and setters for performance
-  const getters = useMemo(() => ({ belt, section }), [belt, section]);
-  const setters = useMemo(() => ({ setBelt, setSection }), []);
+  const getters = useMemo(() => ({ belt, section, graphData }), [belt, section, graphData]);
+  const setters = useMemo(() => ({ setBelt, setSection, setGraphData }), []);
 
   return (
     <Context.Provider value={{ getters, setters }}>
