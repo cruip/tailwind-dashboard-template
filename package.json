@@ -9,6 +9,10 @@
     "start": "react-scripts start"
   },
   "dependencies": {
+    "@fullcalendar/daygrid": "^6.1.15",
+    "@fullcalendar/interaction": "^6.1.15",
+    "@fullcalendar/react": "^6.1.15",
+    "@fullcalendar/timegrid": "^6.1.15",
     "@radix-ui/react-popover": "^1.1.2",
     "@tailwindcss/forms": "^0.5.7",
     "axios": "^1.7.9",
@@ -19,6 +23,7 @@
     "leaflet": "^1.9.4",
     "moment": "^2.29.4",
     "react": "^19.0.0",
+    "react-calendar": "^5.1.0",
     "react-chartjs-2": "^5.3.0",
     "react-day-picker": "^9.4.1",
     "react-dom": "^19.0.0",
