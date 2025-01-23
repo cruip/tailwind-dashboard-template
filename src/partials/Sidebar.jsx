@@ -133,6 +133,27 @@ function Sidebar({
                   </div>
                 </NavLink>
               </li>
+              {/* Maintenance */}
+              <li className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${pathname.includes("maintenance") && "from-yellow-500/[0.12] dark:from-yellow-500/[0.24] to-yellow-500/[0.04]"}`}>
+                <NavLink
+                  end
+                  to="/maintenance"
+                  className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${
+                    pathname.includes("maintenance") ? "" : "hover:text-gray-900 dark:hover:text-white"
+                  }`}
+                >
+                  <div className="flex items-center">
+                  <svg className={`shrink-0 fill-current ${pathname.includes('calendar') ? 'text-violet-500' : 'text-gray-400 dark:text-gray-500'}`} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                    <path d="M5 4a1 1 0 0 0 0 2h6a1 1 0 1 0 0-2H5Z" />
+                    <path d="M4 0a4 4 0 0 0-4 4v8a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4V4a4 4 0 0 0-4-4H4ZM2 4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4Z" />
+                    <path d="M4 0a4 4 0 0 0-4 4v8a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4V4a4 4 0 0 0-4-4H4ZM2 4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4Z" />
+                  </svg>
+                    <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                      Maintenance
+                    </span>
+                  </div>
+                </NavLink>
+              </li>
               {/* Analytics */}
               <li className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${pathname.includes("analytics") && "from-yellow-500/[0.12] dark:from-yellow-500/[0.24] to-yellow-500/[0.04]"}`}>
                 <NavLink
@@ -148,6 +169,26 @@ function Sidebar({
                       <path d="M8 2a6 6 0 1 0 0 12A6 6 0 0 0 8 2ZM4 8a4 4 0 1 1 8 0 4 4 0 0 1-8 0Z" />
                     </svg>
                     <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Analytics</span>
+                  </div>
+                </NavLink>
+              </li>
+              {/* Reports */}
+              <li className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${pathname.includes("reports") && "from-yellow-500/[0.12] dark:from-yellow-500/[0.24] to-yellow-500/[0.04]"}`}>
+                <NavLink
+                  end
+                  to="/reports"
+                  className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${
+                    pathname.includes("reports") ? "" : "hover:text-gray-900 dark:hover:text-white"
+                  }`}
+                >
+                  <div className="flex items-center">
+                  <svg className={`shrink-0 fill-current ${pathname.includes('messages') ? 'text-violet-500' : 'text-gray-400 dark:text-gray-500'}`} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                    <path d="M13.95.879a3 3 0 0 0-4.243 0L1.293 9.293a1 1 0 0 0-.274.51l-1 5a1 1 0 0 0 1.177 1.177l5-1a1 1 0 0 0 .511-.273l8.414-8.414a3 3 0 0 0 0-4.242L13.95.879ZM11.12 2.293a1 1 0 0 1 1.414 0l1.172 1.172a1 1 0 0 1 0 1.414l-8.2 8.2-3.232.646.646-3.232 8.2-8.2Z" />
+                    <path d="M10 14a1 1 0 1 0 0 2h5a1 1 0 1 0 0-2h-5Z" />
+                  </svg>
+                    <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                      Reports
+                    </span>
                   </div>
                 </NavLink>
               </li>
@@ -174,60 +215,6 @@ function Sidebar({
                     </svg>
                     <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
                       Map
-                    </span>
-                  </div>
-                </NavLink>
-              </li>
-              {/* Maintenance */}
-              <li className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${pathname.includes("maintenance") && "from-yellow-500/[0.12] dark:from-yellow-500/[0.24] to-yellow-500/[0.04]"}`}>
-                <NavLink
-                  end
-                  to="/maintenance"
-                  className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${
-                    pathname.includes("maintenance") ? "" : "hover:text-gray-900 dark:hover:text-white"
-                  }`}
-                >
-                  <div className="flex items-center">
-                    <svg
-                      className={`shrink-0 fill-current ${
-                        pathname.includes('maintenance') ? 'text-yellow-500' : 'text-gray-400 dark:text-gray-500'
-                      }`}
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M8 0C4.134 0 1 3.134 1 7c0 3.313 2.687 6 6 6 1.012 0 2.037-.26 2.926-.776L13.71 14.5l1.17-1.172-4.194-4.194A5.974 5.974 0 0 0 13 7c0-3.866-3.134-7-7-7zm0 1.5C11.086 1.5 13.5 3.914 13.5 7c0 1.125-.367 2.164-1.004 3.004l-3.043-3.043C9.203 6.743 9.5 6.392 9.5 6c0-.691-.5-1.25-1.25-1.25S7 5.309 7 6s.5 1.25 1.25 1.25c.392 0 .743-.297.961-.547L12 10.586A5.47 5.47 0 0 1 8 12C4.914 12 2.5 9.586 2.5 7S4.914 2 8 2z" />
-                    </svg>
-                    <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                      Maintenance
-                    </span>
-                  </div>
-                </NavLink>
-              </li>
-              {/* Reporta */}
-              <li className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-[linear-gradient(135deg,var(--tw-gradient-stops))] ${pathname.includes("reports") && "from-yellow-500/[0.12] dark:from-yellow-500/[0.24] to-yellow-500/[0.04]"}`}>
-                <NavLink
-                  end
-                  to="/reports"
-                  className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${
-                    pathname.includes("reports") ? "" : "hover:text-gray-900 dark:hover:text-white"
-                  }`}
-                >
-                  <div className="flex items-center">
-                    <svg
-                      className={`shrink-0 fill-current ${
-                        pathname.includes('reports') ? 'text-yellow-500' : 'text-gray-400 dark:text-gray-500'
-                      }`}
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M8 0C4.134 0 1 3.134 1 7c0 3.313 2.687 6 6 6 1.012 0 2.037-.26 2.926-.776L13.71 14.5l1.17-1.172-4.194-4.194A5.974 5.974 0 0 0 13 7c0-3.866-3.134-7-7-7zm0 1.5C11.086 1.5 13.5 3.914 13.5 7c0 1.125-.367 2.164-1.004 3.004l-3.043-3.043C9.203 6.743 9.5 6.392 9.5 6c0-.691-.5-1.25-1.25-1.25S7 5.309 7 6s.5 1.25 1.25 1.25c.392 0 .743-.297.961-.547L12 10.586A5.47 5.47 0 0 1 8 12C4.914 12 2.5 9.586 2.5 7S4.914 2 8 2z" />
-                    </svg>
-                    <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                      Reports
                     </span>
                   </div>
                 </NavLink>

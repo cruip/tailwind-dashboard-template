@@ -14,7 +14,7 @@ function AnalyticsActions() {
         <div className="relative flex bg-gray-200 dark:bg-gray-700 rounded-full transition-all duration-800">
           {/* Slider */}
           <div
-            className={`absolute bg-yellow-500 rounded-full h-full w-1/3 transition-transform duration-300 ease-in-out`}
+            className={`absolute bg-slate-500 rounded-full h-full w-1/3 transition-transform duration-300 ease-in-out`}
             style={{
               transform: `translateX(${['Model', 'Data', 'Images'].indexOf(activeTab) * 100}%)`,
             }}
