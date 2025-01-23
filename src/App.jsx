@@ -11,6 +11,7 @@ import Dashboard from './pages/Dashboard.jsx';
 import Analytics from './pages/Analytics.jsx';
 import MapPage from './pages/MapPage.jsx';
 import Maintenance from './pages/Maintenance.jsx';
+import Reports from './pages/Reports.jsx';
 
 function App() {
   const location = useLocation();
@@ -29,6 +30,7 @@ function App() {
         <Route path="/analytics" element={<Analytics />} />
         <Route path="/map" element={<MapPage />} />
         <Route path="/maintenance" element={<Maintenance />} />
+        <Route path="/reports" element={<Reports />} />
       </Routes>
     </ContextProvider>
   );
