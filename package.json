@@ -9,10 +9,11 @@
     "start": "react-scripts start"
   },
   "dependencies": {
-    "@fullcalendar/daygrid": "^6.1.15",
-    "@fullcalendar/interaction": "^6.1.15",
-    "@fullcalendar/react": "^6.1.15",
-    "@fullcalendar/timegrid": "^6.1.15",
+    "@fullcalendar/core": "^6.1.15",
+    "@fullcalendar/daygrid": "^5.11.2",
+    "@fullcalendar/interaction": "^5.11.2",
+    "@fullcalendar/react": "^5.11.2",
+    "@fullcalendar/timegrid": "^5.11.2",
     "@radix-ui/react-popover": "^1.1.2",
     "@tailwindcss/forms": "^0.5.7",
     "axios": "^1.7.9",
