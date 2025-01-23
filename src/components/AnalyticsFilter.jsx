@@ -3,7 +3,7 @@ import { useCustomContext, Context } from '../context.jsx';
 
 function AnalyticsFilter({ onFilterChange }) {
   const belts = ['Ironflow 01', 'RedEarth Conveyor', 'Pilbara Express', 'OreLink 4000', 'DustTrail Belt'];
-  const sections = Array.from({ length: 10 }, (_, i) => i + 1); // Sections 1-10
+  const sections = Array.from({ length: 3 }, (_, i) => i + 1); // Sections 1-10
   const [selectedBelt, setSelectedBelt] = useState('');
   const [selectedSection, setSelectedSection] = useState('');
 

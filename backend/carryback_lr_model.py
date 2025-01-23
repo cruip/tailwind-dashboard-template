@@ -9,7 +9,7 @@ import sys
 
 
 # Load the CSV data into a DataFrame
-data_file = os.path.join(os.path.dirname(__file__), 'sample_data.csv')
+data_file = os.path.join(os.path.dirname(__file__), 'predictions_output.csv')
 df = pd.read_csv(data_file)
 
 # Filter data for 'carryback' tag
@@ -49,7 +49,7 @@ def process_section_data(section_id, output_file='graph_data.json'):
     print(f"R-squared: {r2:.2f}")
 
     # Define the threshold value for area_sum
-    threshold = 50000  # Example threshold value
+    threshold = 2500  # Example threshold value
 
     # Extend the range of belt_rotation values
     min_belt_rotation = X['belt_rotation'].min()
