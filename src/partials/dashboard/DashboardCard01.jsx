@@ -5,7 +5,7 @@ import { chartAreaGradient } from '../../charts/ChartjsConfig';
 import EditMenu from '../../components/DropdownEditMenu';
 
 // Import utilities
-import { tailwindConfig, hexToRGB } from '../../utils/Utils';
+import { adjustColorOpacity, getCssVariable } from '../../utils/Utils';
 
 function DashboardCard01() {
 
@@ -47,16 +47,16 @@ function DashboardCard01() {
           const chart = context.chart;
           const {ctx, chartArea} = chart;
           return chartAreaGradient(ctx, chartArea, [
-            { stop: 0, color: `rgba(${hexToRGB(tailwindConfig().theme.colors.violet[500])}, 0)` },
-            { stop: 1, color: `rgba(${hexToRGB(tailwindConfig().theme.colors.violet[500])}, 0.2)` }
+            { stop: 0, color: adjustColorOpacity(getCssVariable('--color-violet-500'), 0) },
+            { stop: 1, color: adjustColorOpacity(getCssVariable('--color-violet-500'), 0.2) }
           ]);
         },            
-        borderColor: tailwindConfig().theme.colors.violet[500],
+        borderColor: getCssVariable('--color-violet-500'),
         borderWidth: 2,
         pointRadius: 0,
         pointHoverRadius: 3,
-        pointBackgroundColor: tailwindConfig().theme.colors.violet[500],
-        pointHoverBackgroundColor: tailwindConfig().theme.colors.violet[500],
+        pointBackgroundColor: getCssVariable('--color-violet-500'),
+        pointHoverBackgroundColor: getCssVariable('--color-violet-500'),
         pointBorderWidth: 0,
         pointHoverBorderWidth: 0,
         clip: 20,
@@ -65,12 +65,12 @@ function DashboardCard01() {
       // Gray line
       {
         data: [532, 532, 532, 404, 404, 314, 314, 314, 314, 314, 234, 314, 234, 234, 314, 314, 314, 388, 314, 202, 202, 202, 202, 314, 720, 642],
-        borderColor: `rgba(${hexToRGB(tailwindConfig().theme.colors.gray[500])}, 0.25)`,
+        borderColor: adjustColorOpacity(getCssVariable('--color-gray-500'), 0.25),
         borderWidth: 2,
         pointRadius: 0,
         pointHoverRadius: 3,
-        pointBackgroundColor: `rgba(${hexToRGB(tailwindConfig().theme.colors.gray[500])}, 0.25)`,
-        pointHoverBackgroundColor: `rgba(${hexToRGB(tailwindConfig().theme.colors.gray[500])}, 0.25)`,
+        pointBackgroundColor: adjustColorOpacity(getCssVariable('--color-gray-500'), 0.25),
+        pointHoverBackgroundColor: adjustColorOpacity(getCssVariable('--color-gray-500'), 0.25),
         pointBorderWidth: 0,
         pointHoverBorderWidth: 0,
         clip: 20,
@@ -80,7 +80,7 @@ function DashboardCard01() {
   };
 
   return (
-    <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-gray-800 shadow-sm rounded-xl">
+    <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-gray-800 shadow-xs rounded-xl">
       <div className="px-5 pt-5">
         <header className="flex justify-between items-start mb-2">
           <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">Acme Plus</h2>

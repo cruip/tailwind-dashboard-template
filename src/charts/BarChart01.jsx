@@ -8,7 +8,7 @@ import {
 import 'chartjs-adapter-moment';
 
 // Import utilities
-import { tailwindConfig, formatValue } from '../utils/Utils';
+import { formatValue } from '../utils/Utils';
 
 Chart.register(BarController, BarElement, LinearScale, TimeScale, Tooltip, Legend);
 
@@ -124,10 +124,10 @@ function BarChart01({
               // Color box
               const box = document.createElement('span');
               box.style.display = 'block';
-              box.style.width = tailwindConfig().theme.width[3];
-              box.style.height = tailwindConfig().theme.height[3];
-              box.style.borderRadius = tailwindConfig().theme.borderRadius.full;
-              box.style.marginRight = tailwindConfig().theme.margin[2];
+              box.style.width = '12px';
+              box.style.height = '12px';
+              box.style.borderRadius = 'calc(infinity * 1px)';
+              box.style.marginRight = '8px';
               box.style.borderWidth = '3px';
               box.style.borderColor = item.fillStyle;
               box.style.pointerEvents = 'none';
@@ -137,15 +137,15 @@ function BarChart01({
               labelContainer.style.alignItems = 'center';
               const value = document.createElement('span');
               value.classList.add('text-gray-800', 'dark:text-gray-100');
-              value.style.fontSize = tailwindConfig().theme.fontSize['3xl'][0];
-              value.style.lineHeight = tailwindConfig().theme.fontSize['3xl'][1].lineHeight;
-              value.style.fontWeight = tailwindConfig().theme.fontWeight.bold;
-              value.style.marginRight = tailwindConfig().theme.margin[2];
+              value.style.fontSize = '30px';
+              value.style.lineHeight = 'calc(2.25 / 1.875)';
+              value.style.fontWeight = '700';
+              value.style.marginRight = '8px';
               value.style.pointerEvents = 'none';
               const label = document.createElement('span');
               label.classList.add('text-gray-500', 'dark:text-gray-400');
-              label.style.fontSize = tailwindConfig().theme.fontSize.sm[0];
-              label.style.lineHeight = tailwindConfig().theme.fontSize.sm[1].lineHeight;
+              label.style.fontSize = '14px';
+              label.style.lineHeight = 'calc(1.25 / 0.875)';
               const theValue = c.data.datasets[item.datasetIndex].data.reduce((a, b) => a + b, 0);
               const valueText = document.createTextNode(formatValue(theValue));
               const labelText = document.createTextNode(item.text);

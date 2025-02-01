@@ -31,7 +31,7 @@ function Info({
         <Transition
           show={infoOpen}
           tag="div"
-          className={`bg-white border border-gray-200 p-3 rounded shadow-lg overflow-hidden mb-2 ${containerClassName}`}
+          className={`bg-white border border-gray-200 p-3 rounded-sm shadow-lg overflow-hidden mb-2 ${containerClassName}`}
           enter="transition ease-out duration-200 transform"
           enterStart="opacity-0 -translate-y-2"
           enterEnd="opacity-100 translate-y-0"

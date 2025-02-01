@@ -1,26 +1,3 @@
-import resolveConfig from 'tailwindcss/resolveConfig'
-import tailwindConfigFile from '@tailwindConfig'
-
-export const tailwindConfig = () => {
-  return resolveConfig(tailwindConfigFile)
-}
-
-export const hexToRGB = (h) => {
-  let r = 0;
-  let g = 0;
-  let b = 0;
-  if (h.length === 4) {
-    r = `0x${h[1]}${h[1]}`;
-    g = `0x${h[2]}${h[2]}`;
-    b = `0x${h[3]}${h[3]}`;
-  } else if (h.length === 7) {
-    r = `0x${h[1]}${h[2]}`;
-    g = `0x${h[3]}${h[4]}`;
-    b = `0x${h[5]}${h[6]}`;
-  }
-  return `${+r},${+g},${+b}`;
-};
-
 export const formatValue = (value) => Intl.NumberFormat('en-US', {
   style: 'currency',
   currency: 'USD',
@@ -32,3 +9,55 @@ export const formatThousands = (value) => Intl.NumberFormat('en-US', {
   maximumSignificantDigits: 3,
   notation: 'compact',
 }).format(value);
+
+export const getCssVariable = (variable) => {
+  return getComputedStyle(document.documentElement).getPropertyValue(variable).trim();
+};
+
+const adjustHexOpacity = (hexColor, opacity) => {
+  // Remove the '#' if it exists
+  hexColor = hexColor.replace('#', '');
+
+  // Convert hex to RGB
+  const r = parseInt(hexColor.substring(0, 2), 16);
+  const g = parseInt(hexColor.substring(2, 4), 16);
+  const b = parseInt(hexColor.substring(4, 6), 16);
+
+  // Return RGBA string
+  return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+};
+
+const adjustHSLOpacity = (hslColor, opacity) => {
+  // Convert HSL to HSLA
+  return hslColor.replace('hsl(', 'hsla(').replace(')', `, ${opacity})`);
+};
+
+const adjustOKLCHOpacity = (oklchColor, opacity) => {
+  // Add alpha value to OKLCH color
+  return oklchColor.replace(/oklch\((.*?)\)/, (match, p1) => `oklch(${p1} / ${opacity})`);
+};
+
+export const adjustColorOpacity = (color, opacity) => {
+  if (color.startsWith('#')) {
+    return adjustHexOpacity(color, opacity);
+  } else if (color.startsWith('hsl')) {
+    return adjustHSLOpacity(color, opacity);
+  } else if (color.startsWith('oklch')) {
+    return adjustOKLCHOpacity(color, opacity);
+  } else {
+    throw new Error('Unsupported color format');
+  }
+};
+
+export const oklchToRGBA = (oklchColor) => {
+  // Create a temporary div to use for color conversion
+  const tempDiv = document.createElement('div');
+  tempDiv.style.color = oklchColor;
+  document.body.appendChild(tempDiv);
+  
+  // Get the computed style and convert to RGB
+  const computedColor = window.getComputedStyle(tempDiv).color;
+  document.body.removeChild(tempDiv);
+  
+  return computedColor;
+};

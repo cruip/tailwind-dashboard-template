@@ -8,7 +8,7 @@ import {
 import 'chartjs-adapter-moment';
 
 // Import utilities
-import { tailwindConfig, hexToRGB, formatValue } from '../utils/Utils';
+import { adjustColorOpacity, getCssVariable, formatValue } from '../utils/Utils';
 
 Chart.register(LineController, LineElement, Filler, PointElement, LinearScale, TimeScale, Tooltip);
 
@@ -112,11 +112,11 @@ function RealtimeChart({
     const diff = ((currentValue - previousValue) / previousValue) * 100;
     chartValue.current.innerHTML = data.datasets[0].data[data.datasets[0].data.length - 1];
     if (diff < 0) {
-      chartDeviation.current.style.backgroundColor = `rgba(${hexToRGB(tailwindConfig().theme.colors.red[500])}, 0.2)`;
-      chartDeviation.current.style.color = tailwindConfig().theme.colors.red[700];
+      chartDeviation.current.style.backgroundColor = adjustColorOpacity(getCssVariable('--color-red-500'), 0.2);
+      chartDeviation.current.style.color = getCssVariable('--color-red-700');
     } else {
-      chartDeviation.current.style.backgroundColor = `rgba(${hexToRGB(tailwindConfig().theme.colors.green[500])}, 0.2)`;
-      chartDeviation.current.style.color = tailwindConfig().theme.colors.green[700];
+      chartDeviation.current.style.backgroundColor = adjustColorOpacity(getCssVariable('--color-green-500'), 0.2);
+      chartDeviation.current.style.color = getCssVariable('--color-green-700');
     }
     chartDeviation.current.innerHTML = `${diff > 0 ? '+' : ''}${diff.toFixed(2)}%`;
   }, [data]);

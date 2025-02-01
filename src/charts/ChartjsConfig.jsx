@@ -1,7 +1,7 @@
 // Import Chart.js
 import { Chart, Tooltip } from 'chart.js';
 // Import Tailwind config
-import { tailwindConfig, hexToRGB } from '../utils/Utils';
+import { adjustColorOpacity, getCssVariable } from '../utils/Utils';
 
 Chart.register(Tooltip);
 
@@ -32,31 +32,31 @@ export const chartAreaGradient = (ctx, chartArea, colorStops) => {
 
 export const chartColors = {
   textColor: {
-    light: tailwindConfig().theme.colors.gray[400],
-    dark: tailwindConfig().theme.colors.gray[500],
+    light: getCssVariable('--color-gray-400'),
+    dark: getCssVariable('--color-gray-500'),
   },
   gridColor: {
-    light: tailwindConfig().theme.colors.gray[100],
-    dark: `rgba(${hexToRGB(tailwindConfig().theme.colors.gray[700])}, 0.6)`,
+    light: getCssVariable('--color-gray-100'),
+    dark: adjustColorOpacity(getCssVariable('--color-gray-700'), 0.6),
   },
   backdropColor: {
-    light: tailwindConfig().theme.colors.white,
-    dark: tailwindConfig().theme.colors.gray[800],
+    light: getCssVariable('--color-white'),
+    dark: getCssVariable('--color-gray-800'),
   },
   tooltipTitleColor: {
-    light: tailwindConfig().theme.colors.gray[800],
-    dark: tailwindConfig().theme.colors.gray[100],
+    light: getCssVariable('--color-gray-800'),
+    dark: getCssVariable('--color-gray-100'),
   },
   tooltipBodyColor : {
-    light: tailwindConfig().theme.colors.gray[500],
-    dark: tailwindConfig().theme.colors.gray[400]
+    light: getCssVariable('--color-gray-500'),
+    dark: getCssVariable('--color-gray-400')
   },
   tooltipBgColor: {
-    light: tailwindConfig().theme.colors.white,
-    dark: tailwindConfig().theme.colors.gray[700],
+    light: getCssVariable('--color-white'),
+    dark: getCssVariable('--color-gray-700'),
   },
   tooltipBorderColor: {
-    light: tailwindConfig().theme.colors.gray[200],
-    dark: tailwindConfig().theme.colors.gray[600],
+    light: getCssVariable('--color-gray-200'),
+    dark: getCssVariable('--color-gray-600'),
   },
 };

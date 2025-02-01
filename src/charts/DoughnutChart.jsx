@@ -7,9 +7,6 @@ import {
 } from 'chart.js';
 import 'chartjs-adapter-moment';
 
-// Import utilities
-import { tailwindConfig } from '../utils/Utils';
-
 Chart.register(DoughnutController, ArcElement, TimeScale, Tooltip);
 
 function DoughnutChart({
@@ -71,10 +68,10 @@ function DoughnutChart({
             const items = c.options.plugins.legend.labels.generateLabels(c);
             items.forEach((item) => {
               const li = document.createElement('li');
-              li.style.margin = tailwindConfig().theme.margin[1];
+              li.style.margin = '4px';
               // Button element
               const button = document.createElement('button');
-              button.classList.add('btn-xs', 'bg-white', 'dark:bg-gray-700', 'text-gray-500', 'dark:text-gray-400', 'shadow-sm', 'shadow-black/[0.08]', 'rounded-full');
+              button.classList.add('btn-xs', 'bg-white', 'dark:bg-gray-700', 'text-gray-500', 'dark:text-gray-400', 'shadow-xs', 'shadow-black/[0.08]', 'rounded-full');
               button.style.opacity = item.hidden ? '.3' : '';
               button.onclick = () => {
                 c.toggleDataVisibility(item.index);
@@ -83,11 +80,11 @@ function DoughnutChart({
               // Color box
               const box = document.createElement('span');
               box.style.display = 'block';
-              box.style.width = tailwindConfig().theme.width[2];
-              box.style.height = tailwindConfig().theme.height[2];
+              box.style.width = '8px';
+              box.style.height = '8px';
               box.style.backgroundColor = item.fillStyle;
-              box.style.borderRadius = tailwindConfig().theme.borderRadius.sm;
-              box.style.marginRight = tailwindConfig().theme.margin[1];
+              box.style.borderRadius = '4px';
+              box.style.marginRight = '4px';
               box.style.pointerEvents = 'none';
               // Label
               const label = document.createElement('span');

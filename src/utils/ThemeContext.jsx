@@ -15,7 +15,7 @@ export default function ThemeProvider({children}) {
   };
 
   useEffect(() => {
-    document.documentElement.classList.add('[&_*]:!transition-none');
+    document.documentElement.classList.add('**:transition-none!');
     if (theme === 'light') {
       document.documentElement.classList.remove('dark');
       document.documentElement.style.colorScheme = 'light';
@@ -25,7 +25,7 @@ export default function ThemeProvider({children}) {
     }
 
     const transitionTimeout = setTimeout(() => {
-      document.documentElement.classList.remove('[&_*]:!transition-none');
+      document.documentElement.classList.remove('**:transition-none!');
     }, 1);
     
     return () => clearTimeout(transitionTimeout);
