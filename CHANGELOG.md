@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## [4.0.1] - 2025-02-02
+
+- Remove deprecated class name
+
 ## [4.0.0] - 2025-02-01
 
 - Updgrade to Tailwind v4

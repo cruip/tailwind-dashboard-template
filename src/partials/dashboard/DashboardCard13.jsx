@@ -11,7 +11,7 @@ function DashboardCard13() {
         {/* Card content */}
         {/* "Today" group */}
         <div>
-          <header className="text-xs uppercase text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-gray-700 dark:bg-opacity-50 rounded-xs font-semibold p-2">Today</header>
+          <header className="text-xs uppercase text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-gray-700/50 rounded-xs font-semibold p-2">Today</header>
           <ul className="my-1">
             {/* Item */}
             <li className="flex px-2">

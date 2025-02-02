@@ -11,7 +11,7 @@ function DashboardCard07() {
         <div className="overflow-x-auto">
           <table className="table-auto w-full dark:text-gray-300">
             {/* Table header */}
-            <thead className="text-xs uppercase text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-gray-700 dark:bg-opacity-50 rounded-xs">
+            <thead className="text-xs uppercase text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-gray-700/50 rounded-xs">
               <tr>
                 <th className="p-2">
                   <div className="font-semibold text-left">Source</div>

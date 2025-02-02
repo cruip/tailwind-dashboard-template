@@ -62,7 +62,7 @@ function DashboardCard10() {
         <div className="overflow-x-auto">
           <table className="table-auto w-full">
             {/* Table header */}
-            <thead className="text-xs font-semibold uppercase text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-gray-700 dark:bg-opacity-50">
+            <thead className="text-xs font-semibold uppercase text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-gray-700/50">
               <tr>
                 <th className="p-2 whitespace-nowrap">
                   <div className="font-semibold text-left">Name</div>
