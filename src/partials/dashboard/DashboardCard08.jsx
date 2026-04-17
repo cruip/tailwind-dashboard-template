@@ -8,38 +8,10 @@ import { getCssVariable } from '../../utils/Utils';
 function DashboardCard08() {
 
   const chartData = {
-    labels: [
-      '12-01-2022',
-      '01-01-2023',
-      '02-01-2023',
-      '03-01-2023',
-      '04-01-2023',
-      '05-01-2023',
-      '06-01-2023',
-      '07-01-2023',
-      '08-01-2023',
-      '09-01-2023',
-      '10-01-2023',
-      '11-01-2023',
-      '12-01-2023',
-      '01-01-2024',
-      '02-01-2024',
-      '03-01-2024',
-      '04-01-2024',
-      '05-01-2024',
-      '06-01-2024',
-      '07-01-2024',
-      '08-01-2024',
-      '09-01-2024',
-      '10-01-2024',
-      '11-01-2024',
-      '12-01-2024',
-      '01-01-2025',
-    ],
+    labels: ['12月', '1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月', '1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月', '1月'],
     datasets: [
-      // Indigo line
       {
-        label: 'Current',
+        label: '本月',
         data: [73, 64, 73, 69, 104, 104, 164, 164, 120, 120, 120, 148, 142, 104, 122, 110, 104, 152, 166, 233, 268, 252, 284, 284, 333, 323],
         borderColor: getCssVariable('--color-violet-500'),
         fill: false,
@@ -53,9 +25,8 @@ function DashboardCard08() {
         clip: 20,
         tension: 0.2,
       },
-      // Blue line
       {
-        label: 'Previous',
+        label: '上月',
         data: [184, 86, 42, 378, 42, 243, 38, 120, 0, 0, 42, 0, 84, 0, 276, 0, 124, 42, 124, 88, 88, 215, 156, 88, 124, 64],
         borderColor: getCssVariable('--color-sky-500'),
         fill: false,
@@ -69,9 +40,8 @@ function DashboardCard08() {
         clip: 20,
         tension: 0.2,
       },
-      // green line
       {
-        label: 'Average',
+        label: '平均',
         data: [122, 170, 192, 86, 102, 124, 115, 115, 56, 104, 0, 72, 208, 186, 223, 188, 114, 162, 200, 150, 118, 118, 76, 122, 230, 268],
         borderColor: getCssVariable('--color-green-500'),
         fill: false,
@@ -91,10 +61,11 @@ function DashboardCard08() {
   return (
     <div className="flex flex-col col-span-full sm:col-span-6 bg-white dark:bg-gray-800 shadow-xs rounded-xl">
       <header className="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60 flex items-center">
-        <h2 className="font-semibold text-gray-800 dark:text-gray-100">Sales Over Time (all stores)</h2>
+        <div>
+          <h2 className="font-semibold text-gray-800 dark:text-gray-100">销售趋势</h2>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">近12个月销售额变化趋势</p>
+        </div>
       </header>
-      {/* Chart built with Chart.js 3 */}
-      {/* Change the height attribute to adjust the chart height */}
       <LineChart data={chartData} width={595} height={248} />
     </div>
   );

@@ -4,104 +4,95 @@ function DashboardCard12() {
   return (
     <div className="col-span-full xl:col-span-6 bg-white dark:bg-gray-800 shadow-xs rounded-xl">
       <header className="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60">
-        <h2 className="font-semibold text-gray-800 dark:text-gray-100">Recent Activity</h2>
+        <h2 className="font-semibold text-gray-800 dark:text-gray-100">系统动态</h2>
+        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">最近24小时内的关键事件</p>
       </header>
       <div className="p-3">
-
-        {/* Card content */}
-        {/* "Today" group */}
         <div>
-          <header className="text-xs uppercase text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-gray-700/50 rounded-xs font-semibold p-2">Today</header>
+          <header className="text-xs uppercase text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-gray-700/50 rounded-xs font-semibold p-2">今天</header>
           <ul className="my-1">
-            {/* Item */}
             <li className="flex px-2">
-              <div className="w-9 h-9 rounded-full shrink-0 bg-violet-500 my-2 mr-3">
-                <svg className="w-9 h-9 fill-current text-white" viewBox="0 0 36 36">
-                  <path d="M18 10c-4.4 0-8 3.1-8 7s3.6 7 8 7h.6l5.4 2v-4.4c1.2-1.2 2-2.8 2-4.6 0-3.9-3.6-7-8-7zm4 10.8v2.3L18.9 22H18c-3.3 0-6-2.2-6-5s2.7-5 6-5 6 2.2 6 5c0 2.2-2 3.8-2 3.8z" />
+              <div className="w-9 h-9 rounded-full shrink-0 bg-violet-500 my-2 mr-3 flex items-center justify-center">
+                <svg className="w-5 h-5 fill-current text-white" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
                 </svg>
               </div>
               <div className="grow flex items-center border-b border-gray-100 dark:border-gray-700/60 text-sm py-2">
-                <div className="grow flex justify-between">
-                  <div className="self-center"><a className="font-medium text-gray-800 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white" href="#0">Nick Mark</a> mentioned <a className="font-medium text-gray-800 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white" href="#0">Sara Smith</a> in a new post</div>
-                  <div className="shrink-0 self-end ml-2">
-                    <a className="font-medium text-violet-500 hover:text-violet-600 dark:hover:text-violet-400" href="#0">View<span className="hidden sm:inline"> -&gt;</span></a>
+                <div className="grow">
+                  <div className="self-center text-gray-800 dark:text-gray-100">
+                    新订单 <span className="font-medium text-violet-500">#20240418001</span> 已支付成功，金额 <span className="font-medium text-green-500">¥899</span>
                   </div>
+                  <div className="text-xs text-gray-400 dark:text-gray-500 mt-1">10分钟前</div>
                 </div>
               </div>
             </li>
-            {/* Item */}
             <li className="flex px-2">
-              <div className="w-9 h-9 rounded-full shrink-0 bg-red-500 my-2 mr-3">
-                <svg className="w-9 h-9 fill-current text-white" viewBox="0 0 36 36">
-                  <path d="M25 24H11a1 1 0 01-1-1v-5h2v4h12v-4h2v5a1 1 0 01-1 1zM14 13h8v2h-8z" />
+              <div className="w-9 h-9 rounded-full shrink-0 bg-green-500 my-2 mr-3 flex items-center justify-center">
+                <svg className="w-5 h-5 fill-current text-white" viewBox="0 0 24 24">
+                  <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
                 </svg>
               </div>
               <div className="grow flex items-center border-b border-gray-100 dark:border-gray-700/60 text-sm py-2">
-                <div className="grow flex justify-between">
-                  <div className="self-center">The post <a className="font-medium text-gray-800 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white" href="#0">Post Name</a> was removed by <a className="font-medium text-gray-800 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white" href="#0">Nick Mark</a></div>
-                  <div className="shrink-0 self-end ml-2">
-                    <a className="font-medium text-violet-500 hover:text-violet-600 dark:hover:text-violet-400" href="#0">View<span className="hidden sm:inline"> -&gt;</span></a>
+                <div className="grow">
+                  <div className="self-center text-gray-800 dark:text-gray-100">
+                    <span className="font-medium">王建国</span> 完成注册并成为新会员
                   </div>
+                  <div className="text-xs text-gray-400 dark:text-gray-500 mt-1">45分钟前</div>
                 </div>
               </div>
             </li>
-            {/* Item */}
             <li className="flex px-2">
-              <div className="w-9 h-9 rounded-full shrink-0 bg-green-500 my-2 mr-3">
-                <svg className="w-9 h-9 fill-current text-white" viewBox="0 0 36 36">
-                  <path d="M15 13v-3l-5 4 5 4v-3h8a1 1 0 000-2h-8zM21 21h-8a1 1 0 000 2h8v3l5-4-5-4v3z" />
+              <div className="w-9 h-9 rounded-full shrink-0 bg-amber-500 my-2 mr-3 flex items-center justify-center">
+                <svg className="w-5 h-5 fill-current text-white" viewBox="0 0 24 24">
+                  <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
                 </svg>
               </div>
               <div className="grow flex items-center text-sm py-2">
-                <div className="grow flex justify-between">
-                  <div className="self-center"><a className="font-medium text-gray-800 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white" href="#0">Patrick Sullivan</a> published a new <a className="font-medium text-gray-800 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white" href="#0">post</a></div>
-                  <div className="shrink-0 self-end ml-2">
-                    <a className="font-medium text-violet-500 hover:text-violet-600 dark:hover:text-violet-400" href="#0">View<span className="hidden sm:inline"> -&gt;</span></a>
+                <div className="grow">
+                  <div className="self-center text-gray-800 dark:text-gray-100">
+                    本月营销活动 <span className="font-medium text-amber-500">"春季特惠"</span> 已获得 1,256 次点击
                   </div>
+                  <div className="text-xs text-gray-400 dark:text-gray-500 mt-1">2小时前</div>
                 </div>
               </div>
             </li>
           </ul>
         </div>
-        {/* "Yesterday" group */}
         <div>
-          <header className="text-xs uppercase text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-gray-700/50 rounded-xs font-semibold p-2">Yesterday</header>
+          <header className="text-xs uppercase text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-gray-700/50 rounded-xs font-semibold p-2">昨天</header>
           <ul className="my-1">
-            {/* Item */}
             <li className="flex px-2">
-              <div className="w-9 h-9 rounded-full shrink-0 bg-sky-500 my-2 mr-3">
-                <svg className="w-9 h-9 fill-current text-white" viewBox="0 0 36 36">
-                  <path d="M23 11v2.085c-2.841.401-4.41 2.462-5.8 4.315-1.449 1.932-2.7 3.6-5.2 3.6h-1v2h1c3.5 0 5.253-2.338 6.8-4.4 1.449-1.932 2.7-3.6 5.2-3.6h3l-4-4zM15.406 16.455c.066-.087.125-.162.194-.254.314-.419.656-.872 1.033-1.33C15.475 13.802 14.038 13 12 13h-1v2h1c1.471 0 2.505.586 3.406 1.455zM24 21c-1.471 0-2.505-.586-3.406-1.455-.066.087-.125.162-.194.254-.316.422-.656.873-1.028 1.328.959.878 2.108 1.573 3.628 1.788V25l4-4h-3z" />
+              <div className="w-9 h-9 rounded-full shrink-0 bg-sky-500 my-2 mr-3 flex items-center justify-center">
+                <svg className="w-5 h-5 fill-current text-white" viewBox="0 0 24 24">
+                  <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z" />
                 </svg>
               </div>
               <div className="grow flex items-center border-b border-gray-100 dark:border-gray-700/60 text-sm py-2">
-                <div className="grow flex justify-between">
-                  <div className="self-center"><a className="font-medium text-gray-800 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white" href="#0">240+</a> users have subscribed to <a className="font-medium text-gray-800 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white" href="#0">Newsletter #1</a></div>
-                  <div className="shrink-0 self-end ml-2">
-                    <a className="font-medium text-violet-500 hover:text-violet-600 dark:hover:text-violet-400" href="#0">View<span className="hidden sm:inline"> -&gt;</span></a>
+                <div className="grow">
+                  <div className="self-center text-gray-800 dark:text-gray-100">
+                    运营团队发布了新的产品 <span className="font-medium text-sky-500">SKU-20240417</span>
                   </div>
+                  <div className="text-xs text-gray-400 dark:text-gray-500 mt-1">10小时前</div>
                 </div>
               </div>
             </li>
-            {/* Item */}
             <li className="flex px-2">
-              <div className="w-9 h-9 rounded-full shrink-0 bg-violet-500 my-2 mr-3">
-                <svg className="w-9 h-9 fill-current text-white" viewBox="0 0 36 36">
-                  <path d="M18 10c-4.4 0-8 3.1-8 7s3.6 7 8 7h.6l5.4 2v-4.4c1.2-1.2 2-2.8 2-4.6 0-3.9-3.6-7-8-7zm4 10.8v2.3L18.9 22H18c-3.3 0-6-2.2-6-5s2.7-5 6-5 6 2.2 6 5c0 2.2-2 3.8-2 3.8z" />
+              <div className="w-9 h-9 rounded-full shrink-0 bg-red-500 my-2 mr-3 flex items-center justify-center">
+                <svg className="w-5 h-5 fill-current text-white" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
                 </svg>
               </div>
               <div className="grow flex items-center text-sm py-2">
-                <div className="grow flex justify-between">
-                  <div className="self-center">The post <a className="font-medium text-gray-800 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white" href="#0">Post Name</a> was suspended by <a className="font-medium text-gray-800 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white" href="#0">Nick Mark</a></div>
-                  <div className="shrink-0 self-end ml-2">
-                    <a className="font-medium text-violet-500 hover:text-violet-600 dark:hover:text-violet-400" href="#0">View<span className="hidden sm:inline"> -&gt;</span></a>
+                <div className="grow">
+                  <div className="self-center text-gray-800 dark:text-gray-100">
+                    订单 <span className="font-medium text-red-500">#20240417008</span> 申请退款，金额 <span className="font-medium text-red-500">¥299</span>
                   </div>
+                  <div className="text-xs text-gray-400 dark:text-gray-500 mt-1">16小时前</div>
                 </div>
               </div>
             </li>
           </ul>
         </div>
-
       </div>
     </div>
   );
